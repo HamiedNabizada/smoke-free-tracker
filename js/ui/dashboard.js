@@ -7,6 +7,8 @@ import { updateAchievements } from './achievements.js';
 import { updateChart } from './charts.js';
 import { updateHealthScore, updateMilestoneTimeline, updateFutureProjection, updateDetailedComparison, updateAgeGroupComparison } from './statistics.js';
 import { updateHealthAvatar } from './health-avatar.js';
+import { updateProgressVisuals } from './progress-visuals.js';
+import { updateHappeningNow } from './happening-now.js';
 
 export function updateDashboard() {
     const stats = calculateStats();
@@ -79,8 +81,8 @@ export function updateDashboard() {
     // Update next milestone progress
     updateNextMilestoneProgress(stats);
 
-    // Update progress rings
-    updateProgressRings(stats);
+    // Update progress visualizations
+    updateProgressVisuals(stats);
 
     // Update comparison stats
     updateComparisonStats(stats);
@@ -102,30 +104,11 @@ export function updateDashboard() {
         updateDetailedComparison(stats);
         updateAgeGroupComparison(stats);
     }
-}
 
-export function updateProgressRings(stats) {
-    // Update ring values
-    document.getElementById('ringDaysValue').textContent = Math.floor(stats.totalDays);
-    document.getElementById('ringMoneyValue').textContent = Math.floor(stats.money) + '€';
-    document.getElementById('ringCigarettesValue').textContent = stats.cigarettes;
-
-    // Calculate ring progress (0-100%)
-    const dayProgress = Math.min((stats.totalDays / 365) * 100, 100);
-    const moneyProgress = Math.min((stats.money / 1000) * 100, 100);
-    const cigaretteProgress = Math.min((stats.cigarettes / 1000) * 100, 100);
-
-    // Update ring circles (stroke-dashoffset calculation)
-    // circumference = 2 * PI * r = 2 * 3.14159 * 52 = 326.73
-    const circumference = 326.73;
-
-    const dayOffset = circumference - (dayProgress / 100) * circumference;
-    const moneyOffset = circumference - (moneyProgress / 100) * circumference;
-    const cigaretteOffset = circumference - (cigaretteProgress / 100) * circumference;
-
-    document.getElementById('ringDays').style.strokeDashoffset = dayOffset;
-    document.getElementById('ringMoney').style.strokeDashoffset = moneyOffset;
-    document.getElementById('ringCigarettes').style.strokeDashoffset = cigaretteOffset;
+    // Update "What's Happening NOW" (only if milestones tab)
+    if (document.querySelector('[data-tab="milestones"]').classList.contains('active')) {
+        updateHappeningNow(stats);
+    }
 }
 
 export function updateNextMilestoneProgress(stats) {

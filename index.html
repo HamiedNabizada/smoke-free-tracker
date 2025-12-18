@@ -169,41 +169,155 @@
                     <div id="nextMilestoneProgress"></div>
                 </div>
 
-                <!-- Progress Rings -->
-                <div class="card progress-rings-card">
-                    <h2>Deine Fortschrittsringe</h2>
-                    <div class="progress-rings-container">
-                        <div class="progress-ring-item">
-                            <svg class="progress-ring-svg" width="120" height="120">
-                                <circle class="progress-ring-bg" cx="60" cy="60" r="52" />
-                                <circle class="progress-ring-circle ring-days" cx="60" cy="60" r="52" id="ringDays" />
+                <!-- Progress Visualizations -->
+                <div class="card progress-visuals-card">
+                    <h2>Dein Fortschritt</h2>
+                    <div class="progress-visuals-container">
+                        <!-- Tree Visualization (Days) -->
+                        <div class="progress-visual-item">
+                            <svg class="tree-svg" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Trunk -->
+                                <rect x="85" y="150" width="30" height="90" fill="#8B4513" rx="5" id="treeTrunk"/>
+
+                                <!-- Roots -->
+                                <path d="M 85 235 Q 60 240 40 245" stroke="#654321" stroke-width="3" fill="none" opacity="0.6" id="root1"/>
+                                <path d="M 115 235 Q 140 240 160 245" stroke="#654321" stroke-width="3" fill="none" opacity="0.6" id="root2"/>
+
+                                <!-- Leaves Layer 3 (Top) -->
+                                <circle cx="100" cy="80" r="35" fill="#90EE90" class="tree-leaves layer3" id="leaves3" opacity="0"/>
+
+                                <!-- Leaves Layer 2 (Middle) -->
+                                <circle cx="70" cy="110" r="30" fill="#7CCD7C" class="tree-leaves layer2" id="leaves2-left" opacity="0"/>
+                                <circle cx="130" cy="110" r="30" fill="#7CCD7C" class="tree-leaves layer2" id="leaves2-right" opacity="0"/>
+
+                                <!-- Leaves Layer 1 (Bottom) -->
+                                <circle cx="100" cy="140" r="40" fill="#6B8E23" class="tree-leaves layer1" id="leaves1" opacity="0"/>
+
+                                <!-- Small branches (visible as tree grows) -->
+                                <line x1="85" y1="180" x2="60" y2="190" stroke="#8B4513" stroke-width="4" id="branch1" opacity="0"/>
+                                <line x1="115" y1="180" x2="140" y2="190" stroke="#8B4513" stroke-width="4" id="branch2" opacity="0"/>
+                                <line x1="85" y1="160" x2="55" y2="165" stroke="#8B4513" stroke-width="3" id="branch3" opacity="0"/>
+                                <line x1="115" y1="160" x2="145" y2="165" stroke="#8B4513" stroke-width="3" id="branch4" opacity="0"/>
                             </svg>
-                            <div class="progress-ring-label">
-                                <div class="progress-ring-value" id="ringDaysValue">0</div>
-                                <div class="progress-ring-text">Tage</div>
-                                <div class="progress-ring-goal">/ 365</div>
+                            <div class="progress-visual-label">
+                                <div class="progress-visual-value" id="treeDaysValue">0</div>
+                                <div class="progress-visual-text">Tage rauchfrei</div>
+                                <div class="progress-visual-goal" id="treeGoalText">Ziel: 365 Tage</div>
                             </div>
                         </div>
-                        <div class="progress-ring-item">
-                            <svg class="progress-ring-svg" width="120" height="120">
-                                <circle class="progress-ring-bg" cx="60" cy="60" r="52" />
-                                <circle class="progress-ring-circle ring-money" cx="60" cy="60" r="52" id="ringMoney" />
+
+                        <!-- Piggy Bank Visualization (Money) -->
+                        <div class="progress-visual-item">
+                            <svg class="piggy-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Piggy Bank Body -->
+                                <ellipse cx="100" cy="110" rx="60" ry="45" fill="#FFB6C1" id="piggyBody"/>
+
+                                <!-- Piggy Head -->
+                                <circle cx="140" cy="90" r="25" fill="#FFB6C1" id="piggyHead"/>
+
+                                <!-- Snout -->
+                                <ellipse cx="155" cy="90" rx="12" ry="10" fill="#FF69B4" id="piggySnout"/>
+                                <circle cx="150" cy="87" r="2" fill="#8B4513"/>
+                                <circle cx="150" cy="93" r="2" fill="#8B4513"/>
+
+                                <!-- Eye -->
+                                <circle cx="135" cy="85" r="3" fill="#000"/>
+
+                                <!-- Ear -->
+                                <ellipse cx="145" cy="70" rx="8" ry="12" fill="#FFB6C1" transform="rotate(-20 145 70)"/>
+
+                                <!-- Legs -->
+                                <rect x="70" y="145" width="12" height="25" fill="#FFB6C1" rx="6" id="leg1"/>
+                                <rect x="90" y="145" width="12" height="25" fill="#FFB6C1" rx="6" id="leg2"/>
+                                <rect x="110" y="145" width="12" height="25" fill="#FFB6C1" rx="6" id="leg3"/>
+                                <rect x="130" y="145" width="12" height="25" fill="#FFB6C1" rx="6" id="leg4"/>
+
+                                <!-- Tail -->
+                                <path d="M 50 110 Q 30 105 25 95 Q 20 90 25 85" stroke="#FFB6C1" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+                                <!-- Coin Slot -->
+                                <rect x="90" y="85" width="20" height="3" fill="#8B4513" rx="1"/>
+
+                                <!-- Money fill level (will be animated) -->
+                                <rect x="50" y="150" width="100" height="0" fill="#FFD700" opacity="0.6" id="moneyFill" rx="5"/>
+
+                                <!-- Coins (appear at milestones) -->
+                                <g id="coins" opacity="0">
+                                    <circle cx="80" cy="95" r="6" fill="#FFD700" stroke="#DAA520" stroke-width="1"/>
+                                    <circle cx="95" cy="100" r="6" fill="#FFD700" stroke="#DAA520" stroke-width="1"/>
+                                    <circle cx="110" cy="95" r="6" fill="#FFD700" stroke="#DAA520" stroke-width="1"/>
+                                </g>
                             </svg>
-                            <div class="progress-ring-label">
-                                <div class="progress-ring-value" id="ringMoneyValue">0€</div>
-                                <div class="progress-ring-text">Gespart</div>
-                                <div class="progress-ring-goal">/ 1000€</div>
+                            <div class="progress-visual-label">
+                                <div class="progress-visual-value" id="piggyMoneyValue">0€</div>
+                                <div class="progress-visual-text">Gespart</div>
+                                <div class="progress-visual-goal" id="piggyGoalText">Ziel: 1000€</div>
                             </div>
                         </div>
-                        <div class="progress-ring-item">
-                            <svg class="progress-ring-svg" width="120" height="120">
-                                <circle class="progress-ring-bg" cx="60" cy="60" r="52" />
-                                <circle class="progress-ring-circle ring-cigarettes" cx="60" cy="60" r="52" id="ringCigarettes" />
+
+                        <!-- Cemetery Visualization (Cigarettes) -->
+                        <div class="progress-visual-item">
+                            <svg class="cemetery-svg" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Ground -->
+                                <rect x="0" y="180" width="200" height="40" fill="#4a5568" opacity="0.3"/>
+                                <rect x="0" y="185" width="200" height="35" fill="#2d3748" opacity="0.5"/>
+
+                                <!-- Grass -->
+                                <path d="M 0 180 Q 20 175 40 180 T 80 180 T 120 180 T 160 180 T 200 180" fill="#2f4f2f" opacity="0.4"/>
+
+                                <!-- Small graves (< 100 cigarettes) -->
+                                <g id="smallGraves" opacity="0">
+                                    <rect x="30" y="155" width="25" height="30" fill="#5a5a5a" rx="3"/>
+                                    <rect x="32" y="157" width="21" height="2" fill="#fff" opacity="0.3"/>
+                                    <rect x="70" y="160" width="20" height="25" fill="#5a5a5a" rx="3"/>
+                                    <rect x="72" y="162" width="16" height="2" fill="#fff" opacity="0.3"/>
+                                </g>
+
+                                <!-- Medium gravestones (100-500 cigarettes) -->
+                                <g id="mediumGraves" opacity="0">
+                                    <path d="M 105 165 L 105 145 Q 105 135 115 135 Q 125 135 125 145 L 125 165 Z" fill="#6a6a6a"/>
+                                    <rect x="107" y="150" width="16" height="2" fill="#fff" opacity="0.3"/>
+                                    <text x="115" y="155" text-anchor="middle" font-size="10" fill="#fff" opacity="0.5">RIP</text>
+
+                                    <path d="M 145 170 L 145 150 Q 145 140 155 140 Q 165 140 165 150 L 165 170 Z" fill="#6a6a6a"/>
+                                    <rect x="147" y="155" width="16" height="2" fill="#fff" opacity="0.3"/>
+                                </g>
+
+                                <!-- Large cemetery (500-1000 cigarettes) -->
+                                <g id="largeGraves" opacity="0">
+                                    <path d="M 20 130 L 20 105 Q 20 95 30 95 Q 40 95 40 105 L 40 130 Z" fill="#7a7a7a"/>
+                                    <line x1="25" y1="95" x2="25" y2="85" stroke="#7a7a7a" stroke-width="4"/>
+                                    <line x1="20" y1="90" x2="30" y2="90" stroke="#7a7a7a" stroke-width="4"/>
+                                    <text x="30" y="115" text-anchor="middle" font-size="9" fill="#fff" opacity="0.6">🚬</text>
+
+                                    <path d="M 160 125 L 160 100 Q 160 90 170 90 Q 180 90 180 100 L 180 125 Z" fill="#7a7a7a"/>
+                                    <line x1="165" y1="90" x2="165" y2="80" stroke="#7a7a7a" stroke-width="4"/>
+                                    <line x1="160" y1="85" x2="170" y2="85" stroke="#7a7a7a" stroke-width="4"/>
+                                </g>
+
+                                <!-- Epic cemetery scene (> 1000 cigarettes) -->
+                                <g id="epicGraves" opacity="0">
+                                    <!-- Fence -->
+                                    <rect x="5" y="100" width="3" height="80" fill="#3a3a3a"/>
+                                    <rect x="192" y="100" width="3" height="80" fill="#3a3a3a"/>
+                                    <rect x="5" y="100" width="190" height="3" fill="#3a3a3a"/>
+
+                                    <!-- Moon -->
+                                    <circle cx="30" cy="30" r="15" fill="#f4f4f4" opacity="0.8"/>
+                                    <circle cx="35" cy="27" r="13" fill="#1a1a2e"/>
+                                </g>
+
+                                <!-- Cigarette icons falling (animated) -->
+                                <g id="fallingCigarettes" opacity="0">
+                                    <rect x="60" y="20" width="3" height="12" fill="#fff" rx="1" class="cig-fall cig1"/>
+                                    <rect x="120" y="10" width="3" height="12" fill="#fff" rx="1" class="cig-fall cig2"/>
+                                    <rect x="150" y="30" width="3" height="12" fill="#fff" rx="1" class="cig-fall cig3"/>
+                                </g>
                             </svg>
-                            <div class="progress-ring-label">
-                                <div class="progress-ring-value" id="ringCigarettesValue">0</div>
-                                <div class="progress-ring-text">Zigaretten</div>
-                                <div class="progress-ring-goal">/ 1000</div>
+                            <div class="progress-visual-label">
+                                <div class="progress-visual-value" id="cemeteryCigarettesValue">0</div>
+                                <div class="progress-visual-text">Zigaretten vermieden</div>
+                                <div class="progress-visual-goal" id="cemeteryGoalText">Ziel: 1000</div>
                             </div>
                         </div>
                     </div>
@@ -295,6 +409,22 @@
 
             <!-- Tab Panel: Meilensteine -->
             <div class="tab-panel" data-panel="milestones">
+                <!-- What's Happening NOW -->
+                <div class="card happening-now-card">
+                    <h2>⏰ Was passiert gerade JETZT in deinem Körper?</h2>
+                    <div class="happening-now-content" id="happeningNowContent">
+                        <div class="happening-icon" id="happeningIcon">🫁</div>
+                        <div class="happening-text">
+                            <div class="happening-title" id="happeningTitle">Deine Regeneration läuft...</div>
+                            <div class="happening-description" id="happeningDescription">In diesem Moment arbeitet dein Körper daran, sich zu erholen.</div>
+                        </div>
+                    </div>
+                    <div class="happening-progress">
+                        <div class="happening-bar" id="happeningBar"></div>
+                    </div>
+                    <div class="happening-next" id="happeningNext">Nächste Phase in X Stunden</div>
+                </div>
+
                 <div class="card">
                     <h2>Gesundheits-Meilensteine</h2>
                     <div id="healthMilestones" class="milestones"></div>

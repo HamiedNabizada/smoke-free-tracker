@@ -1,0 +1,166 @@
+/* Progress Visualizations (Tree, Piggy, Cemetery) */
+.progress-visuals-card {
+    background: white;
+}
+
+.progress-visuals-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    gap: 30px;
+    flex-wrap: wrap;
+    padding: 20px 0;
+}
+
+.progress-visual-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    min-width: 200px;
+    max-width: 250px;
+}
+
+/* SVG Containers */
+.tree-svg,
+.piggy-svg,
+.cemetery-svg {
+    width: 100%;
+    height: auto;
+    max-width: 220px;
+    margin-bottom: 15px;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+}
+
+/* Tree Animations */
+.tree-leaves {
+    animation: leaf-sway 3s ease-in-out infinite;
+    transform-origin: center;
+}
+
+@keyframes leaf-sway {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(2px);
+    }
+}
+
+.tree-leaves.layer1 {
+    animation-delay: 0s;
+}
+
+.tree-leaves.layer2 {
+    animation-delay: 0.3s;
+}
+
+.tree-leaves.layer3 {
+    animation-delay: 0.6s;
+}
+
+/* Piggy Bank Animations */
+.piggy-svg {
+    animation: piggy-bounce 2s ease-in-out infinite;
+}
+
+@keyframes piggy-bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
+#moneyFill {
+    transition: height 1s ease, y 1s ease;
+}
+
+#coins {
+    animation: coins-sparkle 1.5s ease-in-out infinite;
+}
+
+@keyframes coins-sparkle {
+    0%, 100% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+}
+
+/* Cemetery Animations */
+.cig-fall {
+    animation: cigarette-fall 3s ease-in infinite;
+}
+
+.cig1 {
+    animation-delay: 0s;
+}
+
+.cig2 {
+    animation-delay: 1s;
+}
+
+.cig3 {
+    animation-delay: 2s;
+}
+
+@keyframes cigarette-fall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(160px) rotate(180deg);
+        opacity: 0;
+    }
+}
+
+/* Labels */
+.progress-visual-label {
+    text-align: center;
+    width: 100%;
+}
+
+.progress-visual-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.progress-visual-text {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 3px;
+}
+
+.progress-visual-goal {
+    font-size: 0.75rem;
+    color: #999;
+    font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .progress-visuals-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+    }
+
+    .progress-visual-item {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .tree-svg,
+    .piggy-svg,
+    .cemetery-svg {
+        max-width: 180px;
+    }
+}

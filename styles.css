@@ -12,6 +12,8 @@
 @import url('./css/components/milestones.css');
 @import url('./css/components/achievements.css');
 @import url('./css/components/progress.css');
+@import url('./css/components/progress-visuals.css');
+@import url('./css/components/happening-now.css');
 @import url('./css/components/statistics.css');
 @import url('./css/components/craving-timer.css');
 @import url('./css/components/goal-calculator.css');

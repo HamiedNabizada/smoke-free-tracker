@@ -1,6 +1,7 @@
 import { calculateStats } from '../utils/calculations.js';
 import { updateChart } from './charts.js';
 import { updateHealthScore, updateMilestoneTimeline, updateFutureProjection, updateDetailedComparison, updateAgeGroupComparison } from './statistics.js';
+import { updateHappeningNow } from './happening-now.js';
 
 // Tab switching functionality
 export function initializeTabs() {
@@ -32,6 +33,14 @@ export function initializeTabs() {
                     updateFutureProjection(stats);
                     updateDetailedComparison(stats);
                     updateAgeGroupComparison(stats);
+                }, 100);
+            }
+
+            // If switching to milestones tab, update "What's Happening NOW"
+            if (targetTab === 'milestones') {
+                setTimeout(() => {
+                    const stats = calculateStats();
+                    updateHappeningNow(stats);
                 }, 100);
             }
         });

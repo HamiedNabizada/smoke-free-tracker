@@ -272,3 +272,37 @@ body.dark-mode .next-milestone-progress-bar {
     background: rgba(255, 255, 255, 0.1);
 }
 
+/* Progress Visuals Dark Mode */
+body.dark-mode .progress-visuals-card {
+    background: #2d3748;
+}
+
+body.dark-mode .progress-visual-value {
+    color: #e2e8f0;
+}
+
+body.dark-mode .progress-visual-text {
+    color: #cbd5e0;
+}
+
+body.dark-mode .progress-visual-goal {
+    color: #a0aec0;
+}
+
+/* Happening Now Dark Mode */
+body.dark-mode .happening-now-card {
+    background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+}
+
+body.dark-mode .happening-title {
+    color: #e2e8f0;
+}
+
+body.dark-mode .happening-description {
+    color: rgba(226, 232, 240, 0.9);
+}
+
+body.dark-mode .happening-next {
+    color: rgba(226, 232, 240, 0.8);
+}
+
