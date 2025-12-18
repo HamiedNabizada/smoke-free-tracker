@@ -1,0 +1,357 @@
+/* Statistics Components */
+
+/* Milestone Timeline */
+.timeline-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.timeline-card h2 {
+    color: white;
+    margin-bottom: 30px;
+}
+
+.milestone-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+}
+
+.timeline-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+    padding: 15px 0;
+}
+
+.timeline-marker {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    min-width: 60px;
+}
+
+.timeline-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s;
+    z-index: 2;
+}
+
+.timeline-item.achieved .timeline-icon {
+    background: rgba(17, 153, 142, 0.9);
+    border-color: #11998e;
+    box-shadow: 0 0 20px rgba(17, 153, 142, 0.5);
+}
+
+.timeline-item.current .timeline-icon {
+    background: rgba(255, 193, 7, 0.9);
+    border-color: #ffc107;
+    animation: pulse-timeline 2s infinite;
+}
+
+.timeline-item.future .timeline-icon {
+    opacity: 0.5;
+    filter: grayscale(50%);
+}
+
+.timeline-status {
+    font-size: 1.2rem;
+    font-weight: bold;
+    min-height: 20px;
+}
+
+.timeline-connector {
+    position: absolute;
+    left: 29px;
+    top: 50px;
+    width: 3px;
+    height: calc(100% - 10px);
+    background: rgba(255, 255, 255, 0.3);
+    z-index: 1;
+}
+
+.timeline-item.achieved .timeline-connector {
+    background: rgba(17, 153, 142, 0.6);
+}
+
+.timeline-content {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 12px 15px;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+}
+
+.timeline-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+
+.timeline-progress {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    font-style: italic;
+}
+
+/* Future Projection */
+.projection-card {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.projection-card h2 {
+    color: #333;
+    margin-bottom: 25px;
+}
+
+.projection-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.projection-item {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.projection-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.projection-header {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #667eea;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.projection-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.projection-stat {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.projection-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.projection-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #333;
+    flex: 1;
+}
+
+.projection-label {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+/* Health Score Gauge */
+.health-score-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.health-score-card h2 {
+    color: white;
+    margin-bottom: 25px;
+}
+
+.health-score-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.health-gauge {
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+}
+
+.gauge-progress {
+    transition: stroke-dashoffset 2s ease-in-out, stroke 0.5s ease;
+}
+
+.health-score-details {
+    width: 100%;
+    text-align: center;
+}
+
+.health-score-rating {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.health-score-message {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    opacity: 0.95;
+}
+
+.health-score-breakdown {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.score-component {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    backdrop-filter: blur(10px);
+}
+
+/* Detailed Comparison Table */
+.detailed-comparison {
+    margin-top: 25px;
+}
+
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.comparison-table thead {
+    background: #667eea;
+    color: white;
+}
+
+.comparison-table th {
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.comparison-table td {
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.comparison-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.comparison-table tbody tr.achieved {
+    background: rgba(17, 153, 142, 0.1);
+}
+
+.comparison-table tbody tr.achieved td:last-child {
+    color: #11998e;
+    font-weight: 600;
+}
+
+.comparison-table tbody tr.pending {
+    opacity: 0.7;
+}
+
+/* Age Group Comparison */
+.age-comparison-card {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+}
+
+.age-comparison-card h2 {
+    color: white;
+    margin-bottom: 25px;
+}
+
+.age-comparison-hero {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 20px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    margin-bottom: 20px;
+}
+
+.age-comparison-icon {
+    font-size: 4rem;
+    flex-shrink: 0;
+}
+
+.age-comparison-text h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.age-comparison-text p {
+    font-size: 1rem;
+    margin-bottom: 8px;
+    opacity: 0.95;
+}
+
+.age-highlight {
+    font-size: 1.2rem !important;
+    font-weight: 700 !important;
+    margin-top: 10px !important;
+}
+
+.age-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.age-stat {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+.age-stat.highlight {
+    background: rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.age-stat-value {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.age-stat-label {
+    font-size: 0.95rem;
+    opacity: 0.9;
+}

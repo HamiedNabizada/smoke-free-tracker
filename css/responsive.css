@@ -1,0 +1,437 @@
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    header {
+        margin-bottom: 20px;
+        padding: 15px 10px;
+    }
+
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    .tab-navigation {
+        padding: 8px;
+        gap: 3px;
+        margin-bottom: 15px;
+    }
+
+    .tab-button {
+        min-width: 70px;
+        padding: 10px 6px;
+    }
+
+    .tab-icon {
+        font-size: 1.3rem;
+    }
+
+    .tab-label {
+        font-size: 0.7rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .stat-card {
+        padding: 25px 20px;
+    }
+
+    .stat-value {
+        font-size: 2rem;
+    }
+
+    .stat-icon {
+        font-size: 2.5rem;
+    }
+
+    .stat-label {
+        font-size: 0.95rem;
+    }
+
+    .stat-info {
+        font-size: 0.65rem;
+        margin-top: 6px;
+    }
+
+    .card {
+        padding: 20px;
+        margin-bottom: 15px;
+    }
+
+    .card h2 {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+    }
+
+    .milestone {
+        padding: 12px;
+    }
+
+    .milestone-header {
+        flex-wrap: wrap;
+    }
+
+    .milestone-icon {
+        font-size: 1.8rem;
+        margin-right: 12px;
+    }
+
+    .milestone-title {
+        font-size: 0.95rem;
+    }
+
+    .milestone-description {
+        font-size: 0.85rem;
+    }
+
+    .milestone-time {
+        font-size: 0.8rem;
+        margin-left: 0;
+        margin-top: 5px;
+    }
+
+    .milestone-expand-icon {
+        font-size: 1rem;
+        margin-left: 8px;
+    }
+
+    .milestone-details p {
+        font-size: 0.9rem;
+        padding: 12px;
+    }
+
+    .progress-rings-container {
+        gap: 20px;
+    }
+
+    .progress-ring-svg {
+        width: 100px;
+        height: 100px;
+    }
+
+    .progress-ring-svg circle {
+        r: 42;
+    }
+
+    .progress-ring-circle {
+        stroke-dasharray: 263.89;
+        stroke-dashoffset: 263.89;
+    }
+
+    .progress-ring-value {
+        font-size: 1.2rem;
+    }
+
+    .progress-ring-text {
+        font-size: 0.7rem;
+    }
+
+    .progress-ring-goal {
+        font-size: 0.65rem;
+    }
+
+    .achievements-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 12px;
+    }
+
+    .achievement {
+        padding: 15px 10px;
+    }
+
+    .achievement-icon {
+        font-size: 2.5rem;
+    }
+
+    .achievement-title {
+        font-size: 0.85rem;
+    }
+
+    .achievement-description {
+        font-size: 0.7rem;
+    }
+
+    #progressChart {
+        max-height: 250px;
+    }
+
+    .timeline-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+
+    .timeline-connector {
+        left: 19px;
+        top: 40px;
+    }
+
+    .timeline-title {
+        font-size: 1rem;
+    }
+
+    .timeline-progress {
+        font-size: 0.85rem;
+    }
+
+    .projection-content {
+        grid-template-columns: 1fr;
+    }
+
+    .projection-header {
+        font-size: 1.1rem;
+    }
+
+    .projection-value {
+        font-size: 1rem;
+    }
+
+    .health-gauge {
+        max-width: 250px;
+    }
+
+    .health-score-rating {
+        font-size: 1.5rem;
+    }
+
+    .health-score-message {
+        font-size: 1rem;
+    }
+
+    .health-score-breakdown {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .score-component {
+        font-size: 0.85rem;
+        padding: 8px;
+    }
+
+    .comparison-table {
+        font-size: 0.9rem;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+        padding: 10px 8px;
+    }
+
+    .age-comparison-hero {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .age-comparison-icon {
+        font-size: 3rem;
+    }
+
+    .age-comparison-text h3 {
+        font-size: 1.3rem;
+    }
+
+    .age-comparison-text p {
+        font-size: 0.95rem;
+    }
+
+    .age-stat-value {
+        font-size: 2.5rem;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+    body {
+        padding: 8px;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    .stat-card {
+        padding: 20px 15px;
+    }
+
+    .stat-value {
+        font-size: 1.7rem;
+    }
+
+    .stat-icon {
+        font-size: 2rem;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .card h2 {
+        font-size: 1.2rem;
+    }
+
+    .milestone-icon {
+        font-size: 1.5rem;
+        margin-right: 10px;
+    }
+
+    .achievements-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 10px;
+    }
+
+    .achievement {
+        padding: 12px 8px;
+    }
+
+    .achievement-icon {
+        font-size: 2rem;
+    }
+
+    .stat-label {
+        font-size: 0.85rem;
+    }
+
+    .stat-info {
+        font-size: 0.6rem;
+        margin-top: 5px;
+    }
+
+    .timeline-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+
+    .timeline-connector {
+        left: 16px;
+        top: 35px;
+    }
+
+    .timeline-title {
+        font-size: 0.95rem;
+    }
+
+    .timeline-progress {
+        font-size: 0.8rem;
+    }
+
+    .projection-item {
+        padding: 15px;
+    }
+
+    .projection-header {
+        font-size: 1rem;
+    }
+
+    .projection-stat {
+        padding: 8px;
+    }
+
+    .projection-icon {
+        font-size: 1.3rem;
+    }
+
+    .projection-value {
+        font-size: 0.95rem;
+    }
+
+    .projection-label {
+        font-size: 0.75rem;
+    }
+
+    .health-gauge {
+        max-width: 200px;
+    }
+
+    .health-score-rating {
+        font-size: 1.3rem;
+    }
+
+    .health-score-message {
+        font-size: 0.9rem;
+    }
+
+    .health-score-breakdown {
+        grid-template-columns: 1fr;
+    }
+
+    .score-component {
+        font-size: 0.8rem;
+    }
+
+    .comparison-table {
+        font-size: 0.8rem;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+        padding: 8px 6px;
+    }
+
+    .age-comparison-icon {
+        font-size: 2.5rem;
+    }
+
+    .age-comparison-text h3 {
+        font-size: 1.1rem;
+    }
+
+    .age-comparison-text p {
+        font-size: 0.85rem;
+    }
+
+    .age-stat-value {
+        font-size: 2rem;
+    }
+
+    .age-stat-label {
+        font-size: 0.85rem;
+    }
+}
+
+/* Landscape mobile optimization */
+@media (max-width: 896px) and (orientation: landscape) {
+    header {
+        margin-bottom: 15px;
+        padding: 10px;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .stat-card {
+        padding: 15px 10px;
+    }
+
+    .stat-icon {
+        font-size: 2rem;
+        margin-bottom: 5px;
+    }
+
+    .stat-value {
+        font-size: 1.5rem;
+    }
+
+    .stat-label {
+        font-size: 0.85rem;
+    }
+
+    .stat-info {
+        font-size: 0.6rem;
+        margin-top: 5px;
+    }
+
+    .card {
+        padding: 15px;
+        margin-bottom: 10px;
+    }
+}

@@ -1,0 +1,229 @@
+/* Goal Calculator */
+.goal-calculator-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.goal-calculator-card h2 {
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+.goal-calculator-intro {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+}
+
+/* Toggle Buttons */
+.goal-toggle {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 0.5rem;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
+
+.goal-toggle-btn {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.goal-toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.goal-toggle-btn.active {
+    background: white;
+    color: #667eea;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Input Section */
+.goal-input-section {
+    margin-bottom: 1.5rem;
+}
+
+.goal-input-group {
+    margin-bottom: 1rem;
+}
+
+.goal-input-group.hidden {
+    display: none;
+}
+
+.goal-input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.goal-input-group input {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.goal-input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.goal-input-group input:focus {
+    outline: none;
+    border-color: white;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.calculate-goal-btn {
+    width: 100%;
+    padding: 1rem;
+    background: white;
+    color: #667eea;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.calculate-goal-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.calculate-goal-btn:active {
+    transform: translateY(0);
+}
+
+/* Results Section */
+.goal-results {
+    margin-top: 2rem;
+    animation: fadeIn 0.4s ease;
+}
+
+.goal-results.hidden {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Progress Bar */
+.goal-progress-bar {
+    position: relative;
+    width: 100%;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(10px);
+}
+
+.goal-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #11998e, #38ef7d);
+    border-radius: 20px;
+    transition: width 0.6s ease;
+    box-shadow: 0 0 20px rgba(56, 239, 125, 0.5);
+}
+
+.goal-progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 700;
+    font-size: 1rem;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Stats Grid */
+.goal-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.goal-stat-box {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 1.5rem;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.goal-stat-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.goal-stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.25rem;
+}
+
+.goal-stat-label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.goal-stat-date {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .goal-toggle-btn {
+        font-size: 0.85rem;
+        padding: 0.6rem 0.8rem;
+    }
+
+    .goal-input-group input {
+        font-size: 1rem;
+        padding: 0.9rem;
+    }
+
+    .goal-stat-box {
+        padding: 1rem;
+    }
+
+    .goal-stat-value {
+        font-size: 1.5rem;
+    }
+}

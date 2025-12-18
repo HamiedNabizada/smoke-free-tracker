@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="Verfolge deinen Fortschritt beim Rauchstopp mit detaillierten Statistiken und Gesundheitsmeilensteinen">
+    <meta name="theme-color" content="#667eea">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- iOS Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Rauchfrei">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Ccircle fill='%23667eea' cx='256' cy='256' r='256'/%3E%3Ctext x='256' y='350' text-anchor='middle' font-size='280' fill='white'%3E🚭%3C/text%3E%3C/svg%3E">
+
+    <title>Rauchentwöhnung Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚭 Meine Rauchentwöhnung</h1>
+            <button id="darkModeToggle" class="dark-mode-toggle" aria-label="Dark Mode umschalten">🌙</button>
+        </header>
+
+        <!-- Tab Navigation -->
+        <nav class="tab-navigation">
+            <button class="tab-button active" data-tab="overview">
+                <span class="tab-icon">📊</span>
+                <span class="tab-label">Übersicht</span>
+            </button>
+            <button class="tab-button" data-tab="milestones">
+                <span class="tab-icon">🏥</span>
+                <span class="tab-label">Meilensteine</span>
+            </button>
+            <button class="tab-button" data-tab="achievements">
+                <span class="tab-icon">🏆</span>
+                <span class="tab-label">Erfolge</span>
+            </button>
+            <button class="tab-button" data-tab="statistics">
+                <span class="tab-icon">📈</span>
+                <span class="tab-label">Statistiken</span>
+            </button>
+            <button class="tab-button" data-tab="help">
+                <span class="tab-icon">🆘</span>
+                <span class="tab-label">Hilfe</span>
+            </button>
+        </nav>
+
+        <!-- Main Dashboard -->
+        <div id="dashboard" class="dashboard">
+            <!-- Tab Panel: Übersicht -->
+            <div class="tab-panel active" data-panel="overview">
+                <!-- Daily Motivation -->
+                <div class="card motivation-card">
+                    <div class="motivation-icon">💪</div>
+                    <div id="dailyMotivation" class="motivation-text"></div>
+                </div>
+
+                <!-- Health Avatar -->
+                <div class="card health-avatar-card">
+                    <h2>🫁 Dein Körper erholt sich</h2>
+                    <p class="health-avatar-subtitle">Sieh live, wie sich dein Körper regeneriert!</p>
+
+                    <div class="health-avatar-container">
+                        <!-- Tooltip -->
+                        <div class="health-tooltip hidden" id="healthTooltip"></div>
+
+                        <!-- Left: Body Silhouette -->
+                        <div class="body-silhouette">
+                            <svg viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Body outline -->
+                                <ellipse cx="100" cy="50" rx="35" ry="45" fill="#e0e0e0" opacity="0.3" />
+                                <!-- Neck -->
+                                <rect x="90" y="85" width="20" height="15" fill="#e0e0e0" opacity="0.3" />
+                                <!-- Torso -->
+                                <ellipse cx="100" cy="170" rx="60" ry="80" fill="#e0e0e0" opacity="0.3" />
+                                <!-- Arms -->
+                                <ellipse cx="50" cy="150" rx="15" ry="60" fill="#e0e0e0" opacity="0.3" />
+                                <ellipse cx="150" cy="150" rx="15" ry="60" fill="#e0e0e0" opacity="0.3" />
+                                <!-- Legs -->
+                                <ellipse cx="80" cy="300" rx="18" ry="90" fill="#e0e0e0" opacity="0.3" />
+                                <ellipse cx="120" cy="300" rx="18" ry="90" fill="#e0e0e0" opacity="0.3" />
+
+                                <!-- Heart (animated) -->
+                                <g id="heart" class="organ-heart">
+                                    <path d="M100 140 L110 130 Q115 125 115 120 Q115 110 105 110 Q100 110 100 115 Q100 110 95 110 Q85 110 85 120 Q85 125 90 130 Z"
+                                          fill="#ff6b6b" class="organ-fill" />
+                                    <title>Herz</title>
+                                </g>
+
+                                <!-- Lungs (left and right) -->
+                                <g id="lungs" class="organ-lungs">
+                                    <!-- Left lung -->
+                                    <ellipse cx="80" cy="140" rx="18" ry="35" fill="#95a5a6" class="organ-fill lung-left" />
+                                    <!-- Right lung -->
+                                    <ellipse cx="120" cy="140" rx="18" ry="35" fill="#95a5a6" class="organ-fill lung-right" />
+                                    <title>Lungen</title>
+                                </g>
+
+                                <!-- Blood vessels (simplified) -->
+                                <g id="blood-vessels" class="organ-blood">
+                                    <line x1="100" y1="130" x2="80" y2="150" stroke="#e74c3c" stroke-width="3" class="vessel" opacity="0.6" />
+                                    <line x1="100" y1="130" x2="120" y2="150" stroke="#e74c3c" stroke-width="3" class="vessel" opacity="0.6" />
+                                    <line x1="100" y1="145" x2="100" y2="180" stroke="#e74c3c" stroke-width="3" class="vessel" opacity="0.6" />
+                                    <title>Blutgefäße</title>
+                                </g>
+
+                                <!-- Skin indicator (glow around body) -->
+                                <ellipse id="skin-glow" cx="100" cy="170" rx="65" ry="85" fill="none"
+                                         stroke="#f39c12" stroke-width="2" opacity="0.4" class="skin-glow" />
+                            </svg>
+                        </div>
+
+                        <!-- Right: Stats -->
+                        <div class="health-stats">
+                            <div class="health-stat-item" data-organ="lungs">
+                                <div class="health-stat-icon">🫁</div>
+                                <div class="health-stat-content">
+                                    <div class="health-stat-label">Lungen</div>
+                                    <div class="health-stat-bar">
+                                        <div class="health-stat-fill" id="lungRegenBar"></div>
+                                    </div>
+                                    <div class="health-stat-value" id="lungRegenValue">0% regeneriert</div>
+                                </div>
+                            </div>
+
+                            <div class="health-stat-item" data-organ="heart">
+                                <div class="health-stat-icon">❤️</div>
+                                <div class="health-stat-content">
+                                    <div class="health-stat-label">Herz</div>
+                                    <div class="health-stat-bar">
+                                        <div class="health-stat-fill" id="heartRegenBar"></div>
+                                    </div>
+                                    <div class="health-stat-value" id="heartRegenValue">0% normalisiert</div>
+                                </div>
+                            </div>
+
+                            <div class="health-stat-item" data-organ="blood">
+                                <div class="health-stat-icon">🩸</div>
+                                <div class="health-stat-content">
+                                    <div class="health-stat-label">Blutkreislauf</div>
+                                    <div class="health-stat-bar">
+                                        <div class="health-stat-fill" id="bloodRegenBar"></div>
+                                    </div>
+                                    <div class="health-stat-value" id="bloodRegenValue">0% verbessert</div>
+                                </div>
+                            </div>
+
+                            <div class="health-stat-item" data-organ="skin">
+                                <div class="health-stat-icon">✨</div>
+                                <div class="health-stat-content">
+                                    <div class="health-stat-label">Haut</div>
+                                    <div class="health-stat-bar">
+                                        <div class="health-stat-fill" id="skinRegenBar"></div>
+                                    </div>
+                                    <div class="health-stat-value" id="skinRegenValue">0% verjüngt</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Next Milestone Progress -->
+                <div class="card">
+                    <h2>Nächstes Ziel</h2>
+                    <div id="nextMilestoneProgress"></div>
+                </div>
+
+                <!-- Progress Rings -->
+                <div class="card progress-rings-card">
+                    <h2>Deine Fortschrittsringe</h2>
+                    <div class="progress-rings-container">
+                        <div class="progress-ring-item">
+                            <svg class="progress-ring-svg" width="120" height="120">
+                                <circle class="progress-ring-bg" cx="60" cy="60" r="52" />
+                                <circle class="progress-ring-circle ring-days" cx="60" cy="60" r="52" id="ringDays" />
+                            </svg>
+                            <div class="progress-ring-label">
+                                <div class="progress-ring-value" id="ringDaysValue">0</div>
+                                <div class="progress-ring-text">Tage</div>
+                                <div class="progress-ring-goal">/ 365</div>
+                            </div>
+                        </div>
+                        <div class="progress-ring-item">
+                            <svg class="progress-ring-svg" width="120" height="120">
+                                <circle class="progress-ring-bg" cx="60" cy="60" r="52" />
+                                <circle class="progress-ring-circle ring-money" cx="60" cy="60" r="52" id="ringMoney" />
+                            </svg>
+                            <div class="progress-ring-label">
+                                <div class="progress-ring-value" id="ringMoneyValue">0€</div>
+                                <div class="progress-ring-text">Gespart</div>
+                                <div class="progress-ring-goal">/ 1000€</div>
+                            </div>
+                        </div>
+                        <div class="progress-ring-item">
+                            <svg class="progress-ring-svg" width="120" height="120">
+                                <circle class="progress-ring-bg" cx="60" cy="60" r="52" />
+                                <circle class="progress-ring-circle ring-cigarettes" cx="60" cy="60" r="52" id="ringCigarettes" />
+                            </svg>
+                            <div class="progress-ring-label">
+                                <div class="progress-ring-value" id="ringCigarettesValue">0</div>
+                                <div class="progress-ring-text">Zigaretten</div>
+                                <div class="progress-ring-goal">/ 1000</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card primary">
+                    <div class="stat-icon">📅</div>
+                    <div class="stat-value" id="daysSmokeFree">0</div>
+                    <div class="stat-label">Zeit rauchfrei</div>
+                    <div class="stat-info">Seit deinem Rauchstopp</div>
+                </div>
+                <div class="stat-card success">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-value" id="moneySaved">0 €</div>
+                    <div class="stat-label">Geld gespart</div>
+                    <div class="stat-info">Basierend auf 12 Zig./Tag à 0,50€</div>
+                </div>
+                <div class="stat-card info">
+                    <div class="stat-icon">🚬</div>
+                    <div class="stat-value" id="cigarettesNotSmoked">0</div>
+                    <div class="stat-label">Nicht geraucht</div>
+                    <div class="stat-info">12 Zigaretten pro Tag vermieden</div>
+                </div>
+                <div class="stat-card warning">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-value" id="lifeGained">0</div>
+                    <div class="stat-label">Lebenszeit gewonnen</div>
+                    <div class="stat-info">~11 Minuten pro Zigarette</div>
+                </div>
+                <div class="stat-card danger">
+                    <div class="stat-icon">☠️</div>
+                    <div class="stat-value" id="toxinsAvoided">0 g</div>
+                    <div class="stat-label">Schadstoffe vermieden</div>
+                    <div class="stat-info">Nikotin, Teer & Co.</div>
+                </div>
+                <div class="stat-card health">
+                    <div class="stat-icon" id="lungIcon">🫁</div>
+                    <div class="stat-value" id="lungHealth">0%</div>
+                    <div class="stat-label">Lungengesundheit</div>
+                    <div class="stat-info">Regeneration über 10 Jahre</div>
+                </div>
+                <div class="stat-card accent">
+                    <div class="stat-icon">⏱️</div>
+                    <div class="stat-value" id="timeSaved">0</div>
+                    <div class="stat-label">Zeit gespart</div>
+                    <div class="stat-info">~5 Min. pro Zigarette (inkl. Vorbereitung)</div>
+                </div>
+                <div class="stat-card beauty">
+                    <div class="stat-icon">✨</div>
+                    <div class="stat-value" id="skinAge">0 Tage</div>
+                    <div class="stat-label">Haut verjüngt</div>
+                    <div class="stat-info">Max. ~30 Tage nach 9 Monaten</div>
+                </div>
+            </div>
+
+                <!-- Environmental Impact -->
+                <div class="card environmental-card">
+                    <h2>🌱 Dein Beitrag für die Umwelt</h2>
+                    <div class="environmental-stats">
+                        <div class="environmental-item">
+                            <div class="environmental-icon">💧</div>
+                            <div class="environmental-content">
+                                <div class="environmental-value" id="waterSaved">0</div>
+                                <div class="environmental-label">Liter Wasser gespart</div>
+                                <div class="environmental-info">Zigarettenproduktion verbraucht ~3.7L pro Zigarette</div>
+                            </div>
+                        </div>
+                        <div class="environmental-item">
+                            <div class="environmental-icon">🌳</div>
+                            <div class="environmental-content">
+                                <div class="environmental-value" id="treesSaved">0</div>
+                                <div class="environmental-label">Bäume geschützt</div>
+                                <div class="environmental-info">Pro 300 Zigaretten wird ~1 Baum für Trocknung benötigt</div>
+                            </div>
+                        </div>
+                        <div class="environmental-item">
+                            <div class="environmental-icon">🌍</div>
+                            <div class="environmental-content">
+                                <div class="environmental-value" id="co2Avoided">0 kg</div>
+                                <div class="environmental-label">CO₂ vermieden</div>
+                                <div class="environmental-info">~14g CO₂ pro Zigarette (Produktion + Transport)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Panel: Meilensteine -->
+            <div class="tab-panel" data-panel="milestones">
+                <div class="card">
+                    <h2>Gesundheits-Meilensteine</h2>
+                    <div id="healthMilestones" class="milestones"></div>
+                </div>
+            </div>
+
+            <!-- Tab Panel: Erfolge -->
+            <div class="tab-panel" data-panel="achievements">
+                <div class="card">
+                    <h2>Erfolge</h2>
+                    <div id="achievements" class="achievements-grid"></div>
+                </div>
+            </div>
+
+            <!-- Tab Panel: Statistiken -->
+            <div class="tab-panel" data-panel="statistics">
+                <!-- Health Score Gauge -->
+                <div class="card health-score-card">
+                    <h2>💪 Dein Gesundheits-Score</h2>
+                    <div class="health-score-container">
+                        <svg class="health-gauge" viewBox="0 0 200 120">
+                            <path class="gauge-background" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#e0e0e0" stroke-width="15" stroke-linecap="round"/>
+                            <path id="gaugeProgress" class="gauge-progress" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#11998e" stroke-width="15" stroke-linecap="round" stroke-dasharray="251.2" stroke-dashoffset="251.2"/>
+                            <text id="gaugeScore" x="100" y="90" text-anchor="middle" font-size="36" font-weight="bold" fill="#333">0</text>
+                            <text x="100" y="110" text-anchor="middle" font-size="14" fill="#666">von 100</text>
+                        </svg>
+                        <div class="health-score-details" id="healthScoreDetails"></div>
+                    </div>
+                </div>
+
+                <!-- Future Projection -->
+                <div class="card projection-card">
+                    <h2>🔮 Deine Zukunftsprognose</h2>
+                    <div id="futureProjection" class="projection-content"></div>
+                </div>
+
+                <!-- Custom Goal Calculator -->
+                <div class="card goal-calculator-card">
+                    <h2>🎯 Dein persönliches Ziel</h2>
+                    <p class="goal-calculator-intro">Berechne, wie lange es dauert oder was du erreichen wirst!</p>
+
+                    <!-- Toggle Mode -->
+                    <div class="goal-toggle">
+                        <button class="goal-toggle-btn active" data-mode="days">Nach Tagen</button>
+                        <button class="goal-toggle-btn" data-mode="money">Nach Geld</button>
+                    </div>
+
+                    <!-- Input Section -->
+                    <div class="goal-input-section">
+                        <div class="goal-input-group" id="daysInputGroup">
+                            <label for="goalDaysInput">Wie viele Tage?</label>
+                            <input type="number" id="goalDaysInput" placeholder="z.B. 100" min="1" />
+                        </div>
+                        <div class="goal-input-group hidden" id="moneyInputGroup">
+                            <label for="goalMoneyInput">Wie viel Geld (€)?</label>
+                            <input type="number" id="goalMoneyInput" placeholder="z.B. 2000" min="1" />
+                        </div>
+                        <button id="calculateGoalBtn" class="calculate-goal-btn">Berechnen</button>
+                    </div>
+
+                    <!-- Results Section -->
+                    <div class="goal-results hidden" id="goalResults">
+                        <div class="goal-progress-bar">
+                            <div class="goal-progress-fill" id="goalProgressFill"></div>
+                            <div class="goal-progress-text" id="goalProgressText">0%</div>
+                        </div>
+
+                        <div class="goal-stats-grid" id="goalStatsGrid">
+                            <!-- Will be filled by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress Chart -->
+                <div class="card">
+                    <h2>Fortschritt</h2>
+                    <canvas id="progressChart"></canvas>
+                </div>
+
+                <!-- Detailed Comparison -->
+                <div class="card comparison-card">
+                    <h2>🏆 Du bist stärker als der Durchschnitt!</h2>
+                    <div id="comparisonStats" class="comparison-content"></div>
+                    <div id="detailedComparison" class="detailed-comparison"></div>
+                </div>
+
+                <!-- Age Group Comparison -->
+                <div class="card age-comparison-card">
+                    <h2>👥 Vergleich mit deiner Altersgruppe</h2>
+                    <div id="ageGroupComparison" class="age-comparison-content"></div>
+                </div>
+
+                <!-- Milestone Timeline -->
+                <div class="card timeline-card">
+                    <h2>🎯 Deine Meilenstein-Reise</h2>
+                    <div id="milestoneTimeline" class="milestone-timeline"></div>
+                </div>
+            </div>
+
+            <!-- Tab Panel: Hilfe -->
+            <div class="tab-panel" data-panel="help">
+                <!-- Craving Button -->
+                <div class="card craving-button-card">
+                    <button id="cravingButton" class="craving-button">
+                        🆘 Akutes Verlangen - Jetzt Hilfe!
+                    </button>
+                    <p class="craving-button-hint">Klicke hier für sofortige Unterstützung mit einem 5-Minuten-Timer</p>
+                </div>
+
+                <div class="card craving-tips-card">
+                <h2>💡 Tipps gegen akutes Verlangen</h2>
+                <div class="craving-tips">
+                    <div class="tip">
+                        <div class="tip-icon">⏱️</div>
+                        <div class="tip-content">
+                            <h3>5-Minuten-Regel</h3>
+                            <p>Warte 5 Minuten. Das Verlangen wird von selbst schwächer!</p>
+                        </div>
+                    </div>
+                    <div class="tip">
+                        <div class="tip-icon">💧</div>
+                        <div class="tip-content">
+                            <h3>Wasser trinken</h3>
+                            <p>Ein großes Glas Wasser trinken lenkt ab und hilft.</p>
+                        </div>
+                    </div>
+                    <div class="tip">
+                        <div class="tip-icon">🚶</div>
+                        <div class="tip-content">
+                            <h3>Kurzer Spaziergang</h3>
+                            <p>Bewege dich 5-10 Minuten. Frische Luft hilft!</p>
+                        </div>
+                    </div>
+                    <div class="tip">
+                        <div class="tip-icon">🫁</div>
+                        <div class="tip-content">
+                            <h3>Tief durchatmen</h3>
+                            <p>10x tief ein- und ausatmen. Beruhigt sofort.</p>
+                        </div>
+                    </div>
+                    <div class="tip">
+                        <div class="tip-icon">📱</div>
+                        <div class="tip-content">
+                            <h3>Jemanden anrufen</h3>
+                            <p>Ruf eine unterstützende Person an und rede.</p>
+                        </div>
+                    </div>
+                    <div class="tip">
+                        <div class="tip-icon">🍎</div>
+                        <div class="tip-content">
+                            <h3>Gesunder Snack</h3>
+                            <p>Obst, Gemüse oder Kaugummi lenken den Mund ab.</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Craving Timer Overlay -->
+    <div id="cravingOverlay" class="craving-overlay hidden">
+        <div class="craving-overlay-content">
+            <!-- Close Button -->
+            <button id="cravingCloseBtn" class="craving-close-btn">✕</button>
+
+            <!-- Breathing Animation -->
+            <div class="breathing-container">
+                <div class="breathing-circle"></div>
+                <div class="breathing-text" id="breathingText">Einatmen</div>
+            </div>
+
+            <!-- Timer Display -->
+            <div class="craving-timer">
+                <div class="timer-display" id="timerDisplay">5:00</div>
+                <div class="timer-label">Das Verlangen vergeht...</div>
+            </div>
+
+            <!-- Random Tip -->
+            <div class="craving-tip-display" id="cravingTipDisplay">
+                <div class="tip-icon-large">💪</div>
+                <div class="tip-text" id="cravingTipText">Atme tief ein und aus. Du schaffst das!</div>
+            </div>
+
+            <!-- Success Message (hidden initially) -->
+            <div class="craving-success hidden" id="cravingSuccess">
+                <div class="success-icon">🎉</div>
+                <h2>Geschafft!</h2>
+                <p>Du hast es 5 Minuten durchgehalten!</p>
+                <div class="success-stats" id="successStats"></div>
+                <button class="success-close-btn" id="successCloseBtn">Schließen</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Main App (ES6 Module) -->
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
