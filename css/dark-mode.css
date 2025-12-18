@@ -306,3 +306,22 @@ body.dark-mode .happening-next {
     color: rgba(226, 232, 240, 0.8);
 }
 
+/* Shocking Facts Dark Mode */
+body.dark-mode .shocking-facts-card {
+    background: linear-gradient(135deg, #c92a2a 0%, #7d1f1f 100%);
+}
+
+body.dark-mode .shocking-fact {
+    background: rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+body.dark-mode .shocking-fact:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+body.dark-mode .shocking-reminder {
+    background: rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
