@@ -255,3 +255,20 @@ body.dark-mode .health-stat-item:hover {
     background: rgba(255, 255, 255, 0.15);
 }
 
+/* Next Milestone Dark Mode */
+body.dark-mode .next-milestone-title {
+    color: #e2e8f0;
+}
+
+body.dark-mode .next-milestone-desc {
+    color: #cbd5e0;
+}
+
+body.dark-mode .next-milestone-time {
+    color: #9f7aea;
+}
+
+body.dark-mode .next-milestone-progress-bar {
+    background: rgba(255, 255, 255, 0.1);
+}
+

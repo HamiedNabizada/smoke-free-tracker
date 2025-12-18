@@ -185,7 +185,7 @@ export function updateNextMilestoneProgress(stats) {
                 <div class="next-milestone-time">Noch ${timeRemaining}</div>
             </div>
         </div>
-        <div class="progress-bar">
+        <div class="next-milestone-progress-bar">
             <div class="progress-bar-fill" style="width: ${progress}%"></div>
         </div>
     `;
