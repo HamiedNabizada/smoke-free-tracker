@@ -1,0 +1,13 @@
+# Firebase Credentials - NIEMALS committen!
+.env
+js/firebase-config.js
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# OS Files
+.DS_Store
+Thumbs.db
+desktop.ini
