@@ -743,6 +743,33 @@
                 <p class="settings-username">Eingeloggt als: <strong id="usernameDisplay">-</strong></p>
             </div>
 
+            <div class="settings-section">
+                <h3>📊 Meine Daten bearbeiten</h3>
+                <form id="settingsDataForm">
+                    <div class="form-group">
+                        <label for="settingsQuitDate">Rauchstopp-Datum & Uhrzeit</label>
+                        <input type="datetime-local" id="settingsQuitDate" name="quit_date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="settingsCigarettesPerDay">Zigaretten pro Tag (vorher)</label>
+                        <input type="number" id="settingsCigarettesPerDay" name="cigarettes_per_day" min="1" max="200" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="settingsPricePerPack">Preis pro Packung (€)</label>
+                        <input type="number" step="0.01" id="settingsPricePerPack" name="price_per_pack" min="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="settingsCigarettesPerPack">Zigaretten pro Packung</label>
+                        <input type="number" id="settingsCigarettesPerPack" name="cigarettes_per_pack" min="1" required>
+                    </div>
+
+                    <button type="submit" class="save-settings-btn">Speichern</button>
+                </form>
+            </div>
+
             <div class="settings-section danger-zone">
                 <h3>⚠️ Gefahrenzone</h3>
                 <p class="danger-warning">Diese Aktion kann nicht rückgängig gemacht werden!</p>

@@ -62,10 +62,22 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (settingsBtn && settingsModal) {
         // Show settings modal
-        settingsBtn.addEventListener('click', () => {
+        settingsBtn.addEventListener('click', async () => {
             if (usernameDisplay && user.displayName) {
                 usernameDisplay.textContent = user.displayName;
             }
+
+            // Load current user data and populate form
+            try {
+                const currentUserData = await getUserData();
+                document.getElementById('settingsQuitDate').value = currentUserData.quit_date;
+                document.getElementById('settingsCigarettesPerDay').value = currentUserData.cigarettes_per_day;
+                document.getElementById('settingsPricePerPack').value = currentUserData.price_per_pack;
+                document.getElementById('settingsCigarettesPerPack').value = currentUserData.cigarettes_per_pack;
+            } catch (error) {
+                console.error('Error loading user data:', error);
+            }
+
             settingsModal.classList.remove('hidden');
         });
 
@@ -82,6 +94,41 @@ document.addEventListener('DOMContentLoaded', async () => {
                 settingsModal.classList.add('hidden');
             }
         });
+
+        // Settings form submit handler
+        const settingsDataForm = document.getElementById('settingsDataForm');
+        if (settingsDataForm) {
+            settingsDataForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const submitBtn = settingsDataForm.querySelector('.save-settings-btn');
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Speichern...';
+
+                try {
+                    const updates = {
+                        quit_date: document.getElementById('settingsQuitDate').value,
+                        cigarettes_per_day: parseInt(document.getElementById('settingsCigarettesPerDay').value),
+                        price_per_pack: parseFloat(document.getElementById('settingsPricePerPack').value),
+                        cigarettes_per_pack: parseInt(document.getElementById('settingsCigarettesPerPack').value)
+                    };
+
+                    await updateUserData(updates);
+
+                    // Update local config
+                    setUserData(updates);
+
+                    // Reload page to update all statistics
+                    alert('Daten erfolgreich gespeichert! Die Seite wird neu geladen.');
+                    window.location.reload();
+                } catch (error) {
+                    console.error('Error updating user data:', error);
+                    alert('Fehler beim Speichern der Daten: ' + error.message);
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Speichern';
+                }
+            });
+        }
 
         // Delete account button
         if (deleteAccountBtn) {
