@@ -20,6 +20,7 @@
 @import url('./css/components/goal-calculator.css');
 @import url('./css/components/health-avatar.css');
 @import url('./css/components/shocking-facts.css');
+@import url('./css/components/footer.css');
 
 /* Theme and responsive */
 @import url('./css/dark-mode.css');
