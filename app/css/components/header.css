@@ -4,6 +4,7 @@ header {
     color: white;
     margin-bottom: 40px;
     padding: 20px;
+    padding-top: 80px;
     position: relative;
 }
 
@@ -15,8 +16,8 @@ header {
 }
 
 .logo-image {
-    max-width: 300px;
-    max-height: 120px;
+    max-width: 500px;
+    max-height: 200px;
     width: auto;
     height: auto;
     object-fit: contain;
@@ -26,8 +27,12 @@ header {
 /* Responsive Logo */
 @media (max-width: 768px) {
     .logo-image {
-        max-width: 200px;
-        max-height: 80px;
+        max-width: 300px;
+        max-height: 120px;
+    }
+
+    header {
+        padding-top: 70px;
     }
 }
 
