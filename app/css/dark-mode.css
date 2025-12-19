@@ -1,0 +1,327 @@
+/* Dark Mode */
+body.dark-mode {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+body.dark-mode .card {
+    background: #2d3748;
+    color: #e2e8f0;
+}
+
+body.dark-mode .card h2 {
+    color: #e2e8f0;
+}
+
+body.dark-mode .milestone {
+    background: #374151;
+    color: #e2e8f0;
+}
+
+body.dark-mode .milestone.achieved {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: white;
+}
+
+body.dark-mode .milestone-details p {
+    background: rgba(0, 0, 0, 0.3);
+    border-left-color: rgba(255, 255, 255, 0.3);
+}
+
+body.dark-mode .milestone.achieved .milestone-details p {
+    background: rgba(0, 0, 0, 0.2);
+    border-left-color: rgba(255, 255, 255, 0.6);
+}
+
+body.dark-mode .achievement {
+    background: #374151;
+    color: #e2e8f0;
+}
+
+body.dark-mode .progress-label {
+    color: #e2e8f0;
+}
+
+body.dark-mode .progress-bar-container {
+    background: #1f2937;
+}
+
+body.dark-mode .stat-card.health {
+    background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+    color: #e2e8f0;
+}
+
+body.dark-mode .tab-navigation {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .tab-button {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .tab-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode .tab-button.active {
+    background: #2d3748;
+    color: #667eea;
+}
+
+body.dark-mode .progress-rings-card {
+    background: #2d3748;
+}
+
+body.dark-mode .progress-ring-bg {
+    stroke: #4a5568;
+}
+
+body.dark-mode .progress-ring-value {
+    color: #e2e8f0;
+}
+
+body.dark-mode .progress-ring-text {
+    color: #cbd5e0;
+}
+
+body.dark-mode .progress-ring-goal {
+    color: #a0aec0;
+}
+
+body.dark-mode .stat-card.beauty {
+    background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+    color: #e2e8f0;
+}
+
+body.dark-mode .stat-card.beauty .stat-info {
+    color: rgba(226, 232, 240, 0.7);
+}
+
+body.dark-mode .stat-card.health .stat-info {
+    color: rgba(226, 232, 240, 0.7);
+}
+
+body.dark-mode .environmental-card {
+    background: linear-gradient(135deg, #2d3748 0%, #38a169 100%);
+}
+
+body.dark-mode .environmental-item {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .environmental-item:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+body.dark-mode .timeline-card {
+    background: linear-gradient(135deg, #2d3748 0%, #667eea 100%);
+}
+
+body.dark-mode .projection-card {
+    background: linear-gradient(135deg, #2d3748 0%, #fa709a 100%);
+}
+
+body.dark-mode .projection-card h2 {
+    color: white;
+}
+
+body.dark-mode .projection-item {
+    background: rgba(45, 55, 72, 0.95);
+}
+
+body.dark-mode .projection-header {
+    color: #e2e8f0;
+}
+
+body.dark-mode .projection-stat {
+    background: #1a202c;
+}
+
+body.dark-mode .projection-value {
+    color: #e2e8f0;
+}
+
+body.dark-mode .projection-label {
+    color: #a0aec0;
+}
+
+body.dark-mode .health-score-card {
+    background: linear-gradient(135deg, #2d3748 0%, #667eea 100%);
+}
+
+body.dark-mode .gauge-background {
+    stroke: #4a5568;
+}
+
+body.dark-mode #gaugeScore {
+    fill: #e2e8f0;
+}
+
+body.dark-mode .health-gauge text:last-child {
+    fill: #cbd5e0;
+}
+
+body.dark-mode .comparison-table {
+    background: #2d3748;
+    color: #e2e8f0;
+}
+
+body.dark-mode .comparison-table thead {
+    background: #1a202c;
+}
+
+body.dark-mode .comparison-table td {
+    border-bottom-color: #4a5568;
+}
+
+body.dark-mode .comparison-table tbody tr.achieved {
+    background: rgba(17, 153, 142, 0.2);
+}
+
+body.dark-mode .age-comparison-card {
+    background: linear-gradient(135deg, #2d3748 0%, #f093fb 100%);
+}
+
+/* Craving Timer Dark Mode */
+body.dark-mode .craving-button-card {
+    background: #2d3748;
+}
+
+body.dark-mode .craving-button-hint {
+    color: #a0aec0;
+}
+
+body.dark-mode .craving-success {
+    background: #2d3748;
+    color: #e2e8f0;
+}
+
+body.dark-mode .craving-success h2 {
+    color: #38ef7d;
+}
+
+body.dark-mode .craving-success p {
+    color: #cbd5e0;
+}
+
+body.dark-mode .success-stats {
+    background: linear-gradient(135deg, #374151 0%, #4a5568 100%);
+    color: #e2e8f0;
+}
+
+/* Goal Calculator Dark Mode */
+body.dark-mode .goal-calculator-card {
+    background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+}
+
+body.dark-mode .goal-toggle {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .goal-toggle-btn.active {
+    background: #667eea;
+    color: white;
+}
+
+body.dark-mode .goal-input-group input {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode .calculate-goal-btn {
+    background: #667eea;
+    color: white;
+}
+
+body.dark-mode .goal-progress-bar {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .goal-stat-box {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Health Avatar Dark Mode */
+body.dark-mode .health-avatar-card {
+    background: linear-gradient(135deg, #0f766e 0%, #065f46 100%);
+}
+
+body.dark-mode .health-stat-item {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .health-stat-item:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Next Milestone Dark Mode */
+body.dark-mode .next-milestone-title {
+    color: #e2e8f0;
+}
+
+body.dark-mode .next-milestone-desc {
+    color: #cbd5e0;
+}
+
+body.dark-mode .next-milestone-time {
+    color: #9f7aea;
+}
+
+body.dark-mode .next-milestone-progress-bar {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Progress Visuals Dark Mode */
+body.dark-mode .progress-visuals-card {
+    background: #2d3748;
+}
+
+body.dark-mode .progress-visual-value {
+    color: #e2e8f0;
+}
+
+body.dark-mode .progress-visual-text {
+    color: #cbd5e0;
+}
+
+body.dark-mode .progress-visual-goal {
+    color: #a0aec0;
+}
+
+/* Happening Now Dark Mode */
+body.dark-mode .happening-now-card {
+    background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+}
+
+body.dark-mode .happening-title {
+    color: #e2e8f0;
+}
+
+body.dark-mode .happening-description {
+    color: rgba(226, 232, 240, 0.9);
+}
+
+body.dark-mode .happening-next {
+    color: rgba(226, 232, 240, 0.8);
+}
+
+/* Shocking Facts Dark Mode */
+body.dark-mode .shocking-facts-card {
+    background: linear-gradient(135deg, #c92a2a 0%, #7d1f1f 100%);
+}
+
+body.dark-mode .shocking-fact {
+    background: rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+body.dark-mode .shocking-fact:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+body.dark-mode .shocking-reminder {
+    background: rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
