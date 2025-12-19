@@ -62,11 +62,12 @@
 }
 
 .shocking-number {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 900;
     color: #fff;
     margin-bottom: 5px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    word-wrap: break-word;
 }
 
 .shocking-label {
@@ -112,7 +113,7 @@
     }
 
     .shocking-number {
-        font-size: 1.7rem;
+        font-size: 1.3rem;
     }
 
     .shocking-reminder {
