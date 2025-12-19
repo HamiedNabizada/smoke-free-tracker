@@ -29,9 +29,11 @@
     background: rgba(0, 0, 0, 0.3);
     padding: 20px;
     border-radius: 12px;
-    text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 2px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
 }
 
 .shocking-fact:hover {
@@ -41,8 +43,8 @@
 }
 
 .shocking-icon {
-    font-size: 3rem;
-    margin-bottom: 10px;
+    font-size: 2.5rem;
+    flex-shrink: 0;
     animation: pulse-warning 2s ease-in-out infinite;
 }
 
@@ -55,11 +57,15 @@
     }
 }
 
+.shocking-content {
+    flex: 1;
+}
+
 .shocking-number {
     font-size: 2rem;
     font-weight: 900;
     color: #fff;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -102,7 +108,7 @@
     }
 
     .shocking-icon {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
 
     .shocking-number {
