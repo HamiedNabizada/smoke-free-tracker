@@ -7,10 +7,28 @@ header {
     position: relative;
 }
 
-header h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+/* Header Logo */
+.header-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-image {
+    max-width: 300px;
+    max-height: 120px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+}
+
+/* Responsive Logo */
+@media (max-width: 768px) {
+    .logo-image {
+        max-width: 200px;
+        max-height: 80px;
+    }
 }
 
 /* Header Buttons */
