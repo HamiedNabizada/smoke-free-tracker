@@ -7,20 +7,17 @@ import { initializeGoalCalculator } from './ui/goal-calculator.js';
 import { setUserData } from './config.js';
 
 // Register Service Worker for PWA functionality
-// DEAKTIVIERT - Service Worker hatte falsche Cache-Pfade
-/*
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('./service-worker.js')
             .then(registration => {
-                console.log('Service Worker registriert:', registration.scope);
+                console.log('[PWA] Service Worker registriert:', registration.scope);
             })
             .catch(error => {
-                console.log('Service Worker Registrierung fehlgeschlagen:', error);
+                console.error('[PWA] Service Worker Registrierung fehlgeschlagen:', error);
             });
     });
 }
-*/
 
 // Initialize app
 document.addEventListener('DOMContentLoaded', async () => {
