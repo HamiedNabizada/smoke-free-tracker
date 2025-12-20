@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com; style-src 'self' 'unsafe-inline'; connect-src 'self' https://*.firebaseapp.com https://*.googleapis.com; img-src 'self' data:; font-src 'self' data:; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'">
     <title>Registrierung - ByeByeSmoke</title>
     <link rel="stylesheet" href="styles.css">
     <style>
@@ -203,59 +204,7 @@
     <script src="js/firebase-config.js"></script>
     <script src="js/firebase-auth.js"></script>
 
-    <script>
-        const form = document.getElementById('registerForm');
-        const errorMessage = document.getElementById('errorMessage');
-        const registerBtn = document.getElementById('registerBtn');
-
-        // Set default quit date to now
-        const now = new Date();
-        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-        document.getElementById('quit_date').value = now.toISOString().slice(0, 16);
-
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value;
-            const quit_date = document.getElementById('quit_date').value;
-            const cigarettes_per_day = parseInt(document.getElementById('cigarettes_per_day').value);
-            const price_per_pack = parseFloat(document.getElementById('price_per_pack').value);
-            const cigarettes_per_pack = parseInt(document.getElementById('cigarettes_per_pack').value);
-
-            // Validation
-            if (username.length < 3 || username.length > 50) {
-                errorMessage.textContent = 'Benutzername muss zwischen 3 und 50 Zeichen lang sein';
-                errorMessage.style.display = 'block';
-                return;
-            }
-
-            if (password.length < 6) {
-                errorMessage.textContent = 'Passwort muss mindestens 6 Zeichen lang sein';
-                errorMessage.style.display = 'block';
-                return;
-            }
-
-            errorMessage.style.display = 'none';
-            registerBtn.disabled = true;
-            registerBtn.textContent = 'Registriere...';
-
-            try {
-                await registerUser(username, password, {
-                    quit_date,
-                    cigarettes_per_day,
-                    price_per_pack,
-                    cigarettes_per_pack
-                });
-
-                window.location.href = 'index.html';
-            } catch (error) {
-                errorMessage.textContent = error.message;
-                errorMessage.style.display = 'block';
-                registerBtn.disabled = false;
-                registerBtn.textContent = 'Registrieren';
-            }
-        });
-    </script>
+    <!-- Register Script with Validation and Rate Limiting -->
+    <script type="module" src="js/register.js"></script>
 </body>
 </html>

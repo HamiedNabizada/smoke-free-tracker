@@ -1,0 +1,32 @@
+# Security Headers für ByeByeSmoke
+
+<IfModule mod_headers.c>
+    # X-Frame-Options: Schutz gegen Clickjacking
+    Header set X-Frame-Options "SAMEORIGIN"
+
+    # X-Content-Type-Options: Verhindert MIME-Sniffing
+    Header set X-Content-Type-Options "nosniff"
+
+    # Referrer-Policy: Kontrolliert Referrer-Informationen
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # Permissions-Policy: Beschränkt Browser-Features
+    Header set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+
+    # X-XSS-Protection: Legacy XSS-Schutz (für ältere Browser)
+    Header set X-XSS-Protection "1; mode=block"
+
+    # Strict-Transport-Security: Erzwingt HTTPS (nur wenn HTTPS aktiv)
+    Header set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+</IfModule>
+
+# Prevent directory listing
+Options -Indexes
+
+# Deny access to sensitive files
+<FilesMatch "(^\.htaccess|^\.env|firebase-config\.js|\.git|\.gitignore)$">
+    Require all denied
+</FilesMatch>
+
+# Charset UTF-8
+AddDefaultCharset UTF-8
