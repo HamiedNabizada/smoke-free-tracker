@@ -3,12 +3,31 @@
  */
 
 import { checkRateLimit, recordFailedAttempt, recordSuccessfulAttempt, formatRemainingTime } from './utils/rate-limiter.js';
-import { loginDemo } from './demo-mode.js';
 
 const form = document.getElementById('loginForm');
 const errorMessage = document.getElementById('errorMessage');
 const loginBtn = document.getElementById('loginBtn');
 const demoBtn = document.getElementById('demoBtn');
+
+// Demo login function (inline)
+async function loginDemo() {
+    const DEMO_EMAIL = 'demo@byebyesmoke.app';
+    const DEMO_PASSWORD = 'demo123456';
+
+    try {
+        await firebase.auth().signInWithEmailAndPassword(DEMO_EMAIL, DEMO_PASSWORD);
+        console.log('[Demo] Demo account logged in');
+        return true;
+    } catch (error) {
+        console.error('[Demo] Login failed:', error);
+        if (error.code === 'auth/user-not-found') {
+            alert('Demo-Account ist noch nicht eingerichtet. Bitte kontaktiere den Support.');
+        } else {
+            alert('Fehler beim Demo-Login: ' + error.message);
+        }
+        return false;
+    }
+}
 
 form.addEventListener('submit', async (e) => {
     e.preventDefault();

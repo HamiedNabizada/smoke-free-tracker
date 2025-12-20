@@ -1,8 +1,57 @@
 // Firebase Authentication Helper Functions
 // Diese Datei muss NACH firebase-config.js geladen werden
 
-// Import demo mode helpers
-import { isDemoMode, DEMO_USER_DATA, blockDemoWrite, getDemoCravingEvents } from './demo-mode.js';
+// Demo mode helpers (inline to avoid module issues)
+const DEMO_EMAIL = 'demo@byebyesmoke.app';
+
+function isDemoMode() {
+  const user = auth.currentUser;
+  if (!user) return false;
+  return user.email === DEMO_EMAIL;
+}
+
+function blockDemoWrite(operation = 'Diese Aktion') {
+  if (isDemoMode()) {
+    alert(`${operation} ist im Test-Modus nicht möglich.\n\nRegistriere dich kostenlos, um alle Funktionen zu nutzen!`);
+    return true;
+  }
+  return false;
+}
+
+function getDemoQuitDate() {
+  const date = new Date();
+  date.setDate(date.getDate() - 30);
+  return date.toISOString();
+}
+
+const DEMO_USER_DATA = {
+  quit_date: getDemoQuitDate(),
+  cigarettes_per_day: 15,
+  price_per_pack: 8,
+  cigarettes_per_pack: 20,
+  notifications_enabled: false,
+  milestones_enabled: false,
+  daily_motivation_enabled: false
+};
+
+function getDemoCravingEvents() {
+  function getDateDaysAgo(days) {
+    const date = new Date();
+    date.setDate(date.getDate() - days);
+    return date.toISOString().split('T')[0];
+  }
+
+  return [
+    { date: getDateDaysAgo(1), count: 3 },
+    { date: getDateDaysAgo(2), count: 5 },
+    { date: getDateDaysAgo(3), count: 2 },
+    { date: getDateDaysAgo(5), count: 4 },
+    { date: getDateDaysAgo(7), count: 6 },
+    { date: getDateDaysAgo(10), count: 3 },
+    { date: getDateDaysAgo(14), count: 2 },
+    { date: getDateDaysAgo(21), count: 1 }
+  ];
+}
 
 // Check if user is authenticated
 async function checkAuth() {
