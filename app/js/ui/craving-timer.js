@@ -25,6 +25,7 @@ export function initializeCravingTimer() {
     const cravingButton = document.getElementById('cravingButton');
     const cravingCloseBtn = document.getElementById('cravingCloseBtn');
     const successCloseBtn = document.getElementById('successCloseBtn');
+    const overlay = document.getElementById('cravingOverlay');
 
     if (cravingButton) {
         cravingButton.addEventListener('click', startCravingTimer);
@@ -36,6 +37,15 @@ export function initializeCravingTimer() {
 
     if (successCloseBtn) {
         successCloseBtn.addEventListener('click', closeCravingOverlay);
+    }
+
+    // Close overlay when clicking outside the content
+    if (overlay) {
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                closeCravingOverlay();
+            }
+        });
     }
 }
 
