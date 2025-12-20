@@ -257,8 +257,36 @@ async function getCurrentCravingCount() {
 
 async function incrementCravingCount() {
     try {
-        await recordCraving();
+        const user = firebase.auth().currentUser;
+        if (!user) {
+            throw new Error('Nicht angemeldet');
+        }
+
+        const today = new Date().toISOString().split('T')[0];
+        const docRef = firebase.firestore().collection('craving_events').doc(`${user.uid}_${today}`);
+
+        // Use Firestore transaction to increment count
+        await firebase.firestore().runTransaction(async (transaction) => {
+            const doc = await transaction.get(docRef);
+
+            if (!doc.exists) {
+                transaction.set(docRef, {
+                    user_id: user.uid,
+                    date: today,
+                    count: 1,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                return 1;
+            } else {
+                const newCount = (doc.data().count || 0) + 1;
+                transaction.update(docRef, { count: newCount });
+                return newCount;
+            }
+        });
+
+        return true;
     } catch (error) {
         console.error('Error incrementing craving count:', error);
+        throw error;
     }
 }
