@@ -8,6 +8,7 @@ import { initializeNotifications } from './ui/notifications.js';
 import { initializeTutorial } from './ui/tutorial.js';
 import { initializeDataExport } from './ui/data-export.js';
 import { initializeProgressGoals } from './ui/progress-goals.js';
+import { showDemoBanner } from './demo-mode.js';
 import { setUserData } from './config.js';
 
 // Register Service Worker for PWA functionality
@@ -32,6 +33,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Load user data from Firestore
     const userData = await getUserData();
     setUserData(userData);
+
+    // Show demo banner if in demo mode
+    showDemoBanner();
 
     // Initialize app components
     initializeDarkMode();

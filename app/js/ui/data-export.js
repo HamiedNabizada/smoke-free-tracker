@@ -87,6 +87,20 @@ async function getCravingEvents() {
     if (!user) return [];
 
     try {
+        // Return demo data in demo mode
+        if (user.email === 'demo@byebyesmoke.app') {
+            return [
+                { date: getDateDaysAgo(1), count: 3 },
+                { date: getDateDaysAgo(2), count: 5 },
+                { date: getDateDaysAgo(3), count: 2 },
+                { date: getDateDaysAgo(5), count: 4 },
+                { date: getDateDaysAgo(7), count: 6 },
+                { date: getDateDaysAgo(10), count: 3 },
+                { date: getDateDaysAgo(14), count: 2 },
+                { date: getDateDaysAgo(21), count: 1 }
+            ];
+        }
+
         const snapshot = await firebase.firestore()
             .collection('craving_events')
             .where('user_id', '==', user.uid)
@@ -106,6 +120,12 @@ async function getCravingEvents() {
         console.error('[DataExport] Error loading craving events:', error);
         return [];
     }
+}
+
+function getDateDaysAgo(days) {
+    const date = new Date();
+    date.setDate(date.getDate() - days);
+    return date.toISOString().split('T')[0];
 }
 
 /**

@@ -1,6 +1,9 @@
 // Firebase Authentication Helper Functions
 // Diese Datei muss NACH firebase-config.js geladen werden
 
+// Import demo mode helpers
+import { isDemoMode, DEMO_USER_DATA, blockDemoWrite, getDemoCravingEvents } from './demo-mode.js';
+
 // Check if user is authenticated
 async function checkAuth() {
   return new Promise((resolve) => {
@@ -96,6 +99,11 @@ async function getUserData() {
       throw new Error('Nicht angemeldet');
     }
 
+    // Return demo data if in demo mode
+    if (isDemoMode()) {
+      return DEMO_USER_DATA;
+    }
+
     const doc = await db.collection('users').doc(user.uid).get();
 
     if (!doc.exists) {
@@ -117,6 +125,11 @@ async function updateUserData(updates) {
       throw new Error('Nicht angemeldet');
     }
 
+    // Block write in demo mode
+    if (blockDemoWrite('Daten speichern')) {
+      return { success: false };
+    }
+
     await db.collection('users').doc(user.uid).update(updates);
     return { success: true };
   } catch (error) {
@@ -127,6 +140,11 @@ async function updateUserData(updates) {
 
 // Delete user account
 async function deleteAccount() {
+  // Block delete in demo mode
+  if (blockDemoWrite('Account löschen')) {
+    return false;
+  }
+
   if (!confirm('Bist du sicher, dass du deinen Account löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden!')) {
     return false;
   }
@@ -178,6 +196,12 @@ async function recordCraving() {
       throw new Error('Nicht angemeldet');
     }
 
+    // Block write in demo mode (silently - craving timer still works)
+    if (isDemoMode()) {
+      console.log('[Demo] Craving event not recorded (demo mode)');
+      return true;
+    }
+
     const today = new Date().toISOString().split('T')[0];
     const docRef = db.collection('craving_events').doc(`${user.uid}_${today}`);
 
@@ -216,6 +240,17 @@ async function getCravingCount() {
     }
 
     const today = new Date().toISOString().split('T')[0];
+
+    // Return demo data in demo mode
+    if (isDemoMode()) {
+      const demoEvents = getDemoCravingEvents();
+      const todayEvent = demoEvents.find(e => e.date === today);
+      return {
+        count: todayEvent ? todayEvent.count : 3,
+        date: today
+      };
+    }
+
     const docRef = db.collection('craving_events').doc(`${user.uid}_${today}`);
     const doc = await docRef.get();
 

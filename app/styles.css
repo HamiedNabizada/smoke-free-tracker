@@ -27,4 +27,5 @@
 
 /* Theme and responsive */
 @import url('./css/dark-mode.css');
+@import url('./css/demo-mode.css');
 @import url('./css/responsive.css');

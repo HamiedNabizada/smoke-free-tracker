@@ -3,10 +3,12 @@
  */
 
 import { checkRateLimit, recordFailedAttempt, recordSuccessfulAttempt, formatRemainingTime } from './utils/rate-limiter.js';
+import { loginDemo } from './demo-mode.js';
 
 const form = document.getElementById('loginForm');
 const errorMessage = document.getElementById('errorMessage');
 const loginBtn = document.getElementById('loginBtn');
+const demoBtn = document.getElementById('demoBtn');
 
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -46,5 +48,19 @@ form.addEventListener('submit', async (e) => {
         errorMessage.style.display = 'block';
         loginBtn.disabled = false;
         loginBtn.textContent = 'Anmelden';
+    }
+});
+
+// Demo button handler
+demoBtn.addEventListener('click', async () => {
+    demoBtn.disabled = true;
+    demoBtn.textContent = 'Lade Demo...';
+
+    const success = await loginDemo();
+    if (success) {
+        window.location.href = 'index.html';
+    } else {
+        demoBtn.disabled = false;
+        demoBtn.innerHTML = '<span class="demo-btn-icon">👀</span><span>Erst mal ausprobieren</span>';
     }
 });
