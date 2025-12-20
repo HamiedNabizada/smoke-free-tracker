@@ -1,0 +1,114 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isValidUsername(username) {
+      return username is string
+             && username.size() >= 3
+             && username.size() <= 50;
+    }
+
+    function isValidQuitDate(quitDate) {
+      return quitDate is string
+             && quitDate.size() > 0;
+    }
+
+    function isValidCigarettesPerDay(count) {
+      return count is int
+             && count >= 1
+             && count <= 200;
+    }
+
+    function isValidPrice(price) {
+      return price is number
+             && price >= 0;
+    }
+
+    function isValidCigarettesPerPack(count) {
+      return count is int
+             && count >= 1
+             && count <= 100;
+    }
+
+    // Users Collection - nur eigene Daten
+    match /users/{userId} {
+      // Lesen: Nur eigene Daten
+      allow read: if isOwner(userId);
+
+      // Erstellen: Mit Validierung
+      allow create: if isOwner(userId)
+                    && request.resource.data.keys().hasAll([
+                         'username',
+                         'quit_date',
+                         'cigarettes_per_day',
+                         'price_per_pack',
+                         'cigarettes_per_pack'
+                       ])
+                    && isValidUsername(request.resource.data.username)
+                    && isValidQuitDate(request.resource.data.quit_date)
+                    && isValidCigarettesPerDay(request.resource.data.cigarettes_per_day)
+                    && isValidPrice(request.resource.data.price_per_pack)
+                    && isValidCigarettesPerPack(request.resource.data.cigarettes_per_pack);
+
+      // Update: Nur eigene Daten, created_at darf nicht geändert werden
+      allow update: if isOwner(userId)
+                    && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['created_at']))
+                    && (!request.resource.data.keys().hasAny(['username'])
+                        || isValidUsername(request.resource.data.username))
+                    && (!request.resource.data.keys().hasAny(['quit_date'])
+                        || isValidQuitDate(request.resource.data.quit_date))
+                    && (!request.resource.data.keys().hasAny(['cigarettes_per_day'])
+                        || isValidCigarettesPerDay(request.resource.data.cigarettes_per_day))
+                    && (!request.resource.data.keys().hasAny(['price_per_pack'])
+                        || isValidPrice(request.resource.data.price_per_pack))
+                    && (!request.resource.data.keys().hasAny(['cigarettes_per_pack'])
+                        || isValidCigarettesPerPack(request.resource.data.cigarettes_per_pack));
+
+      // Delete: Nur eigene Daten
+      allow delete: if isOwner(userId);
+    }
+
+    // Craving Events Collection - nur eigene Daten
+    match /craving_events/{eventId} {
+      // Lesen: Nur wenn user_id übereinstimmt
+      allow read: if isAuthenticated()
+                  && resource.data.user_id == request.auth.uid;
+
+      // Erstellen: Mit Validierung
+      allow create: if isAuthenticated()
+                    && request.resource.data.user_id == request.auth.uid
+                    && request.resource.data.keys().hasAll(['user_id', 'date', 'count'])
+                    && request.resource.data.count is int
+                    && request.resource.data.count > 0
+                    && request.resource.data.count <= 1000
+                    && request.resource.data.date is string
+                    && request.resource.data.date.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$');
+
+      // Update: Nur eigene Events
+      allow update: if isAuthenticated()
+                    && resource.data.user_id == request.auth.uid
+                    && request.resource.data.user_id == request.auth.uid
+                    && request.resource.data.count is int
+                    && request.resource.data.count > 0
+                    && request.resource.data.count <= 1000;
+
+      // Delete: Nur eigene Events
+      allow delete: if isAuthenticated()
+                    && resource.data.user_id == request.auth.uid;
+    }
+
+    // Alle anderen Zugriffe verweigern
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
