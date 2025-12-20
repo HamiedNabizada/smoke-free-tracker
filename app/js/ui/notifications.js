@@ -3,8 +3,6 @@
  * Handles push notifications permission, settings, and scheduling
  */
 
-import { db } from '../firebase-config.js';
-
 // Notification state
 let notificationSettings = {
     enabled: false,
@@ -40,7 +38,7 @@ async function loadNotificationSettings() {
     if (!user) return;
 
     try {
-        const docRef = db.collection('users').doc(user.uid);
+        const docRef = firebase.firestore().collection('users').doc(user.uid);
         const doc = await docRef.get();
 
         if (doc.exists) {
@@ -73,7 +71,7 @@ async function saveNotificationSettings() {
     if (!user) return;
 
     try {
-        await db.collection('users').doc(user.uid).update({
+        await firebase.firestore().collection('users').doc(user.uid).update({
             notifications_enabled: notificationSettings.enabled,
             milestones_enabled: notificationSettings.milestones,
             daily_motivation_enabled: notificationSettings.dailyMotivation
@@ -221,7 +219,7 @@ export async function checkMilestoneNotifications(currentMilestone) {
 
     try {
         // Get last notified milestone
-        const docRef = db.collection('users').doc(user.uid);
+        const docRef = firebase.firestore().collection('users').doc(user.uid);
         const doc = await docRef.get();
         const lastMilestone = doc.data()?.last_milestone_notification || -1;
 
@@ -281,7 +279,7 @@ async function checkTodaysMotivation() {
     if (!user) return;
 
     try {
-        const docRef = db.collection('users').doc(user.uid);
+        const docRef = firebase.firestore().collection('users').doc(user.uid);
         const doc = await docRef.get();
         const lastSent = doc.data()?.last_daily_motivation;
 
@@ -332,7 +330,7 @@ async function sendDailyMotivation() {
     // Update last sent date
     try {
         const today = new Date().toISOString().split('T')[0];
-        await db.collection('users').doc(user.uid).update({
+        await firebase.firestore().collection('users').doc(user.uid).update({
             last_daily_motivation: today
         });
         console.log('[Notifications] Daily motivation sent');
