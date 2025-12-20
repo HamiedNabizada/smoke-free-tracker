@@ -228,8 +228,8 @@ export async function checkMilestoneNotifications(currentMilestone) {
             // Send notification
             new Notification('🎉 Meilenstein erreicht!', {
                 body: `${currentMilestone.title}\n${currentMilestone.description}`,
-                icon: '/icon.png',
-                badge: '/icon.png',
+                icon: './icon.png',
+                badge: './icon.png',
                 tag: `milestone-${currentMilestone.id}`,
                 requireInteraction: false
             });
@@ -321,8 +321,8 @@ async function sendDailyMotivation() {
 
     new Notification('💪 Tägliche Motivation', {
         body: randomMotivation,
-        icon: '/icon.png',
-        badge: '/icon.png',
+        icon: './icon.png',
+        badge: './icon.png',
         tag: 'daily-motivation',
         requireInteraction: false
     });
@@ -361,8 +361,8 @@ export function sendTestNotification() {
 
     new Notification('🎉 ByeByeSmoke', {
         body: 'Benachrichtigungen funktionieren!',
-        icon: '/icon.png',
-        badge: '/icon.png',
+        icon: './icon.png',
+        badge: './icon.png',
         tag: 'test-notification'
     });
 }
