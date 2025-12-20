@@ -197,3 +197,32 @@ function isCDNResource(url) {
 function isHTMLRequest(request) {
   return request.headers.get('accept')?.includes('text/html');
 }
+
+// Notification click event - open app when notification is clicked
+self.addEventListener('notificationclick', event => {
+  console.log('[Service Worker] Notification clicked:', event.notification.tag);
+
+  event.notification.close();
+
+  // Open or focus the app
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true })
+      .then(clientList => {
+        // If app is already open, focus it
+        for (const client of clientList) {
+          if (client.url.includes('/index.html') && 'focus' in client) {
+            return client.focus();
+          }
+        }
+        // Otherwise open a new window
+        if (clients.openWindow) {
+          return clients.openWindow('./index.html');
+        }
+      })
+  );
+});
+
+// Notification close event - track if user dismissed notification
+self.addEventListener('notificationclose', event => {
+  console.log('[Service Worker] Notification closed:', event.notification.tag);
+});

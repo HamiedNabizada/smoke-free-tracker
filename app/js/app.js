@@ -4,6 +4,7 @@ import { initializeTabs } from './ui/tabs.js';
 import { updateDashboard } from './ui/dashboard.js';
 import { initializeCravingTimer } from './ui/craving-timer.js';
 import { initializeGoalCalculator } from './ui/goal-calculator.js';
+import { initializeNotifications } from './ui/notifications.js';
 import { setUserData } from './config.js';
 
 // Register Service Worker for PWA functionality
@@ -34,6 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     initializeTabs();
     initializeCravingTimer();
     initializeGoalCalculator();
+    initializeNotifications();
     updateDashboard();
 
     // Add logout button handler

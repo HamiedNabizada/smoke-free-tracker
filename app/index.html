@@ -835,6 +835,46 @@
                 </form>
             </div>
 
+            <div class="settings-section">
+                <h3>🔔 Benachrichtigungen</h3>
+                <p class="settings-description">Erhalte motivierende Push-Benachrichtigungen, wenn du wichtige Meilensteine erreichst.</p>
+
+                <div class="notification-settings">
+                    <div class="notification-option">
+                        <div class="notification-info">
+                            <div class="notification-label">Push-Benachrichtigungen aktivieren</div>
+                            <div class="notification-description">Erlaube der App, dir Benachrichtigungen zu senden</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="notificationsEnabled">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="notification-option" id="milestoneNotificationOption">
+                        <div class="notification-info">
+                            <div class="notification-label">Meilenstein-Benachrichtigungen</div>
+                            <div class="notification-description">Erhalte eine Benachrichtigung, wenn du einen Gesundheitsmeilenstein erreichst</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="milestonesEnabled" disabled>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="notification-option" id="dailyMotivationOption">
+                        <div class="notification-info">
+                            <div class="notification-label">Tägliche Motivation</div>
+                            <div class="notification-description">Erhalte einmal täglich eine motivierende Nachricht (10:00 Uhr)</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="dailyMotivationEnabled" disabled>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
             <div class="settings-section danger-zone">
                 <h3>⚠️ Gefahrenzone</h3>
                 <p class="danger-warning">Diese Aktion kann nicht rückgängig gemacht werden!</p>

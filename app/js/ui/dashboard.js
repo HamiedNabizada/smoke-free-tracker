@@ -9,6 +9,7 @@ import { updateHealthScore, updateMilestoneTimeline, updateFutureProjection, upd
 import { updateHealthAvatar } from './health-avatar.js';
 import { updateProgressVisuals } from './progress-visuals.js';
 import { updateHappeningNow } from './happening-now.js';
+import { checkMilestoneNotifications } from './notifications.js';
 
 export function updateDashboard() {
     const stats = calculateStats();
@@ -89,6 +90,12 @@ export function updateDashboard() {
 
     // Update health milestones
     updateHealthMilestones(stats.totalDays);
+
+    // Check for milestone notifications
+    const currentMilestone = findCurrentMilestone(stats.totalDays);
+    if (currentMilestone) {
+        checkMilestoneNotifications(currentMilestone);
+    }
 
     // Update achievements
     updateAchievements(stats);
@@ -208,4 +215,22 @@ export function updateComparisonStats(stats) {
         `;
         container.appendChild(statDiv);
     }
+}
+
+/**
+ * Find the most recent achieved milestone
+ */
+function findCurrentMilestone(daysPassed) {
+    let currentMilestone = null;
+    for (let i = 0; i < healthMilestones.length; i++) {
+        if (daysPassed >= healthMilestones[i].days) {
+            currentMilestone = {
+                ...healthMilestones[i],
+                id: i
+            };
+        } else {
+            break;
+        }
+    }
+    return currentMilestone;
 }
