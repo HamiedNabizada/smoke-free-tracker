@@ -2,6 +2,7 @@ import { calculateStats } from '../utils/calculations.js';
 import { updateChart } from './charts.js';
 import { updateHealthScore, updateMilestoneTimeline, updateFutureProjection, updateDetailedComparison, updateAgeGroupComparison } from './statistics.js';
 import { updateHappeningNow } from './happening-now.js';
+import { updateCompactCravingStats, updateCravingChart } from './craving-stats.js';
 
 // Tab switching functionality
 export function initializeTabs() {
@@ -33,6 +34,7 @@ export function initializeTabs() {
                     updateFutureProjection(stats);
                     updateDetailedComparison(stats);
                     updateAgeGroupComparison(stats);
+                    updateCravingChart();
                 }, 100);
             }
 
@@ -41,6 +43,13 @@ export function initializeTabs() {
                 setTimeout(() => {
                     const stats = calculateStats();
                     updateHappeningNow(stats);
+                }, 100);
+            }
+
+            // If switching to help tab, update craving stats
+            if (targetTab === 'help') {
+                setTimeout(() => {
+                    updateCompactCravingStats();
                 }, 100);
             }
         });

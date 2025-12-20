@@ -1,4 +1,5 @@
 import { calculateStats } from '../utils/calculations.js';
+import { updateCompactCravingStats } from './craving-stats.js';
 
 // Craving tips that rotate during the timer
 const cravingTips = [
@@ -119,6 +120,9 @@ async function showSuccessMessage() {
 
     // Get updated count
     const currentCount = await getCurrentCravingCount();
+
+    // Update compact craving stats in background
+    updateCompactCravingStats();
 
     // Create success message with stats
     successStats.innerHTML = `

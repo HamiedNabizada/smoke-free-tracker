@@ -1,0 +1,153 @@
+/* Craving Statistics Styles */
+
+/* Compact Craving Stats (SOS Tab) */
+.compact-craving-stats-card {
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    color: white;
+}
+
+.compact-craving-stats-card h2 {
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.compact-craving-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.compact-craving-stat {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+.compact-stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: white;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.compact-stat-label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+}
+
+.compact-craving-trend {
+    grid-column: 1 / -1;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.75rem;
+    border-radius: 8px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.trend-icon {
+    font-size: 1.5rem;
+}
+
+.trend-text {
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+}
+
+.loading-message {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 1rem;
+}
+
+.error-message {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.9);
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Craving Chart (Statistics Tab) */
+.craving-chart-card {
+    background: white;
+}
+
+.chart-subtitle {
+    color: #666;
+    font-size: 0.9rem;
+    margin-top: -0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+#cravingChart {
+    max-height: 300px;
+    margin-bottom: 1.5rem;
+}
+
+.craving-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid #f0f0f0;
+}
+
+.craving-summary-item {
+    text-align: center;
+    padding: 1rem;
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    border-radius: 8px;
+    color: white;
+}
+
+.summary-value {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+}
+
+.summary-label {
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
+/* Dark Mode Support */
+body.dark-mode .craving-chart-card {
+    background: #1e1e1e;
+}
+
+body.dark-mode .chart-subtitle {
+    color: #aaa;
+}
+
+body.dark-mode .craving-summary {
+    border-top-color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .compact-craving-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .compact-stat-number {
+        font-size: 2rem;
+    }
+
+    .craving-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .summary-value {
+        font-size: 1.75rem;
+    }
+}
