@@ -1,0 +1,233 @@
+/* Goal Edit Modal */
+.goal-edit-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+    backdrop-filter: blur(5px);
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.goal-edit-content {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    animation: slideInScale 0.3s ease-out;
+}
+
+.dark-mode .goal-edit-content {
+    background: #2d3748;
+    color: white;
+}
+
+@keyframes slideInScale {
+    from {
+        transform: scale(0.9) translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+.goal-edit-content h3 {
+    margin: 0 0 25px 0;
+    color: #667eea;
+    font-size: 1.4rem;
+    text-align: center;
+}
+
+.dark-mode .goal-edit-content h3 {
+    color: #90cdf4;
+}
+
+.goal-edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.goal-edit-form label {
+    font-weight: 600;
+    color: #333;
+    font-size: 1rem;
+}
+
+.dark-mode .goal-edit-form label {
+    color: #e2e8f0;
+}
+
+.goal-input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f7fafc;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 5px 15px;
+    transition: border-color 0.3s;
+}
+
+.dark-mode .goal-input-group {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.goal-input-group:focus-within {
+    border-color: #667eea;
+}
+
+.goal-input-group input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 12px 5px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    outline: none;
+}
+
+.dark-mode .goal-input-group input {
+    color: white;
+}
+
+.goal-unit {
+    color: #666;
+    font-size: 1rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.dark-mode .goal-unit {
+    color: #a0aec0;
+}
+
+.goal-edit-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.goal-btn {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.goal-btn-cancel {
+    background: #e0e0e0;
+    color: #333;
+}
+
+.dark-mode .goal-btn-cancel {
+    background: rgba(255, 255, 255, 0.1);
+    color: #e2e8f0;
+}
+
+.goal-btn-cancel:hover {
+    background: #d0d0d0;
+    transform: translateY(-2px);
+}
+
+.dark-mode .goal-btn-cancel:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.goal-btn-save {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.goal-btn-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+}
+
+.goal-btn:active {
+    transform: translateY(0);
+}
+
+/* Make goal text look clickable */
+.progress-visual-goal {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    padding: 5px 10px;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.progress-visual-goal:hover {
+    background: rgba(102, 126, 234, 0.1);
+}
+
+.dark-mode .progress-visual-goal:hover {
+    background: rgba(144, 205, 244, 0.1);
+}
+
+.progress-visual-goal::after {
+    content: '✎';
+    position: absolute;
+    right: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    font-size: 0.9rem;
+    color: #667eea;
+    transition: opacity 0.3s;
+}
+
+.dark-mode .progress-visual-goal::after {
+    color: #90cdf4;
+}
+
+.progress-visual-goal:hover::after {
+    opacity: 1;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+    .goal-edit-content {
+        padding: 25px 20px;
+        width: 95%;
+    }
+
+    .goal-edit-content h3 {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+    }
+
+    .goal-input-group input {
+        font-size: 1.1rem;
+    }
+
+    .goal-btn {
+        padding: 12px;
+        font-size: 0.95rem;
+    }
+}

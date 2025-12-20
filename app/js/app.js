@@ -7,6 +7,7 @@ import { initializeGoalCalculator } from './ui/goal-calculator.js';
 import { initializeNotifications } from './ui/notifications.js';
 import { initializeTutorial } from './ui/tutorial.js';
 import { initializeDataExport } from './ui/data-export.js';
+import { initializeProgressGoals } from './ui/progress-goals.js';
 import { setUserData } from './config.js';
 
 // Register Service Worker for PWA functionality
@@ -40,7 +41,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     initializeNotifications();
     initializeTutorial();
     initializeDataExport();
+    await initializeProgressGoals();
     updateDashboard();
+
+    // Make updateDashboard globally accessible for goal edits
+    window.updateDashboard = updateDashboard;
 
     // Add logout button handler
     const logoutBtn = document.getElementById('logoutBtn');
