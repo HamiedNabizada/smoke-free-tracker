@@ -1,0 +1,34 @@
+# Firebase credentials (NEVER commit!)
+app/js/firebase-config.js
+App/js/firebase-config.js
+
+# Database credentials (NEVER commit!)
+api/db-config.php
+
+# Claude Code files
+.claude/
+
+# Node modules (if added later)
+node_modules/
+package-lock.json
+
+# Backups
+*.bak
+*.backup
+*~
+
+# OS Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs & Temp files
+*.log
+console.txt
+*.tmp
