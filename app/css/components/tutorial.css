@@ -384,26 +384,6 @@
     background: rgba(255, 255, 255, 0.5);
 }
 
-/* Tutorial Button in Header */
-.tutorial-btn {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 8px 12px;
-    border-radius: 10px;
-    transition: all 0.3s;
-}
-
-.tutorial-btn:hover {
-    background: rgba(102, 126, 234, 0.1);
-    transform: scale(1.1);
-}
-
-.dark-mode .tutorial-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-
 /* Responsive */
 @media (max-width: 768px) {
     .tutorial-modal-content {

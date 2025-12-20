@@ -52,8 +52,9 @@ header {
     right: 20px;
 }
 
-/* Dark Mode Toggle, Settings & Logout Button */
+/* Dark Mode Toggle, Tutorial, Settings & Logout Button */
 .dark-mode-toggle,
+.tutorial-btn,
 .settings-btn,
 .logout-btn {
     background: rgba(255, 255, 255, 0.2);
@@ -72,6 +73,7 @@ header {
 }
 
 .dark-mode-toggle:hover,
+.tutorial-btn:hover,
 .settings-btn:hover,
 .logout-btn:hover {
     background: rgba(255, 255, 255, 0.3);
@@ -79,6 +81,7 @@ header {
 }
 
 .dark-mode-toggle:active,
+.tutorial-btn:active,
 .settings-btn:active,
 .logout-btn:active {
     transform: scale(0.95);
