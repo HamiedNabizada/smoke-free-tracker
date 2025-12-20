@@ -28,6 +28,7 @@
             </div>
             <div class="header-buttons">
                 <button id="darkModeToggle" class="dark-mode-toggle" aria-label="Dark Mode umschalten">🌙</button>
+                <button id="tutorialBtn" class="tutorial-btn" aria-label="Hilfe & Anleitung">ℹ️</button>
                 <button id="settingsBtn" class="settings-btn" aria-label="Einstellungen">⚙️</button>
                 <button id="logoutBtn" class="logout-btn" aria-label="Abmelden">🚪</button>
             </div>
@@ -879,6 +880,165 @@
                 <h3>⚠️ Gefahrenzone</h3>
                 <p class="danger-warning">Diese Aktion kann nicht rückgängig gemacht werden!</p>
                 <button id="deleteAccountBtn" class="delete-account-btn">Account löschen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tutorial Modal -->
+    <div id="tutorialModal" class="tutorial-modal hidden">
+        <div class="tutorial-modal-content">
+            <button id="tutorialCloseBtn" class="tutorial-close-btn">✕</button>
+
+            <div class="tutorial-slides">
+                <!-- Slide 1: Willkommen -->
+                <div class="tutorial-slide active" data-slide="1">
+                    <div class="tutorial-icon">👋</div>
+                    <h2>Willkommen bei ByeByeSmoke!</h2>
+                    <p>Lass uns dir die wichtigsten Features zeigen und wie du die App als PWA installieren kannst.</p>
+                    <ul class="tutorial-features">
+                        <li>📊 Verfolge deinen Fortschritt</li>
+                        <li>🏥 Gesundheitsmeilensteine</li>
+                        <li>🆘 Hilfe bei Verlangen</li>
+                        <li>🔔 Push-Benachrichtigungen</li>
+                        <li>📱 Als App installieren</li>
+                    </ul>
+                </div>
+
+                <!-- Slide 2: Hauptfunktionen -->
+                <div class="tutorial-slide" data-slide="2">
+                    <div class="tutorial-icon">📊</div>
+                    <h2>Die wichtigsten Features</h2>
+                    <div class="tutorial-feature-list">
+                        <div class="tutorial-feature-item">
+                            <div class="feature-icon">📈</div>
+                            <div class="feature-content">
+                                <h3>Statistiken</h3>
+                                <p>Sieh wie viel Geld du gespart hast und wie sich deine Gesundheit verbessert.</p>
+                            </div>
+                        </div>
+                        <div class="tutorial-feature-item">
+                            <div class="feature-icon">🏥</div>
+                            <div class="feature-content">
+                                <h3>Meilensteine</h3>
+                                <p>28 Gesundheitsmeilensteine zeigen dir, wie sich dein Körper regeneriert.</p>
+                            </div>
+                        </div>
+                        <div class="tutorial-feature-item">
+                            <div class="feature-icon">🆘</div>
+                            <div class="feature-content">
+                                <h3>Craving-Timer</h3>
+                                <p>5-Minuten-Timer mit Atemübungen hilft dir, Verlangen zu überwinden.</p>
+                            </div>
+                        </div>
+                        <div class="tutorial-feature-item">
+                            <div class="feature-icon">🔔</div>
+                            <div class="feature-content">
+                                <h3>Benachrichtigungen</h3>
+                                <p>Aktiviere Push-Benachrichtigungen in den Einstellungen für Meilensteine und tägliche Motivation.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3: Android Installation -->
+                <div class="tutorial-slide" data-slide="3">
+                    <div class="tutorial-icon">🤖</div>
+                    <h2>Installation auf Android</h2>
+                    <div class="install-steps">
+                        <div class="install-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>Chrome-Menü öffnen</h3>
+                                <p>Tippe auf die drei Punkte (⋮) oben rechts im Browser.</p>
+                            </div>
+                        </div>
+                        <div class="install-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>"App installieren" wählen</h3>
+                                <p>Tippe auf "App installieren" oder "Zum Startbildschirm hinzufügen".</p>
+                            </div>
+                        </div>
+                        <div class="install-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>Bestätigen</h3>
+                                <p>Bestätige die Installation. Die App erscheint nun auf deinem Homescreen!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="install-note">
+                        💡 Die App funktioniert dann wie eine normale App und kann auch offline genutzt werden.
+                    </div>
+                </div>
+
+                <!-- Slide 4: iOS Installation -->
+                <div class="tutorial-slide" data-slide="4">
+                    <div class="tutorial-icon">🍎</div>
+                    <h2>Installation auf iOS (iPhone/iPad)</h2>
+                    <div class="install-steps">
+                        <div class="install-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>Safari öffnen</h3>
+                                <p>Öffne diese Seite in Safari (nicht Chrome oder andere Browser!).</p>
+                            </div>
+                        </div>
+                        <div class="install-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>Teilen-Button tippen</h3>
+                                <p>Tippe unten auf das Teilen-Symbol (□↑).</p>
+                            </div>
+                        </div>
+                        <div class="install-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>"Zum Home-Bildschirm"</h3>
+                                <p>Scrolle runter und wähle "Zum Home-Bildschirm".</p>
+                            </div>
+                        </div>
+                        <div class="install-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h3>Hinzufügen bestätigen</h3>
+                                <p>Tippe oben rechts auf "Hinzufügen". Fertig!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="install-note install-note-warning">
+                        ⚠️ Wichtig: Die Installation funktioniert nur in Safari, nicht in Chrome oder anderen Browsern!
+                    </div>
+                </div>
+
+                <!-- Slide 5: Fertig -->
+                <div class="tutorial-slide" data-slide="5">
+                    <div class="tutorial-icon">🎉</div>
+                    <h2>Alles klar!</h2>
+                    <p>Du kennst jetzt die wichtigsten Features und weißt, wie du die App installieren kannst.</p>
+                    <div class="tutorial-final-tips">
+                        <h3>Noch ein paar Tipps:</h3>
+                        <ul>
+                            <li>🌙 Nutze den Dark Mode für bessere Lesbarkeit nachts</li>
+                            <li>⚙️ Passe deine Daten in den Einstellungen an</li>
+                            <li>🔔 Aktiviere Benachrichtigungen für Extra-Motivation</li>
+                            <li>📊 Schau dir regelmäßig deine Erfolge an!</li>
+                        </ul>
+                    </div>
+                    <p class="tutorial-final-message">Viel Erfolg auf deinem Weg! 💪</p>
+                </div>
+            </div>
+
+            <div class="tutorial-navigation">
+                <button id="tutorialPrevBtn" class="tutorial-nav-btn" disabled>← Zurück</button>
+                <div class="tutorial-dots" id="tutorialDots">
+                    <span class="tutorial-dot active" data-slide="1"></span>
+                    <span class="tutorial-dot" data-slide="2"></span>
+                    <span class="tutorial-dot" data-slide="3"></span>
+                    <span class="tutorial-dot" data-slide="4"></span>
+                    <span class="tutorial-dot" data-slide="5"></span>
+                </div>
+                <button id="tutorialNextBtn" class="tutorial-nav-btn">Weiter →</button>
             </div>
         </div>
     </div>
