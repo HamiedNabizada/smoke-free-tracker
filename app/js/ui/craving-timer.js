@@ -108,6 +108,7 @@ async function showSuccessMessage() {
     const cravingTipDisplay = document.getElementById('cravingTipDisplay');
     const cravingSuccess = document.getElementById('cravingSuccess');
     const successStats = document.getElementById('successStats');
+    const countCheckbox = document.getElementById('countCravingCheckbox');
 
     // Hide tip display
     cravingTipDisplay.classList.add('hidden');
@@ -115,22 +116,44 @@ async function showSuccessMessage() {
     // Calculate stats
     const stats = calculateStats();
 
-    // Increment craving count in Firestore first
-    await incrementCravingCount();
+    // Check if user wants to count this craving
+    const shouldCount = countCheckbox && countCheckbox.checked;
 
-    // Get updated count
-    const currentCount = await getCurrentCravingCount();
+    let currentCount = 0;
 
-    // Update compact craving stats in background
-    updateCompactCravingStats();
+    if (shouldCount) {
+        // Increment craving count in Firestore
+        await incrementCravingCount();
+        // Get updated count
+        currentCount = await getCurrentCravingCount();
+        // Update compact craving stats in background
+        updateCompactCravingStats();
+    }
+
+    // Calculate how long they held on (5 minutes - secondsRemaining)
+    const secondsHeld = 300 - secondsRemaining;
+    const minutesHeld = Math.floor(secondsHeld / 60);
+    const secondsRemainder = secondsHeld % 60;
+    const timeHeldText = minutesHeld > 0
+        ? `${minutesHeld} Minute${minutesHeld > 1 ? 'n' : ''}${secondsRemainder > 0 ? ` und ${secondsRemainder} Sekunden` : ''}`
+        : `${secondsHeld} Sekunden`;
 
     // Create success message with stats
-    successStats.innerHTML = `
-        <p><strong>Das war dein ${currentCount}. überwundenes Verlangen heute!</strong></p>
-        <p>Du hast bereits <strong>${stats.days} Tage</strong> durchgehalten.</p>
-        <p>Gespart: <strong>${stats.money.toFixed(2)}€</strong></p>
-        <p>Nicht geraucht: <strong>${stats.cigarettes} Zigaretten</strong></p>
-    `;
+    if (shouldCount) {
+        successStats.innerHTML = `
+            <p><strong>Das war dein ${currentCount}. überwundenes Verlangen heute!</strong></p>
+            <p>Du hast <strong>${timeHeldText}</strong> durchgehalten.</p>
+            <p>Gesamt rauchfrei: <strong>${stats.days} Tage</strong></p>
+            <p>Gespart: <strong>${stats.money.toFixed(2)}€</strong></p>
+        `;
+    } else {
+        successStats.innerHTML = `
+            <p>Du hast <strong>${timeHeldText}</strong> durchgehalten.</p>
+            <p>Nicht als Verlangen gezählt (war nur ein Test).</p>
+            <p>Gesamt rauchfrei: <strong>${stats.days} Tage</strong></p>
+            <p>Gespart: <strong>${stats.money.toFixed(2)}€</strong></p>
+        `;
+    }
 
     // Show success message
     cravingSuccess.classList.remove('hidden');
@@ -157,8 +180,23 @@ function startBreathingAnimation() {
     }, 4000);
 }
 
-function closeCravingOverlay() {
+async function closeCravingOverlay() {
     const overlay = document.getElementById('cravingOverlay');
+    const countCheckbox = document.getElementById('countCravingCheckbox');
+    const cravingSuccess = document.getElementById('cravingSuccess');
+
+    // Check if we should count this
+    const timeSpent = 300 - secondsRemaining;
+    const isSuccessScreenVisible = !cravingSuccess.classList.contains('hidden');
+
+    // Only count if checkbox is checked, some time was spent (at least 10 seconds), and NOT already counted (success screen not visible)
+    if (countCheckbox && countCheckbox.checked && timeSpent >= 10 && !isSuccessScreenVisible) {
+        await incrementCravingCount();
+        // Update compact craving stats in background
+        updateCompactCravingStats();
+    }
+
+    // Hide overlay
     overlay.classList.add('hidden');
 
     if (timerInterval) {
@@ -172,6 +210,18 @@ function closeCravingOverlay() {
     }
 
     secondsRemaining = 300;
+
+    // Reset success screen
+    cravingSuccess.classList.add('hidden');
+    const cravingTipDisplay = document.getElementById('cravingTipDisplay');
+    if (cravingTipDisplay) {
+        cravingTipDisplay.classList.remove('hidden');
+    }
+
+    // Reset checkbox to checked for next time
+    if (countCheckbox) {
+        countCheckbox.checked = true;
+    }
 }
 
 // Helper functions for craving count (stored in Firestore)

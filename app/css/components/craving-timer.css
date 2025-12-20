@@ -157,6 +157,46 @@
     font-weight: 300;
 }
 
+/* Count Option Checkbox */
+.craving-count-option {
+    margin: 1.5rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.craving-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    user-select: none;
+}
+
+.craving-checkbox-label:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.craving-checkbox-label input[type="checkbox"] {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    accent-color: #11998e;
+    flex-shrink: 0;
+}
+
+.checkbox-text {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
 /* Tip Display */
 .craving-tip-display {
     background: rgba(255, 255, 255, 0.15);
@@ -281,6 +321,14 @@
 
     .tip-text {
         font-size: 1.1rem;
+    }
+
+    .checkbox-text {
+        font-size: 0.95rem;
+    }
+
+    .craving-checkbox-label {
+        padding: 0.6rem 1rem;
     }
 
     .craving-success h2 {
