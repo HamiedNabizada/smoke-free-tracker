@@ -24,7 +24,7 @@
 Options -Indexes
 
 # Deny access to sensitive files
-<FilesMatch "(^\.htaccess|^\.env|firebase-config\.js|\.git|\.gitignore)$">
+<FilesMatch "(^\.htaccess|^\.env|\.git|\.gitignore)$">
     Require all denied
 </FilesMatch>
 
