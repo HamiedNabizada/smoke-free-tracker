@@ -68,7 +68,7 @@
 .craving-overlay-content {
     position: relative;
     width: 90%;
-    max-width: 600px;
+    max-width: 500px;
     text-align: center;
     color: white;
 }
@@ -290,7 +290,71 @@
     box-shadow: 0 10px 30px rgba(17, 153, 142, 0.3);
 }
 
-/* Responsive */
+/* Desktop - Kompaktere Größen */
+@media (min-width: 769px) {
+    .breathing-container {
+        width: 180px;
+        height: 180px;
+        margin: 0 auto 1.5rem;
+    }
+
+    .breathing-circle {
+        width: 140px;
+        height: 140px;
+    }
+
+    .breathing-text {
+        font-size: 1.4rem;
+    }
+
+    .timer-display {
+        font-size: 3.5rem;
+    }
+
+    .timer-label {
+        font-size: 1.2rem;
+    }
+
+    .craving-timer {
+        margin: 1.5rem 0;
+    }
+
+    .craving-tip-display {
+        padding: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .tip-icon-large {
+        font-size: 2.5rem;
+    }
+
+    .tip-text {
+        font-size: 1.1rem;
+    }
+
+    .craving-count-option {
+        margin: 1rem 0;
+    }
+
+    .craving-success {
+        max-width: 450px;
+        padding: 2.5rem 2rem;
+    }
+
+    .success-icon {
+        font-size: 4rem;
+    }
+
+    .craving-success h2 {
+        font-size: 2rem;
+    }
+
+    .craving-success p {
+        font-size: 1.1rem;
+    }
+}
+
+/* Mobile - Responsive */
 @media (max-width: 768px) {
     .craving-button {
         font-size: 1.2rem;
