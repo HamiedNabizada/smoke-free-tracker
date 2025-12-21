@@ -72,7 +72,7 @@
 </head>
 <body>
     <div class="container">
-        <a href="index.html" class="back-link">← Zurück zur App</a>
+        <a href="#" id="backLink" class="back-link">← Zurück</a>
 
         <h1>👋 Über ByeByeSmoke</h1>
 
@@ -176,5 +176,23 @@
             <strong>Viel Erfolg auf deinem Weg in ein rauchfreies Leben! 💪</strong>
         </p>
     </div>
+
+    <script>
+        // Smart back navigation
+        const backLink = document.getElementById('backLink');
+        const referrer = document.referrer;
+
+        // Check if referrer is from same domain
+        if (referrer && referrer.includes(window.location.hostname)) {
+            // Go back to previous page
+            backLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.history.back();
+            });
+        } else {
+            // No referrer or external - go to landing page
+            backLink.href = '../index.html';
+        }
+    </script>
 </body>
 </html>

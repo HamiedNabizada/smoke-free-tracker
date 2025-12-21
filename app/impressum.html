@@ -43,7 +43,7 @@
 </head>
 <body>
     <div class="container">
-        <a href="index.html" class="back-link">← Zurück zur App</a>
+        <a href="#" id="backLink" class="back-link">← Zurück</a>
 
         <h1>Impressum</h1>
 
@@ -81,5 +81,23 @@
         <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a href="https://ec.europa.eu/consumers/odr" target="_blank">https://ec.europa.eu/consumers/odr</a>.</p>
         <p>Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
     </div>
+
+    <script>
+        // Smart back navigation
+        const backLink = document.getElementById('backLink');
+        const referrer = document.referrer;
+
+        // Check if referrer is from same domain
+        if (referrer && referrer.includes(window.location.hostname)) {
+            // Go back to previous page
+            backLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.history.back();
+            });
+        } else {
+            // No referrer or external - go to landing page
+            backLink.href = '../index.html';
+        }
+    </script>
 </body>
 </html>
