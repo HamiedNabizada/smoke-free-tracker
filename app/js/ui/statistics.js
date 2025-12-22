@@ -91,40 +91,43 @@ export function updateHealthScore(stats) {
         detailsContainer.innerHTML = `
             <div class="health-score-rating">${rating}</div>
             <div class="health-score-message">${message}</div>
+            <div class="health-score-explanation">
+                Gewichteter Durchschnitt aus 5 Erholungsmetriken, basierend auf WHO, JAMA und PMC-Studien.
+            </div>
             <div class="health-score-breakdown">
-                <div class="score-component">
+                <div class="score-component" title="100% nach ca. 15 Jahren (WHO, JAMA)">
                     <span class="component-label">❤️ Herz-Kreislauf</span>
                     <span class="component-bar"><span class="component-fill" style="width: ${cardiovascular}%"></span></span>
                     <span class="component-value">${cardiovascular}%</span>
-                    <span class="component-weight">(×30%)</span>
+                    <span class="component-weight">×30%</span>
                 </div>
-                <div class="score-component">
+                <div class="score-component" title="100% nach ca. 10 Jahren (PMC)">
                     <span class="component-label">🫁 Lungenfunktion</span>
                     <span class="component-bar"><span class="component-fill" style="width: ${lung}%"></span></span>
                     <span class="component-value">${lung}%</span>
-                    <span class="component-weight">(×25%)</span>
+                    <span class="component-weight">×25%</span>
                 </div>
-                <div class="score-component">
+                <div class="score-component" title="100% nach ca. 6 Monaten (WHO)">
                     <span class="component-label">🩸 Durchblutung</span>
                     <span class="component-bar"><span class="component-fill" style="width: ${circulation}%"></span></span>
                     <span class="component-value">${circulation}%</span>
-                    <span class="component-weight">(×20%)</span>
+                    <span class="component-weight">×20%</span>
                 </div>
-                <div class="score-component">
+                <div class="score-component" title="Herzinfarkt, Schlaganfall, Lungenkrebs">
                     <span class="component-label">🎗️ Risikoreduktion</span>
                     <span class="component-bar"><span class="component-fill" style="width: ${Math.round(riskReduction)}%"></span></span>
                     <span class="component-value">${Math.round(riskReduction)}%</span>
-                    <span class="component-weight">(×15%)</span>
+                    <span class="component-weight">×15%</span>
                 </div>
-                <div class="score-component">
+                <div class="score-component" title="100% nach ca. 9 Monaten (Mailänder Studie)">
                     <span class="component-label">✨ Hautgesundheit</span>
                     <span class="component-bar"><span class="component-fill" style="width: ${skin}%"></span></span>
                     <span class="component-value">${skin}%</span>
-                    <span class="component-weight">(×10%)</span>
+                    <span class="component-weight">×10%</span>
                 </div>
             </div>
             <div class="health-score-source">
-                <a href="quellen.html">📚 Wissenschaftliche Quellen</a>
+                <a href="quellen.html">Quellen einsehen</a>
             </div>
         `;
     }

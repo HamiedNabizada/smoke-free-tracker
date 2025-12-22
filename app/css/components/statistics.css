@@ -217,8 +217,15 @@
 
 .health-score-message {
     font-size: 1.1rem;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     opacity: 0.95;
+}
+
+.health-score-explanation {
+    font-size: 0.85rem;
+    opacity: 0.8;
+    margin-bottom: 20px;
+    font-style: italic;
 }
 
 .health-score-breakdown {
