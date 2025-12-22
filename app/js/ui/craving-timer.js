@@ -241,6 +241,17 @@ async function getCurrentCravingCount() {
         if (!user) return 0;
 
         const today = new Date().toISOString().split('T')[0];
+
+        // Demo mode: return demo count
+        if (typeof isDemoMode === 'function' && isDemoMode()) {
+            if (typeof getDemoCravingEvents === 'function') {
+                const demoEvents = getDemoCravingEvents();
+                const todayEvent = demoEvents.find(e => e.date === today);
+                return todayEvent ? todayEvent.count : 3;
+            }
+            return 3;
+        }
+
         const docRef = firebase.firestore().collection('craving_events').doc(`${user.uid}_${today}`);
         const doc = await docRef.get();
 
@@ -260,6 +271,12 @@ async function incrementCravingCount() {
         const user = firebase.auth().currentUser;
         if (!user) {
             throw new Error('Nicht angemeldet');
+        }
+
+        // Skip write in demo mode (silently - timer still works)
+        if (typeof isDemoMode === 'function' && isDemoMode()) {
+            console.log('[Demo] Craving count not incremented (demo mode)');
+            return true;
         }
 
         const today = new Date().toISOString().split('T')[0];

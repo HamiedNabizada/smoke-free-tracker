@@ -36,6 +36,12 @@ async function loadGoals() {
     const user = firebase.auth().currentUser;
     if (!user) return;
 
+    // Demo mode: use default goals
+    if (typeof isDemoMode === 'function' && isDemoMode()) {
+        console.log('[ProgressGoals] Demo mode - using default goals');
+        return;
+    }
+
     try {
         const docRef = firebase.firestore().collection('users').doc(user.uid);
         const doc = await docRef.get();
@@ -54,6 +60,11 @@ async function loadGoals() {
 async function saveGoals() {
     const user = firebase.auth().currentUser;
     if (!user) return;
+
+    // Block write in demo mode
+    if (typeof blockDemoWrite === 'function' && blockDemoWrite('Ziele speichern')) {
+        return;
+    }
 
     try {
         await firebase.firestore().collection('users').doc(user.uid).update({

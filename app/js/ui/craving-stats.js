@@ -7,6 +7,19 @@ export async function getCravingHistory(days = 30) {
         const user = firebase.auth().currentUser;
         if (!user) return [];
 
+        // Demo mode: return demo craving events
+        if (typeof isDemoMode === 'function' && isDemoMode()) {
+            if (typeof getDemoCravingEvents === 'function') {
+                const demoEvents = getDemoCravingEvents();
+                const startDate = new Date();
+                startDate.setDate(startDate.getDate() - days);
+                const startDateStr = startDate.toISOString().split('T')[0];
+                // Filter to requested date range
+                return demoEvents.filter(e => e.date >= startDateStr);
+            }
+            return [];
+        }
+
         const endDate = new Date();
         const startDate = new Date();
         startDate.setDate(startDate.getDate() - days);
@@ -46,6 +59,17 @@ export async function getTodayCravingCount() {
         if (!user) return 0;
 
         const today = new Date().toISOString().split('T')[0];
+
+        // Demo mode: return demo count for today
+        if (typeof isDemoMode === 'function' && isDemoMode()) {
+            if (typeof getDemoCravingEvents === 'function') {
+                const demoEvents = getDemoCravingEvents();
+                const todayEvent = demoEvents.find(e => e.date === today);
+                return todayEvent ? todayEvent.count : 3; // Default demo count
+            }
+            return 3;
+        }
+
         const docRef = firebase.firestore().collection('craving_events').doc(`${user.uid}_${today}`);
         const doc = await docRef.get();
 

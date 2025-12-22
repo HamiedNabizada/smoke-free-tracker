@@ -37,6 +37,20 @@ async function loadNotificationSettings() {
     const user = firebase.auth().currentUser;
     if (!user) return;
 
+    // Demo mode: use disabled notifications (demo data)
+    if (typeof isDemoMode === 'function' && isDemoMode()) {
+        notificationSettings = {
+            enabled: false,
+            milestones: false,
+            dailyMotivation: false
+        };
+        // Update UI to reflect demo settings
+        const enabledToggle = document.getElementById('notificationsEnabled');
+        if (enabledToggle) enabledToggle.checked = false;
+        console.log('[Notifications] Demo mode - notifications disabled');
+        return;
+    }
+
     try {
         const docRef = firebase.firestore().collection('users').doc(user.uid);
         const doc = await docRef.get();
@@ -69,6 +83,11 @@ async function loadNotificationSettings() {
 async function saveNotificationSettings() {
     const user = firebase.auth().currentUser;
     if (!user) return;
+
+    // Block write in demo mode
+    if (typeof blockDemoWrite === 'function' && blockDemoWrite('Benachrichtigungen aktivieren')) {
+        return;
+    }
 
     try {
         await firebase.firestore().collection('users').doc(user.uid).update({
@@ -217,6 +236,9 @@ export async function checkMilestoneNotifications(currentMilestone) {
     const user = firebase.auth().currentUser;
     if (!user) return;
 
+    // Skip in demo mode
+    if (typeof isDemoMode === 'function' && isDemoMode()) return;
+
     try {
         // Get last notified milestone
         const docRef = firebase.firestore().collection('users').doc(user.uid);
@@ -278,6 +300,9 @@ async function checkTodaysMotivation() {
     const user = firebase.auth().currentUser;
     if (!user) return;
 
+    // Skip in demo mode
+    if (typeof isDemoMode === 'function' && isDemoMode()) return;
+
     try {
         const docRef = firebase.firestore().collection('users').doc(user.uid);
         const doc = await docRef.get();
@@ -304,6 +329,9 @@ async function sendDailyMotivation() {
 
     const user = firebase.auth().currentUser;
     if (!user) return;
+
+    // Skip in demo mode
+    if (typeof isDemoMode === 'function' && isDemoMode()) return;
 
     const motivations = [
         'Jeder rauchfreie Tag ist ein Erfolg!',
