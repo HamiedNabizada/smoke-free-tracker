@@ -11,6 +11,7 @@ export function initializeDataExport() {
     const exportBtn = document.getElementById('exportDataBtn');
     const shareBtn = document.getElementById('shareSuccessBtn');
     const badgeBtn = document.getElementById('generateBadgeBtn');
+    const shareImageBtn = document.getElementById('shareImageBtn');
 
     if (exportBtn) {
         exportBtn.addEventListener('click', exportUserData);
@@ -22,6 +23,10 @@ export function initializeDataExport() {
 
     if (badgeBtn) {
         badgeBtn.addEventListener('click', generateBadge);
+    }
+
+    if (shareImageBtn) {
+        shareImageBtn.addEventListener('click', shareAsImage);
     }
 }
 
@@ -275,4 +280,181 @@ function generateBadge() {
 
     console.log('[Badge] Badge generated and downloaded');
     alert('🏆 Dein Erfolgs-Badge wurde heruntergeladen!\n\nDu kannst es jetzt als Profilbild, Wallpaper oder zum Teilen verwenden.');
+}
+
+/**
+ * Generate shareable PNG image
+ */
+export async function generateShareImage() {
+    const stats = calculateStats();
+    const user = firebase.auth().currentUser;
+    const username = user?.displayName || 'Anonymer Held';
+
+    // Create canvas
+    const canvas = document.createElement('canvas');
+    canvas.width = 1080;
+    canvas.height = 1080;
+    const ctx = canvas.getContext('2d');
+
+    // Draw gradient background
+    const gradient = ctx.createLinearGradient(0, 0, 1080, 1080);
+    gradient.addColorStop(0, '#667eea');
+    gradient.addColorStop(1, '#764ba2');
+    ctx.fillStyle = gradient;
+    ctx.roundRect(0, 0, 1080, 1080, 40);
+    ctx.fill();
+
+    // Draw inner card
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+    ctx.roundRect(40, 40, 1000, 1000, 30);
+    ctx.fill();
+
+    // Text settings
+    ctx.textAlign = 'center';
+    ctx.fillStyle = 'white';
+
+    // Title with emoji
+    ctx.font = 'bold 64px Arial, sans-serif';
+    ctx.fillText('🎉 Rauchfrei!', 540, 140);
+
+    // Username
+    ctx.font = '36px Arial, sans-serif';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+    ctx.fillText(username, 540, 200);
+
+    // Main stat - Days
+    ctx.fillStyle = 'white';
+    ctx.font = 'bold 180px Arial, sans-serif';
+    ctx.fillText(stats.days.toString(), 540, 420);
+
+    ctx.font = '48px Arial, sans-serif';
+    ctx.fillText('Tage rauchfrei', 540, 490);
+
+    // Stats row
+    const statsY = 620;
+
+    // Money saved
+    ctx.font = 'bold 72px Arial, sans-serif';
+    ctx.fillText(`${stats.money.toFixed(0)}€`, 270, statsY);
+    ctx.font = '28px Arial, sans-serif';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+    ctx.fillText('gespart', 270, statsY + 40);
+
+    // Cigarettes avoided
+    ctx.fillStyle = 'white';
+    ctx.font = 'bold 72px Arial, sans-serif';
+    ctx.fillText(stats.cigarettes.toString(), 810, statsY);
+    ctx.font = '28px Arial, sans-serif';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+    ctx.fillText('Zigaretten vermieden', 810, statsY + 40);
+
+    // Life gained
+    ctx.fillStyle = 'white';
+    ctx.font = 'bold 48px Arial, sans-serif';
+    ctx.fillText(`❤️ ${stats.lifeGained.totalHours}h Lebenszeit gewonnen`, 540, 780);
+
+    // Lung health
+    ctx.font = '36px Arial, sans-serif';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+    ctx.fillText(`🫁 Lungengesundheit: ${stats.lungHealth}%`, 540, 850);
+
+    // Footer
+    ctx.font = '28px Arial, sans-serif';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+    ctx.fillText('Erstellt mit ByeByeSmoke', 540, 960);
+    ctx.fillText('tracker.hamied.de', 540, 1000);
+
+    return canvas;
+}
+
+/**
+ * Share image via Web Share API or download
+ */
+export async function shareAsImage() {
+    try {
+        // Show loading state
+        const badgeBtn = document.getElementById('generateBadgeBtn');
+        if (badgeBtn) {
+            badgeBtn.disabled = true;
+            badgeBtn.innerHTML = '<span class="btn-icon">⏳</span><div class="btn-content"><div class="btn-title">Erstelle Bild...</div></div>';
+        }
+
+        const canvas = await generateShareImage();
+
+        // Convert to blob
+        const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+        const file = new File([blob], 'byebyesmoke-erfolg.png', { type: 'image/png' });
+
+        // Try Web Share API with files
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            try {
+                await navigator.share({
+                    files: [file],
+                    title: 'Mein rauchfreier Erfolg',
+                    text: '🎉 Schau dir meinen Fortschritt an! #rauchfrei #byebyesmoke'
+                });
+                console.log('[Share] Image shared via Web Share API');
+            } catch (error) {
+                if (error.name !== 'AbortError') {
+                    // Fallback to download
+                    downloadCanvas(canvas);
+                }
+            }
+        } else {
+            // No file sharing support - download instead
+            downloadCanvas(canvas);
+        }
+    } catch (error) {
+        console.error('[Share] Error creating share image:', error);
+        alert('Fehler beim Erstellen des Bildes: ' + error.message);
+    } finally {
+        // Reset button
+        const badgeBtn = document.getElementById('generateBadgeBtn');
+        if (badgeBtn) {
+            badgeBtn.disabled = false;
+            badgeBtn.innerHTML = '<span class="btn-icon">🏆</span><div class="btn-content"><div class="btn-title">Erfolgs-Badge erstellen</div><div class="btn-description">Erstelle ein Badge mit deinen Statistiken</div></div>';
+        }
+    }
+}
+
+/**
+ * Download canvas as PNG
+ */
+function downloadCanvas(canvas) {
+    const url = canvas.toDataURL('image/png');
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'byebyesmoke-erfolg.png';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    console.log('[Share] Image downloaded as PNG');
+    alert('📸 Dein Erfolgs-Bild wurde heruntergeladen!\n\nDu kannst es jetzt auf Instagram, WhatsApp, Facebook oder wo du möchtest teilen.');
+}
+
+/**
+ * Fetch user data from Firestore (for export)
+ */
+async function getUserData() {
+    const user = firebase.auth().currentUser;
+    if (!user) return null;
+
+    try {
+        // Return demo data in demo mode
+        if (user.email === 'demo@byebyesmoke.app') {
+            return {
+                quit_date: '2025-11-01T10:00:00',
+                cigarettes_per_day: 15,
+                price_per_pack: 9,
+                cigarettes_per_pack: 20
+            };
+        }
+
+        const doc = await firebase.firestore().collection('users').doc(user.uid).get();
+        return doc.exists ? doc.data() : null;
+    } catch (error) {
+        console.error('[DataExport] Error loading user data:', error);
+        return null;
+    }
 }

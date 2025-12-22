@@ -434,3 +434,7 @@
 .badge-btn:hover {
     border-color: #f6ad55;
 }
+
+.image-btn:hover {
+    border-color: #e53e3e;
+}
