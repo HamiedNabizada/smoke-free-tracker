@@ -1,125 +1,89 @@
-/* Progress Rings */
+/* Progress Bars */
 .progress-visuals-card {
     background: white;
 }
 
-.progress-rings-container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 60px;
-    padding: 30px 20px;
-}
-
-.progress-ring-item {
+.progress-bars-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    width: 150px;
+    gap: 20px;
+    padding: 10px 0;
 }
 
-/* Ring Container */
-.progress-ring {
-    position: relative;
-    width: 150px;
-    height: 150px;
-}
-
-.progress-ring svg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 150px;
-    height: 150px;
-    transform: rotate(-90deg);
-}
-
-/* Background Circle */
-.progress-ring-bg {
-    fill: none;
-    stroke: #e9ecef;
-    stroke-width: 10;
-}
-
-/* Progress Fill Circle */
-.progress-ring-fill {
-    fill: none;
-    stroke-width: 10;
-    stroke-linecap: round;
-    stroke-dasharray: 326.73;
-    stroke-dashoffset: 326.73;
-    transition: stroke-dashoffset 1s ease-out;
-}
-
-/* Ring Colors */
-.days-ring {
-    stroke: #667eea;
-}
-
-.money-ring {
-    stroke: #48bb78;
-}
-
-.cigarettes-ring {
-    stroke: #ed8936;
-}
-
-/* Center Content - INSIDE the ring */
-.progress-ring-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.progress-bar-item {
     display: flex;
     flex-direction: column;
+    gap: 8px;
+}
+
+.progress-bar-header {
+    display: flex;
     align-items: center;
-    justify-content: center;
-    text-align: center;
-    width: 100px;
+    gap: 10px;
 }
 
-.progress-ring-icon {
-    font-size: 1.5rem;
-    line-height: 1;
-    margin-bottom: 4px;
+.progress-bar-icon {
+    font-size: 1.3rem;
 }
 
-.progress-ring-value {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #333;
-    line-height: 1;
-}
-
-.progress-ring-percent {
-    font-size: 0.85rem;
-    color: #666;
-    font-weight: 600;
-    line-height: 1;
-    margin-top: 4px;
-}
-
-/* Labels - BELOW the ring */
-.progress-ring-label {
-    margin-top: 15px;
-    text-align: center;
-}
-
-.progress-ring-title {
+.progress-bar-title {
     font-size: 1rem;
     font-weight: 600;
     color: #333;
-    margin-bottom: 4px;
+    flex: 1;
 }
 
-.progress-ring-goal {
+.progress-bar-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.progress-bar-track {
+    height: 12px;
+    background: #e9ecef;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    transition: width 1s ease-out;
+    width: 0%;
+}
+
+.days-bar {
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+}
+
+.money-bar {
+    background: linear-gradient(90deg, #48bb78 0%, #38a169 100%);
+}
+
+.cigarettes-bar {
+    background: linear-gradient(90deg, #ed8936 0%, #dd6b20 100%);
+}
+
+.progress-bar-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.progress-bar-percent {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #666;
+}
+
+.progress-bar-goal {
     font-size: 0.8rem;
     color: #999;
     cursor: pointer;
 }
 
-.progress-ring-goal:hover {
+.progress-bar-goal:hover {
     color: #667eea;
     text-decoration: underline;
 }
@@ -129,76 +93,23 @@
     background: #1e1e1e;
 }
 
-.dark-mode .progress-ring-bg {
-    stroke: #3a3a3a;
-}
-
-.dark-mode .progress-ring-value,
-.dark-mode .progress-ring-title {
+.dark-mode .progress-bar-title,
+.dark-mode .progress-bar-value {
     color: #fff;
 }
 
-.dark-mode .progress-ring-percent,
-.dark-mode .progress-ring-goal {
+.dark-mode .progress-bar-track {
+    background: #3a3a3a;
+}
+
+.dark-mode .progress-bar-percent {
     color: #aaa;
 }
 
-.dark-mode .progress-ring-goal:hover {
-    color: #667eea;
+.dark-mode .progress-bar-goal {
+    color: #888;
 }
 
-/* Responsive - Tablet & Mobile */
-@media (max-width: 768px) {
-    .progress-rings-container {
-        gap: 15px;
-        padding: 20px 10px;
-    }
-
-    .progress-ring-item {
-        width: 100px;
-    }
-
-    .progress-ring {
-        width: 100px;
-        height: 100px;
-    }
-
-    .progress-ring svg {
-        width: 100px;
-        height: 100px;
-    }
-
-    .progress-ring-bg,
-    .progress-ring-fill {
-        stroke-width: 8;
-    }
-
-    .progress-ring-content {
-        width: 70px;
-    }
-
-    .progress-ring-icon {
-        font-size: 1.1rem;
-        margin-bottom: 2px;
-    }
-
-    .progress-ring-value {
-        font-size: 1rem;
-    }
-
-    .progress-ring-percent {
-        font-size: 0.7rem;
-    }
-
-    .progress-ring-label {
-        margin-top: 10px;
-    }
-
-    .progress-ring-title {
-        font-size: 0.8rem;
-    }
-
-    .progress-ring-goal {
-        font-size: 0.65rem;
-    }
+.dark-mode .progress-bar-goal:hover {
+    color: #667eea;
 }

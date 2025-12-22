@@ -1,89 +1,77 @@
-// Progress Rings Visualization
+// Progress Bars Visualization
 
 import { getCurrentGoals } from './progress-goals.js';
-
-// Circle circumference (2 * PI * r, where r = 52)
-const CIRCUMFERENCE = 326.73;
 
 export function updateProgressVisuals(stats) {
     const goals = getCurrentGoals();
 
-    updateDaysRing(stats, goals);
-    updateMoneyRing(stats, goals);
-    updateCigarettesRing(stats, goals);
+    updateDaysBar(stats, goals);
+    updateMoneyBar(stats, goals);
+    updateCigarettesBar(stats, goals);
     updateGoalTexts(goals);
 }
 
-function updateDaysRing(stats, goals) {
+function updateDaysBar(stats, goals) {
     const days = Math.floor(stats.totalDays);
     const targetDays = goals.days;
-    const progress = Math.min(days / targetDays, 1);
-    const percent = Math.round(progress * 100);
+    const progress = Math.min(days / targetDays, 1) * 100;
+    const percent = Math.round(progress);
 
-    // Update ring
-    const ring = document.getElementById('daysRing');
-    if (ring) {
-        const offset = CIRCUMFERENCE - (progress * CIRCUMFERENCE);
-        ring.style.strokeDashoffset = offset;
+    const bar = document.getElementById('daysBar');
+    if (bar) {
+        bar.style.width = progress + '%';
     }
 
-    // Update values
-    const valueEl = document.getElementById('daysRingValue');
+    const valueEl = document.getElementById('daysBarValue');
     if (valueEl) {
         valueEl.textContent = days;
     }
 
-    const percentEl = document.getElementById('daysRingPercent');
+    const percentEl = document.getElementById('daysBarPercent');
     if (percentEl) {
         percentEl.textContent = percent + '%';
     }
 }
 
-function updateMoneyRing(stats, goals) {
+function updateMoneyBar(stats, goals) {
     const money = stats.money;
     const targetMoney = goals.money;
-    const progress = Math.min(money / targetMoney, 1);
-    const percent = Math.round(progress * 100);
+    const progress = Math.min(money / targetMoney, 1) * 100;
+    const percent = Math.round(progress);
 
-    // Update ring
-    const ring = document.getElementById('moneyRing');
-    if (ring) {
-        const offset = CIRCUMFERENCE - (progress * CIRCUMFERENCE);
-        ring.style.strokeDashoffset = offset;
+    const bar = document.getElementById('moneyBar');
+    if (bar) {
+        bar.style.width = progress + '%';
     }
 
-    // Update values
-    const valueEl = document.getElementById('moneyRingValue');
+    const valueEl = document.getElementById('moneyBarValue');
     if (valueEl) {
         valueEl.textContent = Math.floor(money) + '€';
     }
 
-    const percentEl = document.getElementById('moneyRingPercent');
+    const percentEl = document.getElementById('moneyBarPercent');
     if (percentEl) {
         percentEl.textContent = percent + '%';
     }
 }
 
-function updateCigarettesRing(stats, goals) {
+function updateCigarettesBar(stats, goals) {
     const cigarettes = stats.cigarettes;
     const targetCigarettes = goals.cigarettes;
-    const progress = Math.min(cigarettes / targetCigarettes, 1);
-    const percent = Math.round(progress * 100);
+    const progress = Math.min(cigarettes / targetCigarettes, 1) * 100;
+    const percent = Math.round(progress);
 
-    // Update ring
-    const ring = document.getElementById('cigarettesRing');
-    if (ring) {
-        const offset = CIRCUMFERENCE - (progress * CIRCUMFERENCE);
-        ring.style.strokeDashoffset = offset;
+    const bar = document.getElementById('cigarettesBar');
+    if (bar) {
+        bar.style.width = progress + '%';
     }
 
-    // Update values
-    const valueEl = document.getElementById('cigarettesRingValue');
+    const valueEl = document.getElementById('cigarettesBarValue');
     if (valueEl) {
         valueEl.textContent = cigarettes;
     }
 
-    const percentEl = document.getElementById('cigarettesRingPercent');
+    const percentEl = document.getElementById('cigarettesBarPercent');
     if (percentEl) {
         percentEl.textContent = percent + '%';
     }
