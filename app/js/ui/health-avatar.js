@@ -6,16 +6,23 @@ let currentRegenValues = {
     skin: 0
 };
 
+/**
+ * Aktualisiert Health Avatar mit wissenschaftlich fundierten Werten
+ *
+ * Verwendet jetzt die zentralen Berechnungen aus calculations.js:
+ * - Lunge: PMC-Studie, FEV1-Verbesserung (10 Jahre bis 100%)
+ * - Herz-Kreislauf: WHO, JAMA (15 Jahre bis 100%)
+ * - Durchblutung: WHO (6 Monate bis 100%)
+ * - Haut: Mailänder Studie 2010 (2 Jahre bis 100%)
+ */
 export function updateHealthAvatar(stats) {
-    if (!stats) return;
+    if (!stats || !stats.health) return;
 
-    const days = stats.totalDays;
-
-    // Calculate regeneration percentages
-    const lungRegen = calculateLungRegeneration(days);
-    const heartRegen = calculateHeartRegeneration(days);
-    const bloodRegen = calculateBloodRegeneration(days);
-    const skinRegen = calculateSkinRegeneration(days);
+    // Verwende wissenschaftlich fundierte Werte aus calculations.js
+    const lungRegen = stats.health.lung;
+    const heartRegen = stats.health.cardiovascular;
+    const bloodRegen = stats.health.circulation;
+    const skinRegen = stats.health.skin;
 
     // Update progress bars
     updateProgressBar('lungRegenBar', lungRegen);
@@ -29,10 +36,10 @@ export function updateHealthAvatar(stats) {
     const bloodValue = document.getElementById('bloodRegenValue');
     const skinValue = document.getElementById('skinRegenValue');
 
-    if (lungValue) lungValue.textContent = `${Math.round(lungRegen)}% regeneriert`;
-    if (heartValue) heartValue.textContent = `${Math.round(heartRegen)}% normalisiert`;
-    if (bloodValue) bloodValue.textContent = `${Math.round(bloodRegen)}% verbessert`;
-    if (skinValue) skinValue.textContent = `${Math.round(skinRegen)}% verjüngt`;
+    if (lungValue) lungValue.textContent = `${lungRegen}% regeneriert`;
+    if (heartValue) heartValue.textContent = `${heartRegen}% normalisiert`;
+    if (bloodValue) bloodValue.textContent = `${bloodRegen}% verbessert`;
+    if (skinValue) skinValue.textContent = `${skinRegen}% verjüngt`;
 
     // Store values for tooltips
     currentRegenValues = {
@@ -115,65 +122,8 @@ function initializeTooltips() {
     }
 }
 
-function calculateLungRegeneration(days) {
-    // Lung regeneration timeline:
-    // 0-90 days: 0-30% (initial recovery)
-    // 90-270 days: 30-60% (significant improvement)
-    // 270-3650 days (10 years): 60-100% (full recovery)
-
-    if (days < 90) {
-        return (days / 90) * 30;
-    } else if (days < 270) {
-        return 30 + ((days - 90) / 180) * 30;
-    } else if (days < 3650) {
-        return 60 + ((days - 270) / 3380) * 40;
-    } else {
-        return 100;
-    }
-}
-
-function calculateHeartRegeneration(days) {
-    // Heart normalization:
-    // 0-1 day: Heart rate and blood pressure normalize (0-20%)
-    // 1-14 days: Circulation improves (20-50%)
-    // 14-90 days: Heart attack risk decreases significantly (50-100%)
-
-    if (days < 1) {
-        return (days / 1) * 20;
-    } else if (days < 14) {
-        return 20 + ((days - 1) / 13) * 30;
-    } else if (days < 90) {
-        return 50 + ((days - 14) / 76) * 50;
-    } else {
-        return 100;
-    }
-}
-
-function calculateBloodRegeneration(days) {
-    // Blood circulation improvement:
-    // 2-12 weeks (14-84 days): Circulation improves (0-100%)
-
-    if (days < 14) {
-        return (days / 14) * 20; // Early improvement
-    } else if (days < 84) {
-        return 20 + ((days - 14) / 70) * 80;
-    } else {
-        return 100;
-    }
-}
-
-function calculateSkinRegeneration(days) {
-    // Skin rejuvenation:
-    // 2-9 months (60-270 days): Skin improves (0-100%)
-
-    if (days < 60) {
-        return (days / 60) * 20; // Minimal improvement
-    } else if (days < 270) {
-        return 20 + ((days - 60) / 210) * 80;
-    } else {
-        return 100;
-    }
-}
+// Alte Berechnungsfunktionen entfernt - jetzt zentral in calculations.js
+// mit wissenschaftlichen Quellen (WHO, PMC, JAMA, Mailänder Studie)
 
 function updateProgressBar(barId, percentage) {
     const bar = document.getElementById(barId);

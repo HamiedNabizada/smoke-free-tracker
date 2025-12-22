@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wissenschaftliche Quellen - ByeByeSmoke</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #667eea;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+        h2:first-of-type {
+            border-top: none;
+            padding-top: 0;
+        }
+        h3 {
+            color: #4a5568;
+            margin-top: 20px;
+            font-size: 1.1em;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .intro-box {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .source-category {
+            background: #f9fafb;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #e5e7eb;
+        }
+        .source-category h3 {
+            margin-top: 0;
+            color: #667eea;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .source-item {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 3px solid #667eea;
+        }
+        .source-item .authors {
+            font-weight: 600;
+            color: #333;
+        }
+        .source-item .year {
+            color: #667eea;
+            font-weight: 600;
+        }
+        .source-item .title {
+            font-style: italic;
+            color: #4a5568;
+        }
+        .source-item .journal {
+            color: #718096;
+        }
+        .source-item a {
+            color: #667eea;
+            word-break: break-all;
+        }
+        .key-finding {
+            background: #e6fffa;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 3px solid #38b2ac;
+            font-size: 0.95em;
+        }
+        .key-finding strong {
+            color: #234e52;
+        }
+        .timeline-list {
+            list-style: none;
+            padding: 0;
+        }
+        .timeline-list li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #e5e7eb;
+            display: flex;
+            gap: 15px;
+        }
+        .timeline-list li:last-child {
+            border-bottom: none;
+        }
+        .timeline-time {
+            font-weight: 600;
+            color: #667eea;
+            min-width: 100px;
+        }
+        .methodology-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            .timeline-list li {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="#" id="backLink" class="back-link">← Zurück</a>
+
+        <h1>📚 Wissenschaftliche Quellen</h1>
+
+        <div class="intro-box">
+            <p><strong>Transparenz ist uns wichtig.</strong> Alle Berechnungen und Gesundheitsinformationen in ByeByeSmoke basieren auf peer-reviewed wissenschaftlichen Studien und offiziellen Gesundheitsorganisationen.</p>
+            <p>Diese Seite listet alle verwendeten Quellen mit direkten Links zu den Originalstudien.</p>
+        </div>
+
+        <h2>Lebenszeit pro Zigarette</h2>
+
+        <div class="source-category">
+            <h3>🕐 Lebenserwartungs-Berechnungen</h3>
+
+            <div class="key-finding">
+                <strong>Ergebnis:</strong> Jede gerauchte Zigarette kostet 17-22 Minuten Lebenszeit (Durchschnitt: 20 Minuten).
+            </div>
+
+            <div class="source-item">
+                <p class="authors">Shaw M, Mitchell R, Dorling D</p>
+                <p><span class="year">2000</span> - <span class="title">"Time for a smoke? One cigarette reduces your life by 11 minutes"</span></p>
+                <p class="journal">BMJ 320(53)</p>
+                <p><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC1117323/" target="_blank">https://pmc.ncbi.nlm.nih.gov/articles/PMC1117323/</a></p>
+            </div>
+
+            <div class="source-item">
+                <p class="authors">Jackson SE et al.</p>
+                <p><span class="year">2025</span> - <span class="title">"The price of a cigarette: 20 minutes of life? An updated estimate"</span></p>
+                <p class="journal">Addiction Journal</p>
+                <p><a href="https://onlinelibrary.wiley.com/doi/10.1111/add.16757" target="_blank">https://onlinelibrary.wiley.com/doi/10.1111/add.16757</a></p>
+                <p style="margin-top: 10px; color: #4a5568;"><strong>Neuste Daten:</strong> Männer: 17 Min/Zigarette, Frauen: 22 Min/Zigarette</p>
+            </div>
+        </div>
+
+        <h2>Herz-Kreislauf-Erholung</h2>
+
+        <div class="source-category">
+            <h3>❤️ Kardiovaskuläre Regeneration</h3>
+
+            <div class="key-finding">
+                <strong>Ergebnis:</strong> Nach 1 Jahr halbiert sich das Herzinfarktrisiko. Nach 15 Jahren erreicht man Nichtraucher-Niveau.
+            </div>
+
+            <ul class="timeline-list">
+                <li><span class="timeline-time">20 Minuten</span> Herzfrequenz und Blutdruck normalisieren sich</li>
+                <li><span class="timeline-time">1 Jahr</span> 50% Risikoreduktion für Herzinfarkt</li>
+                <li><span class="timeline-time">2 Jahre</span> 67% des Weges zur Normalität</li>
+                <li><span class="timeline-time">5-10 Jahre</span> 70-80% Erholung</li>
+                <li><span class="timeline-time">15 Jahre</span> Nichtraucher-Niveau erreicht</li>
+            </ul>
+
+            <div class="source-item">
+                <p class="authors">World Health Organization (WHO)</p>
+                <p><span class="title">"Tobacco: Health benefits of smoking cessation"</span></p>
+                <p><a href="https://www.who.int/news-room/questions-and-answers/item/tobacco-health-benefits-of-smoking-cessation" target="_blank">https://www.who.int/news-room/questions-and-answers/item/tobacco-health-benefits-of-smoking-cessation</a></p>
+            </div>
+
+            <div class="source-item">
+                <p class="authors">Duncan MS, Freiberg MS, Greevy RA Jr, et al.</p>
+                <p><span class="year">2019</span> - <span class="title">"Association of Smoking Cessation With Subsequent Risk of Cardiovascular Disease"</span></p>
+                <p class="journal">JAMA</p>
+                <p><a href="https://jamanetwork.com/journals/jama/fullarticle/2748507" target="_blank">https://jamanetwork.com/journals/jama/fullarticle/2748507</a></p>
+            </div>
+        </div>
+
+        <h2>Lungenfunktion</h2>
+
+        <div class="source-category">
+            <h3>🫁 Lungenregeneration</h3>
+
+            <div class="key-finding">
+                <strong>Ergebnis:</strong> Die Lungenfunktion (FEV1) verbessert sich um bis zu 30% in den ersten 3 Monaten. Vollständige Regeneration nach 10 Jahren.<br>
+                <strong>Hinweis:</strong> Emphysem-Schäden sind leider nicht reversibel.
+            </div>
+
+            <ul class="timeline-list">
+                <li><span class="timeline-time">12 Stunden</span> CO-Spiegel im Blut normalisiert sich</li>
+                <li><span class="timeline-time">2-3 Tage</span> Flimmerhärchen (Zilien) reaktivieren sich</li>
+                <li><span class="timeline-time">2-12 Wochen</span> Lungenfunktion verbessert sich um 30%</li>
+                <li><span class="timeline-time">1-9 Monate</span> Zilien vollständig regeneriert, weniger Husten</li>
+                <li><span class="timeline-time">10 Jahre</span> Lungenkrebsrisiko halbiert sich</li>
+            </ul>
+
+            <div class="source-item">
+                <p class="authors">Jiménez-Ruiz CA et al.</p>
+                <p><span class="year">2023</span> - <span class="title">"Short-Term Benefits of Smoking Cessation Improve Respiratory Function"</span></p>
+                <p class="journal">PMC (PubMed Central)</p>
+                <p><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10697086/" target="_blank">https://pmc.ncbi.nlm.nih.gov/articles/PMC10697086/</a></p>
+            </div>
+
+            <div class="source-item">
+                <p class="authors">American Cancer Society</p>
+                <p><span class="title">"Benefits of Quitting Smoking Over Time"</span></p>
+                <p><a href="https://www.cancer.org/healthy/stay-away-from-tobacco/benefits-of-quitting-smoking-over-time.html" target="_blank">https://www.cancer.org/healthy/stay-away-from-tobacco/benefits-of-quitting-smoking-over-time.html</a></p>
+            </div>
+        </div>
+
+        <h2>Hautgesundheit</h2>
+
+        <div class="source-category">
+            <h3>✨ Hautverjüngung</h3>
+
+            <div class="key-finding">
+                <strong>Ergebnis:</strong> Raucher haben ein biologisch 9 Jahre älteres Hautbild. Nach dem Rauchstopp kann sich die Haut um bis zu 13 Jahre verjüngen.
+            </div>
+
+            <ul class="timeline-list">
+                <li><span class="timeline-time">2-4 Wochen</span> Kollagenproduktion normalisiert sich</li>
+                <li><span class="timeline-time">4-12 Wochen</span> Haut wird heller, weniger Rötung</li>
+                <li><span class="timeline-time">6 Monate</span> Falten und Pigmentflecken reduzieren sich</li>
+                <li><span class="timeline-time">12 Monate</span> Deutliche Verjüngung sichtbar</li>
+                <li><span class="timeline-time">2 Jahre</span> Maximale Erholung erreicht</li>
+            </ul>
+
+            <div class="source-item">
+                <p class="authors">Serri R et al. (Mailänder Studie)</p>
+                <p><span class="year">2010</span> - <span class="title">"Quitting smoking rejuvenates the skin"</span></p>
+                <p class="journal">Skinmed</p>
+                <p><a href="https://pubmed.ncbi.nlm.nih.gov/20839421/" target="_blank">https://pubmed.ncbi.nlm.nih.gov/20839421/</a></p>
+                <p style="margin-top: 10px; color: #4a5568;"><strong>Pilotstudie:</strong> 64 Frauen über 9 Monate untersucht. Durchschnittliche Hautverjüngung: 13 Jahre biologisches Alter.</p>
+            </div>
+
+            <div class="source-item">
+                <p class="authors">Koreanische Studie</p>
+                <p><span class="year">2012</span> - <span class="title">"Changes in Skin Color after Smoking Cessation"</span></p>
+                <p class="journal">PMC</p>
+                <p><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3383505/" target="_blank">https://pmc.ncbi.nlm.nih.gov/articles/PMC3383505/</a></p>
+            </div>
+        </div>
+
+        <h2>Durchblutung</h2>
+
+        <div class="source-category">
+            <h3>🩸 Periphere Durchblutung</h3>
+
+            <div class="key-finding">
+                <strong>Ergebnis:</strong> Die Durchblutung verbessert sich am schnellsten - bereits nach 20 Minuten beginnt die Erholung. Nach 6 Monaten ist sie normal.
+            </div>
+
+            <div class="source-item">
+                <p class="authors">World Health Organization (WHO)</p>
+                <p><span class="title">"Health benefits of smoking cessation"</span></p>
+                <p><a href="https://www.who.int/news-room/questions-and-answers/item/tobacco-health-benefits-of-smoking-cessation" target="_blank">https://www.who.int/news-room/questions-and-answers/item/tobacco-health-benefits-of-smoking-cessation</a></p>
+            </div>
+        </div>
+
+        <h2>Krebsrisiko-Reduktion</h2>
+
+        <div class="source-category">
+            <h3>🎗️ Risikoreduktion für Krebs und Schlaganfall</h3>
+
+            <div class="key-finding">
+                <strong>Wichtig:</strong> Das Lungenkrebsrisiko sinkt zwar deutlich, erreicht aber nie ganz Nichtraucher-Niveau. Es bleibt ein leicht erhöhtes Restrisiko.
+            </div>
+
+            <ul class="timeline-list">
+                <li><span class="timeline-time">5 Jahre</span> Schlaganfallrisiko deutlich reduziert</li>
+                <li><span class="timeline-time">10 Jahre</span> Lungenkrebsrisiko halbiert</li>
+                <li><span class="timeline-time">15 Jahre</span> Herzinfarktrisiko auf Nichtraucher-Niveau</li>
+                <li><span class="timeline-time">15-20 Jahre</span> Lungenkrebsrisiko maximal reduziert (~90%)</li>
+            </ul>
+
+            <div class="source-item">
+                <p class="authors">National Cancer Institute (NCI)</p>
+                <p><span class="title">"Health Benefits of Quitting"</span></p>
+                <p><a href="https://www.cancer.gov/about-cancer/causes-prevention/risk/tobacco/cessation-fact-sheet" target="_blank">https://www.cancer.gov/about-cancer/causes-prevention/risk/tobacco/cessation-fact-sheet</a></p>
+            </div>
+        </div>
+
+        <div class="methodology-box">
+            <h3>⚙️ Methodik unserer Berechnungen</h3>
+            <p>Die Regenerationswerte in ByeByeSmoke werden wie folgt berechnet:</p>
+            <ul>
+                <li><strong>Stufenweise Interpolation:</strong> Basierend auf den wissenschaftlichen Zeitpunkten werden Zwischenwerte linear interpoliert.</li>
+                <li><strong>Konservative Schätzungen:</strong> Bei widersprüchlichen Quellen verwenden wir die konservativeren Werte.</li>
+                <li><strong>Gerundete Prozente:</strong> Alle Werte werden auf ganze Zahlen gerundet, da wissenschaftlich keine höhere Genauigkeit gegeben ist.</li>
+                <li><strong>Individuelle Unterschiede:</strong> Die tatsächliche Regeneration kann je nach Alter, Rauchhistorie und Gesundheitszustand variieren.</li>
+            </ul>
+            <p><strong>Hinweis:</strong> Diese App ist kein medizinisches Gerät. Für individuelle Gesundheitsfragen konsultiere bitte einen Arzt.</p>
+        </div>
+
+        <h2>Weitere Links</h2>
+        <ul>
+            <li><a href="info.html">Über ByeByeSmoke</a></li>
+            <li><a href="datenschutz.html">Datenschutzerklärung</a></li>
+            <li><a href="impressum.html">Impressum</a></li>
+            <li><a href="https://github.com/HamiedNabizada/smoke-free-tracker" target="_blank">GitHub Repository</a></li>
+        </ul>
+
+        <p style="margin-top: 40px; text-align: center; color: #666;">
+            <strong>Zuletzt aktualisiert: Dezember 2025</strong>
+        </p>
+    </div>
+
+    <script>
+        // Smart back navigation
+        const backLink = document.getElementById('backLink');
+        const referrer = document.referrer;
+
+        if (referrer && referrer.includes(window.location.hostname)) {
+            backLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.history.back();
+            });
+        } else {
+            backLink.href = '../index.html';
+        }
+    </script>
+</body>
+</html>

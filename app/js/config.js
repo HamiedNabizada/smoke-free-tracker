@@ -3,7 +3,8 @@ export let userData = {
     quitDate: null,
     cigarettesPerDay: 12,
     pricePerPack: 10,
-    cigarettesPerPack: 20
+    cigarettesPerPack: 20,
+    gender: 'unknown' // 'male', 'female', or 'unknown' (für Lebenszeit-Berechnung)
 };
 
 // Function to set user data (called after loading from Firebase)
@@ -12,6 +13,7 @@ export function setUserData(data) {
     userData.cigarettesPerDay = data.cigarettes_per_day;
     userData.pricePerPack = data.price_per_pack;
     userData.cigarettesPerPack = data.cigarettes_per_pack;
+    userData.gender = data.gender || 'unknown';
 }
 
 // Global chart instance
