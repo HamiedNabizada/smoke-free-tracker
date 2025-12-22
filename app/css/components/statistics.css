@@ -222,18 +222,71 @@
 }
 
 .health-score-breakdown {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 10px;
-    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+    text-align: left;
 }
 
 .score-component {
-    background: rgba(255, 255, 255, 0.15);
-    padding: 10px;
+    display: grid;
+    grid-template-columns: 140px 1fr 50px 50px;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 15px;
     border-radius: 8px;
     font-size: 0.9rem;
-    backdrop-filter: blur(10px);
+}
+
+.component-label {
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.component-bar {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.component-fill {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, #11998e, #38ef7d);
+    border-radius: 4px;
+    transition: width 1s ease-out;
+}
+
+.component-value {
+    font-weight: 700;
+    text-align: right;
+}
+
+.component-weight {
+    font-size: 0.75rem;
+    opacity: 0.7;
+    text-align: right;
+}
+
+.health-score-source {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.health-score-source a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+}
+
+.health-score-source a:hover {
+    color: white;
+    text-decoration: underline;
 }
 
 /* Detailed Comparison Table */

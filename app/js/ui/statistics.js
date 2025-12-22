@@ -3,54 +3,59 @@ import { healthMilestones } from '../data/milestones.js';
 import { calculateTimeRemaining } from '../utils/calculations.js';
 
 
+/**
+ * Wissenschaftlich fundierter Health Score
+ *
+ * Gewichtung basiert auf Mortalitätsrelevanz:
+ * - Herz-Kreislauf: 30% (führende Todesursache bei Rauchern)
+ * - Lunge: 25% (COPD, Lungenkrebs)
+ * - Durchblutung: 20% (periphere Gefäßerkrankungen)
+ * - Risikoreduktion: 15% (Herzinfarkt, Schlaganfall, Krebs)
+ * - Haut: 10% (Indikator für Geweberegeneration)
+ *
+ * Quellen: WHO, JAMA, PMC - siehe quellen.html
+ */
 export function updateHealthScore(stats) {
-    // Calculate overall health score (0-100)
-    let score = 0;
+    if (!stats.health) return;
 
-    // Time component (0-30 points): exponential growth, plateaus at ~3 years
-    const timeScore = Math.min(30, (stats.days / 1095) * 30);
-    score += timeScore;
+    // Komponenten aus wissenschaftlichen Berechnungen
+    const cardiovascular = stats.health.cardiovascular;  // 0-100%
+    const lung = stats.health.lung;                      // 0-100%
+    const circulation = stats.health.circulation;        // 0-100%
+    const skin = stats.health.skin;                      // 0-100%
 
-    // Lung health component (0-25 points)
-    const lungScore = (stats.lungHealth / 100) * 25;
-    score += lungScore;
+    // Risikoreduktion (Durchschnitt)
+    const riskReduction = stats.riskReduction ?
+        (stats.riskReduction.heartAttack + stats.riskReduction.stroke + stats.riskReduction.lungCancer) / 3
+        : 0;
 
-    // Consistency component (0-20 points): rewards reaching milestones
-    let consistencyScore = 0;
-    if (stats.days >= 1) consistencyScore += 2;
-    if (stats.days >= 3) consistencyScore += 3;
-    if (stats.days >= 7) consistencyScore += 3;
-    if (stats.days >= 30) consistencyScore += 4;
-    if (stats.days >= 90) consistencyScore += 4;
-    if (stats.days >= 365) consistencyScore += 4;
-    score += consistencyScore;
+    // Gewichteter Health Score
+    const weights = {
+        cardiovascular: 0.30,  // 30%
+        lung: 0.25,            // 25%
+        circulation: 0.20,     // 20%
+        riskReduction: 0.15,   // 15%
+        skin: 0.10             // 10%
+    };
 
-    // Commitment component (0-15 points): based on cigarettes avoided
-    const commitmentScore = Math.min(15, (stats.cigarettes / 5000) * 15);
-    score += commitmentScore;
-
-    // Survival component (0-10 points): beating the odds
-    let survivalScore = 0;
-    if (stats.days >= 1) survivalScore += 2;
-    if (stats.days >= 7) survivalScore += 2;
-    if (stats.days >= 30) survivalScore += 2;
-    if (stats.days >= 90) survivalScore += 2;
-    if (stats.days >= 180) survivalScore += 2;
-    score += survivalScore;
-
-    const finalScore = Math.min(100, Math.round(score));
+    const finalScore = Math.round(
+        cardiovascular * weights.cardiovascular +
+        lung * weights.lung +
+        circulation * weights.circulation +
+        riskReduction * weights.riskReduction +
+        skin * weights.skin
+    );
 
     // Update gauge
     const gaugeProgress = document.getElementById('gaugeProgress');
     const gaugeScore = document.getElementById('gaugeScore');
 
     if (gaugeProgress && gaugeScore) {
-        const circumference = 251.2; // Half circle circumference
+        const circumference = 251.2;
         const offset = circumference - (finalScore / 100) * circumference;
         gaugeProgress.style.strokeDashoffset = offset;
         gaugeScore.textContent = finalScore;
 
-        // Change color based on score
         if (finalScore >= 80) {
             gaugeProgress.style.stroke = '#11998e';
         } else if (finalScore >= 50) {
@@ -60,41 +65,66 @@ export function updateHealthScore(stats) {
         }
     }
 
-    // Update details
+    // Update details mit wissenschaftlicher Aufschlüsselung
     const detailsContainer = document.getElementById('healthScoreDetails');
     if (detailsContainer) {
         let rating = '';
         let message = '';
 
         if (finalScore >= 90) {
-            rating = 'Exzellent! 🌟';
+            rating = 'Exzellent!';
             message = 'Deine Gesundheit hat sich hervorragend erholt!';
         } else if (finalScore >= 75) {
-            rating = 'Sehr gut! 💪';
+            rating = 'Sehr gut!';
             message = 'Du machst großartige Fortschritte!';
-        } else if (finalScore >= 60) {
-            rating = 'Gut! 👍';
-            message = 'Dein Körper erholt sich gut!';
-        } else if (finalScore >= 40) {
-            rating = 'Aufwärts! 📈';
-            message = 'Weiter so, du bist auf dem richtigen Weg!';
-        } else if (finalScore >= 20) {
-            rating = 'Begonnen! 🌱';
-            message = 'Jeder Tag zählt, bleib dran!';
+        } else if (finalScore >= 50) {
+            rating = 'Gut!';
+            message = 'Dein Körper erholt sich stetig.';
+        } else if (finalScore >= 25) {
+            rating = 'Fortschritt!';
+            message = 'Die Erholung hat begonnen.';
         } else {
-            rating = 'Gestartet! 🚀';
-            message = 'Du hast den ersten Schritt gemacht!';
+            rating = 'Gestartet!';
+            message = 'Erste positive Veränderungen laufen.';
         }
 
         detailsContainer.innerHTML = `
             <div class="health-score-rating">${rating}</div>
             <div class="health-score-message">${message}</div>
             <div class="health-score-breakdown">
-                <div class="score-component">⏱️ Zeit: ${Math.round(timeScore)}/30</div>
-                <div class="score-component">🫁 Lungen: ${Math.round(lungScore)}/25</div>
-                <div class="score-component">🎯 Meilensteine: ${consistencyScore}/20</div>
-                <div class="score-component">💎 Disziplin: ${Math.round(commitmentScore)}/15</div>
-                <div class="score-component">🏆 Durchhaltevermögen: ${survivalScore}/10</div>
+                <div class="score-component">
+                    <span class="component-label">❤️ Herz-Kreislauf</span>
+                    <span class="component-bar"><span class="component-fill" style="width: ${cardiovascular}%"></span></span>
+                    <span class="component-value">${cardiovascular}%</span>
+                    <span class="component-weight">(×30%)</span>
+                </div>
+                <div class="score-component">
+                    <span class="component-label">🫁 Lungenfunktion</span>
+                    <span class="component-bar"><span class="component-fill" style="width: ${lung}%"></span></span>
+                    <span class="component-value">${lung}%</span>
+                    <span class="component-weight">(×25%)</span>
+                </div>
+                <div class="score-component">
+                    <span class="component-label">🩸 Durchblutung</span>
+                    <span class="component-bar"><span class="component-fill" style="width: ${circulation}%"></span></span>
+                    <span class="component-value">${circulation}%</span>
+                    <span class="component-weight">(×20%)</span>
+                </div>
+                <div class="score-component">
+                    <span class="component-label">🎗️ Risikoreduktion</span>
+                    <span class="component-bar"><span class="component-fill" style="width: ${Math.round(riskReduction)}%"></span></span>
+                    <span class="component-value">${Math.round(riskReduction)}%</span>
+                    <span class="component-weight">(×15%)</span>
+                </div>
+                <div class="score-component">
+                    <span class="component-label">✨ Hautgesundheit</span>
+                    <span class="component-bar"><span class="component-fill" style="width: ${skin}%"></span></span>
+                    <span class="component-value">${skin}%</span>
+                    <span class="component-weight">(×10%)</span>
+                </div>
+            </div>
+            <div class="health-score-source">
+                <a href="quellen.html">📚 Wissenschaftliche Quellen</a>
             </div>
         `;
     }
