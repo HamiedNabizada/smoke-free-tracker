@@ -169,6 +169,10 @@
     background: #2d2d2d;
 }
 
+.dark-mode .weekly-stat-value {
+    color: #fff;
+}
+
 .dark-mode .weekly-stat-label {
     color: #aaa;
 }
