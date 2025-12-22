@@ -1,0 +1,439 @@
+/* Mini Games Styles */
+
+.mini-game-card {
+    margin-bottom: 20px;
+}
+
+.play-game-btn {
+    width: 100%;
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.play-game-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.play-game-btn .game-emoji {
+    font-size: 1.5rem;
+}
+
+/* Game Modal */
+.mini-game-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+    animation: fadeIn 0.3s;
+}
+
+.mini-game-content {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 400px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    animation: slideUp 0.3s;
+}
+
+.dark-mode .mini-game-content {
+    background: #1e1e1e;
+    color: white;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.mini-game-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0, 0, 0, 0.1);
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.dark-mode .mini-game-close {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.mini-game-close:hover {
+    background: rgba(0, 0, 0, 0.2);
+    transform: rotate(90deg);
+}
+
+.mini-game-content h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.dark-mode .mini-game-content h2 {
+    color: #fff;
+}
+
+.game-intro {
+    text-align: center;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.dark-mode .game-intro {
+    color: #aaa;
+}
+
+/* Game Selection */
+.game-selection {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.game-option {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: #f7fafc;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: left;
+}
+
+.dark-mode .game-option {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.game-option:hover {
+    border-color: #667eea;
+    transform: translateX(5px);
+}
+
+.game-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.game-name {
+    font-weight: 600;
+    color: #333;
+    display: block;
+}
+
+.dark-mode .game-name {
+    color: #fff;
+}
+
+.game-desc {
+    font-size: 0.85rem;
+    color: #666;
+    display: block;
+    margin-top: 2px;
+}
+
+.dark-mode .game-desc {
+    color: #aaa;
+}
+
+/* Game Stats */
+.game-stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.game-stat {
+    text-align: center;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.dark-mode .stat-label {
+    color: #aaa;
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #667eea;
+}
+
+/* Tap Game */
+.tap-arena {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    background: linear-gradient(135deg, #f7fafc 0%, #e2e8f0 100%);
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.dark-mode .tap-arena {
+    background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+}
+
+.tap-target {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.1s, opacity 0.3s;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.5);
+}
+
+.tap-target:active {
+    transform: scale(0.9);
+}
+
+.game-hint {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #999;
+}
+
+/* Breathing Game */
+.breathe-instruction {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #667eea;
+    margin-bottom: 20px;
+}
+
+.breathe-circle-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    margin-bottom: 20px;
+}
+
+.breathe-circle {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    transition: transform 4s ease-in-out;
+}
+
+.breathe-circle.inhale {
+    transform: scale(1.8);
+}
+
+.breathe-circle.exhale {
+    transform: scale(1);
+}
+
+.breathe-progress {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #666;
+}
+
+.dark-mode .breathe-progress {
+    color: #aaa;
+}
+
+/* Memory Game */
+.memory-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.memory-card {
+    aspect-ratio: 1;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.memory-card .card-front,
+.memory-card .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    border-radius: 8px;
+    backface-visibility: hidden;
+    transition: transform 0.3s;
+}
+
+.memory-card .card-front {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.memory-card .card-back {
+    background: #f7fafc;
+    transform: rotateY(180deg);
+}
+
+.dark-mode .memory-card .card-back {
+    background: #2d2d2d;
+}
+
+.memory-card.flipped .card-front {
+    transform: rotateY(180deg);
+}
+
+.memory-card.flipped .card-back {
+    transform: rotateY(0);
+}
+
+.memory-card.matched .card-back {
+    background: #48bb78;
+}
+
+/* Game Results */
+.game-result {
+    text-align: center;
+    padding: 30px 0;
+}
+
+.result-score {
+    font-size: 4rem;
+    font-weight: 700;
+    color: #667eea;
+    line-height: 1;
+}
+
+.result-icon {
+    font-size: 4rem;
+    margin-bottom: 10px;
+}
+
+.result-label {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.dark-mode .result-label {
+    color: #aaa;
+}
+
+.result-message {
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.dark-mode .result-message {
+    color: #ddd;
+}
+
+/* Game Buttons */
+.game-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.game-btn {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.game-btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.game-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.game-btn-secondary {
+    background: #f7fafc;
+    color: #333;
+}
+
+.dark-mode .game-btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.game-btn-secondary:hover {
+    background: #e2e8f0;
+}
+
+.dark-mode .game-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Responsive */
+@media (max-width: 400px) {
+    .memory-grid {
+        gap: 5px;
+    }
+
+    .memory-card .card-front,
+    .memory-card .card-back {
+        font-size: 1.4rem;
+    }
+
+    .tap-arena {
+        height: 200px;
+    }
+
+    .tap-target {
+        width: 50px;
+        height: 50px;
+    }
+}

@@ -10,6 +10,7 @@ import { initializeDataExport } from './ui/data-export.js';
 import { initializeProgressGoals } from './ui/progress-goals.js';
 import { initializeStreak } from './ui/streak.js';
 import { initializeWeeklySummary } from './ui/weekly-summary.js';
+import { initializeMiniGames } from './ui/mini-games.js';
 import { setUserData } from './config.js';
 
 // Register Service Worker for PWA functionality
@@ -60,6 +61,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await initializeProgressGoals();
     updateDashboard();
     initializeWeeklySummary();
+    initializeMiniGames();
 
     // Make updateDashboard globally accessible for goal edits
     window.updateDashboard = updateDashboard;
