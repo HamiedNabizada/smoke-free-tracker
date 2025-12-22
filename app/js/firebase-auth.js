@@ -617,7 +617,7 @@ async function getCravingHeatmapData() {
 
     // Check cache
     const cacheKey = 'craving_heatmap_' + user.uid;
-    const cached = getFromCache(cacheKey);
+    const cached = getCached(cacheKey);
     if (cached) {
       console.log('[Cache] Craving heatmap from cache');
       return cached;

@@ -4,6 +4,11 @@
     margin-bottom: 20px;
 }
 
+/* Reserve space for heatmap to prevent CLS */
+#cravingHeatmap {
+    min-height: 280px;
+}
+
 .craving-heatmap-card h2 {
     margin-bottom: 15px;
     color: #333;

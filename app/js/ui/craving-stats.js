@@ -15,13 +15,12 @@ export async function getCravingHistory(days = 30) {
                 const startDate = new Date();
                 startDate.setDate(startDate.getDate() - days);
                 const startDateStr = startDate.toISOString().split('T')[0];
-                // Filter to requested date range
                 return demoEvents.filter(e => e.date >= startDateStr);
             }
             return [];
         }
 
-        // Check cache first (use global getCached from firebase-auth.js)
+        // Check cache first
         const cacheKey = 'craving_history_' + user.uid + '_' + days;
         if (typeof getCached === 'function') {
             const cached = getCached(cacheKey);
@@ -38,23 +37,28 @@ export async function getCravingHistory(days = 30) {
         const startDateStr = startDate.toISOString().split('T')[0];
         const endDateStr = endDate.toISOString().split('T')[0];
 
-        // Query craving events for this user in date range
-        const snapshot = await firebase.firestore()
-            .collection('craving_events')
+        // Use db from global scope (firebase-config.js) for consistent access
+        const db = firebase.firestore();
+
+        // Query craving events - use simpler query to avoid index requirements
+        const snapshot = await db.collection('craving_events')
             .where('user_id', '==', user.uid)
-            .where('date', '>=', startDateStr)
-            .where('date', '<=', endDateStr)
-            .orderBy('date', 'asc')
             .get();
 
         const cravingData = [];
         snapshot.forEach(doc => {
             const data = doc.data();
-            cravingData.push({
-                date: data.date,
-                count: data.count || 0
-            });
+            // Filter by date range client-side to avoid compound index requirement
+            if (data.date >= startDateStr && data.date <= endDateStr) {
+                cravingData.push({
+                    date: data.date,
+                    count: data.count || 0
+                });
+            }
         });
+
+        // Sort client-side
+        cravingData.sort((a, b) => a.date.localeCompare(b.date));
 
         // Cache result (2 min TTL)
         if (typeof setCache === 'function') {
@@ -69,49 +73,15 @@ export async function getCravingHistory(days = 30) {
     }
 }
 
-// Get today's craving count (with caching)
+// Get today's craving count (uses global getCravingCount from firebase-auth.js)
 export async function getTodayCravingCount() {
     try {
-        const user = firebase.auth().currentUser;
-        if (!user) return 0;
-
-        const today = new Date().toISOString().split('T')[0];
-
-        // Demo mode: return demo count for today
-        if (typeof isDemoMode === 'function' && isDemoMode()) {
-            if (typeof getDemoCravingEvents === 'function') {
-                const demoEvents = getDemoCravingEvents();
-                const todayEvent = demoEvents.find(e => e.date === today);
-                return todayEvent ? todayEvent.count : 3; // Default demo count
-            }
-            return 3;
+        // Use global getCravingCount function from firebase-auth.js
+        if (typeof getCravingCount === 'function') {
+            const result = await getCravingCount();
+            return result.count || 0;
         }
-
-        // Check cache first
-        const cacheKey = 'craving_today_' + user.uid;
-        if (typeof getCached === 'function') {
-            const cached = getCached(cacheKey);
-            if (cached && cached.date === today) {
-                console.log('[Cache] Today craving count from cache');
-                return cached.count;
-            }
-        }
-
-        const docRef = firebase.firestore().collection('craving_events').doc(`${user.uid}_${today}`);
-        const doc = await docRef.get();
-
-        let count = 0;
-        if (doc.exists) {
-            count = doc.data().count || 0;
-        }
-
-        // Cache result (30 sec TTL)
-        if (typeof setCache === 'function') {
-            setCache(cacheKey, { count, date: today }, 30 * 1000);
-            console.log('[Firebase] Today craving count loaded');
-        }
-
-        return count;
+        return 0;
     } catch (error) {
         console.error('Error getting today craving count:', error);
         return 0;

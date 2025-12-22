@@ -197,7 +197,7 @@
 .health-gauge {
     max-width: 300px;
     width: 100%;
-    height: auto;
+    aspect-ratio: 200 / 120;
 }
 
 .gauge-progress {
@@ -239,6 +239,7 @@
 /* Detailed Comparison Table */
 .detailed-comparison {
     margin-top: 25px;
+    min-height: 200px;
 }
 
 .comparison-table {
