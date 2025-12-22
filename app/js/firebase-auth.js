@@ -495,7 +495,10 @@ async function recordCraving() {
       return true;
     }
 
-    const today = new Date().toISOString().split('T')[0];
+    const now = new Date();
+    const today = now.toISOString().split('T')[0];
+    const currentHour = now.getHours();
+    const dayOfWeek = now.getDay(); // 0 = Sunday, 6 = Saturday
     const docRef = db.collection('craving_events').doc(`${user.uid}_${today}`);
 
     // Use Firestore transaction to increment count
@@ -503,16 +506,30 @@ async function recordCraving() {
       const doc = await transaction.get(docRef);
 
       if (!doc.exists) {
+        // Initialize hours object with current hour having count 1
+        const hours = {};
+        hours[currentHour] = 1;
+
         transaction.set(docRef, {
           user_id: user.uid,
           date: today,
+          day_of_week: dayOfWeek,
           count: 1,
+          hours: hours,
           timestamp: firebase.firestore.FieldValue.serverTimestamp()
         });
         return 1;
       } else {
-        const newCount = (doc.data().count || 0) + 1;
-        transaction.update(docRef, { count: newCount });
+        const data = doc.data();
+        const newCount = (data.count || 0) + 1;
+        const hours = data.hours || {};
+        hours[currentHour] = (hours[currentHour] || 0) + 1;
+
+        transaction.update(docRef, {
+          count: newCount,
+          hours: hours,
+          day_of_week: dayOfWeek // Update in case it wasn't set before
+        });
         return newCount;
       }
     });
@@ -588,4 +605,111 @@ function getCurrentUsername() {
 function getCurrentUserId() {
   const user = auth.currentUser;
   return user ? user.uid : null;
+}
+
+// Get craving heatmap data (last 30 days)
+async function getCravingHeatmapData() {
+  try {
+    const user = auth.currentUser;
+    if (!user) {
+      return { heatmap: createEmptyHeatmap(), totalCravings: 0 };
+    }
+
+    // Check cache
+    const cacheKey = 'craving_heatmap_' + user.uid;
+    const cached = getFromCache(cacheKey);
+    if (cached) {
+      console.log('[Cache] Craving heatmap from cache');
+      return cached;
+    }
+
+    // Demo mode data
+    if (isDemoMode()) {
+      const demoData = generateDemoHeatmapData();
+      return demoData;
+    }
+
+    // Get last 30 days of craving events
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    const startDate = thirtyDaysAgo.toISOString().split('T')[0];
+
+    const snapshot = await db.collection('craving_events')
+      .where('user_id', '==', user.uid)
+      .where('date', '>=', startDate)
+      .get();
+
+    // Create heatmap: 7 days x 24 hours
+    const heatmap = createEmptyHeatmap();
+    let totalCravings = 0;
+
+    snapshot.docs.forEach(doc => {
+      const data = doc.data();
+      const dayOfWeek = data.day_of_week !== undefined ? data.day_of_week : new Date(data.date).getDay();
+      const hours = data.hours || {};
+
+      Object.keys(hours).forEach(hour => {
+        const hourNum = parseInt(hour);
+        heatmap[dayOfWeek][hourNum] += hours[hour];
+        totalCravings += hours[hour];
+      });
+
+      // For old data without hours, distribute the count across typical waking hours
+      if (!data.hours && data.count) {
+        const typicalHours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
+        const countPerHour = Math.ceil(data.count / typicalHours.length);
+        typicalHours.forEach(h => {
+          heatmap[dayOfWeek][h] += countPerHour;
+        });
+        totalCravings += data.count;
+      }
+    });
+
+    const result = { heatmap, totalCravings };
+    setCache(cacheKey, result, CACHE_TTL.CRAVING_TODAY);
+    console.log('[Firebase] Craving heatmap loaded');
+    return result;
+  } catch (error) {
+    console.error('Get craving heatmap error:', error);
+    return { heatmap: createEmptyHeatmap(), totalCravings: 0 };
+  }
+}
+
+// Create empty heatmap structure (7 days x 24 hours)
+function createEmptyHeatmap() {
+  const heatmap = [];
+  for (let day = 0; day < 7; day++) {
+    heatmap[day] = [];
+    for (let hour = 0; hour < 24; hour++) {
+      heatmap[day][hour] = 0;
+    }
+  }
+  return heatmap;
+}
+
+// Generate demo heatmap data
+function generateDemoHeatmapData() {
+  const heatmap = createEmptyHeatmap();
+  let totalCravings = 0;
+
+  // Simulate realistic craving patterns:
+  // - More cravings in the morning (after waking), after meals, and evening
+  // - Fewer on weekends
+  const patterns = {
+    weekday: { 7: 2, 8: 3, 9: 2, 12: 3, 13: 2, 17: 2, 18: 3, 19: 2, 20: 2, 21: 1 },
+    weekend: { 9: 1, 10: 2, 12: 2, 14: 1, 18: 2, 20: 2, 21: 1 }
+  };
+
+  for (let day = 0; day < 7; day++) {
+    const isWeekend = day === 0 || day === 6;
+    const pattern = isWeekend ? patterns.weekend : patterns.weekday;
+
+    Object.keys(pattern).forEach(hour => {
+      const count = pattern[hour];
+      heatmap[day][parseInt(hour)] = count;
+      totalCravings += count;
+    });
+  }
+
+  return { heatmap, totalCravings };
 }

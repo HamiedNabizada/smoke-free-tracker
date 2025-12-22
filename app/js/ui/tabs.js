@@ -3,6 +3,7 @@ import { updateChart } from './charts.js';
 import { updateHealthScore, updateMilestoneTimeline, updateFutureProjection, updateDetailedComparison, updateAgeGroupComparison } from './statistics.js';
 import { updateHappeningNow } from './happening-now.js';
 import { updateCompactCravingStats, updateCravingChart } from './craving-stats.js';
+import { updateCravingHeatmap } from './craving-heatmap.js';
 
 // Debounce timers for tab content loading
 let statisticsTimer = null;
@@ -102,6 +103,7 @@ function loadTabContent(tabName) {
                 updateDetailedComparison(stats);
                 updateAgeGroupComparison(stats);
                 updateCravingChart();
+                updateCravingHeatmap();
                 if (isFirstLoad) {
                     console.log('[LazyLoad] Statistics tab initialized');
                     initializedTabs.add(tabName);

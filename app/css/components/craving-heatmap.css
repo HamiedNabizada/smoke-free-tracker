@@ -1,0 +1,231 @@
+/* Craving Heatmap Styles */
+
+.craving-heatmap-card {
+    margin-bottom: 20px;
+}
+
+.craving-heatmap-card h2 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.heatmap-loading,
+.heatmap-error {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+.heatmap-empty {
+    text-align: center;
+    padding: 30px 20px;
+    color: #666;
+}
+
+.heatmap-hint {
+    font-size: 0.9rem;
+    margin-top: 10px;
+    color: #999;
+}
+
+.heatmap-wrapper {
+    overflow-x: auto;
+}
+
+.heatmap-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 280px;
+}
+
+.heatmap-row {
+    display: flex;
+    gap: 2px;
+    align-items: center;
+}
+
+.heatmap-header {
+    margin-bottom: 5px;
+}
+
+.heatmap-day-label {
+    width: 30px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #666;
+    text-align: right;
+    padding-right: 8px;
+    flex-shrink: 0;
+}
+
+.heatmap-hour-label {
+    flex: 1;
+    text-align: center;
+    font-size: 0.7rem;
+    color: #999;
+}
+
+.heatmap-cell {
+    flex: 1;
+    height: 20px;
+    border-radius: 3px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.heatmap-cell:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+/* Color levels */
+.level-0 {
+    background: #ebedf0;
+}
+
+.level-1 {
+    background: #c6e48b;
+}
+
+.level-2 {
+    background: #7bc96f;
+}
+
+.level-3 {
+    background: #449934;
+}
+
+.level-4 {
+    background: #196127;
+}
+
+/* Legend */
+.heatmap-legend {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 15px;
+    font-size: 0.75rem;
+    color: #666;
+}
+
+.legend-scale {
+    display: flex;
+    gap: 2px;
+}
+
+.legend-cell {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+.legend-label {
+    color: #999;
+}
+
+/* Insights */
+.heatmap-insights {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.heatmap-insights h4 {
+    font-size: 0.95rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.heatmap-insights ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.heatmap-insights li {
+    padding: 6px 0;
+    padding-left: 20px;
+    position: relative;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.heatmap-insights li::before {
+    content: '•';
+    position: absolute;
+    left: 5px;
+    color: #667eea;
+}
+
+.heatmap-total {
+    margin-top: 12px;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+/* Dark Mode */
+.dark-mode .craving-heatmap-card h2 {
+    color: #fff;
+}
+
+.dark-mode .heatmap-loading,
+.dark-mode .heatmap-error,
+.dark-mode .heatmap-empty {
+    color: #aaa;
+}
+
+.dark-mode .heatmap-hint {
+    color: #777;
+}
+
+.dark-mode .heatmap-day-label {
+    color: #aaa;
+}
+
+.dark-mode .heatmap-hour-label {
+    color: #777;
+}
+
+.dark-mode .level-0 {
+    background: #2d2d2d;
+}
+
+.dark-mode .legend-label {
+    color: #777;
+}
+
+.dark-mode .heatmap-insights {
+    border-top-color: #3a3a3a;
+}
+
+.dark-mode .heatmap-insights h4 {
+    color: #fff;
+}
+
+.dark-mode .heatmap-insights li {
+    color: #bbb;
+}
+
+.dark-mode .heatmap-total {
+    color: #999;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .heatmap-cell {
+        height: 16px;
+    }
+
+    .heatmap-day-label {
+        width: 25px;
+        font-size: 0.7rem;
+    }
+
+    .heatmap-hour-label {
+        font-size: 0.6rem;
+    }
+}
