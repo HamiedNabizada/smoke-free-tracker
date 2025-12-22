@@ -22,7 +22,11 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
+    <!-- Skip Links for keyboard navigation -->
+    <a href="#dashboard" class="skip-link">Zum Hauptinhalt springen</a>
+    <a href="#tab-navigation" class="skip-link">Zur Navigation springen</a>
+
+    <div class="container" role="application" aria-label="ByeByeSmoke Rauchstopp-Tracker">
         <header>
             <div class="header-logo">
                 <img src="logo_small.png" alt="ByeByeSmoke Logo" class="logo-image">
@@ -36,33 +40,33 @@
         </header>
 
         <!-- Tab Navigation -->
-        <nav class="tab-navigation">
-            <button class="tab-button active" data-tab="overview">
-                <span class="tab-icon">📊</span>
+        <nav class="tab-navigation" id="tab-navigation" role="tablist" aria-label="Hauptnavigation">
+            <button class="tab-button active" data-tab="overview" role="tab" aria-selected="true" aria-controls="panel-overview" id="tab-overview">
+                <span class="tab-icon" aria-hidden="true">📊</span>
                 <span class="tab-label">Übersicht</span>
             </button>
-            <button class="tab-button" data-tab="milestones">
-                <span class="tab-icon">🏥</span>
+            <button class="tab-button" data-tab="milestones" role="tab" aria-selected="false" aria-controls="panel-milestones" id="tab-milestones">
+                <span class="tab-icon" aria-hidden="true">🏥</span>
                 <span class="tab-label">Meilensteine</span>
             </button>
-            <button class="tab-button" data-tab="achievements">
-                <span class="tab-icon">🏆</span>
+            <button class="tab-button" data-tab="achievements" role="tab" aria-selected="false" aria-controls="panel-achievements" id="tab-achievements">
+                <span class="tab-icon" aria-hidden="true">🏆</span>
                 <span class="tab-label">Erfolge</span>
             </button>
-            <button class="tab-button" data-tab="statistics">
-                <span class="tab-icon">📈</span>
+            <button class="tab-button" data-tab="statistics" role="tab" aria-selected="false" aria-controls="panel-statistics" id="tab-statistics">
+                <span class="tab-icon" aria-hidden="true">📈</span>
                 <span class="tab-label">Statistiken</span>
             </button>
-            <button class="tab-button" data-tab="help">
-                <span class="tab-icon">🆘</span>
+            <button class="tab-button" data-tab="help" role="tab" aria-selected="false" aria-controls="panel-help" id="tab-help">
+                <span class="tab-icon" aria-hidden="true">🆘</span>
                 <span class="tab-label">Hilfe</span>
             </button>
         </nav>
 
         <!-- Main Dashboard -->
-        <div id="dashboard" class="dashboard">
+        <main id="dashboard" class="dashboard" aria-live="polite">
             <!-- Tab Panel: Übersicht -->
-            <div class="tab-panel active" data-panel="overview">
+            <div class="tab-panel active" data-panel="overview" role="tabpanel" id="panel-overview" aria-labelledby="tab-overview" tabindex="0">
                 <!-- Daily Motivation -->
                 <div class="card motivation-card">
                     <div class="motivation-icon">💪</div>
@@ -338,7 +342,7 @@
             </div>
 
             <!-- Tab Panel: Meilensteine -->
-            <div class="tab-panel" data-panel="milestones">
+            <div class="tab-panel" data-panel="milestones" role="tabpanel" id="panel-milestones" aria-labelledby="tab-milestones" tabindex="0">
                 <!-- What's Happening NOW -->
                 <div class="card happening-now-card">
                     <h2>⏰ Was passiert gerade JETZT in deinem Körper?</h2>
@@ -362,7 +366,7 @@
             </div>
 
             <!-- Tab Panel: Erfolge -->
-            <div class="tab-panel" data-panel="achievements">
+            <div class="tab-panel" data-panel="achievements" role="tabpanel" id="panel-achievements" aria-labelledby="tab-achievements" tabindex="0">
                 <div class="card">
                     <h2>Erfolge</h2>
                     <div id="achievements" class="achievements-grid"></div>
@@ -370,7 +374,7 @@
             </div>
 
             <!-- Tab Panel: Statistiken -->
-            <div class="tab-panel" data-panel="statistics">
+            <div class="tab-panel" data-panel="statistics" role="tabpanel" id="panel-statistics" aria-labelledby="tab-statistics" tabindex="0">
                 <!-- Health Score Gauge -->
                 <div class="card health-score-card">
                     <h2>💪 Dein Gesundheits-Score</h2>
@@ -463,7 +467,7 @@
             </div>
 
             <!-- Tab Panel: Hilfe -->
-            <div class="tab-panel" data-panel="help">
+            <div class="tab-panel" data-panel="help" role="tabpanel" id="panel-help" aria-labelledby="tab-help" tabindex="0">
                 <!-- Craving Button -->
                 <div class="card craving-button-card">
                     <button id="cravingButton" class="craving-button">
@@ -660,7 +664,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
 
         <!-- Footer -->
         <footer class="app-footer">
@@ -677,10 +681,11 @@
     </div>
 
     <!-- Craving Timer Overlay -->
-    <div id="cravingOverlay" class="craving-overlay hidden">
+    <div id="cravingOverlay" class="craving-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="cravingTimerTitle">
         <div class="craving-overlay-content">
             <!-- Close Button -->
-            <button id="cravingCloseBtn" class="craving-close-btn">✕</button>
+            <button id="cravingCloseBtn" class="craving-close-btn" aria-label="Timer schließen">✕</button>
+            <h2 id="cravingTimerTitle" class="sr-only">Craving-Timer</h2>
 
             <!-- Breathing Animation -->
             <div class="breathing-container">
@@ -720,10 +725,10 @@
     </div>
 
     <!-- Settings Modal -->
-    <div id="settingsModal" class="settings-modal hidden">
+    <div id="settingsModal" class="settings-modal hidden" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
         <div class="settings-modal-content">
-            <button id="settingsCloseBtn" class="settings-close-btn">✕</button>
-            <h2>⚙️ Einstellungen</h2>
+            <button id="settingsCloseBtn" class="settings-close-btn" aria-label="Einstellungen schließen">✕</button>
+            <h2 id="settingsModalTitle">⚙️ Einstellungen</h2>
 
             <div class="settings-section">
                 <h3>Account</h3>
@@ -837,9 +842,10 @@
     </div>
 
     <!-- Tutorial Modal -->
-    <div id="tutorialModal" class="tutorial-modal hidden">
+    <div id="tutorialModal" class="tutorial-modal hidden" role="dialog" aria-modal="true" aria-labelledby="tutorialTitle">
         <div class="tutorial-modal-content">
-            <button id="tutorialCloseBtn" class="tutorial-close-btn">✕</button>
+            <button id="tutorialCloseBtn" class="tutorial-close-btn" aria-label="Tutorial schließen">✕</button>
+            <h2 id="tutorialTitle" class="sr-only">Tutorial</h2>
 
             <div class="tutorial-slides">
                 <!-- Slide 1: Willkommen -->

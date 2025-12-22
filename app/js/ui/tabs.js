@@ -31,12 +31,17 @@ export function initializeTabs() {
         button.addEventListener('click', () => {
             const targetTab = button.dataset.tab;
 
-            // Remove active class from all buttons and panels
-            tabButtons.forEach(btn => btn.classList.remove('active'));
+            // Remove active class and update aria-selected for all buttons
+            tabButtons.forEach(btn => {
+                btn.classList.remove('active');
+                btn.setAttribute('aria-selected', 'false');
+            });
             tabPanels.forEach(panel => panel.classList.remove('active'));
 
-            // Add active class to clicked button and corresponding panel
+            // Add active class and aria-selected to clicked button
             button.classList.add('active');
+            button.setAttribute('aria-selected', 'true');
+
             const targetPanel = document.querySelector(`[data-panel="${targetTab}"]`);
             if (targetPanel) {
                 targetPanel.classList.add('active');
@@ -44,6 +49,34 @@ export function initializeTabs() {
 
             // Lazy load tab content - only load on first view or when needed
             loadTabContent(targetTab);
+        });
+
+        // Keyboard navigation for tabs
+        button.addEventListener('keydown', (e) => {
+            let newIndex;
+            const currentIndex = TAB_ORDER.indexOf(button.dataset.tab);
+
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                e.preventDefault();
+                newIndex = (currentIndex + 1) % TAB_ORDER.length;
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                newIndex = (currentIndex - 1 + TAB_ORDER.length) % TAB_ORDER.length;
+            } else if (e.key === 'Home') {
+                e.preventDefault();
+                newIndex = 0;
+            } else if (e.key === 'End') {
+                e.preventDefault();
+                newIndex = TAB_ORDER.length - 1;
+            }
+
+            if (newIndex !== undefined) {
+                const newButton = document.querySelector(`.tab-button[data-tab="${TAB_ORDER[newIndex]}"]`);
+                if (newButton) {
+                    newButton.focus();
+                    newButton.click();
+                }
+            }
         });
     });
 
