@@ -95,35 +95,50 @@ export function updateHealthScore(stats) {
                 Gewichteter Durchschnitt aus 5 Erholungsmetriken, basierend auf WHO, JAMA und PMC-Studien.
             </div>
             <div class="health-score-breakdown">
-                <div class="score-component" title="100% nach ca. 15 Jahren (WHO, JAMA)">
-                    <span class="component-label">❤️ Herz-Kreislauf</span>
+                <div class="score-component">
+                    <div class="component-header">
+                        <span class="component-label">❤️ Herz-Kreislauf</span>
+                        <span class="component-value">${cardiovascular}%</span>
+                        <span class="component-weight">×30%</span>
+                    </div>
                     <span class="component-bar"><span class="component-fill" style="width: ${cardiovascular}%"></span></span>
-                    <span class="component-value">${cardiovascular}%</span>
-                    <span class="component-weight">×30%</span>
+                    <span class="component-desc">Häufigste Todesursache bei Rauchern. 15 Jahre bis Nichtraucher-Niveau.</span>
                 </div>
-                <div class="score-component" title="100% nach ca. 10 Jahren (PMC)">
-                    <span class="component-label">🫁 Lungenfunktion</span>
+                <div class="score-component">
+                    <div class="component-header">
+                        <span class="component-label">🫁 Lungenfunktion</span>
+                        <span class="component-value">${lung}%</span>
+                        <span class="component-weight">×25%</span>
+                    </div>
                     <span class="component-bar"><span class="component-fill" style="width: ${lung}%"></span></span>
-                    <span class="component-value">${lung}%</span>
-                    <span class="component-weight">×25%</span>
+                    <span class="component-desc">COPD, Lungenkrebs. 10 Jahre bis volle Erholung.</span>
                 </div>
-                <div class="score-component" title="100% nach ca. 6 Monaten (WHO)">
-                    <span class="component-label">🩸 Durchblutung</span>
+                <div class="score-component">
+                    <div class="component-header">
+                        <span class="component-label">🩸 Durchblutung</span>
+                        <span class="component-value">${circulation}%</span>
+                        <span class="component-weight">×20%</span>
+                    </div>
                     <span class="component-bar"><span class="component-fill" style="width: ${circulation}%"></span></span>
-                    <span class="component-value">${circulation}%</span>
-                    <span class="component-weight">×20%</span>
+                    <span class="component-desc">Periphere Gefäße. Schnelle Erholung in 6 Monaten.</span>
                 </div>
-                <div class="score-component" title="Herzinfarkt, Schlaganfall, Lungenkrebs">
-                    <span class="component-label">🎗️ Risikoreduktion</span>
+                <div class="score-component">
+                    <div class="component-header">
+                        <span class="component-label">🎗️ Risikoreduktion</span>
+                        <span class="component-value">${Math.round(riskReduction)}%</span>
+                        <span class="component-weight">×15%</span>
+                    </div>
                     <span class="component-bar"><span class="component-fill" style="width: ${Math.round(riskReduction)}%"></span></span>
-                    <span class="component-value">${Math.round(riskReduction)}%</span>
-                    <span class="component-weight">×15%</span>
+                    <span class="component-desc">Herzinfarkt, Schlaganfall, Krebs. Langfristiger Schutz.</span>
                 </div>
-                <div class="score-component" title="100% nach ca. 9 Monaten (Mailänder Studie)">
-                    <span class="component-label">✨ Hautgesundheit</span>
+                <div class="score-component">
+                    <div class="component-header">
+                        <span class="component-label">✨ Hautgesundheit</span>
+                        <span class="component-value">${skin}%</span>
+                        <span class="component-weight">×10%</span>
+                    </div>
                     <span class="component-bar"><span class="component-fill" style="width: ${skin}%"></span></span>
-                    <span class="component-value">${skin}%</span>
-                    <span class="component-weight">×10%</span>
+                    <span class="component-desc">Sichtbarer Indikator für Regeneration. 9 Monate.</span>
                 </div>
             </div>
             <div class="health-score-source">

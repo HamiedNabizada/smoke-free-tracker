@@ -203,9 +203,11 @@
     }
 
     .score-component {
-        grid-template-columns: 120px 1fr 45px 45px;
-        font-size: 0.85rem;
-        padding: 8px 12px;
+        padding: 10px 12px;
+    }
+
+    .component-desc {
+        font-size: 0.75rem;
     }
 
     .comparison-table {
@@ -352,14 +354,19 @@
     }
 
     .score-component {
-        grid-template-columns: 100px 1fr 40px 40px;
-        font-size: 0.8rem;
         padding: 8px 10px;
-        gap: 6px;
     }
 
     .component-label {
-        font-size: 0.75rem;
+        font-size: 0.85rem;
+    }
+
+    .component-value {
+        font-size: 0.9rem;
+    }
+
+    .component-desc {
+        font-size: 0.7rem;
     }
 
     .comparison-table {
