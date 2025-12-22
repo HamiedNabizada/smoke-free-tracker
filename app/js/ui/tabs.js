@@ -12,8 +12,11 @@ const DEBOUNCE_DELAY = 200; // ms
 
 // Swipe detection variables
 let touchStartX = 0;
+let touchStartY = 0;
 let touchEndX = 0;
-const SWIPE_THRESHOLD = 50; // Minimum distance for swipe
+let touchEndY = 0;
+const SWIPE_THRESHOLD = 80; // Minimum horizontal distance for swipe
+const SWIPE_VERTICAL_LIMIT = 100; // Max vertical movement allowed
 const TAB_ORDER = ['overview', 'milestones', 'achievements', 'statistics', 'help'];
 
 // Lazy loading: Track which tabs have been initialized
@@ -110,27 +113,33 @@ function loadTabContent(tabName) {
  * Initialize swipe navigation for tab panels
  */
 function initializeSwipeNavigation(tabButtons, tabPanels) {
-    const tabContent = document.querySelector('.tab-content');
-    if (!tabContent) return;
+    const dashboard = document.getElementById('dashboard');
+    if (!dashboard) return;
 
-    tabContent.addEventListener('touchstart', (e) => {
+    dashboard.addEventListener('touchstart', (e) => {
         touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
     }, { passive: true });
 
-    tabContent.addEventListener('touchend', (e) => {
+    dashboard.addEventListener('touchend', (e) => {
         touchEndX = e.changedTouches[0].screenX;
-        handleSwipe(tabButtons, tabPanels);
+        touchEndY = e.changedTouches[0].screenY;
+        handleSwipe();
     }, { passive: true });
 }
 
 /**
  * Handle swipe gesture and navigate tabs
  */
-function handleSwipe(tabButtons, tabPanels) {
-    const swipeDistance = touchEndX - touchStartX;
+function handleSwipe() {
+    const swipeDistanceX = touchEndX - touchStartX;
+    const swipeDistanceY = Math.abs(touchEndY - touchStartY);
 
-    // Not a valid swipe
-    if (Math.abs(swipeDistance) < SWIPE_THRESHOLD) return;
+    // Ignore if vertical movement is too large (user is scrolling)
+    if (swipeDistanceY > SWIPE_VERTICAL_LIMIT) return;
+
+    // Ignore if horizontal movement is too small
+    if (Math.abs(swipeDistanceX) < SWIPE_THRESHOLD) return;
 
     // Find current active tab
     const activeButton = document.querySelector('.tab-button.active');
@@ -140,7 +149,7 @@ function handleSwipe(tabButtons, tabPanels) {
     const currentIndex = TAB_ORDER.indexOf(currentTab);
 
     let newIndex;
-    if (swipeDistance > 0) {
+    if (swipeDistanceX > 0) {
         // Swipe right = previous tab
         newIndex = currentIndex - 1;
     } else {
