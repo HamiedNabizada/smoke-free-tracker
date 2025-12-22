@@ -148,10 +148,34 @@ export function calculateSkinRecovery(days) {
 }
 
 // Hautverjüngung in Jahren (basierend auf Mailänder Studie: max 13 Jahre)
+// WICHTIG: Sichtbare Verjüngung beginnt erst nach ca. 1 Monat,
+// die meiste Verbesserung passiert zwischen Monat 3-9
 export function calculateSkinAgeImprovement(days) {
-    const recoveryPercent = calculateSkinRecovery(days);
+    if (days <= 0) return 0;
+
     const maxImprovementYears = 13; // Mailänder Studie
-    return Math.round((recoveryPercent / 100) * maxImprovementYears * 10) / 10;
+
+    // Erste 30 Tage: Kaum sichtbare Verbesserung (Kollagen baut sich erst auf)
+    if (days < 30) {
+        return Math.round((days / 30) * 0.5 * 10) / 10; // Max 0.5 Jahre
+    }
+
+    // 1-3 Monate: Langsamer Start (0.5 - 2 Jahre)
+    if (days < 90) {
+        return Math.round((0.5 + ((days - 30) / 60) * 1.5) * 10) / 10;
+    }
+
+    // 3-9 Monate: Hauptverbesserung (2 - 10 Jahre) - hier passiert das meiste
+    if (days < 270) {
+        return Math.round((2 + ((days - 90) / 180) * 8) * 10) / 10;
+    }
+
+    // 9-24 Monate: Letzte Verbesserungen (10 - 13 Jahre)
+    if (days < 730) {
+        return Math.round((10 + ((days - 270) / 460) * 3) * 10) / 10;
+    }
+
+    return maxImprovementYears;
 }
 
 // ============================================

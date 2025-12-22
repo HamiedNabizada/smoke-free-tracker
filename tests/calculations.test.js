@@ -259,7 +259,21 @@ describe('Skin Age Improvement (Milan Study: max 13 years)', () => {
     expect(calculateSkinAgeImprovement(0)).toBe(0);
   });
 
-  it('should approach 13 years after full recovery', () => {
+  it('should show minimal improvement in first month (max 0.5 years)', () => {
+    expect(calculateSkinAgeImprovement(7)).toBeLessThanOrEqual(0.2);
+    expect(calculateSkinAgeImprovement(23)).toBeLessThanOrEqual(0.5);
+    expect(calculateSkinAgeImprovement(30)).toBeCloseTo(0.5, 1);
+  });
+
+  it('should show ~2 years at 3 months', () => {
+    expect(calculateSkinAgeImprovement(90)).toBeCloseTo(2, 0);
+  });
+
+  it('should show ~10 years at 9 months (main improvement period)', () => {
+    expect(calculateSkinAgeImprovement(270)).toBeCloseTo(10, 0);
+  });
+
+  it('should reach 13 years after 2 years', () => {
     expect(calculateSkinAgeImprovement(730)).toBe(13);
   });
 });
