@@ -234,7 +234,7 @@ async function closeCravingOverlay() {
     }
 }
 
-// Helper functions for craving count (stored in Firestore)
+// Helper functions for craving count (stored in Firestore, with caching)
 async function getCurrentCravingCount() {
     try {
         const user = firebase.auth().currentUser;
@@ -252,14 +252,29 @@ async function getCurrentCravingCount() {
             return 3;
         }
 
+        // Check cache first
+        const cacheKey = 'craving_today_' + user.uid;
+        if (typeof getCached === 'function') {
+            const cached = getCached(cacheKey);
+            if (cached && cached.date === today) {
+                return cached.count;
+            }
+        }
+
         const docRef = firebase.firestore().collection('craving_events').doc(`${user.uid}_${today}`);
         const doc = await docRef.get();
 
+        let count = 0;
         if (doc.exists) {
-            return doc.data().count || 0;
+            count = doc.data().count || 0;
         }
 
-        return 0;
+        // Cache result (30 sec TTL)
+        if (typeof setCache === 'function') {
+            setCache(cacheKey, { count, date: today }, 30 * 1000);
+        }
+
+        return count;
     } catch (error) {
         console.error('Error getting craving count:', error);
         return 0;
@@ -300,6 +315,13 @@ async function incrementCravingCount() {
                 return newCount;
             }
         });
+
+        // Invalidate cache after write
+        if (typeof invalidateCache === 'function') {
+            invalidateCache('craving_today_' + user.uid);
+            invalidateCache('craving_history_' + user.uid + '_7');
+            invalidateCache('craving_history_' + user.uid + '_30');
+        }
 
         return true;
     } catch (error) {

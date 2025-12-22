@@ -4,7 +4,13 @@ import { updateHealthScore, updateMilestoneTimeline, updateFutureProjection, upd
 import { updateHappeningNow } from './happening-now.js';
 import { updateCompactCravingStats, updateCravingChart } from './craving-stats.js';
 
-// Tab switching functionality
+// Debounce timers for tab content loading
+let statisticsTimer = null;
+let milestonesTimer = null;
+let helpTimer = null;
+const DEBOUNCE_DELAY = 200; // ms
+
+// Tab switching functionality with debounce to reduce Firebase reads
 export function initializeTabs() {
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabPanels = document.querySelectorAll('.tab-panel');
@@ -25,8 +31,10 @@ export function initializeTabs() {
             }
 
             // If switching to statistics tab, redraw chart and update timeline/projection
+            // Use debounce to prevent multiple calls on rapid tab switching
             if (targetTab === 'statistics') {
-                setTimeout(() => {
+                if (statisticsTimer) clearTimeout(statisticsTimer);
+                statisticsTimer = setTimeout(() => {
                     const stats = calculateStats();
                     updateChart(stats);
                     updateHealthScore(stats);
@@ -35,22 +43,24 @@ export function initializeTabs() {
                     updateDetailedComparison(stats);
                     updateAgeGroupComparison(stats);
                     updateCravingChart();
-                }, 100);
+                }, DEBOUNCE_DELAY);
             }
 
             // If switching to milestones tab, update "What's Happening NOW"
             if (targetTab === 'milestones') {
-                setTimeout(() => {
+                if (milestonesTimer) clearTimeout(milestonesTimer);
+                milestonesTimer = setTimeout(() => {
                     const stats = calculateStats();
                     updateHappeningNow(stats);
-                }, 100);
+                }, DEBOUNCE_DELAY);
             }
 
             // If switching to help tab, update craving stats
             if (targetTab === 'help') {
-                setTimeout(() => {
+                if (helpTimer) clearTimeout(helpTimer);
+                helpTimer = setTimeout(() => {
                     updateCompactCravingStats();
-                }, 100);
+                }, DEBOUNCE_DELAY);
             }
         });
     });

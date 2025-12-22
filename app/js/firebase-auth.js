@@ -1,7 +1,41 @@
 // Firebase Authentication Helper Functions
 // Diese Datei muss NACH firebase-config.js geladen werden
 
+// ============================================
+// Simple in-memory cache to reduce Firebase reads
+// ============================================
+const _cache = new Map();
+const CACHE_TTL = {
+    USER_DATA: 10 * 60 * 1000,      // 10 min
+    CRAVING_TODAY: 30 * 1000,       // 30 sec
+    CRAVING_HISTORY: 2 * 60 * 1000  // 2 min
+};
+
+function getCached(key) {
+    const entry = _cache.get(key);
+    if (!entry) return null;
+    if (Date.now() > entry.expiry) {
+        _cache.delete(key);
+        return null;
+    }
+    return entry.value;
+}
+
+function setCache(key, value, ttl) {
+    _cache.set(key, { value, expiry: Date.now() + ttl });
+}
+
+function invalidateCache(key) {
+    _cache.delete(key);
+}
+
+function clearUserCache() {
+    _cache.clear();
+}
+
+// ============================================
 // Demo mode helpers (inline to avoid module issues)
+// ============================================
 const DEMO_EMAIL = 'demo@byebyesmoke.app';
 
 function isDemoMode() {
@@ -132,6 +166,8 @@ async function loginUser(username, password) {
 // Logout user
 async function logoutUser() {
   try {
+    // Clear cache on logout
+    clearUserCache();
     await auth.signOut();
     window.location.href = 'login.html';
   } catch (error) {
@@ -140,8 +176,8 @@ async function logoutUser() {
   }
 }
 
-// Get current user data from Firestore
-async function getUserData() {
+// Get current user data from Firestore (with caching)
+async function getUserData(forceRefresh = false) {
   try {
     const user = auth.currentUser;
     if (!user) {
@@ -153,13 +189,26 @@ async function getUserData() {
       return DEMO_USER_DATA;
     }
 
+    // Check cache first
+    const cacheKey = 'user_data_' + user.uid;
+    if (!forceRefresh) {
+      const cached = getCached(cacheKey);
+      if (cached) {
+        console.log('[Cache] User data from cache');
+        return cached;
+      }
+    }
+
     const doc = await db.collection('users').doc(user.uid).get();
 
     if (!doc.exists) {
       throw new Error('Benutzerdaten nicht gefunden');
     }
 
-    return doc.data();
+    const data = doc.data();
+    setCache(cacheKey, data, CACHE_TTL.USER_DATA);
+    console.log('[Firebase] User data loaded');
+    return data;
   } catch (error) {
     console.error('Get user data error:', error);
     throw error;
@@ -180,6 +229,10 @@ async function updateUserData(updates) {
     }
 
     await db.collection('users').doc(user.uid).update(updates);
+
+    // Invalidate cache after update
+    invalidateCache('user_data_' + user.uid);
+
     return { success: true };
   } catch (error) {
     console.error('Update user data error:', error);
@@ -273,6 +326,10 @@ async function recordCraving() {
       }
     });
 
+    // Invalidate craving cache after recording
+    invalidateCache('craving_today_' + user.uid);
+    invalidateCache('craving_history_' + user.uid);
+
     return true;
   } catch (error) {
     console.error('Record craving error:', error);
@@ -280,7 +337,7 @@ async function recordCraving() {
   }
 }
 
-// Get craving count for today
+// Get craving count for today (with caching)
 async function getCravingCount() {
   try {
     const user = auth.currentUser;
@@ -300,17 +357,27 @@ async function getCravingCount() {
       };
     }
 
+    // Check cache first
+    const cacheKey = 'craving_today_' + user.uid;
+    const cached = getCached(cacheKey);
+    if (cached && cached.date === today) {
+      console.log('[Cache] Craving count from cache');
+      return cached;
+    }
+
     const docRef = db.collection('craving_events').doc(`${user.uid}_${today}`);
     const doc = await docRef.get();
 
+    let result;
     if (!doc.exists) {
-      return { count: 0, date: today };
+      result = { count: 0, date: today };
+    } else {
+      result = { count: doc.data().count || 0, date: today };
     }
 
-    return {
-      count: doc.data().count || 0,
-      date: today
-    };
+    setCache(cacheKey, result, CACHE_TTL.CRAVING_TODAY);
+    console.log('[Firebase] Craving count loaded');
+    return result;
   } catch (error) {
     console.error('Get craving count error:', error);
     return { count: 0, date: new Date().toISOString().split('T')[0] };

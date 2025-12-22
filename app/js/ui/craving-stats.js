@@ -1,7 +1,8 @@
 // Craving Statistics Module
 // Fetches and displays craving data from Firestore
+// Uses global cache functions from firebase-auth.js
 
-// Get craving events for last N days
+// Get craving events for last N days (with caching)
 export async function getCravingHistory(days = 30) {
     try {
         const user = firebase.auth().currentUser;
@@ -18,6 +19,16 @@ export async function getCravingHistory(days = 30) {
                 return demoEvents.filter(e => e.date >= startDateStr);
             }
             return [];
+        }
+
+        // Check cache first (use global getCached from firebase-auth.js)
+        const cacheKey = 'craving_history_' + user.uid + '_' + days;
+        if (typeof getCached === 'function') {
+            const cached = getCached(cacheKey);
+            if (cached) {
+                console.log('[Cache] Craving history from cache');
+                return cached;
+            }
         }
 
         const endDate = new Date();
@@ -45,6 +56,12 @@ export async function getCravingHistory(days = 30) {
             });
         });
 
+        // Cache result (2 min TTL)
+        if (typeof setCache === 'function') {
+            setCache(cacheKey, cravingData, 2 * 60 * 1000);
+            console.log('[Firebase] Craving history loaded');
+        }
+
         return cravingData;
     } catch (error) {
         console.error('Error fetching craving history:', error);
@@ -52,7 +69,7 @@ export async function getCravingHistory(days = 30) {
     }
 }
 
-// Get today's craving count
+// Get today's craving count (with caching)
 export async function getTodayCravingCount() {
     try {
         const user = firebase.auth().currentUser;
@@ -70,14 +87,31 @@ export async function getTodayCravingCount() {
             return 3;
         }
 
+        // Check cache first
+        const cacheKey = 'craving_today_' + user.uid;
+        if (typeof getCached === 'function') {
+            const cached = getCached(cacheKey);
+            if (cached && cached.date === today) {
+                console.log('[Cache] Today craving count from cache');
+                return cached.count;
+            }
+        }
+
         const docRef = firebase.firestore().collection('craving_events').doc(`${user.uid}_${today}`);
         const doc = await docRef.get();
 
+        let count = 0;
         if (doc.exists) {
-            return doc.data().count || 0;
+            count = doc.data().count || 0;
         }
 
-        return 0;
+        // Cache result (30 sec TTL)
+        if (typeof setCache === 'function') {
+            setCache(cacheKey, { count, date: today }, 30 * 1000);
+            console.log('[Firebase] Today craving count loaded');
+        }
+
+        return count;
     } catch (error) {
         console.error('Error getting today craving count:', error);
         return 0;
