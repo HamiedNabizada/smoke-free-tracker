@@ -12,6 +12,7 @@ import { initializeStreak } from './ui/streak.js';
 import { initializeWeeklySummary } from './ui/weekly-summary.js';
 import { initializeMiniGames } from './ui/mini-games.js';
 import { initializeOfflineQueue } from './utils/offline-queue.js';
+import { initializePerformanceMonitoring } from './utils/performance.js';
 import { setUserData } from './config.js';
 
 // Register Service Worker for PWA functionality
@@ -64,6 +65,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     initializeWeeklySummary();
     initializeMiniGames();
     initializeOfflineQueue();
+    initializePerformanceMonitoring();
 
     // Make updateDashboard globally accessible for goal edits
     window.updateDashboard = updateDashboard;
