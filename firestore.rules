@@ -79,9 +79,10 @@ service cloud.firestore {
 
     // Craving Events Collection - nur eigene Daten
     match /craving_events/{eventId} {
-      // Lesen: Nur wenn user_id übereinstimmt
+      // Lesen: Nur wenn user_id übereinstimmt ODER Document-ID mit User-ID beginnt (für Existenz-Check)
       allow read: if isAuthenticated()
-                  && resource.data.user_id == request.auth.uid;
+                  && (resource == null || resource.data.user_id == request.auth.uid
+                      || eventId.matches(request.auth.uid + '_.*'));
 
       // Erstellen: Mit Validierung
       allow create: if isAuthenticated()
