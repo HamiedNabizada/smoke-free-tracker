@@ -126,56 +126,35 @@ export function calculateLungRecovery(days) {
 // Quellen: Mailänder Studie (2010), Koreanische Studie (2012)
 //
 // Mailänder Studie:
-// - Vor Rauchstopp: Biologisches Hautalter 9 Jahre älter
-// - Nach Rauchstopp: Durchschnitt 13 Jahre Verjüngung
+// - Messungen bei 3, 6 und 9 Monaten
+// - Erste SIGNIFIKANTE Verbesserung erst nach 6 Monaten
+// - Nach 9 Monaten: Bis zu 13 Jahre biologische Verjüngung möglich
 //
-// Timeline:
-// - 2-4 Wochen: Kollagenproduktion normalisiert
-// - 4-12 Wochen: Haut heller, weniger Rötung
-// - 6 Monate: Falten/Pigmentflecken reduziert
-// - 12 Monate: Meiste Erholung abgeschlossen
+// Timeline (basierend auf Studienergebnissen):
+// - 0-3 Monate: Kaum messbare Verbesserung (0-10%)
+// - 3-6 Monate: Erste signifikante Verbesserung (10-40%)
+// - 6-9 Monate: Hauptverbesserung (40-100%)
 // ============================================
 
 export function calculateSkinRecovery(days) {
     if (days <= 0) return 0;
-    if (days < 14) return (days / 14) * 5;                      // 0-5% erste 2 Wochen
-    if (days < 28) return 5 + ((days - 14) / 14) * 15;          // 5-20% Wochen 2-4 (Kollagen)
-    if (days < 84) return 20 + ((days - 28) / 56) * 25;         // 20-45% Monate 1-3 (Helligkeit)
-    if (days < 180) return 45 + ((days - 84) / 96) * 30;        // 45-75% Monate 3-6 (Falten)
-    if (days < 365) return 75 + ((days - 180) / 185) * 20;      // 75-95% Monate 6-12
-    if (days < 730) return 95 + ((days - 365) / 365) * 5;       // 95-100% Jahr 2
-    return 100;
-}
 
-// Hautverjüngung in Jahren (basierend auf Mailänder Studie: max 13 Jahre)
-// WICHTIG: Sichtbare Verjüngung beginnt erst nach ca. 1 Monat,
-// die meiste Verbesserung passiert zwischen Monat 3-9
-export function calculateSkinAgeImprovement(days) {
-    if (days <= 0) return 0;
-
-    const maxImprovementYears = 13; // Mailänder Studie
-
-    // Erste 30 Tage: Kaum sichtbare Verbesserung (Kollagen baut sich erst auf)
-    if (days < 30) {
-        return Math.round((days / 30) * 0.5 * 10) / 10; // Max 0.5 Jahre
-    }
-
-    // 1-3 Monate: Langsamer Start (0.5 - 2 Jahre)
+    // 0-90 Tage (3 Monate): Langsamer Start, kaum messbar (0-10%)
     if (days < 90) {
-        return Math.round((0.5 + ((days - 30) / 60) * 1.5) * 10) / 10;
+        return (days / 90) * 10;
     }
 
-    // 3-9 Monate: Hauptverbesserung (2 - 10 Jahre) - hier passiert das meiste
+    // 90-180 Tage (3-6 Monate): Erste signifikante Verbesserung (10-40%)
+    if (days < 180) {
+        return 10 + ((days - 90) / 90) * 30;
+    }
+
+    // 180-270 Tage (6-9 Monate): Hauptverbesserung (40-100%)
     if (days < 270) {
-        return Math.round((2 + ((days - 90) / 180) * 8) * 10) / 10;
+        return 40 + ((days - 180) / 90) * 60;
     }
 
-    // 9-24 Monate: Letzte Verbesserungen (10 - 13 Jahre)
-    if (days < 730) {
-        return Math.round((10 + ((days - 270) / 460) * 3) * 10) / 10;
-    }
-
-    return maxImprovementYears;
+    return 100;
 }
 
 // ============================================
@@ -328,9 +307,6 @@ export function calculateStats() {
     // Umwelt
     const environment = calculateEnvironmentalImpact(cigarettesNotSmoked);
 
-    // Hautverjüngung in Jahren
-    const skinAgeImprovement = calculateSkinAgeImprovement(totalDays);
-
     return {
         // Zeit rauchfrei
         totalDays: totalDays,
@@ -374,7 +350,7 @@ export function calculateStats() {
 
         // Legacy-Felder (für Rückwärtskompatibilität)
         lungHealth: lungRecovery,
-        skinAge: skinAgeImprovement
+        skinImprovement: skinRecovery  // Prozent (0-100), nicht Jahre
     };
 }
 

@@ -72,18 +72,10 @@ export function updateDashboard() {
     // Update CO2 avoided
     document.getElementById('co2Avoided').textContent = stats.co2Avoided.toFixed(2) + ' kg';
 
-    // Update skin age improvement (Mailänder Studie: max 13 Jahre Verjüngung)
-    const skinAgeEl = document.getElementById('skinAge');
-    if (skinAgeEl) {
-        if (stats.skinAge >= 1) {
-            skinAgeEl.textContent = stats.skinAge.toFixed(1) + ' Jahre';
-        } else if (stats.skinAge >= 0.1) {
-            // Unter 1 Jahr: in Monaten anzeigen
-            const months = Math.round(stats.skinAge * 12);
-            skinAgeEl.textContent = months + ' Monate';
-        } else {
-            skinAgeEl.textContent = '< 1 Monat';
-        }
+    // Update skin improvement (Mailänder Studie: Messungen bei 3, 6, 9 Monaten)
+    const skinEl = document.getElementById('skinImprovement');
+    if (skinEl) {
+        skinEl.textContent = Math.round(stats.skinImprovement) + '%';
     }
 
     // Update environmental stats

@@ -21,8 +21,7 @@ import {
     calculateCirculationRecovery,
     calculateLungCancerRiskReduction,
     calculateHeartAttackRiskReduction,
-    calculateStrokeRiskReduction,
-    calculateSkinAgeImprovement
+    calculateStrokeRiskReduction
 } from '../app/js/utils/calculations.js';
 
 // ============================================
@@ -233,48 +232,34 @@ describe('Lung Recovery (PMC, WHO)', () => {
 // ============================================
 
 describe('Skin Recovery (Milan Study 2010)', () => {
+  // Studie: Messungen bei 3, 6, 9 Monaten
+  // Erste signifikante Verbesserung erst nach 6 Monaten
+
   it('should return 0% at day 0', () => {
     expect(calculateSkinRecovery(0)).toBe(0);
   });
 
-  it('should be minimal in first 2 weeks', () => {
-    expect(calculateSkinRecovery(14)).toBeLessThanOrEqual(5);
+  it('should be ~3% after 23 days (minimal, not yet measurable)', () => {
+    const recovery = calculateSkinRecovery(23);
+    expect(recovery).toBeGreaterThan(0);
+    expect(recovery).toBeLessThan(5);
   });
 
-  it('should be ~45% after 3 months', () => {
-    expect(calculateSkinRecovery(84)).toBeCloseTo(45, 1);
+  it('should be ~10% after 3 months (still not significant per study)', () => {
+    expect(calculateSkinRecovery(90)).toBeCloseTo(10, 1);
   });
 
-  it('should be ~95% after 1 year', () => {
-    expect(calculateSkinRecovery(365)).toBeCloseTo(95, 1);
+  it('should be ~40% after 6 months (first significant improvement)', () => {
+    expect(calculateSkinRecovery(180)).toBeCloseTo(40, 1);
   });
 
-  it('should be 100% after 2 years', () => {
+  it('should be 100% after 9 months', () => {
+    expect(calculateSkinRecovery(270)).toBe(100);
+  });
+
+  it('should stay at 100% after 9 months', () => {
+    expect(calculateSkinRecovery(365)).toBe(100);
     expect(calculateSkinRecovery(730)).toBe(100);
-  });
-});
-
-describe('Skin Age Improvement (Milan Study: max 13 years)', () => {
-  it('should return 0 years at day 0', () => {
-    expect(calculateSkinAgeImprovement(0)).toBe(0);
-  });
-
-  it('should show minimal improvement in first month (max 0.5 years)', () => {
-    expect(calculateSkinAgeImprovement(7)).toBeLessThanOrEqual(0.2);
-    expect(calculateSkinAgeImprovement(23)).toBeLessThanOrEqual(0.5);
-    expect(calculateSkinAgeImprovement(30)).toBeCloseTo(0.5, 1);
-  });
-
-  it('should show ~2 years at 3 months', () => {
-    expect(calculateSkinAgeImprovement(90)).toBeCloseTo(2, 0);
-  });
-
-  it('should show ~10 years at 9 months (main improvement period)', () => {
-    expect(calculateSkinAgeImprovement(270)).toBeCloseTo(10, 0);
-  });
-
-  it('should reach 13 years after 2 years', () => {
-    expect(calculateSkinAgeImprovement(730)).toBe(13);
   });
 });
 
