@@ -182,53 +182,62 @@
                 <!-- Progress Visualizations -->
                 <div class="card progress-visuals-card">
                     <h2>Dein Fortschritt</h2>
-                    <div class="progress-bars-container">
-                        <!-- Days Progress Bar -->
-                        <div class="progress-bar-item">
-                            <div class="progress-bar-header">
-                                <span class="progress-bar-icon">📅</span>
-                                <span class="progress-bar-title">Tage rauchfrei</span>
-                                <span class="progress-bar-value" id="daysBarValue">0</span>
+                    <div class="gauges-container">
+                        <!-- Days Gauge -->
+                        <div class="gauge-item">
+                            <div class="gauge">
+                                <svg viewBox="0 0 200 120">
+                                    <path class="gauge-bg" d="M 20 100 A 80 80 0 0 1 180 100" />
+                                    <path class="gauge-fill days-gauge" id="daysGauge" d="M 20 100 A 80 80 0 0 1 180 100" />
+                                </svg>
+                                <div class="gauge-value">
+                                    <span class="gauge-number" id="daysGaugeValue">0</span>
+                                    <span class="gauge-percent" id="daysGaugePercent">0%</span>
+                                </div>
                             </div>
-                            <div class="progress-bar-track">
-                                <div class="progress-bar-fill days-bar" id="daysBar"></div>
+                            <div class="gauge-label">
+                                <span class="gauge-icon">📅</span>
+                                <span class="gauge-title">Tage rauchfrei</span>
                             </div>
-                            <div class="progress-bar-footer">
-                                <span class="progress-bar-percent" id="daysBarPercent">0%</span>
-                                <span class="progress-bar-goal" id="daysGoalText">Ziel: 365 Tage</span>
-                            </div>
+                            <div class="gauge-goal" id="daysGoalText">Ziel: 365 Tage</div>
                         </div>
 
-                        <!-- Money Progress Bar -->
-                        <div class="progress-bar-item">
-                            <div class="progress-bar-header">
-                                <span class="progress-bar-icon">💰</span>
-                                <span class="progress-bar-title">Geld gespart</span>
-                                <span class="progress-bar-value" id="moneyBarValue">0€</span>
+                        <!-- Money Gauge -->
+                        <div class="gauge-item">
+                            <div class="gauge">
+                                <svg viewBox="0 0 200 120">
+                                    <path class="gauge-bg" d="M 20 100 A 80 80 0 0 1 180 100" />
+                                    <path class="gauge-fill money-gauge" id="moneyGauge" d="M 20 100 A 80 80 0 0 1 180 100" />
+                                </svg>
+                                <div class="gauge-value">
+                                    <span class="gauge-number" id="moneyGaugeValue">0€</span>
+                                    <span class="gauge-percent" id="moneyGaugePercent">0%</span>
+                                </div>
                             </div>
-                            <div class="progress-bar-track">
-                                <div class="progress-bar-fill money-bar" id="moneyBar"></div>
+                            <div class="gauge-label">
+                                <span class="gauge-icon">💰</span>
+                                <span class="gauge-title">Geld gespart</span>
                             </div>
-                            <div class="progress-bar-footer">
-                                <span class="progress-bar-percent" id="moneyBarPercent">0%</span>
-                                <span class="progress-bar-goal" id="moneyGoalText">Ziel: 1000€</span>
-                            </div>
+                            <div class="gauge-goal" id="moneyGoalText">Ziel: 1000€</div>
                         </div>
 
-                        <!-- Cigarettes Progress Bar -->
-                        <div class="progress-bar-item">
-                            <div class="progress-bar-header">
-                                <span class="progress-bar-icon">🚭</span>
-                                <span class="progress-bar-title">Zigaretten vermieden</span>
-                                <span class="progress-bar-value" id="cigarettesBarValue">0</span>
+                        <!-- Cigarettes Gauge -->
+                        <div class="gauge-item">
+                            <div class="gauge">
+                                <svg viewBox="0 0 200 120">
+                                    <path class="gauge-bg" d="M 20 100 A 80 80 0 0 1 180 100" />
+                                    <path class="gauge-fill cigarettes-gauge" id="cigarettesGauge" d="M 20 100 A 80 80 0 0 1 180 100" />
+                                </svg>
+                                <div class="gauge-value">
+                                    <span class="gauge-number" id="cigarettesGaugeValue">0</span>
+                                    <span class="gauge-percent" id="cigarettesGaugePercent">0%</span>
+                                </div>
                             </div>
-                            <div class="progress-bar-track">
-                                <div class="progress-bar-fill cigarettes-bar" id="cigarettesBar"></div>
+                            <div class="gauge-label">
+                                <span class="gauge-icon">🚭</span>
+                                <span class="gauge-title">Zigaretten vermieden</span>
                             </div>
-                            <div class="progress-bar-footer">
-                                <span class="progress-bar-percent" id="cigarettesBarPercent">0%</span>
-                                <span class="progress-bar-goal" id="cigarettesGoalText">Ziel: 1000</span>
-                            </div>
+                            <div class="gauge-goal" id="cigarettesGoalText">Ziel: 1000</div>
                         </div>
                     </div>
                 </div>
