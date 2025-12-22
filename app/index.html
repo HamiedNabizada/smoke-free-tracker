@@ -69,12 +69,6 @@
                     <div id="dailyMotivation" class="motivation-text"></div>
                 </div>
 
-                <!-- Streak Counter (hidden by default, shown if streak > 1) -->
-                <div id="streakContainer" class="streak-container" style="display: none;">
-                    <span id="streakFire" class="streak-fire">🔥</span>
-                    <span class="streak-text"><span id="streakCount">0</span> Tage in Folge aktiv</span>
-                </div>
-
                 <!-- Health Avatar -->
                 <div class="card health-avatar-card">
                     <h2>🫁 Dein Körper erholt sich</h2>
@@ -418,6 +412,17 @@
                                 <div class="environmental-label">CO₂ vermieden</div>
                                 <div class="environmental-info">~14g CO₂ pro Zigarette (Produktion + Transport)</div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Streak Counter (hidden by default, shown if streak > 1) -->
+                <div id="streakContainer" class="streak-container card" style="display: none;">
+                    <div class="streak-content">
+                        <span id="streakFire" class="streak-fire">🔥</span>
+                        <div class="streak-info">
+                            <span class="streak-title">Du bist am Ball!</span>
+                            <span class="streak-text">Du nutzt die App bereits <strong id="streakCount">0</strong> Tage in Folge. Weiter so!</span>
                         </div>
                     </div>
                 </div>

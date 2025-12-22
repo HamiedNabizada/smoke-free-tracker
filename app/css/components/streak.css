@@ -1,24 +1,24 @@
 /* Streak Counter Styles */
 
 .streak-container {
+    background: linear-gradient(135deg, #ff9500 0%, #ff5e3a 100%);
+    border-radius: 12px;
+    color: white;
+    padding: 20px;
+    margin-top: 15px;
+    box-shadow: 0 3px 10px rgba(255, 94, 58, 0.3);
+}
+
+.streak-content {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 12px 20px;
-    margin-bottom: 15px;
-    background: linear-gradient(135deg, #ff9500 0%, #ff5e3a 100%);
-    border-radius: 25px;
-    color: white;
-    font-weight: 600;
-    font-size: 0.95rem;
-    box-shadow: 0 3px 10px rgba(255, 94, 58, 0.3);
-    animation: streakPulse 2s ease-in-out infinite;
+    gap: 15px;
 }
 
 .streak-fire {
-    font-size: 1.3rem;
+    font-size: 2.5rem;
     animation: fireWiggle 0.5s ease-in-out infinite;
+    flex-shrink: 0;
 }
 
 .streak-fire.hot {
@@ -31,22 +31,25 @@
     filter: drop-shadow(0 0 10px rgba(255, 200, 0, 1));
 }
 
-.streak-text {
-    letter-spacing: 0.3px;
+.streak-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
-#streakCount {
+.streak-title {
     font-size: 1.1rem;
     font-weight: 700;
 }
 
-@keyframes streakPulse {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.02);
-    }
+.streak-text {
+    font-size: 0.95rem;
+    opacity: 0.95;
+    line-height: 1.4;
+}
+
+.streak-text strong {
+    font-weight: 700;
 }
 
 @keyframes fireWiggle {
