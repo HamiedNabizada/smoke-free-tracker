@@ -5,28 +5,24 @@
 
 .progress-rings-container {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: flex-start;
-    gap: 20px;
-    flex-wrap: wrap;
-    padding: 20px 0;
+    gap: 60px;
+    padding: 30px 20px;
 }
 
 .progress-ring-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex: 1;
-    min-width: 100px;
-    max-width: 150px;
 }
 
-/* Ring Container */
+/* Ring Container - Desktop */
 .progress-ring {
     position: relative;
-    width: 110px;
-    height: 110px;
-    margin-bottom: 12px;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 15px;
 }
 
 .progress-ring svg {
@@ -39,13 +35,13 @@
 .progress-ring-bg {
     fill: none;
     stroke: #e9ecef;
-    stroke-width: 8;
+    stroke-width: 10;
 }
 
 /* Progress Fill Circle */
 .progress-ring-fill {
     fill: none;
-    stroke-width: 8;
+    stroke-width: 10;
     stroke-linecap: round;
     stroke-dasharray: 326.73;
     stroke-dashoffset: 326.73;
@@ -79,19 +75,19 @@
 }
 
 .progress-ring-icon {
-    font-size: 1.2rem;
-    margin-bottom: 2px;
+    font-size: 1.8rem;
+    margin-bottom: 4px;
 }
 
 .progress-ring-value {
-    font-size: 1.1rem;
+    font-size: 1.4rem;
     font-weight: 700;
     color: #333;
     line-height: 1.2;
 }
 
 .progress-ring-percent {
-    font-size: 0.75rem;
+    font-size: 0.9rem;
     color: #666;
     font-weight: 600;
 }
@@ -103,14 +99,14 @@
 }
 
 .progress-ring-title {
-    font-size: 0.85rem;
+    font-size: 1rem;
     font-weight: 600;
     color: #333;
-    margin-bottom: 3px;
+    margin-bottom: 4px;
 }
 
 .progress-ring-goal {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     color: #999;
 }
 
@@ -133,37 +129,47 @@
     color: #aaa;
 }
 
-/* Responsive */
+/* Responsive - Tablet & Mobile */
 @media (max-width: 768px) {
     .progress-rings-container {
-        gap: 15px;
-        justify-content: center;
+        gap: 20px;
+        padding: 20px 10px;
+        flex-wrap: wrap;
+        justify-content: space-around;
     }
 
     .progress-ring-item {
+        flex: 1;
         min-width: 90px;
         max-width: 110px;
     }
 
     .progress-ring {
-        width: 90px;
-        height: 90px;
+        width: 100px;
+        height: 100px;
+        margin-bottom: 10px;
+    }
+
+    .progress-ring-bg,
+    .progress-ring-fill {
+        stroke-width: 8;
     }
 
     .progress-ring-icon {
-        font-size: 1rem;
+        font-size: 1.2rem;
+        margin-bottom: 2px;
     }
 
     .progress-ring-value {
-        font-size: 0.95rem;
+        font-size: 1rem;
     }
 
     .progress-ring-percent {
-        font-size: 0.65rem;
+        font-size: 0.7rem;
     }
 
     .progress-ring-title {
-        font-size: 0.75rem;
+        font-size: 0.8rem;
     }
 
     .progress-ring-goal {
