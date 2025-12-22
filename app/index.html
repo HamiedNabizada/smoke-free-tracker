@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="description" content="Verfolge deinen Fortschritt beim Rauchstopp mit detaillierten Statistiken und Gesundheitsmeilensteinen">
     <meta name="theme-color" content="#667eea">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://www.gstatic.com; style-src 'self' 'unsafe-inline'; connect-src 'self' https://*.firebaseapp.com https://*.googleapis.com https://*.firestore.googleapis.com https://firestore.googleapis.com; img-src 'self' data: https:; font-src 'self' data:; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://www.gstatic.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'; connect-src 'self' https://*.firebaseapp.com https://*.googleapis.com https://*.firestore.googleapis.com https://firestore.googleapis.com; img-src 'self' data: https:; font-src 'self' data:; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'">
 
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
@@ -855,6 +855,14 @@
                             <div class="btn-description">Erstelle ein Bild für Instagram, WhatsApp & Co.</div>
                         </div>
                     </button>
+
+                    <button id="exportPdfBtn" class="data-action-btn pdf-btn">
+                        <span class="btn-icon">📄</span>
+                        <div class="btn-content">
+                            <div class="btn-title">PDF-Report erstellen</div>
+                            <div class="btn-description">Exportiere deine Statistiken als PDF-Dokument</div>
+                        </div>
+                    </button>
                 </div>
             </div>
 
@@ -1037,6 +1045,9 @@
     <!-- Firebase Config & Auth -->
     <script src="js/firebase-config.js"></script>
     <script src="js/firebase-auth.js"></script>
+
+    <!-- jsPDF for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <!-- Main App (ES6 Module) -->
     <script type="module" src="js/app.js"></script>

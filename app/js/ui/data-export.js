@@ -28,6 +28,11 @@ export function initializeDataExport() {
     if (shareImageBtn) {
         shareImageBtn.addEventListener('click', shareAsImage);
     }
+
+    const exportPdfBtn = document.getElementById('exportPdfBtn');
+    if (exportPdfBtn) {
+        exportPdfBtn.addEventListener('click', exportPdf);
+    }
 }
 
 /**
@@ -431,6 +436,122 @@ function downloadCanvas(canvas) {
 
     console.log('[Share] Image downloaded as PNG');
     alert('📸 Dein Erfolgs-Bild wurde heruntergeladen!\n\nDu kannst es jetzt auf Instagram, WhatsApp, Facebook oder wo du möchtest teilen.');
+}
+
+/**
+ * Export statistics as PDF report
+ */
+async function exportPdf() {
+    const stats = calculateStats();
+    const user = firebase.auth().currentUser;
+    const username = user?.displayName || 'Benutzer';
+
+    // Check if jsPDF is loaded
+    if (typeof window.jspdf === 'undefined') {
+        alert('PDF-Bibliothek wird geladen, bitte versuche es erneut.');
+        return;
+    }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Colors
+    const primaryColor = [102, 126, 234]; // #667eea
+    const darkColor = [51, 51, 51];
+    const grayColor = [102, 102, 102];
+
+    // Header with gradient-like effect
+    doc.setFillColor(...primaryColor);
+    doc.rect(0, 0, 210, 50, 'F');
+
+    // Title
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(24);
+    doc.setFont('helvetica', 'bold');
+    doc.text('ByeByeSmoke', 105, 25, { align: 'center' });
+
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Dein Rauchfrei-Report', 105, 35, { align: 'center' });
+
+    // User info
+    doc.setTextColor(...darkColor);
+    doc.setFontSize(12);
+    doc.text(`Erstellt für: ${username}`, 20, 65);
+    doc.text(`Datum: ${new Date().toLocaleDateString('de-DE')}`, 20, 72);
+
+    // Main Statistics Box
+    doc.setDrawColor(...primaryColor);
+    doc.setLineWidth(0.5);
+    doc.roundedRect(15, 85, 180, 60, 5, 5);
+
+    // Days smoke-free (big number)
+    doc.setFontSize(48);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(...primaryColor);
+    doc.text(stats.days.toString(), 105, 115, { align: 'center' });
+
+    doc.setFontSize(16);
+    doc.setTextColor(...grayColor);
+    doc.text('Tage rauchfrei', 105, 130, { align: 'center' });
+
+    // Statistics Grid
+    const startY = 160;
+    const colWidth = 60;
+
+    // Row 1
+    doc.setFontSize(10);
+    doc.setTextColor(...grayColor);
+    doc.text('Geld gespart', 20 + colWidth/2, startY, { align: 'center' });
+    doc.text('Zigaretten vermieden', 80 + colWidth/2, startY, { align: 'center' });
+    doc.text('Lebenszeit gewonnen', 140 + colWidth/2, startY, { align: 'center' });
+
+    doc.setFontSize(18);
+    doc.setTextColor(...darkColor);
+    doc.setFont('helvetica', 'bold');
+    doc.text(`${stats.money.toFixed(0)}€`, 20 + colWidth/2, startY + 10, { align: 'center' });
+    doc.text(stats.cigarettes.toString(), 80 + colWidth/2, startY + 10, { align: 'center' });
+    doc.text(`${stats.lifeGained.totalHours}h`, 140 + colWidth/2, startY + 10, { align: 'center' });
+
+    // Row 2
+    const row2Y = startY + 35;
+    doc.setFontSize(10);
+    doc.setTextColor(...grayColor);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Lungengesundheit', 20 + colWidth/2, row2Y, { align: 'center' });
+    doc.text('Zeit gespart', 80 + colWidth/2, row2Y, { align: 'center' });
+    doc.text('CO₂ vermieden', 140 + colWidth/2, row2Y, { align: 'center' });
+
+    doc.setFontSize(18);
+    doc.setTextColor(...darkColor);
+    doc.setFont('helvetica', 'bold');
+    doc.text(`${stats.lungHealth}%`, 20 + colWidth/2, row2Y + 10, { align: 'center' });
+    doc.text(`${stats.timeSaved.totalHours}h`, 80 + colWidth/2, row2Y + 10, { align: 'center' });
+    doc.text(`${stats.co2Avoided.toFixed(1)}kg`, 140 + colWidth/2, row2Y + 10, { align: 'center' });
+
+    // Environment Section
+    doc.setFontSize(14);
+    doc.setTextColor(...primaryColor);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Umwelt-Impact', 20, 230);
+
+    doc.setFontSize(11);
+    doc.setTextColor(...darkColor);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`Wasser gespart: ${stats.waterSaved.toLocaleString('de-DE')} Liter`, 25, 240);
+    doc.text(`Bäume gerettet: ${(stats.cigarettes / 300).toFixed(1)}`, 25, 248);
+    doc.text(`CO₂ vermieden: ${stats.co2Avoided.toFixed(2)} kg`, 25, 256);
+
+    // Footer
+    doc.setFontSize(9);
+    doc.setTextColor(...grayColor);
+    doc.text('Erstellt mit ByeByeSmoke - tracker.hamied.de', 105, 285, { align: 'center' });
+
+    // Save PDF
+    doc.save(`byebyesmoke-report-${new Date().toISOString().split('T')[0]}.pdf`);
+
+    console.log('[PDF] Report generated');
+    alert('📄 Dein PDF-Report wurde erstellt und heruntergeladen!');
 }
 
 /**

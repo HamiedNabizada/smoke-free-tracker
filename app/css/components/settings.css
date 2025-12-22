@@ -438,3 +438,7 @@
 .image-btn:hover {
     border-color: #e53e3e;
 }
+
+.pdf-btn:hover {
+    border-color: #3182ce;
+}
