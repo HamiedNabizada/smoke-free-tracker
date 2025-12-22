@@ -55,7 +55,7 @@ async function loadGoals() {
 }
 
 /**
- * Save goals to Firestore
+ * Save goals to Firestore (with rate limiting)
  */
 async function saveGoals() {
     const user = firebase.auth().currentUser;
@@ -66,10 +66,21 @@ async function saveGoals() {
         return;
     }
 
+    // Check write limit
+    if (typeof checkWriteLimit === 'function' && !checkWriteLimit('goals')) {
+        return;
+    }
+
     try {
         await firebase.firestore().collection('users').doc(user.uid).update({
             progress_goals: currentGoals
         });
+
+        // Track write
+        if (typeof incrementWriteCount === 'function') {
+            incrementWriteCount('goals');
+        }
+
         console.log('[ProgressGoals] Goals saved:', currentGoals);
     } catch (error) {
         console.error('[ProgressGoals] Error saving goals:', error);

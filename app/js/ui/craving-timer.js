@@ -294,6 +294,14 @@ async function incrementCravingCount() {
             return true;
         }
 
+        // Check write limit (silently - timer still works)
+        if (typeof getWriteCount === 'function' && typeof WRITE_LIMITS !== 'undefined') {
+            if (getWriteCount('craving') >= WRITE_LIMITS.craving) {
+                console.log('[RateLimit] Craving limit reached, not recording');
+                return true;
+            }
+        }
+
         const today = new Date().toISOString().split('T')[0];
         const docRef = firebase.firestore().collection('craving_events').doc(`${user.uid}_${today}`);
 
@@ -315,6 +323,11 @@ async function incrementCravingCount() {
                 return newCount;
             }
         });
+
+        // Track write
+        if (typeof incrementWriteCount === 'function') {
+            incrementWriteCount('craving');
+        }
 
         // Invalidate cache after write
         if (typeof invalidateCache === 'function') {

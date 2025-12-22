@@ -34,6 +34,51 @@ function clearUserCache() {
 }
 
 // ============================================
+// Write rate limiting to reduce Firebase costs
+// ============================================
+const WRITE_LIMITS = {
+    settings: 5,      // Max 5 settings changes per day
+    goals: 5,         // Max 5 goal changes per day
+    craving: 30,      // Max 30 cravings per day
+    notifications: 5  // Max 5 notification toggles per day
+};
+
+function getWriteCountKey(type) {
+    const today = new Date().toISOString().split('T')[0];
+    return `write_count_${type}_${today}`;
+}
+
+function getWriteCount(type) {
+    try {
+        const key = getWriteCountKey(type);
+        const stored = localStorage.getItem(key);
+        return stored ? parseInt(stored, 10) : 0;
+    } catch (e) {
+        return 0;
+    }
+}
+
+function incrementWriteCount(type) {
+    try {
+        const key = getWriteCountKey(type);
+        const current = getWriteCount(type);
+        localStorage.setItem(key, (current + 1).toString());
+    } catch (e) {
+        // Ignore localStorage errors
+    }
+}
+
+function checkWriteLimit(type) {
+    const current = getWriteCount(type);
+    const limit = WRITE_LIMITS[type] || 10;
+    if (current >= limit) {
+        alert(`Du hast das Tageslimit für diese Aktion erreicht (${limit}x pro Tag).\n\nVersuche es morgen wieder.`);
+        return false;
+    }
+    return true;
+}
+
+// ============================================
 // Demo mode helpers (inline to avoid module issues)
 // ============================================
 const DEMO_EMAIL = 'demo@byebyesmoke.app';
@@ -215,7 +260,7 @@ async function getUserData(forceRefresh = false) {
   }
 }
 
-// Update user data in Firestore
+// Update user data in Firestore (with rate limiting)
 async function updateUserData(updates) {
   try {
     const user = auth.currentUser;
@@ -228,7 +273,15 @@ async function updateUserData(updates) {
       return { success: false };
     }
 
+    // Check write limit
+    if (!checkWriteLimit('settings')) {
+      return { success: false };
+    }
+
     await db.collection('users').doc(user.uid).update(updates);
+
+    // Track write
+    incrementWriteCount('settings');
 
     // Invalidate cache after update
     invalidateCache('user_data_' + user.uid);
@@ -290,7 +343,7 @@ async function deleteAccount() {
   }
 }
 
-// Record craving event
+// Record craving event (with rate limiting)
 async function recordCraving() {
   try {
     const user = auth.currentUser;
@@ -301,6 +354,12 @@ async function recordCraving() {
     // Block write in demo mode (silently - craving timer still works)
     if (isDemoMode()) {
       console.log('[Demo] Craving event not recorded (demo mode)');
+      return true;
+    }
+
+    // Check write limit (silently - timer still works)
+    if (getWriteCount('craving') >= WRITE_LIMITS.craving) {
+      console.log('[RateLimit] Craving limit reached, not recording');
       return true;
     }
 
@@ -325,6 +384,9 @@ async function recordCraving() {
         return newCount;
       }
     });
+
+    // Track write
+    incrementWriteCount('craving');
 
     // Invalidate craving cache after recording
     invalidateCache('craving_today_' + user.uid);

@@ -78,7 +78,7 @@ async function loadNotificationSettings() {
 }
 
 /**
- * Save notification settings to Firestore
+ * Save notification settings to Firestore (with rate limiting)
  */
 async function saveNotificationSettings() {
     const user = firebase.auth().currentUser;
@@ -89,12 +89,22 @@ async function saveNotificationSettings() {
         return;
     }
 
+    // Check write limit
+    if (typeof checkWriteLimit === 'function' && !checkWriteLimit('notifications')) {
+        return;
+    }
+
     try {
         await firebase.firestore().collection('users').doc(user.uid).update({
             notifications_enabled: notificationSettings.enabled,
             milestones_enabled: notificationSettings.milestones,
             daily_motivation_enabled: notificationSettings.dailyMotivation
         });
+
+        // Track write
+        if (typeof incrementWriteCount === 'function') {
+            incrementWriteCount('notifications');
+        }
 
         console.log('[Notifications] Settings saved');
     } catch (error) {
