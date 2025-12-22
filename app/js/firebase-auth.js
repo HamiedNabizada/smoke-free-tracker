@@ -68,19 +68,27 @@ function incrementWriteCount(type) {
     }
 }
 
-function checkWriteLimit(type) {
+function checkWriteLimit(type, useToast = false) {
     const current = getWriteCount(type);
     const limit = WRITE_LIMITS[type] || 10;
 
     // Limit reached
     if (current >= limit) {
-        alert(`Du hast das Tageslimit für diese Aktion erreicht (${limit}x pro Tag).\n\nVersuche es morgen wieder.`);
+        if (useToast) {
+            showToast(`Tageslimit erreicht (${limit}x). Versuche es morgen wieder.`, 5000, 'warning');
+        } else {
+            alert(`Du hast das Tageslimit für diese Aktion erreicht (${limit}x pro Tag).\n\nVersuche es morgen wieder.`);
+        }
         return false;
     }
 
     // Warning at second-to-last attempt
     if (current === limit - 1) {
-        alert(`Hinweis: Das ist deine letzte Änderung für heute.\n\nUm die App kostenlos zu halten, ist die Anzahl der Speichervorgänge pro Tag begrenzt (${limit}x).`);
+        if (useToast) {
+            showToast('Letzte Änderung für heute - App bleibt so kostenlos!', 4000, 'info');
+        } else {
+            alert(`Hinweis: Das ist deine letzte Änderung für heute.\n\nUm die App kostenlos zu halten, ist die Anzahl der Speichervorgänge pro Tag begrenzt (${limit}x).`);
+        }
     }
 
     return true;
@@ -89,20 +97,30 @@ function checkWriteLimit(type) {
 // Track if craving limit toast was shown this session
 let _cravingLimitToastShown = false;
 
+// Toast notification types and colors
+const TOAST_TYPES = {
+    info: { bg: 'rgba(0, 0, 0, 0.85)', icon: 'ℹ️' },
+    success: { bg: 'rgba(34, 139, 34, 0.9)', icon: '✓' },
+    warning: { bg: 'rgba(255, 165, 0, 0.9)', icon: '⚠️' },
+    error: { bg: 'rgba(220, 53, 69, 0.9)', icon: '✕' }
+};
+
 // Toast notification for non-blocking messages
-function showToast(message, duration = 4000) {
+function showToast(message, duration = 4000, type = 'info') {
     // Remove existing toast if any
-    const existing = document.getElementById('limitToast');
+    const existing = document.getElementById('appToast');
     if (existing) existing.remove();
 
+    const config = TOAST_TYPES[type] || TOAST_TYPES.info;
+
     const toast = document.createElement('div');
-    toast.id = 'limitToast';
+    toast.id = 'appToast';
     toast.style.cssText = `
         position: fixed;
         bottom: 100px;
         left: 50%;
         transform: translateX(-50%);
-        background: rgba(0, 0, 0, 0.85);
+        background: ${config.bg};
         color: white;
         padding: 12px 20px;
         border-radius: 8px;
@@ -111,8 +129,11 @@ function showToast(message, duration = 4000) {
         max-width: 90%;
         text-align: center;
         animation: fadeIn 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
     `;
-    toast.textContent = message;
+    toast.innerHTML = `<span style="font-size: 16px;">${config.icon}</span><span>${message}</span>`;
     document.body.appendChild(toast);
 
     setTimeout(() => {
@@ -121,6 +142,69 @@ function showToast(message, duration = 4000) {
         setTimeout(() => toast.remove(), 300);
     }, duration);
 }
+
+// Show error toast with retry option for network errors
+function showErrorToast(message, isNetworkError = false) {
+    if (isNetworkError && !navigator.onLine) {
+        showToast('Keine Internetverbindung', 5000, 'warning');
+    } else {
+        showToast(message, 4000, 'error');
+    }
+}
+
+// Network error detection
+function isNetworkError(error) {
+    return error.code === 'unavailable' ||
+           error.message?.includes('network') ||
+           error.message?.includes('Failed to fetch') ||
+           !navigator.onLine;
+}
+
+// Offline indicator
+let offlineIndicator = null;
+
+function updateOnlineStatus() {
+    if (!navigator.onLine) {
+        if (!offlineIndicator) {
+            offlineIndicator = document.createElement('div');
+            offlineIndicator.id = 'offlineIndicator';
+            offlineIndicator.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                background: #ff6b6b;
+                color: white;
+                text-align: center;
+                padding: 8px;
+                font-size: 13px;
+                z-index: 10001;
+            `;
+            offlineIndicator.textContent = 'Offline - Änderungen werden nicht gespeichert';
+            document.body.prepend(offlineIndicator);
+        }
+    } else {
+        if (offlineIndicator) {
+            offlineIndicator.remove();
+            offlineIndicator = null;
+            showToast('Wieder online', 2000, 'success');
+        }
+    }
+}
+
+// Listen for online/offline events
+window.addEventListener('online', updateOnlineStatus);
+window.addEventListener('offline', updateOnlineStatus);
+// Check initial state
+document.addEventListener('DOMContentLoaded', updateOnlineStatus);
+
+// Global error handler for unhandled promise rejections
+window.addEventListener('unhandledrejection', (event) => {
+    console.error('Unhandled error:', event.reason);
+    if (isNetworkError(event.reason)) {
+        showErrorToast('Verbindungsproblem', true);
+    }
+});
 
 // ============================================
 // Demo mode helpers (inline to avoid module issues)

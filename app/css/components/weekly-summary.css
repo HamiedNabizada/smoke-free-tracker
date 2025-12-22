@@ -1,0 +1,193 @@
+/* Weekly Summary Modal Styles */
+
+.weekly-summary-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: 20px;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.weekly-summary-overlay.closing {
+    animation: fadeOut 0.3s ease-out forwards;
+}
+
+.weekly-summary-modal {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    animation: slideUp 0.3s ease-out;
+}
+
+.weekly-summary-overlay.closing .weekly-summary-modal {
+    animation: slideDown 0.3s ease-out forwards;
+}
+
+.weekly-summary-header {
+    margin-bottom: 25px;
+}
+
+.weekly-summary-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.weekly-summary-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.weekly-summary-content {
+    display: grid;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.weekly-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    transition: transform 0.2s ease;
+}
+
+.weekly-stat:hover {
+    transform: scale(1.02);
+}
+
+.weekly-stat.highlight {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.weekly-stat-icon {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.weekly-stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.weekly-stat-label {
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 3px;
+}
+
+.weekly-stat.highlight .weekly-stat-label {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.weekly-summary-message {
+    font-size: 1rem;
+    color: #666;
+    margin: 0 0 20px 0;
+    font-style: italic;
+}
+
+.weekly-summary-close {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 14px 40px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.weekly-summary-close:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+}
+
+.weekly-summary-close:active {
+    transform: translateY(0);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+}
+
+/* Dark mode */
+.dark-mode .weekly-summary-modal {
+    background: #1e1e1e;
+}
+
+.dark-mode .weekly-summary-header h2 {
+    color: #fff;
+}
+
+.dark-mode .weekly-stat {
+    background: #2d2d2d;
+}
+
+.dark-mode .weekly-stat-label {
+    color: #aaa;
+}
+
+.dark-mode .weekly-stat.highlight {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.dark-mode .weekly-summary-message {
+    color: #aaa;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .weekly-summary-modal {
+        padding: 25px 20px;
+    }
+
+    .weekly-stat-value {
+        font-size: 1.5rem;
+    }
+}

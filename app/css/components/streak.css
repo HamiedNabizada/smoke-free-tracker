@@ -1,0 +1,73 @@
+/* Streak Counter Styles */
+
+.streak-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    margin-bottom: 15px;
+    background: linear-gradient(135deg, #ff9500 0%, #ff5e3a 100%);
+    border-radius: 25px;
+    color: white;
+    font-weight: 600;
+    font-size: 0.95rem;
+    box-shadow: 0 3px 10px rgba(255, 94, 58, 0.3);
+    animation: streakPulse 2s ease-in-out infinite;
+}
+
+.streak-fire {
+    font-size: 1.3rem;
+    animation: fireWiggle 0.5s ease-in-out infinite;
+}
+
+.streak-fire.hot {
+    animation: fireWiggle 0.3s ease-in-out infinite;
+    filter: drop-shadow(0 0 5px rgba(255, 200, 0, 0.8));
+}
+
+.streak-fire.blazing {
+    animation: fireWiggle 0.2s ease-in-out infinite, blazeGlow 1s ease-in-out infinite;
+    filter: drop-shadow(0 0 10px rgba(255, 200, 0, 1));
+}
+
+.streak-text {
+    letter-spacing: 0.3px;
+}
+
+#streakCount {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+@keyframes streakPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+}
+
+@keyframes fireWiggle {
+    0%, 100% {
+        transform: rotate(-5deg);
+    }
+    50% {
+        transform: rotate(5deg);
+    }
+}
+
+@keyframes blazeGlow {
+    0%, 100% {
+        filter: drop-shadow(0 0 10px rgba(255, 200, 0, 1));
+    }
+    50% {
+        filter: drop-shadow(0 0 20px rgba(255, 100, 0, 1));
+    }
+}
+
+/* Dark mode */
+.dark-mode .streak-container {
+    box-shadow: 0 3px 15px rgba(255, 94, 58, 0.4);
+}

@@ -132,10 +132,15 @@ async function showSuccessMessage() {
     let currentCount = 0;
 
     if (shouldCount) {
-        // Increment craving count in Firestore
-        await incrementCravingCount();
-        // Get updated count
-        currentCount = await getCurrentCravingCount();
+        // Increment craving count in Firestore (use global recordCraving from firebase-auth.js)
+        if (typeof recordCraving === 'function') {
+            await recordCraving();
+        }
+        // Get updated count (use global getCravingCount from firebase-auth.js)
+        if (typeof getCravingCount === 'function') {
+            const result = await getCravingCount();
+            currentCount = result.count;
+        }
         // Update compact craving stats in background
         updateCompactCravingStats();
     }
@@ -201,7 +206,9 @@ async function closeCravingOverlay() {
 
     // Only count if checkbox is checked, some time was spent (at least 10 seconds), and NOT already counted (success screen not visible)
     if (countCheckbox && countCheckbox.checked && timeSpent >= 10 && !isSuccessScreenVisible) {
-        await incrementCravingCount();
+        if (typeof recordCraving === 'function') {
+            await recordCraving();
+        }
         // Update compact craving stats in background
         updateCompactCravingStats();
     }
@@ -234,115 +241,4 @@ async function closeCravingOverlay() {
     }
 }
 
-// Helper functions for craving count (stored in Firestore, with caching)
-async function getCurrentCravingCount() {
-    try {
-        const user = firebase.auth().currentUser;
-        if (!user) return 0;
-
-        const today = new Date().toISOString().split('T')[0];
-
-        // Demo mode: return demo count
-        if (typeof isDemoMode === 'function' && isDemoMode()) {
-            if (typeof getDemoCravingEvents === 'function') {
-                const demoEvents = getDemoCravingEvents();
-                const todayEvent = demoEvents.find(e => e.date === today);
-                return todayEvent ? todayEvent.count : 3;
-            }
-            return 3;
-        }
-
-        // Check cache first
-        const cacheKey = 'craving_today_' + user.uid;
-        if (typeof getCached === 'function') {
-            const cached = getCached(cacheKey);
-            if (cached && cached.date === today) {
-                return cached.count;
-            }
-        }
-
-        const docRef = firebase.firestore().collection('craving_events').doc(`${user.uid}_${today}`);
-        const doc = await docRef.get();
-
-        let count = 0;
-        if (doc.exists) {
-            count = doc.data().count || 0;
-        }
-
-        // Cache result (30 sec TTL)
-        if (typeof setCache === 'function') {
-            setCache(cacheKey, { count, date: today }, 30 * 1000);
-        }
-
-        return count;
-    } catch (error) {
-        console.error('Error getting craving count:', error);
-        return 0;
-    }
-}
-
-async function incrementCravingCount() {
-    try {
-        const user = firebase.auth().currentUser;
-        if (!user) {
-            throw new Error('Nicht angemeldet');
-        }
-
-        // Skip write in demo mode (silently - timer still works)
-        if (typeof isDemoMode === 'function' && isDemoMode()) {
-            console.log('[Demo] Craving count not incremented (demo mode)');
-            return true;
-        }
-
-        // Check write limit (show toast once, timer still works)
-        if (typeof getWriteCount === 'function' && typeof WRITE_LIMITS !== 'undefined') {
-            if (getWriteCount('craving') >= WRITE_LIMITS.craving) {
-                console.log('[RateLimit] Craving limit reached, not recording');
-                if (typeof showToast === 'function' && typeof _cravingLimitToastShown !== 'undefined' && !_cravingLimitToastShown) {
-                    showToast('Tageslimit erreicht - Timer funktioniert, wird aber nicht mehr gezählt', 5000);
-                    _cravingLimitToastShown = true;
-                }
-                return true;
-            }
-        }
-
-        const today = new Date().toISOString().split('T')[0];
-        const docRef = firebase.firestore().collection('craving_events').doc(`${user.uid}_${today}`);
-
-        // Use Firestore transaction to increment count
-        await firebase.firestore().runTransaction(async (transaction) => {
-            const doc = await transaction.get(docRef);
-
-            if (!doc.exists) {
-                transaction.set(docRef, {
-                    user_id: user.uid,
-                    date: today,
-                    count: 1,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                return 1;
-            } else {
-                const newCount = (doc.data().count || 0) + 1;
-                transaction.update(docRef, { count: newCount });
-                return newCount;
-            }
-        });
-
-        // Track write
-        if (typeof incrementWriteCount === 'function') {
-            incrementWriteCount('craving');
-        }
-
-        // Invalidate cache after write
-        if (typeof invalidateCache === 'function') {
-            invalidateCache('craving_today_' + user.uid);
-            invalidateCache('craving_history_' + user.uid + '_7');
-            invalidateCache('craving_history_' + user.uid + '_30');
-        }
-
-        return true;
-    } catch (error) {
-        console.error('Error incrementing craving count:', error);
-        throw error;
-    }
-}
+// Note: Craving count functions moved to firebase-auth.js (recordCraving, getCravingCount)

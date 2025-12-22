@@ -1,15 +1,32 @@
-const CACHE_VERSION = 'byebyesmoke-v7';
+const CACHE_VERSION = 'byebyesmoke-v8';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const DYNAMIC_CACHE = `${CACHE_VERSION}-dynamic`;
 const CDN_CACHE = `${CACHE_VERSION}-cdn`;
 
-// Essential files to cache immediately
+// Cache size limits
+const MAX_DYNAMIC_CACHE_ITEMS = 50;
+const MAX_CDN_CACHE_ITEMS = 20;
+
+// Essential files to cache immediately (core app shell)
 const STATIC_ASSETS = [
   './index.html',
   './login.html',
   './register.html',
   './manifest.json',
-  './styles.css'
+  './styles.css',
+  './logo.png'
+];
+
+// Additional assets to cache after install (progressive enhancement)
+const SECONDARY_ASSETS = [
+  './datenschutz.html',
+  './impressum.html',
+  './js/app.js',
+  './js/config.js',
+  './css/base.css',
+  './css/layout.css',
+  './css/dark-mode.css',
+  './css/responsive.css'
 ];
 
 // Install event - cache essential files
@@ -21,6 +38,16 @@ self.addEventListener('install', event => {
       .then(cache => {
         console.log('[Service Worker] Caching essential files');
         return cache.addAll(STATIC_ASSETS);
+      })
+      .then(() => {
+        // Cache secondary assets in background (non-blocking)
+        caches.open(STATIC_CACHE).then(cache => {
+          SECONDARY_ASSETS.forEach(asset => {
+            cache.add(asset).catch(() => {
+              // Silently fail for secondary assets
+            });
+          });
+        });
       })
       .then(() => self.skipWaiting())
       .catch(err => console.error('[Service Worker] Cache failed:', err))
@@ -132,6 +159,13 @@ async function networkFirst(request, cacheName) {
     if (networkResponse && networkResponse.status === 200) {
       const cache = await caches.open(cacheName);
       cache.put(request, networkResponse.clone());
+
+      // Trim cache in background to prevent overflow
+      if (cacheName === DYNAMIC_CACHE) {
+        trimCache(DYNAMIC_CACHE, MAX_DYNAMIC_CACHE_ITEMS);
+      } else if (cacheName === CDN_CACHE) {
+        trimCache(CDN_CACHE, MAX_CDN_CACHE_ITEMS);
+      }
     }
 
     return networkResponse;
@@ -168,6 +202,21 @@ async function updateCacheInBackground(request, cacheName) {
     }
   } catch (error) {
     // Silently fail - we already served from cache
+  }
+}
+
+// Limit cache size to prevent storage overflow
+async function trimCache(cacheName, maxItems) {
+  const cache = await caches.open(cacheName);
+  const keys = await cache.keys();
+
+  if (keys.length > maxItems) {
+    // Delete oldest items (FIFO)
+    const deleteCount = keys.length - maxItems;
+    for (let i = 0; i < deleteCount; i++) {
+      await cache.delete(keys[i]);
+    }
+    console.log(`[Service Worker] Trimmed ${deleteCount} items from ${cacheName}`);
   }
 }
 

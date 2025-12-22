@@ -8,6 +8,8 @@ import { initializeNotifications } from './ui/notifications.js';
 import { initializeTutorial } from './ui/tutorial.js';
 import { initializeDataExport } from './ui/data-export.js';
 import { initializeProgressGoals } from './ui/progress-goals.js';
+import { initializeStreak } from './ui/streak.js';
+import { initializeWeeklySummary } from './ui/weekly-summary.js';
 import { setUserData } from './config.js';
 
 // Register Service Worker for PWA functionality
@@ -54,8 +56,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     initializeNotifications();
     initializeTutorial();
     initializeDataExport();
+    initializeStreak();
     await initializeProgressGoals();
     updateDashboard();
+    initializeWeeklySummary();
 
     // Make updateDashboard globally accessible for goal edits
     window.updateDashboard = updateDashboard;

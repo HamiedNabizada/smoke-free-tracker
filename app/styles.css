@@ -24,6 +24,8 @@
 @import url('./css/components/health-avatar.css');
 @import url('./css/components/shocking-facts.css');
 @import url('./css/components/footer.css');
+@import url('./css/components/streak.css');
+@import url('./css/components/weekly-summary.css');
 
 /* Theme and responsive */
 @import url('./css/dark-mode.css');
