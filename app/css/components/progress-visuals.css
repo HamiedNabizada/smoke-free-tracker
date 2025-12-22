@@ -15,6 +15,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
 }
 
 /* Ring Container - Desktop */
@@ -26,6 +27,9 @@
 }
 
 .progress-ring svg {
+    position: absolute;
+    top: 0;
+    left: 0;
     transform: rotate(-90deg);
     width: 100%;
     height: 100%;
@@ -61,43 +65,45 @@
     stroke: #ed8936;
 }
 
-/* Center Content */
+/* Center Content - INSIDE the ring */
 .progress-ring-content {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    gap: 2px;
+    z-index: 1;
 }
 
 .progress-ring-icon {
     font-size: 1.5rem;
     line-height: 1;
+    margin-bottom: 4px;
 }
 
 .progress-ring-value {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 700;
     color: #333;
     line-height: 1;
 }
 
 .progress-ring-percent {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     color: #666;
     font-weight: 600;
     line-height: 1;
+    margin-top: 2px;
 }
 
-/* Labels */
+/* Labels - BELOW the ring */
 .progress-ring-label {
     text-align: center;
-    width: 100%;
 }
 
 .progress-ring-title {
@@ -110,6 +116,12 @@
 .progress-ring-goal {
     font-size: 0.8rem;
     color: #999;
+    cursor: pointer;
+}
+
+.progress-ring-goal:hover {
+    color: #667eea;
+    text-decoration: underline;
 }
 
 /* Dark Mode */
@@ -131,19 +143,15 @@
     color: #aaa;
 }
 
+.dark-mode .progress-ring-goal:hover {
+    color: #667eea;
+}
+
 /* Responsive - Tablet & Mobile */
 @media (max-width: 768px) {
     .progress-rings-container {
         gap: 20px;
         padding: 20px 10px;
-        flex-wrap: wrap;
-        justify-content: space-around;
-    }
-
-    .progress-ring-item {
-        flex: 1;
-        min-width: 90px;
-        max-width: 110px;
     }
 
     .progress-ring {
@@ -158,7 +166,7 @@
     }
 
     .progress-ring-icon {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         margin-bottom: 2px;
     }
 
