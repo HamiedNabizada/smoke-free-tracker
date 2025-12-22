@@ -1,167 +1,172 @@
-/* Progress Visualizations (Tree, Piggy, Cemetery) */
+/* Progress Rings */
 .progress-visuals-card {
     background: white;
 }
 
-.progress-visuals-container {
+.progress-rings-container {
     display: flex;
     justify-content: space-around;
     align-items: flex-start;
-    gap: 30px;
+    gap: 20px;
     flex-wrap: wrap;
     padding: 20px 0;
 }
 
-.progress-visual-item {
+.progress-ring-item {
     display: flex;
     flex-direction: column;
     align-items: center;
     flex: 1;
-    min-width: 200px;
-    max-width: 250px;
+    min-width: 100px;
+    max-width: 150px;
 }
 
-/* SVG Containers with fixed height */
-.tree-svg,
-.piggy-svg,
-.cemetery-svg {
+/* Ring Container */
+.progress-ring {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    margin-bottom: 12px;
+}
+
+.progress-ring svg {
+    transform: rotate(-90deg);
     width: 100%;
-    height: 220px;
-    max-width: 220px;
-    margin-bottom: 15px;
-    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+    height: 100%;
 }
 
-/* Tree Animations */
-.tree-leaves {
-    animation: leaf-sway 3s ease-in-out infinite;
-    transform-origin: center;
+/* Background Circle */
+.progress-ring-bg {
+    fill: none;
+    stroke: #e9ecef;
+    stroke-width: 8;
 }
 
-@keyframes leaf-sway {
-    0%, 100% {
-        transform: translateX(0);
-    }
-    50% {
-        transform: translateX(2px);
-    }
+/* Progress Fill Circle */
+.progress-ring-fill {
+    fill: none;
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 326.73;
+    stroke-dashoffset: 326.73;
+    transition: stroke-dashoffset 1s ease-out;
 }
 
-.tree-leaves.layer1 {
-    animation-delay: 0s;
+/* Ring Colors */
+.days-ring {
+    stroke: #667eea;
 }
 
-.tree-leaves.layer2 {
-    animation-delay: 0.3s;
+.money-ring {
+    stroke: #48bb78;
 }
 
-.tree-leaves.layer3 {
-    animation-delay: 0.6s;
+.cigarettes-ring {
+    stroke: #ed8936;
 }
 
-/* Piggy Bank Animations */
-.piggy-svg {
-    animation: piggy-bounce 2s ease-in-out infinite;
+/* Center Content */
+.progress-ring-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
-@keyframes piggy-bounce {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-3px);
-    }
+.progress-ring-icon {
+    font-size: 1.2rem;
+    margin-bottom: 2px;
 }
 
-#moneyFill {
-    transition: height 1s ease, y 1s ease;
+.progress-ring-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #333;
+    line-height: 1.2;
 }
 
-#coins {
-    animation: coins-sparkle 1.5s ease-in-out infinite;
-}
-
-@keyframes coins-sparkle {
-    0%, 100% {
-        opacity: 0.6;
-        transform: scale(1);
-    }
-    50% {
-        opacity: 1;
-        transform: scale(1.1);
-    }
-}
-
-/* Cemetery Animations */
-.cig-fall {
-    animation: cigarette-fall 3s ease-in infinite;
-}
-
-.cig1 {
-    animation-delay: 0s;
-}
-
-.cig2 {
-    animation-delay: 1s;
-}
-
-.cig3 {
-    animation-delay: 2s;
-}
-
-@keyframes cigarette-fall {
-    0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(160px) rotate(180deg);
-        opacity: 0;
-    }
+.progress-ring-percent {
+    font-size: 0.75rem;
+    color: #666;
+    font-weight: 600;
 }
 
 /* Labels */
-.progress-visual-label {
+.progress-ring-label {
     text-align: center;
     width: 100%;
 }
 
-.progress-visual-value {
-    font-size: 1.8rem;
-    font-weight: 700;
+.progress-ring-title {
+    font-size: 0.85rem;
+    font-weight: 600;
     color: #333;
-    margin-bottom: 5px;
-}
-
-.progress-visual-text {
-    font-size: 0.9rem;
-    color: #666;
     margin-bottom: 3px;
 }
 
-.progress-visual-goal {
-    font-size: 0.75rem;
+.progress-ring-goal {
+    font-size: 0.7rem;
     color: #999;
-    font-style: italic;
+}
+
+/* Dark Mode */
+.dark-mode .progress-visuals-card {
+    background: #1e1e1e;
+}
+
+.dark-mode .progress-ring-bg {
+    stroke: #3a3a3a;
+}
+
+.dark-mode .progress-ring-value,
+.dark-mode .progress-ring-title {
+    color: #fff;
+}
+
+.dark-mode .progress-ring-percent,
+.dark-mode .progress-ring-goal {
+    color: #aaa;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-    .progress-visuals-container {
-        flex-direction: column;
-        align-items: center;
-        gap: 40px;
+    .progress-rings-container {
+        gap: 15px;
+        justify-content: center;
     }
 
-    .progress-visual-item {
-        max-width: 100%;
-        width: 100%;
+    .progress-ring-item {
+        min-width: 90px;
+        max-width: 110px;
     }
 
-    .tree-svg,
-    .piggy-svg,
-    .cemetery-svg {
-        max-width: 180px;
-        height: 200px;
+    .progress-ring {
+        width: 90px;
+        height: 90px;
+    }
+
+    .progress-ring-icon {
+        font-size: 1rem;
+    }
+
+    .progress-ring-value {
+        font-size: 0.95rem;
+    }
+
+    .progress-ring-percent {
+        font-size: 0.65rem;
+    }
+
+    .progress-ring-title {
+        font-size: 0.75rem;
+    }
+
+    .progress-ring-goal {
+        font-size: 0.65rem;
     }
 }

@@ -91,32 +91,42 @@ async function saveGoals() {
  * Update goal displays
  */
 function updateGoalDisplays() {
-    document.getElementById('treeGoalText').textContent = `Ziel: ${currentGoals.days} Tage`;
-    document.getElementById('piggyGoalText').textContent = `Ziel: ${currentGoals.money}€`;
-    document.getElementById('cemeteryGoalText').textContent = `Ziel: ${currentGoals.cigarettes}`;
+    const daysGoal = document.getElementById('daysGoalText');
+    const moneyGoal = document.getElementById('moneyGoalText');
+    const cigarettesGoal = document.getElementById('cigarettesGoalText');
+
+    if (daysGoal) daysGoal.textContent = `Ziel: ${currentGoals.days} Tage`;
+    if (moneyGoal) moneyGoal.textContent = `Ziel: ${currentGoals.money}€`;
+    if (cigarettesGoal) cigarettesGoal.textContent = `Ziel: ${currentGoals.cigarettes}`;
 }
 
 /**
  * Setup click listeners for goal editing
  */
 function setupGoalEditListeners() {
-    // Tree goal (Days)
-    const treeGoal = document.getElementById('treeGoalText');
-    treeGoal.style.cursor = 'pointer';
-    treeGoal.title = 'Klicken zum Bearbeiten';
-    treeGoal.addEventListener('click', () => editGoal('days', 'Tage-Ziel bearbeiten', 'Tage'));
+    // Days goal
+    const daysGoal = document.getElementById('daysGoalText');
+    if (daysGoal) {
+        daysGoal.style.cursor = 'pointer';
+        daysGoal.title = 'Klicken zum Bearbeiten';
+        daysGoal.addEventListener('click', () => editGoal('days', 'Tage-Ziel bearbeiten', 'Tage'));
+    }
 
-    // Piggy goal (Money)
-    const piggyGoal = document.getElementById('piggyGoalText');
-    piggyGoal.style.cursor = 'pointer';
-    piggyGoal.title = 'Klicken zum Bearbeiten';
-    piggyGoal.addEventListener('click', () => editGoal('money', 'Geld-Ziel bearbeiten', '€'));
+    // Money goal
+    const moneyGoal = document.getElementById('moneyGoalText');
+    if (moneyGoal) {
+        moneyGoal.style.cursor = 'pointer';
+        moneyGoal.title = 'Klicken zum Bearbeiten';
+        moneyGoal.addEventListener('click', () => editGoal('money', 'Geld-Ziel bearbeiten', '€'));
+    }
 
-    // Cemetery goal (Cigarettes)
-    const cemeteryGoal = document.getElementById('cemeteryGoalText');
-    cemeteryGoal.style.cursor = 'pointer';
-    cemeteryGoal.title = 'Klicken zum Bearbeiten';
-    cemeteryGoal.addEventListener('click', () => editGoal('cigarettes', 'Zigaretten-Ziel bearbeiten', 'Zigaretten'));
+    // Cigarettes goal
+    const cigarettesGoal = document.getElementById('cigarettesGoalText');
+    if (cigarettesGoal) {
+        cigarettesGoal.style.cursor = 'pointer';
+        cigarettesGoal.title = 'Klicken zum Bearbeiten';
+        cigarettesGoal.addEventListener('click', () => editGoal('cigarettes', 'Zigaretten-Ziel bearbeiten', 'Zigaretten'));
+    }
 }
 
 /**
