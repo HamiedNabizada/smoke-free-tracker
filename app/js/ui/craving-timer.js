@@ -294,10 +294,14 @@ async function incrementCravingCount() {
             return true;
         }
 
-        // Check write limit (silently - timer still works)
+        // Check write limit (show toast once, timer still works)
         if (typeof getWriteCount === 'function' && typeof WRITE_LIMITS !== 'undefined') {
             if (getWriteCount('craving') >= WRITE_LIMITS.craving) {
                 console.log('[RateLimit] Craving limit reached, not recording');
+                if (typeof showToast === 'function' && typeof _cravingLimitToastShown !== 'undefined' && !_cravingLimitToastShown) {
+                    showToast('Tageslimit erreicht - Timer funktioniert, wird aber nicht mehr gezählt', 5000);
+                    _cravingLimitToastShown = true;
+                }
                 return true;
             }
         }

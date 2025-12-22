@@ -71,11 +71,55 @@ function incrementWriteCount(type) {
 function checkWriteLimit(type) {
     const current = getWriteCount(type);
     const limit = WRITE_LIMITS[type] || 10;
+
+    // Limit reached
     if (current >= limit) {
         alert(`Du hast das Tageslimit für diese Aktion erreicht (${limit}x pro Tag).\n\nVersuche es morgen wieder.`);
         return false;
     }
+
+    // Warning at second-to-last attempt
+    if (current === limit - 1) {
+        alert(`Hinweis: Das ist deine letzte Änderung für heute.\n\nUm die App kostenlos zu halten, ist die Anzahl der Speichervorgänge pro Tag begrenzt (${limit}x).`);
+    }
+
     return true;
+}
+
+// Track if craving limit toast was shown this session
+let _cravingLimitToastShown = false;
+
+// Toast notification for non-blocking messages
+function showToast(message, duration = 4000) {
+    // Remove existing toast if any
+    const existing = document.getElementById('limitToast');
+    if (existing) existing.remove();
+
+    const toast = document.createElement('div');
+    toast.id = 'limitToast';
+    toast.style.cssText = `
+        position: fixed;
+        bottom: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.85);
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-size: 14px;
+        z-index: 10000;
+        max-width: 90%;
+        text-align: center;
+        animation: fadeIn 0.3s ease;
+    `;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+    }, duration);
 }
 
 // ============================================
@@ -357,9 +401,13 @@ async function recordCraving() {
       return true;
     }
 
-    // Check write limit (silently - timer still works)
+    // Check write limit (show toast once, timer still works)
     if (getWriteCount('craving') >= WRITE_LIMITS.craving) {
       console.log('[RateLimit] Craving limit reached, not recording');
+      if (!_cravingLimitToastShown) {
+        showToast('Tageslimit erreicht - Timer funktioniert, wird aber nicht mehr gezählt', 5000);
+        _cravingLimitToastShown = true;
+      }
       return true;
     }
 
