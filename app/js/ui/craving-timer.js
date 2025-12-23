@@ -256,12 +256,12 @@ function stopBreathingExercise() {
         phaseTimeout = null;
     }
 
-    // Show options, hide active
+    // Show options, hide active (with null checks)
     const optionsContainer = document.querySelector('.sos-breathing-options');
     const activeContainer = document.getElementById('sosBreathingActive');
 
-    optionsContainer.classList.remove('hidden');
-    activeContainer.classList.add('hidden');
+    if (optionsContainer) optionsContainer.classList.remove('hidden');
+    if (activeContainer) activeContainer.classList.add('hidden');
 
     // Reset state
     currentExercise = null;
@@ -315,15 +315,19 @@ function startGameInline(gameType) {
 }
 
 function closeGameInline() {
+    // Clear all breathe game timeouts
+    breatheGameTimeouts.forEach(t => clearTimeout(t));
+    breatheGameTimeouts = [];
+
     const gamesList = document.getElementById('sosGamesList');
-    const gameActive = document.getElementById('sosGameActive');
+    const gameActiveEl = document.getElementById('sosGameActive');
 
     // Clear game
-    gameActive.innerHTML = '';
+    if (gameActiveEl) gameActiveEl.innerHTML = '';
 
     // Show list, hide game container
-    gamesList.classList.remove('hidden');
-    gameActive.classList.add('hidden');
+    if (gamesList) gamesList.classList.remove('hidden');
+    if (gameActiveEl) gameActiveEl.classList.add('hidden');
 }
 
 // ========== INLINE GAMES ==========
@@ -333,6 +337,7 @@ let gameScore = 0;
 let gameTimer = null;
 let targetTimer = null;
 let timeRemaining = 30;
+let breatheGameTimeouts = []; // Track all breathe game timeouts
 
 function renderTapGame(container) {
     gameScore = 0;
@@ -435,6 +440,7 @@ function renderBreatheGame(container) {
     const totalBreaths = 5;
     let phase = 'inhale';
     gameActive = true;
+    breatheGameTimeouts = []; // Clear previous timeouts
 
     container.innerHTML = `
         <div class="inline-game breathe-game">
@@ -465,17 +471,18 @@ function renderBreatheGame(container) {
             circle.classList.add('inhale');
             circle.classList.remove('exhale');
 
-            setTimeout(() => {
+            const t1 = setTimeout(() => {
                 if (!gameActive) return;
                 phase = 'exhale';
                 instruction.textContent = 'Atme aus...';
                 circle.classList.add('exhale');
                 circle.classList.remove('inhale');
 
-                setTimeout(() => {
+                const t2 = setTimeout(() => {
                     if (!gameActive) return;
                     breathCount++;
-                    document.getElementById('breatheCount').textContent = breathCount;
+                    const countEl = document.getElementById('breatheCount');
+                    if (countEl) countEl.textContent = breathCount;
                     phase = 'inhale';
 
                     if (breathCount >= totalBreaths) {
@@ -484,7 +491,9 @@ function renderBreatheGame(container) {
                         breatheCycle();
                     }
                 }, 4000);
+                breatheGameTimeouts.push(t2);
             }, 4000);
+            breatheGameTimeouts.push(t1);
         }
     }
 
@@ -779,11 +788,19 @@ async function closeCravingOverlay() {
     stopBreathingExercise();
 
     // Stop any active game
-    if (gameActive) {
-        gameActive = false;
-        if (gameTimer) clearInterval(gameTimer);
-        if (targetTimer) clearTimeout(targetTimer);
+    gameActive = false;
+    if (gameTimer) {
+        clearInterval(gameTimer);
+        gameTimer = null;
     }
+    if (targetTimer) {
+        clearTimeout(targetTimer);
+        targetTimer = null;
+    }
+    // Clear breathe game timeouts
+    breatheGameTimeouts.forEach(t => clearTimeout(t));
+    breatheGameTimeouts = [];
+
     closeGameInline();
 
     // Reset state
