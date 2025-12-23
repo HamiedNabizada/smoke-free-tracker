@@ -254,8 +254,12 @@
     animation: fadeIn 0.3s ease;
 }
 
-.sos-content-area.hidden {
-    display: none;
+.sos-content-area.hidden,
+.sos-breathing-options.hidden,
+.sos-breathing-active.hidden,
+.sos-games-list.hidden,
+.sos-game-active.hidden {
+    display: none !important;
 }
 
 @keyframes fadeIn {
