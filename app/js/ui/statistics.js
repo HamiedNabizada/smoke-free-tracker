@@ -1,7 +1,7 @@
 import { userData } from '../config.js';
 import { healthMilestones } from '../data/milestones.js';
 import { calculateTimeRemaining } from '../utils/calculations.js';
-import { generateLotusSVG, getStageProgressInfo } from './lotus.js';
+import { generateLotusSVG, getStageProgressInfo, setCurrentScore, initializeLotusPreview } from './lotus.js';
 
 
 /**
@@ -46,6 +46,9 @@ export function updateHealthScore(stats) {
         riskReduction * weights.riskReduction +
         skin * weights.skin
     );
+
+    // Store current score for preview restoration
+    setCurrentScore(finalScore);
 
     // Update lotus visualization
     const lotusContainer = document.getElementById('lotusContainer');

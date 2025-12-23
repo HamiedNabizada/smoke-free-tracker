@@ -111,6 +111,57 @@
     border-top-color: rgba(255, 255, 255, 0.1);
 }
 
+/* Preview Button */
+.lotus-preview-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    margin-top: 0.5rem;
+    background: linear-gradient(135deg, #e8f4f8 0%, #d0e8f0 100%);
+    border: 1px solid #b8d4dc;
+    border-radius: 20px;
+    color: #2d5a27;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.lotus-preview-btn:hover {
+    background: linear-gradient(135deg, #d0e8f0 0%, #b8d4dc 100%);
+    transform: translateY(-1px);
+}
+
+.lotus-preview-btn:active {
+    transform: translateY(0);
+}
+
+.lotus-preview-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.lotus-preview-btn .preview-icon {
+    font-size: 0.8rem;
+}
+
+.lotus-preview-btn.playing .preview-icon {
+    animation: pulse-icon 0.5s ease-in-out infinite;
+}
+
+[data-theme="dark"] .lotus-preview-btn {
+    background: linear-gradient(135deg, #1a3a1a 0%, #1a4040 100%);
+    border-color: #2d5a4a;
+    color: #b8e6b5;
+}
+
+[data-theme="dark"] .lotus-preview-btn:hover {
+    background: linear-gradient(135deg, #1a4040 0%, #2d5a4a 100%);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .lotus-container {

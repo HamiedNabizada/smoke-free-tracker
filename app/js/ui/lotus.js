@@ -275,3 +275,88 @@ export function getStageProgressInfo(score) {
         progressInStage: Math.round(progressInStage)
     };
 }
+
+// Store the current score to restore after preview
+let currentScore = 0;
+let isPreviewPlaying = false;
+
+/**
+ * Set the current score (called from statistics.js)
+ */
+export function setCurrentScore(score) {
+    currentScore = score;
+}
+
+/**
+ * Update the lotus display with a given score
+ */
+function updateLotusDisplay(score) {
+    const lotusContainer = document.getElementById('lotusContainer');
+    const scoreDisplay = document.getElementById('lotusScore');
+    const stageNameEl = document.getElementById('lotusStageName');
+    const stageProgressEl = document.getElementById('lotusStageProgress');
+    const nextStageEl = document.getElementById('lotusNextStage');
+
+    if (lotusContainer) {
+        lotusContainer.innerHTML = generateLotusSVG(score);
+    }
+
+    if (scoreDisplay) {
+        scoreDisplay.textContent = score;
+    }
+
+    const stageInfo = getStageProgressInfo(score);
+
+    if (stageNameEl) {
+        stageNameEl.textContent = `${stageInfo.stageName} (Stufe ${stageInfo.stageIndex}/${stageInfo.totalStages})`;
+    }
+
+    if (stageProgressEl) {
+        stageProgressEl.textContent = stageInfo.description;
+    }
+
+    if (nextStageEl) {
+        nextStageEl.textContent = stageInfo.nextStage;
+    }
+}
+
+/**
+ * Play the lotus growth preview animation
+ */
+export async function playLotusPreview() {
+    if (isPreviewPlaying) return;
+
+    const btn = document.getElementById('lotusPreviewBtn');
+    if (!btn) return;
+
+    isPreviewPlaying = true;
+    btn.disabled = true;
+    btn.classList.add('playing');
+    btn.innerHTML = '<span class="preview-icon">⏸</span> Läuft...';
+
+    // Preview scores for each stage
+    const previewScores = [10, 30, 50, 70, 95];
+
+    for (const score of previewScores) {
+        updateLotusDisplay(score);
+        await new Promise(resolve => setTimeout(resolve, 1500));
+    }
+
+    // Restore original score
+    updateLotusDisplay(currentScore);
+
+    isPreviewPlaying = false;
+    btn.disabled = false;
+    btn.classList.remove('playing');
+    btn.innerHTML = '<span class="preview-icon">▶</span> Wachstum ansehen';
+}
+
+/**
+ * Initialize the lotus preview button
+ */
+export function initializeLotusPreview() {
+    const btn = document.getElementById('lotusPreviewBtn');
+    if (btn) {
+        btn.addEventListener('click', playLotusPreview);
+    }
+}
