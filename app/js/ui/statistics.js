@@ -1,6 +1,7 @@
 import { userData } from '../config.js';
 import { healthMilestones } from '../data/milestones.js';
 import { calculateTimeRemaining } from '../utils/calculations.js';
+import { generateLotusSVG, getStageProgressInfo } from './lotus.js';
 
 
 /**
@@ -46,23 +47,34 @@ export function updateHealthScore(stats) {
         skin * weights.skin
     );
 
-    // Update gauge
-    const gaugeProgress = document.getElementById('gaugeProgress');
-    const gaugeScore = document.getElementById('gaugeScore');
+    // Update lotus visualization
+    const lotusContainer = document.getElementById('lotusContainer');
+    const scoreDisplay = document.getElementById('lotusScore');
 
-    if (gaugeProgress && gaugeScore) {
-        const circumference = 251.2;
-        const offset = circumference - (finalScore / 100) * circumference;
-        gaugeProgress.style.strokeDashoffset = offset;
-        gaugeScore.textContent = finalScore;
+    if (lotusContainer) {
+        lotusContainer.innerHTML = generateLotusSVG(finalScore);
+    }
 
-        if (finalScore >= 80) {
-            gaugeProgress.style.stroke = '#11998e';
-        } else if (finalScore >= 50) {
-            gaugeProgress.style.stroke = '#ffc107';
-        } else {
-            gaugeProgress.style.stroke = '#ff6b6b';
-        }
+    if (scoreDisplay) {
+        scoreDisplay.textContent = finalScore;
+    }
+
+    // Update stage info
+    const stageInfo = getStageProgressInfo(finalScore);
+    const stageNameEl = document.getElementById('lotusStageName');
+    const stageProgressEl = document.getElementById('lotusStageProgress');
+    const nextStageEl = document.getElementById('lotusNextStage');
+
+    if (stageNameEl) {
+        stageNameEl.textContent = `${stageInfo.stageName} (Stufe ${stageInfo.stageIndex}/${stageInfo.totalStages})`;
+    }
+
+    if (stageProgressEl) {
+        stageProgressEl.textContent = stageInfo.description;
+    }
+
+    if (nextStageEl) {
+        nextStageEl.textContent = stageInfo.nextStage;
     }
 
     // Update details mit wissenschaftlicher Aufschlüsselung

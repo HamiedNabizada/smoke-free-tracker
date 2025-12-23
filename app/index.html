@@ -375,16 +375,22 @@
 
             <!-- Tab Panel: Statistiken -->
             <div class="tab-panel" data-panel="statistics" role="tabpanel" id="panel-statistics" aria-labelledby="tab-statistics" tabindex="0">
-                <!-- Health Score Gauge -->
-                <div class="card health-score-card">
-                    <h2>💪 Dein Gesundheits-Score</h2>
-                    <div class="health-score-container">
-                        <svg class="health-gauge" viewBox="0 0 200 120">
-                            <path class="gauge-background" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#e0e0e0" stroke-width="15" stroke-linecap="round"/>
-                            <path id="gaugeProgress" class="gauge-progress" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#11998e" stroke-width="15" stroke-linecap="round" stroke-dasharray="251.2" stroke-dashoffset="251.2"/>
-                            <text id="gaugeScore" x="100" y="90" text-anchor="middle" font-size="36" font-weight="bold" fill="#333">0</text>
-                            <text x="100" y="110" text-anchor="middle" font-size="14" fill="#666">von 100</text>
-                        </svg>
+                <!-- Health Score with Lotus -->
+                <div class="card health-score-card lotus-card">
+                    <h2>🪷 Deine Lotus</h2>
+                    <div class="lotus-score-container">
+                        <div class="lotus-visual">
+                            <div id="lotusContainer" class="lotus-container"></div>
+                            <div class="lotus-score-display">
+                                <span id="lotusScore" class="lotus-score-value">0</span>
+                                <span class="lotus-score-label">von 100</span>
+                            </div>
+                        </div>
+                        <div class="lotus-info">
+                            <div id="lotusStageName" class="lotus-stage-name">Samen (Stufe 1/5)</div>
+                            <div id="lotusStageProgress" class="lotus-stage-progress">Deine Lotus beginnt zu keimen</div>
+                            <div id="lotusNextStage" class="lotus-next-stage">Bei 20 Punkten erscheint der erste Spross</div>
+                        </div>
                         <div class="health-score-details" id="healthScoreDetails"></div>
                     </div>
                 </div>
