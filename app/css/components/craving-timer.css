@@ -54,12 +54,13 @@
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     z-index: 9999;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     opacity: 1;
     transition: opacity 0.3s ease;
     overflow-y: auto;
     padding: 1rem;
+    box-sizing: border-box;
 }
 
 .craving-overlay.hidden {
@@ -73,6 +74,9 @@
     max-width: 500px;
     text-align: center;
     color: white;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+    margin: auto 0;
 }
 
 /* Close Button */
@@ -793,84 +797,311 @@
 /* Mobile Responsive */
 @media (max-width: 768px) {
     .craving-overlay {
-        padding: 0.75rem;
+        padding: 0.5rem;
+        align-items: flex-start;
+    }
+
+    .craving-overlay-content {
+        padding-top: 0.5rem;
+        padding-bottom: 1.5rem;
+    }
+
+    .craving-close-btn {
+        top: 0;
+        right: 0;
+        width: 36px;
+        height: 36px;
+        font-size: 1.3rem;
     }
 
     .sos-timer-header {
-        gap: 1rem;
-        padding: 0.75rem;
+        gap: 0.75rem;
+        padding: 0.6rem 0.8rem;
+        margin-bottom: 0.75rem;
     }
 
     .breathing-container-compact {
-        width: 65px;
-        height: 65px;
-    }
-
-    .breathing-container-compact .breathing-circle {
         width: 55px;
         height: 55px;
     }
 
+    .breathing-container-compact .breathing-circle {
+        width: 45px;
+        height: 45px;
+    }
+
     .breathing-container-compact .breathing-text {
-        font-size: 0.6rem;
+        font-size: 0.55rem;
     }
 
     .timer-compact .timer-display {
-        font-size: 2rem;
+        font-size: 1.8rem;
+    }
+
+    .timer-compact .timer-label {
+        font-size: 0.75rem;
+    }
+
+    .craving-count-option {
+        margin: 0.5rem 0;
+    }
+
+    .craving-checkbox-label {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+    }
+
+    .sos-tabs {
+        gap: 0.4rem;
+        margin: 0.75rem 0;
     }
 
     .sos-tab {
-        padding: 0.5rem 0.6rem;
-        font-size: 0.8rem;
+        padding: 0.5rem 0.5rem;
+        font-size: 0.75rem;
+        border-radius: 10px;
+    }
+
+    .sos-content {
+        min-height: 150px;
     }
 
     .craving-tip-display {
-        padding: 1.25rem;
+        padding: 1rem;
+        border-radius: 12px;
     }
 
     .tip-icon-large {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
     }
 
     .tip-text {
-        font-size: 1rem;
+        font-size: 0.95rem;
+        line-height: 1.4;
+    }
+
+    .sos-breathing-options,
+    .sos-games-list {
+        gap: 0.5rem;
     }
 
     .sos-breathing-btn,
     .sos-game-btn {
-        padding: 0.9rem 1rem;
+        padding: 0.75rem 0.9rem;
+        gap: 0.75rem;
+        border-radius: 12px;
     }
 
     .sos-breathing-btn .exercise-icon,
     .sos-game-btn .game-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 1.5rem;
+        width: 38px;
+        height: 38px;
+        font-size: 1.4rem;
     }
 
     .sos-breathing-btn .exercise-name,
     .sos-game-btn .game-name {
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
 
+    .sos-breathing-btn .exercise-detail,
+    .sos-game-btn .game-desc {
+        font-size: 0.75rem;
+    }
+
+    /* Breathing Exercise Active */
+    .breathing-exercise-display {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto 0.75rem;
+    }
+
+    .breathing-exercise-circle {
+        width: 100px;
+        height: 100px;
+    }
+
+    .breathing-instruction {
+        font-size: 1.1rem;
+    }
+
+    .breathing-phase-timer {
+        font-size: 1.6rem;
+    }
+
+    .breathing-progress {
+        font-size: 0.8rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .breathing-stop-btn {
+        padding: 0.5rem 1.25rem;
+        font-size: 0.85rem;
+    }
+
+    /* Games */
     .tap-arena {
-        height: 180px;
+        height: 160px;
+        border-radius: 12px;
+    }
+
+    .tap-target {
+        width: 45px;
+        height: 45px;
+    }
+
+    .inline-game .game-header {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+
+    .memory-grid-inline {
+        gap: 0.4rem;
     }
 
     .memory-card-inline .card-front,
     .memory-card-inline .card-back {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
+    .game-back-btn {
+        padding: 0.5rem 1.25rem;
+        font-size: 0.85rem;
+    }
+
+    /* Game Result */
+    .game-result {
+        padding: 1rem;
+    }
+
+    .game-result .result-score {
+        font-size: 2.5rem;
+    }
+
+    .game-result .result-icon {
+        font-size: 2.5rem;
+    }
+
+    .game-result .result-message {
+        font-size: 1rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .game-result .game-actions {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .game-btn-primary,
+    .game-btn-secondary {
+        padding: 0.6rem 1.25rem;
+        font-size: 0.9rem;
+    }
+
+    /* Success Message */
     .craving-success {
-        padding: 2rem 1.5rem;
+        padding: 1.5rem 1.25rem;
+        width: 95%;
+        border-radius: 20px;
     }
 
     .success-icon {
-        font-size: 3rem;
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
     }
 
     .craving-success h2 {
-        font-size: 1.7rem;
+        font-size: 1.5rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .craving-success p {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .success-stats {
+        padding: 1rem;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+
+    .success-close-btn {
+        padding: 0.75rem 2rem;
+        font-size: 0.95rem;
+    }
+}
+
+/* Extra small devices (phones in portrait) */
+@media (max-width: 380px) {
+    .craving-overlay {
+        padding: 0.4rem;
+    }
+
+    .sos-timer-header {
+        gap: 0.5rem;
+        padding: 0.5rem 0.6rem;
+    }
+
+    .breathing-container-compact {
+        width: 45px;
+        height: 45px;
+    }
+
+    .breathing-container-compact .breathing-circle {
+        width: 38px;
+        height: 38px;
+    }
+
+    .breathing-container-compact .breathing-text {
+        font-size: 0.5rem;
+    }
+
+    .timer-compact .timer-display {
+        font-size: 1.5rem;
+    }
+
+    .sos-tab {
+        padding: 0.4rem;
+        font-size: 0.7rem;
+    }
+
+    .tip-text {
+        font-size: 0.9rem;
+    }
+
+    .sos-breathing-btn,
+    .sos-game-btn {
+        padding: 0.65rem 0.75rem;
+    }
+
+    .sos-breathing-btn .exercise-icon,
+    .sos-game-btn .game-icon {
+        width: 34px;
+        height: 34px;
+        font-size: 1.2rem;
+    }
+
+    .sos-breathing-btn .exercise-name,
+    .sos-game-btn .game-name {
+        font-size: 0.9rem;
+    }
+
+    .tap-arena {
+        height: 140px;
+    }
+
+    .memory-card-inline .card-front,
+    .memory-card-inline .card-back {
+        font-size: 1rem;
+    }
+
+    .craving-success {
+        padding: 1.25rem 1rem;
+    }
+
+    .craving-success h2 {
+        font-size: 1.3rem;
     }
 }
