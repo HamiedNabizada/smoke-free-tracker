@@ -119,7 +119,6 @@ function switchTab(contentId) {
 function initializeBreathingExercises() {
     const boxBtn = document.getElementById('startBoxBreathing');
     const btn478 = document.getElementById('start478Breathing');
-    const stopBtn = document.getElementById('sosBreathingStop');
 
     if (boxBtn) {
         boxBtn.addEventListener('click', () => startBreathingExercise('box'));
@@ -127,10 +126,6 @@ function initializeBreathingExercises() {
 
     if (btn478) {
         btn478.addEventListener('click', () => startBreathingExercise('478'));
-    }
-
-    if (stopBtn) {
-        stopBtn.addEventListener('click', stopBreathingExercise);
     }
 }
 
@@ -140,7 +135,6 @@ function startBreathingExercise(type) {
 
     const optionsContainer = document.querySelector('.sos-breathing-options');
     const activeContainer = document.getElementById('sosBreathingActive');
-    const circle = activeContainer.querySelector('.breathing-exercise-circle');
 
     // Reset state
     currentPhaseIndex = 0;
@@ -150,6 +144,13 @@ function startBreathingExercise(type) {
     // Show active exercise, hide options
     optionsContainer.classList.add('hidden');
     activeContainer.classList.remove('hidden');
+
+    // Add stop button listener
+    const stopBtn = document.getElementById('sosBreathingStop');
+    if (stopBtn) {
+        // Remove old listener and add new one
+        stopBtn.onclick = stopBreathingExercise;
+    }
 
     // Start first phase
     runBreathingPhase();

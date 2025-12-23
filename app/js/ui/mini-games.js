@@ -5,7 +5,6 @@
 // Exported games list for SOS hub
 export const MINI_GAMES = [
     { id: 'tap', name: 'Tap Challenge', icon: '👆', description: 'Tippe auf die Ziele!' },
-    { id: 'breathe', name: 'Atem-Trainer', icon: '🫁', description: 'Folge dem Atemrhythmus.' },
     { id: 'memory', name: 'Memory', icon: '🧠', description: 'Finde die Paare!' }
 ];
 
