@@ -48,9 +48,9 @@ Alle JavaScript-Dateien nutzen `import`/`export`. Die App funktioniert nur über
 │   ├── index.html         # App Dashboard
 │   ├── login.html         # Login
 │   ├── register.html      # Registrierung
-│   ├── datenschutz.html   # Datenschutzerklaerung
+│   ├── datenschutz.html   # Datenschutzerklärung
 │   ├── impressum.html     # Impressum
-│   ├── info.html          # Ueber die App
+│   ├── info.html          # Über die App
 │   ├── quellen.html       # Quellenangaben
 │   ├── styles.css         # CSS Import File
 │   ├── service-worker.js  # PWA Service Worker
@@ -107,7 +107,7 @@ Alle JavaScript-Dateien nutzen `import`/`export`. Die App funktioniert nur über
 Das Projekt verwendet **Vitest** als Test-Framework.
 
 ```bash
-# Tests ausfuehren
+# Tests ausführen
 npm test
 
 # Tests mit Watch-Mode
@@ -131,11 +131,11 @@ Getestete Bereiche:
 
 Alle Gesundheitsberechnungen in `app/js/utils/calculations.js` sind wissenschaftlich fundiert:
 
-- **Gewonnene Lebenszeit:** 17 Min/Zigarette (Maenner), 22 Min (Frauen)
-- **Kardiovaskulaere Erholung:** 0-15 Jahre Timeline
+- **Gewonnene Lebenszeit:** 17 Min/Zigarette (Männer), 22 Min (Frauen)
+- **Kardiovaskuläre Erholung:** 0-15 Jahre Timeline
 - **Lungenfunktion:** 10 Jahre Erholungskurve
-- **Hautverbesserung:** Basierend auf Mailaender Studie
-- **Umwelt-Impact:** Wasser, CO2, Baeume
+- **Hautverbesserung:** Basierend auf Mailänder Studie
+- **Umwelt-Impact:** Wasser, CO2, Bäume
 
 Quellen sind in der Datei dokumentiert.
 
@@ -143,10 +143,10 @@ Quellen sind in der Datei dokumentiert.
 
 ## Code Style
 
-- Keine ueberfluessigen Emojis im Code
+- Keine überflüssigen Emojis im Code
 - Einfache, menschliche Commit-Messages
-- Modularitaet bevorzugen
-- Ueber-Engineering vermeiden
+- Modularität bevorzugen
+- Über-Engineering vermeiden
 - Deutsche UI-Texte, englische Variablennamen
 
 ### Commit-Messages
@@ -163,9 +163,9 @@ git commit -m "feat: Implement comprehensive craving heatmap visualization syste
 
 ## Git-Workflow
 
-1. Auf `master` Branch arbeiten (kleine Aenderungen)
-2. Fuer groessere Features: Branch erstellen
-3. Committen mit kurzer, praegnanter Message
+1. Auf `master` Branch arbeiten (kleine Änderungen)
+2. Für größere Features: Branch erstellen
+3. Committen mit kurzer, prägnanter Message
 4. Pushen - Webhook deployed automatisch
 
 ```bash
@@ -201,7 +201,7 @@ Die App ist auf minimale Firebase-Nutzung optimiert:
 
 - **Kostenlos bis ~5.000 aktive User/Tag**
 - Nur 1 Doc pro User (nicht pro Session)
-- Nur 1 Doc pro Tag fuer Cravings (nicht pro Event)
+- Nur 1 Doc pro Tag für Cravings (nicht pro Event)
 - Intelligentes Caching reduziert Reads
 
 Bei realistischer Nutzung (10-1000 User) entstehen keine Kosten.
@@ -214,24 +214,24 @@ Bei realistischer Nutzung (10-1000 User) entstehen keine Kosten.
 // updateDashboard() wird aufgerufen:
 // 1. Bei DOMContentLoaded
 // 2. Alle 60 Sekunden (setInterval)
-// 3. Beim Tab-Wechsel (fuer spezifische Tabs)
+// 3. Beim Tab-Wechsel (für spezifische Tabs)
 ```
 
 ---
 
 ## Debugging
 
-### Haeufige Probleme
+### Häufige Probleme
 
-1. **Module laden nicht:** Nur ueber HTTP/HTTPS, nicht `file://`
-2. **Dark Mode funktioniert nicht:** LocalStorage-Key `darkMode` pruefen
-3. **Firebase-Fehler:** Console auf Permission-Errors pruefen
-4. **Updates funktionieren nicht:** Tab-Switching-Logik in `tabs.js` pruefen
+1. **Module laden nicht:** Nur über HTTP/HTTPS, nicht `file://`
+2. **Dark Mode funktioniert nicht:** LocalStorage-Key `darkMode` prüfen
+3. **Firebase-Fehler:** Console auf Permission-Errors prüfen
+4. **Updates funktionieren nicht:** Tab-Switching-Logik in `tabs.js` prüfen
 
-### Nuetzliche Console-Befehle
+### Nützliche Console-Befehle
 
 ```javascript
-// Aktuellen User pruefen
+// Aktuellen User prüfen
 firebase.auth().currentUser
 
 // LocalStorage ansehen

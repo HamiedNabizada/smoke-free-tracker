@@ -1,6 +1,6 @@
 # Sicherheit
 
-Uebersicht der implementierten Sicherheitsmassnahmen in ByeByeSmoke.
+Übersicht der implementierten Sicherheitsmaßnahmen in ByeByeSmoke.
 
 ---
 
@@ -13,7 +13,7 @@ Uebersicht der implementierten Sicherheitsmassnahmen in ByeByeSmoke.
 
 ### Rate Limiting
 - **5 Login-Versuche**, dann 5 Minuten Sperre
-- Schuetzt vor Brute-Force-Angriffen
+- Schützt vor Brute-Force-Angriffen
 - Implementiert in `app/js/utils/rate-limiter.js`
 
 ---
@@ -85,10 +85,10 @@ Permissions-Policy: geolocation=(), microphone=(), camera=()
 
 ## Firebase API Keys
 
-Die Firebase-Config im Frontend ist **absichtlich oeffentlich**. Das ist sicher weil:
+Die Firebase-Config im Frontend ist **absichtlich öffentlich**. Das ist sicher weil:
 
-1. **Keine geheimen Keys** - Nur oeffentliche Projekt-Identifier
-2. **Schutz durch Security Rules** - Alle Daten sind server-seitig geschuetzt
+1. **Keine geheimen Keys** - Nur öffentliche Projekt-Identifier
+2. **Schutz durch Security Rules** - Alle Daten sind server-seitig geschützt
 3. **Authentication erforderlich** - Ohne Login kein Datenzugriff
 
 Die echte Sicherheit kommt von:
@@ -111,8 +111,8 @@ Nur notwendige Daten werden gespeichert:
 ### Nutzerrechte
 
 - **Auskunftsrecht (Art. 15):** Datenexport als JSON
-- **Loeschrecht (Art. 17):** Vollstaendige Account-Loeschung
-- **Datenportabilitaet (Art. 20):** Export aller Daten
+- **Löschrecht (Art. 17):** Vollständige Account-Löschung
+- **Datenportabilität (Art. 20):** Export aller Daten
 
 ### Cookies
 Nur technisch notwendige Cookies:
@@ -122,7 +122,7 @@ Nur technisch notwendige Cookies:
 
 ---
 
-## Bekannte Einschraenkungen
+## Bekannte Einschränkungen
 
 ### Client-Side Rendering
 Die App rendert client-seitig. XSS-Schutz erfolgt durch:
@@ -133,26 +133,26 @@ Die App rendert client-seitig. XSS-Schutz erfolgt durch:
 ### LocalStorage
 Einige Daten werden lokal gespeichert:
 - Dark Mode Einstellung
-- Taeglicher Craving-Counter
-- Cache fuer Performance
+- Täglicher Craving-Counter
+- Cache für Performance
 
-Diese Daten sind nicht sensitiv und verbessern die Offline-Funktionalitaet.
+Diese Daten sind nicht sensitiv und verbessern die Offline-Funktionalität.
 
 ---
 
-## Security-Checkliste fuer Self-Hosting
+## Security-Checkliste für Self-Hosting
 
-- [ ] HTTPS mit gueltigem Zertifikat
+- [ ] HTTPS mit gültigem Zertifikat
 - [ ] Firestore Security Rules deployed
 - [ ] .htaccess mit Security Headers
 - [ ] firebase-config.js nicht im Git-Repo
-- [ ] Regelmaessige Firebase SDK Updates
+- [ ] Regelmäßige Firebase SDK Updates
 - [ ] Monitoring in Firebase Console aktiviert
 
 ---
 
 ## Sicherheitslücke melden
 
-Bei Sicherheitsproblemen bitte direkt Kontakt aufnehmen statt oeffentlich zu posten.
+Bei Sicherheitsproblemen bitte direkt Kontakt aufnehmen statt öffentlich zu posten.
 
 Kontakt: https://byebyesmoke.de/app/impressum.html

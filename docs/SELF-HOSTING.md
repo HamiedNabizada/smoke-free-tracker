@@ -6,7 +6,7 @@ Diese Anleitung beschreibt, wie du ByeByeSmoke auf deinem eigenen Server hosten 
 
 ## Voraussetzungen
 
-- Webserver (Apache, nginx, oder aehnlich)
+- Webserver (Apache, nginx, oder ähnlich)
 - Firebase-Account (kostenlos)
 - Git
 
@@ -24,7 +24,7 @@ cd smoke-free-tracker
 ## 2. Firebase Projekt erstellen
 
 1. Gehe zu https://console.firebase.google.com
-2. Klicke auf "Projekt hinzufuegen"
+2. Klicke auf "Projekt hinzufügen"
 3. Gib einen Projektnamen ein (z.B. "mein-byebyesmoke")
 4. Google Analytics ist optional
 
@@ -42,8 +42,8 @@ cd smoke-free-tracker
 ## 4. Cloud Firestore erstellen
 
 1. **Firestore Database** -> **Create database**
-2. **Start in production mode** waehlen
-3. Standort waehlen (z.B. `europe-west3` fuer Deutschland)
+2. **Start in production mode** wählen
+3. Standort wählen (z.B. `europe-west3` für Deutschland)
 4. Erstellen
 
 ---
@@ -60,7 +60,7 @@ cp app/js/firebase-config.example.js app/js/firebase-config.js
 
 1. Firebase Console -> Projekteinstellungen (Zahnrad-Icon)
 2. Runterscrollen zu "Deine Apps"
-3. **Web-App hinzufuegen** (</> Icon)
+3. **Web-App hinzufügen** (</> Icon)
 4. App-Namen eingeben
 5. Firebase-SDK Konfiguration kopieren
 
@@ -79,7 +79,7 @@ export const firebaseConfig = {
 
 ### Alternative: Umgebungsvariablen (.env)
 
-Fuer mehr Sicherheit kannst du die Credentials ueber `.env` verwalten:
+Für mehr Sicherheit kannst du die Credentials über `.env` verwalten:
 
 ```bash
 cp .env.example .env
@@ -95,7 +95,9 @@ Dann `generate-firebase-config.php` nutzen um die Config zu generieren.
 
 1. Firebase Console -> **Firestore Database** -> **Rules**
 2. Kopiere den Inhalt aus `firestore.rules`
-3. Einfuegen und **Veroeffentlichen**
+3. Einfügen und **Veröffentlichen**
+
+---
 
 ### Option B: Firebase CLI
 
@@ -109,7 +111,7 @@ firebase deploy --only firestore:rules
 
 ## 7. Composite Index erstellen
 
-Die App benoetigt einen Index fuer Craving-Queries:
+Die App benötigt einen Index für Craving-Queries:
 
 1. Firebase Console -> **Firestore Database** -> **Indexes**
 2. **Composite** Tab -> **Create Index**
@@ -142,7 +144,7 @@ rsync -avz --exclude='.git' --exclude='node_modules' . user@server:/var/www/byeb
 
 ## 9. HTTPS einrichten
 
-Die App benoetigt HTTPS fuer:
+Die App benötigt HTTPS für:
 - Service Worker (PWA)
 - Sichere Firebase-Verbindung
 
@@ -160,19 +162,19 @@ sudo certbot --apache -d deine-domain.de
 
 ## 10. Testen
 
-1. Oeffne `https://deine-domain.de/app/`
+1. Öffne `https://deine-domain.de/app/`
 2. Registriere einen Test-Account
-3. Pruefe ob alle Features funktionieren:
-   - Dashboard laedt
+3. Prüfe ob alle Features funktionieren:
+   - Dashboard lädt
    - Dark Mode funktioniert
-   - Craving-Timer zaehlt
+   - Craving-Timer zählt
    - Daten werden gespeichert
 
 ---
 
 ## Demo-Account einrichten (optional)
 
-Fuer eine "Erst mal ausprobieren"-Funktion:
+Für eine "Erst mal ausprobieren"-Funktion:
 
 ### 1. User in Firebase erstellen
 
@@ -195,7 +197,7 @@ Fuer eine "Erst mal ausprobieren"-Funktion:
 | cigarettes_per_pack | number | `20` |
 | notifications_enabled | boolean | `false` |
 
-Der Demo-Account ist automatisch schreibgeschuetzt.
+Der Demo-Account ist automatisch schreibgeschützt.
 
 ---
 
@@ -207,7 +209,7 @@ Statt eigenem Server kannst du auch Firebase Hosting nutzen:
 npm install -g firebase-tools
 firebase login
 firebase init hosting
-# Waehle: app/ als public directory
+# Wähle: app/ als public directory
 # Single-page app: No
 firebase deploy
 ```
@@ -224,7 +226,7 @@ firebase deploy
 
 ### Module laden nicht
 
-- App muss ueber HTTP/HTTPS laufen, nicht `file://`
+- App muss über HTTP/HTTPS laufen, nicht `file://`
 - Webserver korrekt konfiguriert?
 
 ### PWA installiert nicht
@@ -248,4 +250,4 @@ git pull origin master
 # firebase-config.js bleibt erhalten (in .gitignore)
 ```
 
-Bei Security Rules Aenderungen: Erneut deployen.
+Bei Security Rules Änderungen: Erneut deployen.
