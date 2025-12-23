@@ -7,40 +7,75 @@
  * https://www.bu.edu/sph/news/articles/2024/novel-digital-pet-game-within-smoking-cessation-app-increases-user-engagement-with-apps-tools-to-quit-smoking/
  */
 
-// Growth stages with thresholds and descriptions
+// Growth stages with thresholds and descriptions (10 stages for gradual progress)
 const LOTUS_STAGES = [
     {
         minScore: 0,
-        maxScore: 20,
+        maxScore: 10,
         name: 'Samen',
-        description: 'Deine Lotus beginnt zu keimen',
-        nextStage: 'Bei 20 Punkten erscheint der erste Spross'
+        description: 'Ein Samen ruht in der Erde',
+        nextStage: 'Bei 10 Punkten beginnt die Keimung'
+    },
+    {
+        minScore: 10,
+        maxScore: 20,
+        name: 'Keimling',
+        description: 'Der Samen beginnt zu keimen',
+        nextStage: 'Bei 20 Punkten durchbricht der Spross die Erde'
     },
     {
         minScore: 20,
+        maxScore: 30,
+        name: 'Junger Spross',
+        description: 'Ein zarter Spross wächst empor',
+        nextStage: 'Bei 30 Punkten bilden sich die ersten Blätter'
+    },
+    {
+        minScore: 30,
         maxScore: 40,
-        name: 'Spross',
-        description: 'Ein zartes Pflänzchen wächst',
-        nextStage: 'Bei 40 Punkten entfaltet sich das erste Blatt'
+        name: 'Spross mit Blättern',
+        description: 'Kleine Blätter entfalten sich',
+        nextStage: 'Bei 40 Punkten erreicht die Pflanze das Wasser'
     },
     {
         minScore: 40,
+        maxScore: 50,
+        name: 'Schwimmendes Blatt',
+        description: 'Das erste Blatt schwimmt auf dem Wasser',
+        nextStage: 'Bei 50 Punkten wächst das Blatt weiter'
+    },
+    {
+        minScore: 50,
         maxScore: 60,
-        name: 'Blatt',
-        description: 'Das Lotusblatt schwimmt auf dem Wasser',
-        nextStage: 'Bei 60 Punkten bildet sich die Knospe'
+        name: 'Großes Lotusblatt',
+        description: 'Ein prächtiges Lotusblatt breitet sich aus',
+        nextStage: 'Bei 60 Punkten bildet sich eine kleine Knospe'
     },
     {
         minScore: 60,
+        maxScore: 70,
+        name: 'Kleine Knospe',
+        description: 'Eine zarte Knospe formt sich',
+        nextStage: 'Bei 70 Punkten wächst die Knospe weiter'
+    },
+    {
+        minScore: 70,
         maxScore: 80,
-        name: 'Knospe',
-        description: 'Die Blütenknospe bereitet sich vor',
-        nextStage: 'Bei 80 Punkten beginnt die Blüte sich zu öffnen'
+        name: 'Große Knospe',
+        description: 'Die Knospe ist bereit sich zu öffnen',
+        nextStage: 'Bei 80 Punkten öffnen sich die ersten Blütenblätter'
     },
     {
         minScore: 80,
+        maxScore: 90,
+        name: 'Öffnende Blüte',
+        description: 'Die Blüte beginnt sich zu entfalten',
+        nextStage: 'Bei 90 Punkten erblüht die Lotus vollständig'
+    },
+    {
+        minScore: 90,
         maxScore: 100,
-        name: 'Blüte',
+        name: 'Volle Blüte',
         description: 'Deine Lotus erstrahlt in voller Pracht!',
         nextStage: 'Deine Lotus hat ihre volle Schönheit erreicht'
     }
@@ -86,48 +121,90 @@ export function generateLotusSVG(score) {
         <ellipse cx="100" cy="170" rx="60" ry="12" fill="${waterDarkColor}" opacity="0.3" />
     `;
 
-    // Stage 0: Seed (0-20)
+    // Stage 0: Seed (0-10)
     if (stageIndex === 0) {
-        const progress = (score - 0) / 20;
-        const seedSize = 8 + progress * 4;
+        const progress = (score - 0) / 10;
+        const seedSize = 8 + progress * 2;
         svgContent = `
             ${waterBase}
-            <!-- Seed -->
+            <!-- Seed in soil -->
+            <ellipse cx="100" cy="168" rx="30" ry="8" fill="#8B4513" opacity="0.3" />
             <ellipse cx="100" cy="165" rx="${seedSize}" ry="${seedSize * 0.7}" fill="#5a3825" />
             <ellipse cx="100" cy="163" rx="${seedSize * 0.6}" ry="${seedSize * 0.4}" fill="#7a5035" opacity="0.5" />
+        `;
+    }
+
+    // Stage 1: Sprouting seed (10-20)
+    else if (stageIndex === 1) {
+        const progress = (score - 10) / 10;
+        const seedSize = 10;
+        const sproutHeight = 5 + progress * 15;
+        svgContent = `
+            ${waterBase}
+            <!-- Soil -->
+            <ellipse cx="100" cy="168" rx="30" ry="8" fill="#8B4513" opacity="0.3" />
+            <!-- Seed -->
+            <ellipse cx="100" cy="165" rx="${seedSize}" ry="${seedSize * 0.7}" fill="#5a3825" />
+            <!-- Tiny sprout -->
+            <path d="M 100 ${165 - seedSize * 0.7} Q 100 ${160 - sproutHeight * 0.5} 100 ${160 - sproutHeight}"
+                  stroke="${stemColor}" stroke-width="2" fill="none" stroke-linecap="round" />
             ${progress > 0.5 ? `
-                <!-- Tiny sprout emerging -->
-                <path d="M 100 ${165 - seedSize * 0.7} Q 100 ${155 - progress * 10} 100 ${155 - progress * 15}"
-                      stroke="${stemColor}" stroke-width="2" fill="none" stroke-linecap="round" />
+                <ellipse cx="100" cy="${158 - sproutHeight}" rx="3" ry="5" fill="${leafColor}" />
             ` : ''}
         `;
     }
 
-    // Stage 1: Sprout (20-40)
-    else if (stageIndex === 1) {
-        const progress = (score - 20) / 20;
-        const stemHeight = 30 + progress * 20;
+    // Stage 2: Young sprout (20-30)
+    else if (stageIndex === 2) {
+        const progress = (score - 20) / 10;
+        const stemHeight = 25 + progress * 15;
+        svgContent = `
+            ${waterBase}
+            <!-- Stem -->
+            <path d="M 100 170 Q 100 ${170 - stemHeight * 0.5} 100 ${170 - stemHeight}"
+                  stroke="${stemColor}" stroke-width="2.5" fill="none" stroke-linecap="round" />
+            <!-- Small leaf bud at top -->
+            <ellipse cx="100" cy="${168 - stemHeight}" rx="${4 + progress * 2}" ry="${7 + progress * 3}" fill="${leafColor}" />
+        `;
+    }
+
+    // Stage 3: Sprout with leaves (30-40)
+    else if (stageIndex === 3) {
+        const progress = (score - 30) / 10;
+        const stemHeight = 40 + progress * 10;
         svgContent = `
             ${waterBase}
             <!-- Stem -->
             <path d="M 100 170 Q 100 ${170 - stemHeight * 0.5} 100 ${170 - stemHeight}"
                   stroke="${stemColor}" stroke-width="3" fill="none" stroke-linecap="round" />
             <!-- Small leaves -->
-            <ellipse cx="${95 - progress * 5}" cy="${170 - stemHeight + 10}"
+            <ellipse cx="${92 - progress * 3}" cy="${170 - stemHeight + 12}"
                      rx="${8 + progress * 4}" ry="${4 + progress * 2}"
-                     fill="${leafColor}" transform="rotate(-20 ${95 - progress * 5} ${170 - stemHeight + 10})" />
-            ${progress > 0.5 ? `
-                <ellipse cx="${105 + progress * 5}" cy="${170 - stemHeight + 15}"
-                         rx="${6 + progress * 3}" ry="${3 + progress * 1.5}"
-                         fill="${leafColor}" transform="rotate(25 ${105 + progress * 5} ${170 - stemHeight + 15})" />
-            ` : ''}
+                     fill="${leafColor}" transform="rotate(-25 ${92 - progress * 3} ${170 - stemHeight + 12})" />
+            <ellipse cx="${108 + progress * 3}" cy="${170 - stemHeight + 15}"
+                     rx="${6 + progress * 4}" ry="${3 + progress * 2}"
+                     fill="${leafColor}" transform="rotate(25 ${108 + progress * 3} ${170 - stemHeight + 15})" />
         `;
     }
 
-    // Stage 2: Leaf on water (40-60)
-    else if (stageIndex === 2) {
-        const progress = (score - 40) / 20;
-        const leafSize = 35 + progress * 15;
+    // Stage 4: Small floating leaf (40-50)
+    else if (stageIndex === 4) {
+        const progress = (score - 40) / 10;
+        const leafSize = 25 + progress * 10;
+        svgContent = `
+            <!-- Small lotus leaf on water -->
+            <ellipse cx="100" cy="162" rx="${leafSize}" ry="${leafSize * 0.55}" fill="${leafColor}" />
+            <ellipse cx="100" cy="160" rx="${leafSize * 0.7}" ry="${leafSize * 0.35}" fill="#4a9d42" opacity="0.3" />
+            <!-- Water around leaf -->
+            <ellipse cx="100" cy="175" rx="85" ry="18" fill="${waterColor}" />
+            <ellipse cx="100" cy="175" rx="65" ry="10" fill="${waterDarkColor}" opacity="0.2" />
+        `;
+    }
+
+    // Stage 5: Large lotus leaf (50-60)
+    else if (stageIndex === 5) {
+        const progress = (score - 50) / 10;
+        const leafSize = 38 + progress * 12;
         svgContent = `
             <!-- Big lotus leaf on water -->
             <ellipse cx="100" cy="160" rx="${leafSize}" ry="${leafSize * 0.6}" fill="${leafColor}" />
@@ -138,18 +215,14 @@ export function generateLotusSVG(score) {
             <!-- Water around leaf -->
             <ellipse cx="100" cy="175" rx="85" ry="18" fill="${waterColor}" />
             <ellipse cx="100" cy="175" rx="65" ry="10" fill="${waterDarkColor}" opacity="0.2" />
-            ${progress > 0.5 ? `
-                <!-- Small bud starting -->
-                <ellipse cx="100" cy="${145 - progress * 10}" rx="6" ry="10" fill="${petalColorLight}" />
-            ` : ''}
         `;
     }
 
-    // Stage 3: Bud forming (60-80)
-    else if (stageIndex === 3) {
-        const progress = (score - 60) / 20;
-        const budHeight = 15 + progress * 10;
-        const budWidth = 10 + progress * 8;
+    // Stage 6: Small bud (60-70)
+    else if (stageIndex === 6) {
+        const progress = (score - 60) / 10;
+        const budHeight = 12 + progress * 6;
+        const budWidth = 8 + progress * 4;
         svgContent = `
             <!-- Lotus leaf -->
             <ellipse cx="100" cy="165" rx="45" ry="25" fill="${leafColor}" />
@@ -157,31 +230,85 @@ export function generateLotusSVG(score) {
             <!-- Water -->
             <ellipse cx="100" cy="178" rx="85" ry="18" fill="${waterColor}" />
             <!-- Stem to bud -->
-            <path d="M 100 165 Q 100 140 100 ${130 - progress * 10}" stroke="${stemColor}" stroke-width="3" fill="none" />
-            <!-- Bud -->
-            <ellipse cx="100" cy="${125 - progress * 15}" rx="${budWidth}" ry="${budHeight}" fill="${petalColorMedium}" />
+            <path d="M 100 165 Q 100 145 100 ${135 - progress * 5}" stroke="${stemColor}" stroke-width="3" fill="none" />
+            <!-- Small bud -->
+            <ellipse cx="100" cy="${130 - progress * 8}" rx="${budWidth}" ry="${budHeight}" fill="${petalColorLight}" />
+            <ellipse cx="100" cy="${128 - progress * 8}" rx="${budWidth * 0.6}" ry="${budHeight * 0.5}" fill="${petalColorMedium}" opacity="0.5" />
+        `;
+    }
+
+    // Stage 7: Large bud (70-80)
+    else if (stageIndex === 7) {
+        const progress = (score - 70) / 10;
+        const budHeight = 20 + progress * 8;
+        const budWidth = 14 + progress * 6;
+        svgContent = `
+            <!-- Lotus leaf -->
+            <ellipse cx="100" cy="165" rx="45" ry="25" fill="${leafColor}" />
+            <ellipse cx="100" cy="163" rx="35" ry="18" fill="#4a9d42" opacity="0.3" />
+            <!-- Water -->
+            <ellipse cx="100" cy="178" rx="85" ry="18" fill="${waterColor}" />
+            <!-- Stem to bud -->
+            <path d="M 100 165 Q 100 135 100 ${115 - progress * 10}" stroke="${stemColor}" stroke-width="3" fill="none" />
+            <!-- Large bud -->
+            <ellipse cx="100" cy="${110 - progress * 12}" rx="${budWidth}" ry="${budHeight}" fill="${petalColorMedium}" />
             <!-- Bud details - petals starting to show -->
-            <path d="M ${100 - budWidth * 0.3} ${125 - progress * 15 - budHeight * 0.3}
-                     Q 100 ${125 - progress * 15 - budHeight * 0.8}
-                     ${100 + budWidth * 0.3} ${125 - progress * 15 - budHeight * 0.3}"
+            <path d="M ${100 - budWidth * 0.3} ${108 - progress * 12 - budHeight * 0.3}
+                     Q 100 ${108 - progress * 12 - budHeight * 0.7}
+                     ${100 + budWidth * 0.3} ${108 - progress * 12 - budHeight * 0.3}"
                   fill="${petalColorLight}" />
-            ${progress > 0.6 ? `
+            ${progress > 0.5 ? `
                 <!-- Petals starting to separate -->
-                <path d="M ${100 - budWidth * 0.5} ${125 - progress * 15}
-                         Q ${100 - budWidth * 0.8} ${125 - progress * 15 - budHeight * 0.5}
-                         ${100 - budWidth * 0.2} ${125 - progress * 15 - budHeight * 0.7}"
-                      fill="${petalColorDark}" opacity="0.5" />
-                <path d="M ${100 + budWidth * 0.5} ${125 - progress * 15}
-                         Q ${100 + budWidth * 0.8} ${125 - progress * 15 - budHeight * 0.5}
-                         ${100 + budWidth * 0.2} ${125 - progress * 15 - budHeight * 0.7}"
-                      fill="${petalColorDark}" opacity="0.5" />
+                <path d="M ${100 - budWidth * 0.4} ${110 - progress * 12}
+                         Q ${100 - budWidth * 0.7} ${110 - progress * 12 - budHeight * 0.4}
+                         ${100 - budWidth * 0.15} ${110 - progress * 12 - budHeight * 0.6}"
+                      fill="${petalColorDark}" opacity="0.4" />
+                <path d="M ${100 + budWidth * 0.4} ${110 - progress * 12}
+                         Q ${100 + budWidth * 0.7} ${110 - progress * 12 - budHeight * 0.4}
+                         ${100 + budWidth * 0.15} ${110 - progress * 12 - budHeight * 0.6}"
+                      fill="${petalColorDark}" opacity="0.4" />
             ` : ''}
         `;
     }
 
-    // Stage 4: Full bloom (80-100)
+    // Stage 8: Opening flower (80-90)
+    else if (stageIndex === 8) {
+        const progress = (score - 80) / 10;
+        const bloomSize = 0.7 + progress * 0.3;
+        const centerY = 90;
+        svgContent = `
+            <!-- Lotus leaf -->
+            <ellipse cx="100" cy="168" rx="48" ry="27" fill="${leafColor}" />
+            <ellipse cx="100" cy="166" rx="38" ry="19" fill="#4a9d42" opacity="0.3" />
+            <!-- Water -->
+            <ellipse cx="100" cy="180" rx="90" ry="20" fill="${waterColor}" />
+            <!-- Stem -->
+            <path d="M 100 168 Q 100 130 100 ${centerY + 25}" stroke="${stemColor}" stroke-width="4" fill="none" />
+
+            <!-- Outer petals (partially open) -->
+            <g transform="translate(100, ${centerY}) scale(${bloomSize})">
+                <ellipse cx="-30" cy="8" rx="16" ry="28" fill="${petalColorLight}" transform="rotate(-35)" />
+                <ellipse cx="30" cy="8" rx="16" ry="28" fill="${petalColorLight}" transform="rotate(35)" />
+                <ellipse cx="-18" cy="-8" rx="14" ry="26" fill="${petalColorLight}" transform="rotate(-20)" />
+                <ellipse cx="18" cy="-8" rx="14" ry="26" fill="${petalColorLight}" transform="rotate(20)" />
+                <ellipse cx="0" cy="-15" rx="12" ry="24" fill="${petalColorLight}" />
+            </g>
+
+            <!-- Inner petals -->
+            <g transform="translate(100, ${centerY}) scale(${bloomSize})">
+                <ellipse cx="-12" cy="0" rx="10" ry="20" fill="${petalColorMedium}" transform="rotate(-15)" />
+                <ellipse cx="12" cy="0" rx="10" ry="20" fill="${petalColorMedium}" transform="rotate(15)" />
+                <ellipse cx="0" cy="-8" rx="8" ry="18" fill="${petalColorMedium}" />
+            </g>
+
+            <!-- Center (small) -->
+            <circle cx="100" cy="${centerY}" r="${8 * bloomSize}" fill="${centerColor}" />
+        `;
+    }
+
+    // Stage 9: Full bloom (90-100)
     else {
-        const progress = (score - 80) / 20;
+        const progress = (score - 90) / 10;
         const bloomSize = 1 + progress * 0.3;
         const centerY = 85;
         svgContent = `
@@ -334,12 +461,12 @@ export async function playLotusPreview() {
     btn.classList.add('playing');
     btn.innerHTML = '<span class="preview-icon">⏸</span> Läuft...';
 
-    // Preview scores for each stage
-    const previewScores = [10, 30, 50, 70, 95];
+    // Preview scores for each stage (10 stages)
+    const previewScores = [5, 15, 25, 35, 45, 55, 65, 75, 85, 95];
 
     for (const score of previewScores) {
         updateLotusDisplay(score);
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        await new Promise(resolve => setTimeout(resolve, 1000));
     }
 
     // Restore original score
