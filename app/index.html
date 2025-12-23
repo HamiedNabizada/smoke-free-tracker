@@ -704,103 +704,92 @@
             <button id="cravingCloseBtn" class="craving-close-btn" aria-label="Schließen">✕</button>
             <h2 id="cravingTimerTitle" class="sr-only">SOS Hilfe</h2>
 
-            <!-- SOS Selection Menu (shown initially) -->
-            <div class="sos-menu" id="sosMenu">
-                <h2 class="sos-menu-title">Was brauchst du?</h2>
-                <div class="sos-options">
-                    <button class="sos-option-btn" id="sosTimerBtn">
-                        <span class="sos-option-icon">🆘</span>
-                        <span class="sos-option-info">
-                            <span class="sos-option-name">5-Minuten Timer</span>
-                            <span class="sos-option-desc">Akutes Verlangen überwinden</span>
-                        </span>
-                    </button>
-                    <button class="sos-option-btn" id="sosBreathingBtn">
-                        <span class="sos-option-icon">🧘</span>
-                        <span class="sos-option-info">
-                            <span class="sos-option-name">Atemübungen</span>
-                            <span class="sos-option-desc">Box Breathing, 4-7-8 Technik</span>
-                        </span>
-                    </button>
-                    <button class="sos-option-btn" id="sosGamesBtn">
-                        <span class="sos-option-icon">🎮</span>
-                        <span class="sos-option-info">
-                            <span class="sos-option-name">Ablenkungsspiele</span>
-                            <span class="sos-option-desc">Schnelle Spiele zur Ablenkung</span>
-                        </span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Timer Screen (hidden initially) -->
-            <div class="sos-timer-screen hidden" id="sosTimerScreen">
-                <button class="sos-back-btn" id="sosBackFromTimer">← Zurück</button>
-
-                <!-- Breathing Animation -->
-                <div class="breathing-container">
+            <!-- Timer Header (always visible) -->
+            <div class="sos-timer-header">
+                <div class="breathing-container-compact">
                     <div class="breathing-circle"></div>
                     <div class="breathing-text" id="breathingText">Einatmen</div>
                 </div>
-
-                <!-- Timer Display -->
-                <div class="craving-timer">
+                <div class="timer-compact">
                     <div class="timer-display" id="timerDisplay">5:00</div>
-                    <div class="timer-label">Das Verlangen vergeht...</div>
-                </div>
-
-                <!-- Count Option -->
-                <div class="craving-count-option">
-                    <label class="craving-checkbox-label">
-                        <input type="checkbox" id="countCravingCheckbox" checked>
-                        <span class="checkbox-text">Als überwundenes Verlangen zählen</span>
-                    </label>
-                </div>
-
-                <!-- Random Tip -->
-                <div class="craving-tip-display" id="cravingTipDisplay">
-                    <div class="tip-icon-large">💪</div>
-                    <div class="tip-text" id="cravingTipText">Atme tief ein und aus. Du schaffst das!</div>
-                </div>
-
-                <!-- Success Message (hidden initially) -->
-                <div class="craving-success hidden" id="cravingSuccess">
-                    <div class="success-icon">🎉</div>
-                    <h2>Geschafft!</h2>
-                    <p>Du hast es 5 Minuten durchgehalten!</p>
-                    <div class="success-stats" id="successStats"></div>
-                    <button class="success-close-btn" id="successCloseBtn">Schließen</button>
+                    <div class="timer-label">verbleibend</div>
                 </div>
             </div>
 
-            <!-- Breathing Exercises Screen (hidden initially) -->
-            <div class="sos-breathing-screen hidden" id="sosBreathingScreen">
-                <button class="sos-back-btn" id="sosBackFromBreathing">← Zurück</button>
-                <h2 class="sos-screen-title">Atemübungen</h2>
-                <div class="sos-breathing-options">
-                    <button class="sos-breathing-btn" id="startBoxBreathing">
-                        <span class="exercise-icon">◻️</span>
-                        <span class="exercise-info">
-                            <span class="exercise-name">Box Breathing</span>
-                            <span class="exercise-detail">4-4-4-4 | ~2 Min | Fokus</span>
-                        </span>
-                    </button>
-                    <button class="sos-breathing-btn" id="start478Breathing">
-                        <span class="exercise-icon">🌙</span>
-                        <span class="exercise-info">
-                            <span class="exercise-name">4-7-8 Technik</span>
-                            <span class="exercise-detail">4-7-8 | ~2.5 Min | Entspannung</span>
-                        </span>
-                    </button>
+            <!-- Count Option -->
+            <div class="craving-count-option">
+                <label class="craving-checkbox-label">
+                    <input type="checkbox" id="countCravingCheckbox" checked>
+                    <span class="checkbox-text">Als Verlangen zählen</span>
+                </label>
+            </div>
+
+            <!-- Content Tabs -->
+            <div class="sos-tabs">
+                <button class="sos-tab active" data-content="tips">💡 Tipps</button>
+                <button class="sos-tab" data-content="breathing">🧘 Atmen</button>
+                <button class="sos-tab" data-content="games">🎮 Spiele</button>
+            </div>
+
+            <!-- Content Areas -->
+            <div class="sos-content">
+                <!-- Tips Content (default) -->
+                <div class="sos-content-area" id="sosContentTips">
+                    <div class="craving-tip-display" id="cravingTipDisplay">
+                        <div class="tip-icon-large">💪</div>
+                        <div class="tip-text" id="cravingTipText">Atme tief ein und aus. Du schaffst das!</div>
+                    </div>
+                </div>
+
+                <!-- Breathing Content -->
+                <div class="sos-content-area hidden" id="sosContentBreathing">
+                    <div class="sos-breathing-options">
+                        <button class="sos-breathing-btn" id="startBoxBreathing">
+                            <span class="exercise-icon">◻️</span>
+                            <span class="exercise-info">
+                                <span class="exercise-name">Box Breathing</span>
+                                <span class="exercise-detail">4-4-4-4 | ~2 Min | Fokus</span>
+                            </span>
+                        </button>
+                        <button class="sos-breathing-btn" id="start478Breathing">
+                            <span class="exercise-icon">🌙</span>
+                            <span class="exercise-info">
+                                <span class="exercise-name">4-7-8 Technik</span>
+                                <span class="exercise-detail">4-7-8 | ~2.5 Min | Entspannung</span>
+                            </span>
+                        </button>
+                    </div>
+                    <!-- Active breathing exercise container -->
+                    <div class="sos-breathing-active hidden" id="sosBreathingActive">
+                        <div class="breathing-exercise-display">
+                            <div class="breathing-exercise-circle"></div>
+                            <div class="breathing-instruction" id="sosBreathingInstruction">Einatmen</div>
+                            <div class="breathing-phase-timer" id="sosBreathingTimer">4</div>
+                        </div>
+                        <div class="breathing-progress" id="sosBreathingProgress">Zyklus 1 von 4</div>
+                        <button class="breathing-stop-btn" id="sosBreathingStop">Übung beenden</button>
+                    </div>
+                </div>
+
+                <!-- Games Content -->
+                <div class="sos-content-area hidden" id="sosContentGames">
+                    <div class="sos-games-list" id="sosGamesList">
+                        <!-- Games will be populated by JS -->
+                    </div>
+                    <!-- Active game container -->
+                    <div class="sos-game-active hidden" id="sosGameActive">
+                        <!-- Game will be rendered here -->
+                    </div>
                 </div>
             </div>
 
-            <!-- Games Screen (hidden initially) -->
-            <div class="sos-games-screen hidden" id="sosGamesScreen">
-                <button class="sos-back-btn" id="sosBackFromGames">← Zurück</button>
-                <h2 class="sos-screen-title">Ablenkungsspiele</h2>
-                <div class="sos-games-list" id="sosGamesList">
-                    <!-- Games will be populated by JS -->
-                </div>
+            <!-- Success Message (hidden initially) -->
+            <div class="craving-success hidden" id="cravingSuccess">
+                <div class="success-icon">🎉</div>
+                <h2>Geschafft!</h2>
+                <p>Du hast das Verlangen überwunden!</p>
+                <div class="success-stats" id="successStats"></div>
+                <button class="success-close-btn" id="successCloseBtn">Schließen</button>
             </div>
         </div>
     </div>

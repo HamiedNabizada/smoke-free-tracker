@@ -58,6 +58,8 @@
     justify-content: center;
     opacity: 1;
     transition: opacity 0.3s ease;
+    overflow-y: auto;
+    padding: 1rem;
 }
 
 .craving-overlay.hidden {
@@ -67,7 +69,7 @@
 
 .craving-overlay-content {
     position: relative;
-    width: 90%;
+    width: 100%;
     max-width: 500px;
     text-align: center;
     color: white;
@@ -76,18 +78,19 @@
 /* Close Button */
 .craving-close-btn {
     position: absolute;
-    top: -40px;
+    top: -10px;
     right: 0;
     background: rgba(255, 255, 255, 0.2);
     border: none;
     color: white;
-    font-size: 2rem;
-    width: 50px;
-    height: 50px;
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     cursor: pointer;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
+    z-index: 10;
 }
 
 .craving-close-btn:hover {
@@ -95,36 +98,46 @@
     transform: rotate(90deg);
 }
 
-/* Breathing Animation */
-.breathing-container {
+/* Timer Header - Always Visible */
+.sos-timer-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.breathing-container-compact {
     position: relative;
-    width: 250px;
-    height: 250px;
-    margin: 0 auto 2rem;
+    width: 80px;
+    height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.breathing-circle {
-    width: 200px;
-    height: 200px;
+.breathing-container-compact .breathing-circle {
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     background: radial-gradient(circle, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
     animation: breathe 8s ease-in-out infinite;
-    box-shadow: 0 0 60px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
     position: absolute;
 }
 
-.breathing-text {
-    font-size: 1.8rem;
+.breathing-container-compact .breathing-text {
+    font-size: 0.7rem;
     font-weight: 600;
     color: white;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     z-index: 10;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    transition: opacity 0.3s ease;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
 }
 
 @keyframes breathe {
@@ -133,33 +146,32 @@
         opacity: 0.5;
     }
     50% {
-        transform: scale(1.3);
+        transform: scale(1.2);
         opacity: 1;
     }
 }
 
-/* Timer Display */
-.craving-timer {
-    margin: 2rem 0;
+.timer-compact {
+    text-align: left;
 }
 
-.timer-display {
-    font-size: 5rem;
+.timer-compact .timer-display {
+    font-size: 2.5rem;
     font-weight: 700;
     color: white;
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    line-height: 1;
 }
 
-.timer-label {
-    font-size: 1.5rem;
-    color: rgba(255, 255, 255, 0.9);
+.timer-compact .timer-label {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.8);
     font-weight: 300;
 }
 
 /* Count Option Checkbox */
 .craving-count-option {
-    margin: 1.5rem 0;
+    margin: 0.75rem 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -168,14 +180,15 @@
 .craving-checkbox-label {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.5rem;
     cursor: pointer;
     background: rgba(255, 255, 255, 0.1);
-    padding: 0.75rem 1.5rem;
+    padding: 0.5rem 1rem;
     border-radius: 50px;
     transition: all 0.3s ease;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     user-select: none;
+    font-size: 0.9rem;
 }
 
 .craving-checkbox-label:hover {
@@ -184,8 +197,8 @@
 }
 
 .craving-checkbox-label input[type="checkbox"] {
-    width: 24px;
-    height: 24px;
+    width: 18px;
+    height: 18px;
     cursor: pointer;
     accent-color: #11998e;
     flex-shrink: 0;
@@ -193,325 +206,86 @@
 
 .checkbox-text {
     color: white;
-    font-size: 1.1rem;
     font-weight: 500;
+}
+
+/* SOS Tabs */
+.sos-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin: 1rem 0;
+    justify-content: center;
+}
+
+.sos-tab {
+    flex: 1;
+    max-width: 120px;
+    padding: 0.6rem 0.8rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.sos-tab:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.sos-tab.active {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* SOS Content */
+.sos-content {
+    min-height: 200px;
+}
+
+.sos-content-area {
+    animation: fadeIn 0.3s ease;
+}
+
+.sos-content-area.hidden {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* Tip Display */
 .craving-tip-display {
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 2rem;
-    margin-top: 2rem;
+    border-radius: 16px;
+    padding: 1.5rem;
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .tip-icon-large {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
     transition: opacity 0.3s ease;
 }
 
 .tip-text {
-    font-size: 1.3rem;
-    line-height: 1.6;
+    font-size: 1.1rem;
+    line-height: 1.5;
     color: white;
     transition: opacity 0.3s ease;
 }
 
-/* Success Message */
-.craving-success {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    color: #333;
-    padding: 3rem 2rem;
-    border-radius: 30px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    width: 90%;
-    max-width: 500px;
-    opacity: 1;
-    transition: all 0.3s ease;
-}
-
-.craving-success.hidden {
-    opacity: 0;
-    pointer-events: none;
-    transform: translate(-50%, -50%) scale(0.8);
-}
-
-.success-icon {
-    font-size: 5rem;
-    margin-bottom: 1rem;
-}
-
-.craving-success h2 {
-    color: #11998e;
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.craving-success p {
-    font-size: 1.2rem;
-    color: #666;
-    margin-bottom: 2rem;
-}
-
-.success-stats {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    border-radius: 15px;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-    font-size: 1rem;
-    line-height: 1.8;
-}
-
-.success-stats strong {
-    color: #11998e;
-}
-
-.success-close-btn {
-    background: linear-gradient(135deg, #11998e, #38ef7d);
-    color: white;
-    border: none;
-    padding: 1rem 3rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.success-close-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(17, 153, 142, 0.3);
-}
-
-/* Desktop - Kompaktere Größen */
-@media (min-width: 769px) {
-    .breathing-container {
-        width: 180px;
-        height: 180px;
-        margin: 0 auto 1.5rem;
-    }
-
-    .breathing-circle {
-        width: 140px;
-        height: 140px;
-    }
-
-    .breathing-text {
-        font-size: 1.4rem;
-    }
-
-    .timer-display {
-        font-size: 3.5rem;
-    }
-
-    .timer-label {
-        font-size: 1.2rem;
-    }
-
-    .craving-timer {
-        margin: 1.5rem 0;
-    }
-
-    .craving-tip-display {
-        padding: 1.5rem;
-        margin-top: 1.5rem;
-    }
-
-    .tip-icon-large {
-        font-size: 2.5rem;
-    }
-
-    .tip-text {
-        font-size: 1.1rem;
-    }
-
-    .craving-count-option {
-        margin: 1rem 0;
-    }
-
-    .craving-success {
-        max-width: 450px;
-        padding: 2.5rem 2rem;
-    }
-
-    .success-icon {
-        font-size: 4rem;
-    }
-
-    .craving-success h2 {
-        font-size: 2rem;
-    }
-
-    .craving-success p {
-        font-size: 1.1rem;
-    }
-}
-
-/* Mobile - Responsive */
-@media (max-width: 768px) {
-    .craving-button {
-        font-size: 1.2rem;
-        padding: 1.2rem 1.5rem;
-    }
-
-    .breathing-container {
-        width: 180px;
-        height: 180px;
-    }
-
-    .breathing-circle {
-        width: 150px;
-        height: 150px;
-    }
-
-    .breathing-text {
-        font-size: 1.4rem;
-    }
-
-    .timer-display {
-        font-size: 4rem;
-    }
-
-    .timer-label {
-        font-size: 1.2rem;
-    }
-
-    .tip-text {
-        font-size: 1.1rem;
-    }
-
-    .checkbox-text {
-        font-size: 0.95rem;
-    }
-
-    .craving-checkbox-label {
-        padding: 0.6rem 1rem;
-    }
-
-    .craving-success h2 {
-        font-size: 2rem;
-    }
-}
-
-/* SOS Hub Menu */
-.sos-menu {
-    text-align: center;
-}
-
-.sos-menu-title {
-    font-size: 2rem;
-    color: white;
-    margin-bottom: 2rem;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-}
-
-.sos-options {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.sos-option-btn {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    width: 100%;
-    padding: 1.25rem 1.5rem;
-    background: rgba(255, 255, 255, 0.15);
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-radius: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: left;
-    backdrop-filter: blur(10px);
-}
-
-.sos-option-btn:hover {
-    background: rgba(255, 255, 255, 0.25);
-    border-color: rgba(255, 255, 255, 0.5);
-    transform: translateY(-2px);
-}
-
-.sos-option-icon {
-    font-size: 2.5rem;
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    flex-shrink: 0;
-}
-
-.sos-option-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-}
-
-.sos-option-name {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: white;
-}
-
-.sos-option-desc {
-    font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.8);
-}
-
-/* SOS Screens */
-.sos-timer-screen,
-.sos-breathing-screen,
-.sos-games-screen {
-    text-align: center;
-}
-
-.sos-timer-screen.hidden,
-.sos-breathing-screen.hidden,
-.sos-games-screen.hidden,
-.sos-menu.hidden {
-    display: none;
-}
-
-.sos-back-btn {
-    position: absolute;
-    top: -40px;
-    left: 0;
-    background: rgba(255, 255, 255, 0.2);
-    border: none;
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: all 0.2s ease;
-}
-
-.sos-back-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
-}
-
-.sos-screen-title {
-    font-size: 1.8rem;
-    color: white;
-    margin-bottom: 1.5rem;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-}
-
-/* SOS Breathing Options */
+/* Breathing Options */
 .sos-breathing-options {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.75rem;
 }
 
 .sos-breathing-btn {
@@ -519,10 +293,10 @@
     align-items: center;
     gap: 1rem;
     width: 100%;
-    padding: 1.25rem 1.5rem;
+    padding: 1rem 1.25rem;
     background: rgba(255, 255, 255, 0.15);
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-radius: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 14px;
     cursor: pointer;
     transition: all 0.3s ease;
     text-align: left;
@@ -531,14 +305,14 @@
 
 .sos-breathing-btn:hover {
     background: rgba(255, 255, 255, 0.25);
-    border-color: rgba(255, 255, 255, 0.5);
+    border-color: rgba(255, 255, 255, 0.4);
     transform: translateY(-2px);
 }
 
 .sos-breathing-btn .exercise-icon {
-    font-size: 2rem;
-    width: 50px;
-    height: 50px;
+    font-size: 1.8rem;
+    width: 45px;
+    height: 45px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -550,25 +324,123 @@
 .sos-breathing-btn .exercise-info {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 0.2rem;
 }
 
 .sos-breathing-btn .exercise-name {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 600;
     color: white;
 }
 
 .sos-breathing-btn .exercise-detail {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
 }
 
-/* SOS Games List */
+/* Active Breathing Exercise */
+.sos-breathing-active {
+    text-align: center;
+}
+
+.breathing-exercise-display {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.breathing-exercise-circle {
+    position: absolute;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.4);
+}
+
+.breathing-exercise-circle.inhale {
+    animation: inhaleAnim ease-in-out forwards;
+}
+
+.breathing-exercise-circle.exhale {
+    animation: exhaleAnim ease-in-out forwards;
+}
+
+.breathing-exercise-circle.hold {
+    animation: holdAnim ease-in-out infinite;
+}
+
+.breathing-exercise-circle.complete {
+    background: radial-gradient(circle, rgba(17, 153, 142, 0.6), rgba(17, 153, 142, 0.2));
+    box-shadow: 0 0 50px rgba(17, 153, 142, 0.5);
+}
+
+@keyframes inhaleAnim {
+    from { transform: scale(0.6); opacity: 0.4; }
+    to { transform: scale(1.1); opacity: 1; }
+}
+
+@keyframes exhaleAnim {
+    from { transform: scale(1.1); opacity: 1; }
+    to { transform: scale(0.6); opacity: 0.4; }
+}
+
+@keyframes holdAnim {
+    0%, 100% { opacity: 0.9; }
+    50% { opacity: 1; }
+}
+
+.breathing-instruction {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: white;
+    z-index: 10;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.breathing-instruction.complete {
+    color: #38ef7d;
+}
+
+.breathing-phase-timer {
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+    z-index: 10;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.breathing-progress {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.breathing-stop-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 0.6rem 1.5rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.breathing-stop-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Games List */
 .sos-games-list {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.75rem;
 }
 
 .sos-game-btn {
@@ -576,10 +448,10 @@
     align-items: center;
     gap: 1rem;
     width: 100%;
-    padding: 1.25rem 1.5rem;
+    padding: 1rem 1.25rem;
     background: rgba(255, 255, 255, 0.15);
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-radius: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 14px;
     cursor: pointer;
     transition: all 0.3s ease;
     text-align: left;
@@ -588,14 +460,14 @@
 
 .sos-game-btn:hover {
     background: rgba(255, 255, 255, 0.25);
-    border-color: rgba(255, 255, 255, 0.5);
+    border-color: rgba(255, 255, 255, 0.4);
     transform: translateY(-2px);
 }
 
 .sos-game-btn .game-icon {
-    font-size: 2rem;
-    width: 50px;
-    height: 50px;
+    font-size: 1.8rem;
+    width: 45px;
+    height: 45px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -607,37 +479,398 @@
 .sos-game-btn .game-info {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 0.2rem;
 }
 
 .sos-game-btn .game-name {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 600;
     color: white;
 }
 
 .sos-game-btn .game-desc {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
 }
 
-/* Mobile adjustments for SOS Hub */
+/* Inline Games */
+.sos-game-active {
+    animation: fadeIn 0.3s ease;
+}
+
+.inline-game {
+    text-align: center;
+}
+
+.inline-game .game-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    font-size: 0.9rem;
+    color: white;
+}
+
+.tap-arena {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+.tap-target {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.5);
+}
+
+.tap-target:hover {
+    transform: scale(1.1) !important;
+}
+
+.game-back-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 0.6rem 1.5rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.game-back-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Breathe Game */
+.breathe-game .breathe-instruction {
+    font-size: 1.3rem;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.breathe-game .breathe-circle-container {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.breathe-game .breathe-circle {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transition: all 4s ease;
+}
+
+.breathe-game .breathe-circle.inhale {
+    width: 110px;
+    height: 110px;
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+}
+
+.breathe-game .breathe-circle.exhale {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.breathe-game .breathe-progress {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+/* Memory Game */
+.memory-grid-inline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.memory-card-inline {
+    aspect-ratio: 1;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.3s;
+}
+
+.memory-card-inline .card-front,
+.memory-card-inline .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    border-radius: 8px;
+    backface-visibility: hidden;
+    transition: opacity 0.3s;
+}
+
+.memory-card-inline .card-front {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+}
+
+.memory-card-inline .card-back {
+    background: rgba(255, 255, 255, 0.3);
+    opacity: 0;
+}
+
+.memory-card-inline.flipped .card-front {
+    opacity: 0;
+}
+
+.memory-card-inline.flipped .card-back {
+    opacity: 1;
+}
+
+.memory-card-inline.matched {
+    background: rgba(17, 153, 142, 0.4);
+}
+
+.memory-card-inline.matched .card-back {
+    opacity: 1;
+}
+
+/* Game Result */
+.game-result {
+    padding: 1.5rem;
+}
+
+.game-result .result-score {
+    font-size: 3rem;
+    font-weight: 700;
+    color: white;
+}
+
+.game-result .result-label {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 0.5rem;
+}
+
+.game-result .result-icon {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.game-result .result-message {
+    font-size: 1.1rem;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.game-result .game-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+}
+
+.game-btn-primary {
+    background: linear-gradient(135deg, #11998e, #38ef7d);
+    border: none;
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.game-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(17, 153, 142, 0.4);
+}
+
+.game-btn-secondary {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.game-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Success Message */
+.craving-success {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    color: #333;
+    padding: 2.5rem 2rem;
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 400px;
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+.craving-success.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(0.8);
+}
+
+.success-icon {
+    font-size: 4rem;
+    margin-bottom: 0.75rem;
+}
+
+.craving-success h2 {
+    color: #11998e;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.craving-success p {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.success-stats {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    text-align: left;
+}
+
+.success-stats strong {
+    color: #11998e;
+}
+
+.success-close-btn {
+    background: linear-gradient(135deg, #11998e, #38ef7d);
+    color: white;
+    border: none;
+    padding: 0.9rem 2.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.success-close-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(17, 153, 142, 0.3);
+}
+
+/* Mobile Responsive */
 @media (max-width: 768px) {
-    .sos-menu-title {
-        font-size: 1.6rem;
+    .craving-overlay {
+        padding: 0.75rem;
     }
 
-    .sos-option-icon {
-        width: 50px;
-        height: 50px;
+    .sos-timer-header {
+        gap: 1rem;
+        padding: 0.75rem;
+    }
+
+    .breathing-container-compact {
+        width: 65px;
+        height: 65px;
+    }
+
+    .breathing-container-compact .breathing-circle {
+        width: 55px;
+        height: 55px;
+    }
+
+    .breathing-container-compact .breathing-text {
+        font-size: 0.6rem;
+    }
+
+    .timer-compact .timer-display {
         font-size: 2rem;
     }
 
-    .sos-option-name {
-        font-size: 1.1rem;
+    .sos-tab {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.8rem;
     }
 
-    .sos-option-desc {
-        font-size: 0.85rem;
+    .craving-tip-display {
+        padding: 1.25rem;
+    }
+
+    .tip-icon-large {
+        font-size: 2rem;
+    }
+
+    .tip-text {
+        font-size: 1rem;
+    }
+
+    .sos-breathing-btn,
+    .sos-game-btn {
+        padding: 0.9rem 1rem;
+    }
+
+    .sos-breathing-btn .exercise-icon,
+    .sos-game-btn .game-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+    }
+
+    .sos-breathing-btn .exercise-name,
+    .sos-game-btn .game-name {
+        font-size: 1rem;
+    }
+
+    .tap-arena {
+        height: 180px;
+    }
+
+    .memory-card-inline .card-front,
+    .memory-card-inline .card-back {
+        font-size: 1.2rem;
+    }
+
+    .craving-success {
+        padding: 2rem 1.5rem;
+    }
+
+    .success-icon {
+        font-size: 3rem;
+    }
+
+    .craving-success h2 {
+        font-size: 1.7rem;
     }
 }
