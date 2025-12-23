@@ -3,6 +3,9 @@
  * Allows users to customize their progress goals
  */
 
+import { auth, db, isDemoMode, blockDemoWrite, checkWriteLimit, incrementWriteCount } from '../firebase-auth.js';
+import { doc, getDoc, updateDoc } from '../firebase-init.js';
+
 // Default goals
 const DEFAULT_GOALS = {
     days: 365,
@@ -33,21 +36,21 @@ export function getCurrentGoals() {
  * Load goals from Firestore
  */
 async function loadGoals() {
-    const user = firebase.auth().currentUser;
+    const user = auth.currentUser;
     if (!user) return;
 
     // Demo mode: use default goals
-    if (typeof isDemoMode === 'function' && isDemoMode()) {
+    if (isDemoMode()) {
         console.log('[ProgressGoals] Demo mode - using default goals');
         return;
     }
 
     try {
-        const docRef = firebase.firestore().collection('users').doc(user.uid);
-        const doc = await docRef.get();
+        const docRef = doc(db, 'users', user.uid);
+        const docSnap = await getDoc(docRef);
 
-        if (doc.exists && doc.data().progress_goals) {
-            currentGoals = { ...DEFAULT_GOALS, ...doc.data().progress_goals };
+        if (docSnap.exists() && docSnap.data().progress_goals) {
+            currentGoals = { ...DEFAULT_GOALS, ...docSnap.data().progress_goals };
         }
     } catch (error) {
         console.error('[ProgressGoals] Error loading goals:', error);
@@ -58,28 +61,27 @@ async function loadGoals() {
  * Save goals to Firestore (with rate limiting)
  */
 async function saveGoals() {
-    const user = firebase.auth().currentUser;
+    const user = auth.currentUser;
     if (!user) return;
 
     // Block write in demo mode
-    if (typeof blockDemoWrite === 'function' && blockDemoWrite('Ziele speichern')) {
+    if (blockDemoWrite('Ziele speichern')) {
         return;
     }
 
     // Check write limit
-    if (typeof checkWriteLimit === 'function' && !checkWriteLimit('goals')) {
+    if (!checkWriteLimit('goals')) {
         return;
     }
 
     try {
-        await firebase.firestore().collection('users').doc(user.uid).update({
+        const docRef = doc(db, 'users', user.uid);
+        await updateDoc(docRef, {
             progress_goals: currentGoals
         });
 
         // Track write
-        if (typeof incrementWriteCount === 'function') {
-            incrementWriteCount('goals');
-        }
+        incrementWriteCount('goals');
 
         console.log('[ProgressGoals] Goals saved:', currentGoals);
     } catch (error) {

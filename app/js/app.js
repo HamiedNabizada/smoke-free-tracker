@@ -14,6 +14,7 @@ import { initializeMiniGames } from './ui/mini-games.js';
 import { initializeOfflineQueue } from './utils/offline-queue.js';
 import { initializePerformanceMonitoring } from './utils/performance.js';
 import { setUserData } from './config.js';
+import { checkAuth, getUserData, logoutUser, isDemoMode } from './firebase-auth.js';
 
 // Register Service Worker for PWA functionality
 if ('serviceWorker' in navigator) {
@@ -38,8 +39,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const userData = await getUserData();
     setUserData(userData);
 
-    // Show demo banner if in demo mode (isDemoMode is in firebase-auth.js)
-    if (typeof isDemoMode === 'function' && isDemoMode()) {
+    // Show demo banner if in demo mode
+    if (isDemoMode()) {
         const banner = document.createElement('div');
         banner.className = 'demo-banner';
         banner.innerHTML = `

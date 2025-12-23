@@ -3,6 +3,9 @@
  * Handles push notifications permission, settings, and scheduling
  */
 
+import { auth, db, isDemoMode, blockDemoWrite, checkWriteLimit, incrementWriteCount } from '../firebase-auth.js';
+import { doc, getDoc, updateDoc } from '../firebase-init.js';
+
 // Notification state
 let notificationSettings = {
     enabled: false,
@@ -14,7 +17,7 @@ let notificationSettings = {
  * Initialize notification settings
  */
 export async function initializeNotifications() {
-    const user = firebase.auth().currentUser;
+    const user = auth.currentUser;
     if (!user) return;
 
     // Load settings from Firestore
@@ -34,11 +37,11 @@ export async function initializeNotifications() {
  * Load notification settings from Firestore
  */
 async function loadNotificationSettings() {
-    const user = firebase.auth().currentUser;
+    const user = auth.currentUser;
     if (!user) return;
 
     // Demo mode: use disabled notifications (demo data)
-    if (typeof isDemoMode === 'function' && isDemoMode()) {
+    if (isDemoMode()) {
         notificationSettings = {
             enabled: false,
             milestones: false,
@@ -52,11 +55,11 @@ async function loadNotificationSettings() {
     }
 
     try {
-        const docRef = firebase.firestore().collection('users').doc(user.uid);
-        const doc = await docRef.get();
+        const docRef = doc(db, 'users', user.uid);
+        const docSnap = await getDoc(docRef);
 
-        if (doc.exists) {
-            const userData = doc.data();
+        if (docSnap.exists()) {
+            const userData = docSnap.data();
             notificationSettings = {
                 enabled: userData.notifications_enabled || false,
                 milestones: userData.milestones_enabled || false,
@@ -81,30 +84,29 @@ async function loadNotificationSettings() {
  * Save notification settings to Firestore (with rate limiting)
  */
 async function saveNotificationSettings() {
-    const user = firebase.auth().currentUser;
+    const user = auth.currentUser;
     if (!user) return;
 
     // Block write in demo mode
-    if (typeof blockDemoWrite === 'function' && blockDemoWrite('Benachrichtigungen aktivieren')) {
+    if (blockDemoWrite('Benachrichtigungen aktivieren')) {
         return;
     }
 
     // Check write limit
-    if (typeof checkWriteLimit === 'function' && !checkWriteLimit('notifications')) {
+    if (!checkWriteLimit('notifications')) {
         return;
     }
 
     try {
-        await firebase.firestore().collection('users').doc(user.uid).update({
+        const docRef = doc(db, 'users', user.uid);
+        await updateDoc(docRef, {
             notifications_enabled: notificationSettings.enabled,
             milestones_enabled: notificationSettings.milestones,
             daily_motivation_enabled: notificationSettings.dailyMotivation
         });
 
         // Track write
-        if (typeof incrementWriteCount === 'function') {
-            incrementWriteCount('notifications');
-        }
+        incrementWriteCount('notifications');
 
         console.log('[Notifications] Settings saved');
     } catch (error) {
@@ -243,17 +245,17 @@ export async function checkMilestoneNotifications(currentMilestone) {
     if (!notificationSettings.enabled || !notificationSettings.milestones) return;
     if (Notification.permission !== 'granted') return;
 
-    const user = firebase.auth().currentUser;
+    const user = auth.currentUser;
     if (!user) return;
 
     // Skip in demo mode
-    if (typeof isDemoMode === 'function' && isDemoMode()) return;
+    if (isDemoMode()) return;
 
     try {
         // Get last notified milestone
-        const docRef = firebase.firestore().collection('users').doc(user.uid);
-        const doc = await docRef.get();
-        const lastMilestone = doc.data()?.last_milestone_notification || -1;
+        const docRef = doc(db, 'users', user.uid);
+        const docSnap = await getDoc(docRef);
+        const lastMilestone = docSnap.data()?.last_milestone_notification || -1;
 
         // Check if this is a new milestone
         if (currentMilestone && currentMilestone.id > lastMilestone) {
@@ -267,7 +269,7 @@ export async function checkMilestoneNotifications(currentMilestone) {
             });
 
             // Update last notified milestone
-            await docRef.update({
+            await updateDoc(docRef, {
                 last_milestone_notification: currentMilestone.id
             });
 
@@ -307,16 +309,16 @@ function scheduleDailyMotivation() {
  * Check if we already sent today's motivation
  */
 async function checkTodaysMotivation() {
-    const user = firebase.auth().currentUser;
+    const user = auth.currentUser;
     if (!user) return;
 
     // Skip in demo mode
-    if (typeof isDemoMode === 'function' && isDemoMode()) return;
+    if (isDemoMode()) return;
 
     try {
-        const docRef = firebase.firestore().collection('users').doc(user.uid);
-        const doc = await docRef.get();
-        const lastSent = doc.data()?.last_daily_motivation;
+        const docRef = doc(db, 'users', user.uid);
+        const docSnap = await getDoc(docRef);
+        const lastSent = docSnap.data()?.last_daily_motivation;
 
         const today = new Date().toISOString().split('T')[0];
         const now = new Date();
@@ -337,11 +339,11 @@ async function sendDailyMotivation() {
     if (!notificationSettings.enabled || !notificationSettings.dailyMotivation) return;
     if (Notification.permission !== 'granted') return;
 
-    const user = firebase.auth().currentUser;
+    const user = auth.currentUser;
     if (!user) return;
 
     // Skip in demo mode
-    if (typeof isDemoMode === 'function' && isDemoMode()) return;
+    if (isDemoMode()) return;
 
     const motivations = [
         'Jeder rauchfreie Tag ist ein Erfolg!',
@@ -368,7 +370,8 @@ async function sendDailyMotivation() {
     // Update last sent date
     try {
         const today = new Date().toISOString().split('T')[0];
-        await firebase.firestore().collection('users').doc(user.uid).update({
+        const docRef = doc(db, 'users', user.uid);
+        await updateDoc(docRef, {
             last_daily_motivation: today
         });
         console.log('[Notifications] Daily motivation sent');

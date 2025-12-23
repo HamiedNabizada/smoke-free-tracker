@@ -3,6 +3,8 @@
  */
 
 import { calculateStats } from '../utils/calculations.js';
+import { auth, db, getUserData, isDemoMode, getDemoCravingEvents } from '../firebase-auth.js';
+import { collection, query, where, getDocs, orderBy } from '../firebase-init.js';
 
 /**
  * Initialize data export features
@@ -14,7 +16,7 @@ export function initializeDataExport() {
     const shareImageBtn = document.getElementById('shareImageBtn');
 
     if (exportBtn) {
-        exportBtn.addEventListener('click', exportUserData);
+        exportBtn.addEventListener('click', exportUserDataToFile);
     }
 
     if (shareBtn) {
@@ -38,8 +40,8 @@ export function initializeDataExport() {
 /**
  * Export all user data as JSON file (DSGVO Art. 15)
  */
-async function exportUserData() {
-    const user = firebase.auth().currentUser;
+async function exportUserDataToFile() {
+    const user = auth.currentUser;
     if (!user) {
         alert('Du musst eingeloggt sein um Daten zu exportieren.');
         return;
@@ -48,7 +50,7 @@ async function exportUserData() {
     try {
         // Sammle alle Daten
         const userData = await getUserData();
-        const cravingEvents = await getCravingEvents();
+        const cravingEvents = await getCravingEventsForExport();
         const stats = calculateStats();
 
         const exportData = {
@@ -90,29 +92,30 @@ async function exportUserData() {
 }
 
 /**
- * Get craving events from Firestore
+ * Get craving events from Firestore for export
  */
-async function getCravingEvents() {
-    const user = firebase.auth().currentUser;
+async function getCravingEventsForExport() {
+    const user = auth.currentUser;
     if (!user) return [];
 
     try {
-        // Return demo data in demo mode (getDemoCravingEvents is in firebase-auth.js)
-        if (user.email === 'demo@byebyesmoke.app' && typeof getDemoCravingEvents === 'function') {
+        // Return demo data in demo mode
+        if (isDemoMode()) {
             return getDemoCravingEvents();
         }
 
-        const snapshot = await firebase.firestore()
-            .collection('craving_events')
-            .where('user_id', '==', user.uid)
-            .orderBy('date', 'desc')
-            .get();
+        const cravingsQuery = query(
+            collection(db, 'craving_events'),
+            where('user_id', '==', user.uid),
+            orderBy('date', 'desc')
+        );
+        const snapshot = await getDocs(cravingsQuery);
 
         const events = [];
-        snapshot.forEach(doc => {
+        snapshot.forEach(docSnap => {
             events.push({
-                date: doc.data().date,
-                count: doc.data().count
+                date: docSnap.data().date,
+                count: docSnap.data().count
             });
         });
 
@@ -210,7 +213,7 @@ function showTextModal(text) {
  */
 function generateBadge() {
     const stats = calculateStats();
-    const user = firebase.auth().currentUser;
+    const user = auth.currentUser;
 
     // SVG Badge erstellen
     const svg = `
@@ -292,7 +295,7 @@ function generateBadge() {
  */
 export async function generateShareImage() {
     const stats = calculateStats();
-    const user = firebase.auth().currentUser;
+    const user = auth.currentUser;
     const username = user?.displayName || 'Anonymer Held';
 
     // Create canvas
@@ -443,7 +446,7 @@ function downloadCanvas(canvas) {
  */
 async function exportPdf() {
     const stats = calculateStats();
-    const user = firebase.auth().currentUser;
+    const user = auth.currentUser;
     const username = user?.displayName || 'Benutzer';
 
     // Check if jsPDF is loaded
@@ -554,28 +557,3 @@ async function exportPdf() {
     alert('📄 Dein PDF-Report wurde erstellt und heruntergeladen!');
 }
 
-/**
- * Fetch user data from Firestore (for export)
- */
-async function getUserData() {
-    const user = firebase.auth().currentUser;
-    if (!user) return null;
-
-    try {
-        // Return demo data in demo mode
-        if (user.email === 'demo@byebyesmoke.app') {
-            return {
-                quit_date: '2025-11-01T10:00:00',
-                cigarettes_per_day: 15,
-                price_per_pack: 9,
-                cigarettes_per_pack: 20
-            };
-        }
-
-        const doc = await firebase.firestore().collection('users').doc(user.uid).get();
-        return doc.exists ? doc.data() : null;
-    } catch (error) {
-        console.error('[DataExport] Error loading user data:', error);
-        return null;
-    }
-}

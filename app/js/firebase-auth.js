@@ -1,5 +1,26 @@
-// Firebase Authentication Helper Functions
-// Diese Datei muss NACH firebase-config.js geladen werden
+// Firebase Authentication Helper Functions (Modular API)
+
+import {
+  auth,
+  db,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+  updateProfile,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  deleteDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+  writeBatch,
+  runTransaction,
+  serverTimestamp
+} from './firebase-init.js';
 
 // ============================================
 // Simple in-memory cache to reduce Firebase reads
@@ -99,9 +120,9 @@ let _cravingLimitToastShown = false;
 
 // Toast notification types and colors
 const TOAST_TYPES = {
-    info: { bg: 'rgba(0, 0, 0, 0.85)', icon: 'ℹ️' },
+    info: { bg: 'rgba(0, 0, 0, 0.85)', icon: 'i' },
     success: { bg: 'rgba(34, 139, 34, 0.9)', icon: '✓' },
-    warning: { bg: 'rgba(255, 165, 0, 0.9)', icon: '⚠️' },
+    warning: { bg: 'rgba(255, 165, 0, 0.9)', icon: '!' },
     error: { bg: 'rgba(220, 53, 69, 0.9)', icon: '✕' }
 };
 
@@ -207,7 +228,7 @@ window.addEventListener('unhandledrejection', (event) => {
 });
 
 // ============================================
-// Demo mode helpers (inline to avoid module issues)
+// Demo mode helpers
 // ============================================
 const DEMO_EMAIL = 'demo@byebyesmoke.app';
 
@@ -260,10 +281,14 @@ function getDemoCravingEvents() {
   ];
 }
 
+// ============================================
+// Auth functions
+// ============================================
+
 // Check if user is authenticated
 async function checkAuth() {
   return new Promise((resolve) => {
-    auth.onAuthStateChanged((user) => {
+    onAuthStateChanged(auth, (user) => {
       if (!user) {
         // Not logged in - redirect to login page
         if (!window.location.pathname.includes('login.html') &&
@@ -283,22 +308,22 @@ async function registerUser(username, password, userData) {
   try {
     // Create user with email-like username (Firebase requires email format)
     const email = `${username}@byebyesmoke.app`;
-    const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
     // Update display name
-    await user.updateProfile({
+    await updateProfile(user, {
       displayName: username
     });
 
     // Save user data to Firestore
-    await db.collection('users').doc(user.uid).set({
+    await setDoc(doc(db, 'users', user.uid), {
       username: username,
       quit_date: userData.quit_date,
       cigarettes_per_day: userData.cigarettes_per_day,
       price_per_pack: userData.price_per_pack,
       cigarettes_per_pack: userData.cigarettes_per_pack,
-      created_at: firebase.firestore.FieldValue.serverTimestamp()
+      created_at: serverTimestamp()
     });
 
     return { success: true, user: user };
@@ -320,13 +345,13 @@ async function registerUser(username, password, userData) {
 async function loginUser(username, password) {
   try {
     const email = `${username}@byebyesmoke.app`;
-    const userCredential = await auth.signInWithEmailAndPassword(email, password);
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
     return { success: true, user: userCredential.user };
   } catch (error) {
     console.error('Login error:', error);
     let message = 'Login fehlgeschlagen';
 
-    if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+    if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
       message = 'Ungültiger Benutzername oder Passwort';
     } else if (error.code === 'auth/invalid-email') {
       message = 'Ungültiger Benutzername';
@@ -341,7 +366,7 @@ async function logoutUser() {
   try {
     // Clear cache on logout
     clearUserCache();
-    await auth.signOut();
+    await signOut(auth);
     window.location.href = 'login.html';
   } catch (error) {
     console.error('Logout error:', error);
@@ -372,13 +397,13 @@ async function getUserData(forceRefresh = false) {
       }
     }
 
-    const doc = await db.collection('users').doc(user.uid).get();
+    const docSnap = await getDoc(doc(db, 'users', user.uid));
 
-    if (!doc.exists) {
+    if (!docSnap.exists()) {
       throw new Error('Benutzerdaten nicht gefunden');
     }
 
-    const data = doc.data();
+    const data = docSnap.data();
     setCache(cacheKey, data, CACHE_TTL.USER_DATA);
     console.log('[Firebase] User data loaded');
     return data;
@@ -406,7 +431,7 @@ async function updateUserData(updates) {
       return { success: false };
     }
 
-    await db.collection('users').doc(user.uid).update(updates);
+    await updateDoc(doc(db, 'users', user.uid), updates);
 
     // Track write
     incrementWriteCount('settings');
@@ -439,16 +464,18 @@ async function deleteAccount() {
     }
 
     // Delete user data from Firestore
-    await db.collection('users').doc(user.uid).delete();
+    await deleteDoc(doc(db, 'users', user.uid));
 
     // Delete all craving events
-    const cravingsSnapshot = await db.collection('craving_events')
-      .where('user_id', '==', user.uid)
-      .get();
+    const cravingsQuery = query(
+      collection(db, 'craving_events'),
+      where('user_id', '==', user.uid)
+    );
+    const cravingsSnapshot = await getDocs(cravingsQuery);
 
-    const batch = db.batch();
-    cravingsSnapshot.docs.forEach((doc) => {
-      batch.delete(doc.ref);
+    const batch = writeBatch(db);
+    cravingsSnapshot.docs.forEach((docSnap) => {
+      batch.delete(docSnap.ref);
     });
     await batch.commit();
 
@@ -499,13 +526,13 @@ async function recordCraving() {
     const today = now.toISOString().split('T')[0];
     const currentHour = now.getHours();
     const dayOfWeek = now.getDay(); // 0 = Sunday, 6 = Saturday
-    const docRef = db.collection('craving_events').doc(`${user.uid}_${today}`);
+    const docRef = doc(db, 'craving_events', `${user.uid}_${today}`);
 
     // Use Firestore transaction to increment count
-    await db.runTransaction(async (transaction) => {
-      const doc = await transaction.get(docRef);
+    await runTransaction(db, async (transaction) => {
+      const docSnap = await transaction.get(docRef);
 
-      if (!doc.exists) {
+      if (!docSnap.exists()) {
         // Initialize hours object with current hour having count 1
         const hours = {};
         hours[currentHour] = 1;
@@ -516,11 +543,11 @@ async function recordCraving() {
           day_of_week: dayOfWeek,
           count: 1,
           hours: hours,
-          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+          timestamp: serverTimestamp()
         });
         return 1;
       } else {
-        const data = doc.data();
+        const data = docSnap.data();
         const newCount = (data.count || 0) + 1;
         const hours = data.hours || {};
         hours[currentHour] = (hours[currentHour] || 0) + 1;
@@ -576,14 +603,14 @@ async function getCravingCount() {
       return cached;
     }
 
-    const docRef = db.collection('craving_events').doc(`${user.uid}_${today}`);
-    const doc = await docRef.get();
+    const docRef = doc(db, 'craving_events', `${user.uid}_${today}`);
+    const docSnap = await getDoc(docRef);
 
     let result;
-    if (!doc.exists) {
+    if (!docSnap.exists()) {
       result = { count: 0, date: today };
     } else {
-      result = { count: doc.data().count || 0, date: today };
+      result = { count: docSnap.data().count || 0, date: today };
     }
 
     setCache(cacheKey, result, CACHE_TTL.CRAVING_TODAY);
@@ -634,17 +661,19 @@ async function getCravingHeatmapData() {
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
     const startDate = thirtyDaysAgo.toISOString().split('T')[0];
 
-    const snapshot = await db.collection('craving_events')
-      .where('user_id', '==', user.uid)
-      .where('date', '>=', startDate)
-      .get();
+    const cravingsQuery = query(
+      collection(db, 'craving_events'),
+      where('user_id', '==', user.uid),
+      where('date', '>=', startDate)
+    );
+    const snapshot = await getDocs(cravingsQuery);
 
     // Create heatmap: 7 days x 24 hours
     const heatmap = createEmptyHeatmap();
     let totalCravings = 0;
 
-    snapshot.docs.forEach(doc => {
-      const data = doc.data();
+    snapshot.docs.forEach(docSnap => {
+      const data = docSnap.data();
       const dayOfWeek = data.day_of_week !== undefined ? data.day_of_week : new Date(data.date).getDay();
       const hours = data.hours || {};
 
@@ -713,3 +742,57 @@ function generateDemoHeatmapData() {
 
   return { heatmap, totalCravings };
 }
+
+// ============================================
+// Exports
+// ============================================
+
+export {
+  auth,
+  db,
+  signInWithEmailAndPassword,
+  checkAuth,
+  registerUser,
+  loginUser,
+  logoutUser,
+  getUserData,
+  updateUserData,
+  deleteAccount,
+  recordCraving,
+  getCravingCount,
+  getCurrentUsername,
+  getCurrentUserId,
+  getCravingHeatmapData,
+  isDemoMode,
+  blockDemoWrite,
+  showToast,
+  showErrorToast,
+  checkWriteLimit,
+  incrementWriteCount,
+  getWriteCount,
+  WRITE_LIMITS,
+  // Cache utilities
+  getCached,
+  setCache,
+  invalidateCache,
+  CACHE_TTL,
+  // Demo data
+  getDemoCravingEvents
+};
+
+// Also expose globally for compatibility
+window.checkAuth = checkAuth;
+window.registerUser = registerUser;
+window.loginUser = loginUser;
+window.logoutUser = logoutUser;
+window.getUserData = getUserData;
+window.updateUserData = updateUserData;
+window.deleteAccount = deleteAccount;
+window.recordCraving = recordCraving;
+window.getCravingCount = getCravingCount;
+window.getCurrentUsername = getCurrentUsername;
+window.getCurrentUserId = getCurrentUserId;
+window.getCravingHeatmapData = getCravingHeatmapData;
+window.isDemoMode = isDemoMode;
+window.blockDemoWrite = blockDemoWrite;
+window.showToast = showToast;

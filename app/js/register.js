@@ -3,6 +3,7 @@
  */
 
 import { checkRateLimit, recordFailedAttempt, recordSuccessfulAttempt, formatRemainingTime } from './utils/rate-limiter.js';
+import { registerUser } from './firebase-auth.js';
 
 const form = document.getElementById('registerForm');
 const errorMessage = document.getElementById('errorMessage');

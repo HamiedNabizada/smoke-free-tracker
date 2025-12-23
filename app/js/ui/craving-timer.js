@@ -1,5 +1,6 @@
 import { calculateStats } from '../utils/calculations.js';
 import { updateCompactCravingStats } from './craving-stats.js';
+import { recordCraving, getCravingCount } from '../firebase-auth.js';
 
 // Craving tips that rotate during the timer
 const cravingTips = [
@@ -132,15 +133,11 @@ async function showSuccessMessage() {
     let currentCount = 0;
 
     if (shouldCount) {
-        // Increment craving count in Firestore (use global recordCraving from firebase-auth.js)
-        if (typeof recordCraving === 'function') {
-            await recordCraving();
-        }
-        // Get updated count (use global getCravingCount from firebase-auth.js)
-        if (typeof getCravingCount === 'function') {
-            const result = await getCravingCount();
-            currentCount = result.count;
-        }
+        // Increment craving count in Firestore
+        await recordCraving();
+        // Get updated count
+        const result = await getCravingCount();
+        currentCount = result.count;
         // Update compact craving stats in background
         updateCompactCravingStats();
     }
@@ -206,9 +203,7 @@ async function closeCravingOverlay() {
 
     // Only count if checkbox is checked, some time was spent (at least 10 seconds), and NOT already counted (success screen not visible)
     if (countCheckbox && countCheckbox.checked && timeSpent >= 10 && !isSuccessScreenVisible) {
-        if (typeof recordCraving === 'function') {
-            await recordCraving();
-        }
+        await recordCraving();
         // Update compact craving stats in background
         updateCompactCravingStats();
     }

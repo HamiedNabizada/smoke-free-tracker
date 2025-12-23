@@ -3,19 +3,20 @@
  */
 
 import { checkRateLimit, recordFailedAttempt, recordSuccessfulAttempt, formatRemainingTime } from './utils/rate-limiter.js';
+import { loginUser, auth, signInWithEmailAndPassword } from './firebase-auth.js';
 
 const form = document.getElementById('loginForm');
 const errorMessage = document.getElementById('errorMessage');
 const loginBtn = document.getElementById('loginBtn');
 const demoBtn = document.getElementById('demoBtn');
 
-// Demo login function (inline)
+// Demo login function
 async function loginDemo() {
     const DEMO_EMAIL = 'demo@byebyesmoke.app';
     const DEMO_PASSWORD = 'demo123456';
 
     try {
-        await firebase.auth().signInWithEmailAndPassword(DEMO_EMAIL, DEMO_PASSWORD);
+        await signInWithEmailAndPassword(auth, DEMO_EMAIL, DEMO_PASSWORD);
         console.log('[Demo] Demo account logged in');
         return true;
     } catch (error) {
