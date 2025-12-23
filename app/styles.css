@@ -29,6 +29,7 @@
 @import url('./css/components/streak.css');
 @import url('./css/components/weekly-summary.css');
 @import url('./css/components/mini-games.css');
+@import url('./css/components/breathing-exercises.css');
 
 /* Theme and responsive */
 @import url('./css/dark-mode.css');

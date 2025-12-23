@@ -558,6 +558,29 @@
                 </div>
                 </div>
 
+                <!-- Breathing Exercises -->
+                <div class="card breathing-exercises-card">
+                    <h2>🧘 Atemübungen</h2>
+                    <p class="breathing-intro">Geführte Atemtechniken zur Entspannung - auch ohne akutes Verlangen.</p>
+
+                    <div class="breathing-exercise-buttons">
+                        <button id="startBoxBreathing" class="breathing-exercise-btn">
+                            <span class="exercise-icon">◻️</span>
+                            <span class="exercise-info">
+                                <span class="exercise-name">Box Breathing</span>
+                                <span class="exercise-detail">4-4-4-4 | ~2 Min | Fokus</span>
+                            </span>
+                        </button>
+                        <button id="start478Breathing" class="breathing-exercise-btn">
+                            <span class="exercise-icon">🌙</span>
+                            <span class="exercise-info">
+                                <span class="exercise-name">4-7-8 Technik</span>
+                                <span class="exercise-detail">4-7-8 | ~2.5 Min | Entspannung</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+
                 <!-- Shocking Facts -->
                 <div class="card shocking-facts-card">
                     <h2>⚠️ Warum du aufgehört hast</h2>
@@ -1041,6 +1064,25 @@
                 </div>
                 <button id="tutorialNextBtn" class="tutorial-nav-btn">Weiter →</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Breathing Exercise Overlay -->
+    <div id="breathingExerciseOverlay" class="breathing-exercise-overlay hidden" role="dialog" aria-modal="true">
+        <div class="breathing-exercise-content">
+            <button id="breathingExerciseCloseBtn" class="breathing-exercise-close-btn" aria-label="Übung beenden">✕</button>
+
+            <h2 id="breathingExerciseTitle" class="breathing-exercise-title">Atemübung</h2>
+
+            <div class="breathing-exercise-visual">
+                <div class="breathing-exercise-circle"></div>
+                <div class="breathing-exercise-inner">
+                    <div id="breathingInstruction" class="breathing-instruction">Bereit</div>
+                    <div id="breathingPhaseTimer" class="breathing-phase-timer"></div>
+                </div>
+            </div>
+
+            <div id="breathingCycleProgress" class="breathing-cycle-progress">Bereit zum Start</div>
         </div>
     </div>
 

@@ -1,0 +1,270 @@
+/* Breathing Exercises Component Styles */
+
+/* Card in Help Tab */
+.breathing-exercises-card {
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+}
+
+.breathing-intro {
+    color: #2d5a27;
+    margin-bottom: 1rem;
+}
+
+.breathing-exercise-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.breathing-exercise-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: white;
+    border: 2px solid #81c784;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+}
+
+.breathing-exercise-btn:hover {
+    background: #f1f8e9;
+    border-color: #4caf50;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+}
+
+.breathing-exercise-btn .exercise-icon {
+    font-size: 1.8rem;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    border-radius: 50%;
+}
+
+.breathing-exercise-btn .exercise-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.breathing-exercise-btn .exercise-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2d5a27;
+}
+
+.breathing-exercise-btn .exercise-detail {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+/* Overlay */
+.breathing-exercise-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.breathing-exercise-overlay.hidden {
+    display: none;
+}
+
+.breathing-exercise-content {
+    background: linear-gradient(135deg, #1a472a 0%, #2d5a27 100%);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    position: relative;
+    color: white;
+}
+
+.breathing-exercise-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.breathing-exercise-close-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.breathing-exercise-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: white;
+}
+
+/* Visual Circle */
+.breathing-exercise-visual {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    margin: 0 auto 1.5rem;
+}
+
+.breathing-exercise-circle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+}
+
+.breathing-exercise-circle.inhale {
+    animation: breathe-in var(--duration, 4s) ease-in-out forwards;
+    border-color: #81c784;
+    background: rgba(129, 199, 132, 0.2);
+}
+
+.breathing-exercise-circle.exhale {
+    animation: breathe-out var(--duration, 4s) ease-in-out forwards;
+    border-color: #64b5f6;
+    background: rgba(100, 181, 246, 0.2);
+}
+
+.breathing-exercise-circle.hold {
+    border-color: #ffb74d;
+    background: rgba(255, 183, 77, 0.2);
+}
+
+.breathing-exercise-circle.complete {
+    border-color: #4caf50;
+    background: rgba(76, 175, 80, 0.3);
+    animation: pulse-complete 1s ease-in-out infinite;
+}
+
+@keyframes breathe-in {
+    0% { transform: scale(0.8); }
+    100% { transform: scale(1.1); }
+}
+
+@keyframes breathe-out {
+    0% { transform: scale(1.1); }
+    100% { transform: scale(0.8); }
+}
+
+@keyframes pulse-complete {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.breathing-exercise-inner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.breathing-instruction {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.breathing-instruction.inhale {
+    color: #81c784;
+}
+
+.breathing-instruction.exhale {
+    color: #64b5f6;
+}
+
+.breathing-instruction.hold {
+    color: #ffb74d;
+}
+
+.breathing-instruction.complete {
+    color: #4caf50;
+}
+
+.breathing-phase-timer {
+    font-size: 2.5rem;
+    font-weight: bold;
+    opacity: 0.9;
+}
+
+.breathing-cycle-progress {
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+/* Dark mode */
+[data-theme="dark"] .breathing-exercises-card {
+    background: linear-gradient(135deg, #1a2a1a 0%, #1a3a1a 100%);
+}
+
+[data-theme="dark"] .breathing-intro {
+    color: #a5d6a7;
+}
+
+[data-theme="dark"] .breathing-exercise-btn {
+    background: #1e1e1e;
+    border-color: #4caf50;
+}
+
+[data-theme="dark"] .breathing-exercise-btn:hover {
+    background: #2a2a2a;
+}
+
+[data-theme="dark"] .breathing-exercise-btn .exercise-icon {
+    background: linear-gradient(135deg, #1a3a1a 0%, #2d5a27 100%);
+}
+
+[data-theme="dark"] .breathing-exercise-btn .exercise-name {
+    color: #a5d6a7;
+}
+
+[data-theme="dark"] .breathing-exercise-btn .exercise-detail {
+    color: #999;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .breathing-exercise-content {
+        padding: 1.5rem;
+    }
+
+    .breathing-exercise-visual {
+        width: 180px;
+        height: 180px;
+    }
+
+    .breathing-instruction {
+        font-size: 1.3rem;
+    }
+
+    .breathing-phase-timer {
+        font-size: 2rem;
+    }
+}
