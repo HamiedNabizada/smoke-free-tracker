@@ -28,12 +28,12 @@
     }
 
     .tab-label {
-        font-size: 0.7rem;
+        font-size: 0.8rem;
     }
 
     .stats-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
     }
 
     .stat-card {
@@ -53,7 +53,7 @@
     }
 
     .stat-info {
-        font-size: 0.65rem;
+        font-size: 0.7rem;
         margin-top: 6px;
     }
 
