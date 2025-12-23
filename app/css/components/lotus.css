@@ -2,6 +2,11 @@
 
 .lotus-card {
     background: linear-gradient(135deg, #f8f9fa 0%, #e8f4f8 100%);
+    color: #333;
+}
+
+.lotus-card h2 {
+    color: #2d5a27;
 }
 
 .lotus-score-container {
@@ -84,6 +89,11 @@
 /* Dark mode adjustments */
 [data-theme="dark"] .lotus-card {
     background: linear-gradient(135deg, #1a2a1a 0%, #1a2d2d 100%);
+    color: #ddd;
+}
+
+[data-theme="dark"] .lotus-card h2 {
+    color: #b8e6b5;
 }
 
 [data-theme="dark"] .lotus-score-value {
