@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="app/logo.svg" alt="ByeByeSmoke Logo" width="120">
+  <img src="app/logo.svg" alt="ByeByeSmoke Logo" width="240">
 </p>
 
 <h1 align="center">ByeByeSmoke</h1>
