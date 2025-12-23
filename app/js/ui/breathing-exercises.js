@@ -68,7 +68,7 @@ export function initializeBreathingExercises() {
     }
 }
 
-function startExercise(type) {
+export function startExercise(type) {
     currentExercise = BREATHING_EXERCISES[type];
     if (!currentExercise) return;
 

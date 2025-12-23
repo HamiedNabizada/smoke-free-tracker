@@ -399,3 +399,245 @@
         font-size: 2rem;
     }
 }
+
+/* SOS Hub Menu */
+.sos-menu {
+    text-align: center;
+}
+
+.sos-menu-title {
+    font-size: 2rem;
+    color: white;
+    margin-bottom: 2rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.sos-options {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.sos-option-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    padding: 1.25rem 1.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    backdrop-filter: blur(10px);
+}
+
+.sos-option-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+.sos-option-icon {
+    font-size: 2.5rem;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.sos-option-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.sos-option-name {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: white;
+}
+
+.sos-option-desc {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* SOS Screens */
+.sos-timer-screen,
+.sos-breathing-screen,
+.sos-games-screen {
+    text-align: center;
+}
+
+.sos-timer-screen.hidden,
+.sos-breathing-screen.hidden,
+.sos-games-screen.hidden,
+.sos-menu.hidden {
+    display: none;
+}
+
+.sos-back-btn {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.sos-back-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.sos-screen-title {
+    font-size: 1.8rem;
+    color: white;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* SOS Breathing Options */
+.sos-breathing-options {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.sos-breathing-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    padding: 1.25rem 1.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    backdrop-filter: blur(10px);
+}
+
+.sos-breathing-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+.sos-breathing-btn .exercise-icon {
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.sos-breathing-btn .exercise-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.sos-breathing-btn .exercise-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+}
+
+.sos-breathing-btn .exercise-detail {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* SOS Games List */
+.sos-games-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.sos-game-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    padding: 1.25rem 1.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    backdrop-filter: blur(10px);
+}
+
+.sos-game-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+.sos-game-btn .game-icon {
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.sos-game-btn .game-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.sos-game-btn .game-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+}
+
+.sos-game-btn .game-desc {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Mobile adjustments for SOS Hub */
+@media (max-width: 768px) {
+    .sos-menu-title {
+        font-size: 1.6rem;
+    }
+
+    .sos-option-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 2rem;
+    }
+
+    .sos-option-name {
+        font-size: 1.1rem;
+    }
+
+    .sos-option-desc {
+        font-size: 0.85rem;
+    }
+}

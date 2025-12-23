@@ -1,6 +1,8 @@
 import { calculateStats } from '../utils/calculations.js';
 import { updateCompactCravingStats } from './craving-stats.js';
 import { recordCraving, getCravingCount } from '../firebase-auth.js';
+import { startExercise as startBreathingExercise } from './breathing-exercises.js';
+import { MINI_GAMES, startGame } from './mini-games.js';
 
 // Craving tips that rotate during the timer
 const cravingTips = [
@@ -28,8 +30,20 @@ export function initializeCravingTimer() {
     const successCloseBtn = document.getElementById('successCloseBtn');
     const overlay = document.getElementById('cravingOverlay');
 
+    // SOS Menu navigation buttons
+    const sosTimerBtn = document.getElementById('sosTimerBtn');
+    const sosBreathingBtn = document.getElementById('sosBreathingBtn');
+    const sosGamesBtn = document.getElementById('sosGamesBtn');
+    const sosBackFromTimer = document.getElementById('sosBackFromTimer');
+    const sosBackFromBreathing = document.getElementById('sosBackFromBreathing');
+    const sosBackFromGames = document.getElementById('sosBackFromGames');
+
+    // Breathing exercise buttons in SOS
+    const boxBreathingBtn = document.getElementById('startBoxBreathing');
+    const btn478 = document.getElementById('start478Breathing');
+
     if (cravingButton) {
-        cravingButton.addEventListener('click', startCravingTimer);
+        cravingButton.addEventListener('click', openSosHub);
     }
 
     if (cravingCloseBtn) {
@@ -40,6 +54,46 @@ export function initializeCravingTimer() {
         successCloseBtn.addEventListener('click', closeCravingOverlay);
     }
 
+    // SOS Menu navigation
+    if (sosTimerBtn) {
+        sosTimerBtn.addEventListener('click', showTimerScreen);
+    }
+
+    if (sosBreathingBtn) {
+        sosBreathingBtn.addEventListener('click', showBreathingScreen);
+    }
+
+    if (sosGamesBtn) {
+        sosGamesBtn.addEventListener('click', showGamesScreen);
+    }
+
+    if (sosBackFromTimer) {
+        sosBackFromTimer.addEventListener('click', backToMenu);
+    }
+
+    if (sosBackFromBreathing) {
+        sosBackFromBreathing.addEventListener('click', backToMenu);
+    }
+
+    if (sosBackFromGames) {
+        sosBackFromGames.addEventListener('click', backToMenu);
+    }
+
+    // Breathing exercises in SOS
+    if (boxBreathingBtn) {
+        boxBreathingBtn.addEventListener('click', () => {
+            closeCravingOverlay();
+            startBreathingExercise('box');
+        });
+    }
+
+    if (btn478) {
+        btn478.addEventListener('click', () => {
+            closeCravingOverlay();
+            startBreathingExercise('478');
+        });
+    }
+
     // Close overlay when clicking outside the content
     if (overlay) {
         overlay.addEventListener('click', (e) => {
@@ -48,6 +102,87 @@ export function initializeCravingTimer() {
             }
         });
     }
+
+    // Populate games list
+    populateGamesList();
+}
+
+function openSosHub() {
+    const overlay = document.getElementById('cravingOverlay');
+    showScreen('sosMenu');
+    overlay.classList.remove('hidden');
+}
+
+function showScreen(screenId) {
+    const screens = ['sosMenu', 'sosTimerScreen', 'sosBreathingScreen', 'sosGamesScreen'];
+    screens.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.classList.toggle('hidden', id !== screenId);
+        }
+    });
+}
+
+function showTimerScreen() {
+    showScreen('sosTimerScreen');
+    startCravingTimer();
+}
+
+function showBreathingScreen() {
+    showScreen('sosBreathingScreen');
+}
+
+function showGamesScreen() {
+    showScreen('sosGamesScreen');
+}
+
+function backToMenu() {
+    // Stop timer if running
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+    if (breathingInterval) {
+        clearInterval(breathingInterval);
+        breathingInterval = null;
+    }
+    secondsRemaining = 300;
+
+    // Reset timer display
+    const timerDisplay = document.getElementById('timerDisplay');
+    if (timerDisplay) timerDisplay.textContent = '5:00';
+
+    // Reset success screen
+    const cravingSuccess = document.getElementById('cravingSuccess');
+    const cravingTipDisplay = document.getElementById('cravingTipDisplay');
+    if (cravingSuccess) cravingSuccess.classList.add('hidden');
+    if (cravingTipDisplay) cravingTipDisplay.classList.remove('hidden');
+
+    showScreen('sosMenu');
+}
+
+function populateGamesList() {
+    const gamesList = document.getElementById('sosGamesList');
+    if (!gamesList || !MINI_GAMES) return;
+
+    gamesList.innerHTML = MINI_GAMES.map(game => `
+        <button class="sos-game-btn" data-game="${game.id}">
+            <span class="game-icon">${game.icon}</span>
+            <span class="game-info">
+                <span class="game-name">${game.name}</span>
+                <span class="game-desc">${game.description}</span>
+            </span>
+        </button>
+    `).join('');
+
+    // Add click handlers
+    gamesList.querySelectorAll('.sos-game-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const gameId = btn.dataset.game;
+            closeCravingOverlay();
+            startGame(gameId);
+        });
+    });
 }
 
 function startCravingTimer() {

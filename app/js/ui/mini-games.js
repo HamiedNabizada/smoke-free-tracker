@@ -2,6 +2,13 @@
  * Mini-Games for Craving Distraction
  */
 
+// Exported games list for SOS hub
+export const MINI_GAMES = [
+    { id: 'tap', name: 'Tap Challenge', icon: '👆', description: 'Tippe auf die Ziele!' },
+    { id: 'breathe', name: 'Atem-Trainer', icon: '🫁', description: 'Folge dem Atemrhythmus.' },
+    { id: 'memory', name: 'Memory', icon: '🧠', description: 'Finde die Paare!' }
+];
+
 let gameActive = false;
 let gameScore = 0;
 let gameTimer = null;
@@ -84,10 +91,23 @@ function closeGameModal() {
 }
 
 /**
- * Start selected game
+ * Start selected game (exported for SOS hub)
  */
-function startGame(gameType) {
-    const modal = document.getElementById('miniGameModal');
+export function startGame(gameType) {
+    // Create modal if it doesn't exist (when called from SOS hub)
+    let modal = document.getElementById('miniGameModal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.className = 'mini-game-modal';
+        modal.id = 'miniGameModal';
+        modal.innerHTML = `<div class="mini-game-content"></div>`;
+        document.body.appendChild(modal);
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeGameModal();
+        });
+    }
+
     const content = modal.querySelector('.mini-game-content');
 
     switch (gameType) {
