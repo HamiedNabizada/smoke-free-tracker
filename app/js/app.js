@@ -12,7 +12,6 @@ import { initializeStreak } from './ui/streak.js';
 import { initializeWeeklySummary } from './ui/weekly-summary.js';
 import { initializeMiniGames } from './ui/mini-games.js';
 import { initializeLotusPreview } from './ui/lotus.js';
-import { initializeBreathingExercises } from './ui/breathing-exercises.js';
 import { initializeOfflineQueue } from './utils/offline-queue.js';
 import { initializePerformanceMonitoring } from './utils/performance.js';
 import { setUserData } from './config.js';
@@ -68,7 +67,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     initializeWeeklySummary();
     initializeMiniGames();
     initializeLotusPreview();
-    initializeBreathingExercises();
     initializeOfflineQueue();
     initializePerformanceMonitoring();
 
