@@ -5,6 +5,7 @@ import { initializeDarkMode } from './ui/dark-mode.js';
 import { initializeTabs } from './ui/tabs.js';
 import { updateDashboard } from './ui/dashboard.js';
 import { initializeCravingTimer } from './ui/craving-timer.js';
+import { initializeDailyMission } from './ui/daily-mission.js';
 import { initializeGoalCalculator } from './ui/goal-calculator.js';
 import { initializeNotifications } from './ui/notifications.js';
 import { initializeTutorial } from './ui/tutorial.js';
@@ -63,6 +64,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     initializeLanguageToggle();
     initializeTabs();
     initializeCravingTimer();
+    initializeDailyMission();
     initializeGoalCalculator();
     initializeNotifications();
     initializeTutorial();

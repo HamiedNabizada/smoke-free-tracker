@@ -15,6 +15,55 @@ export default {
         close: 'Close'
     },
 
+    // Daily Mission
+    mission: {
+        badge: 'Daily Mission',
+        complete: 'Done!',
+        done: 'Completed!',
+        streak: '{count}x completed',
+        tasks: {
+            // Hydration
+            water8: 'Drink 8 glasses of water today',
+            herbalTea: 'Enjoy a cup of herbal tea',
+            fruitWater: 'Make water with lemon or fruits',
+            // Movement
+            walk15: 'Take a 15-minute walk',
+            stairs: 'Take the stairs instead of the elevator today',
+            stretch10: 'Stretch for 10 minutes',
+            danceBreak: 'Dance for 5 minutes to your favorite song',
+            outdoor: 'Spend 20 minutes outside in nature',
+            // Mindfulness
+            breathe5: 'Do 5 minutes of conscious breathing exercises',
+            gratitude3: 'Write down 3 things you are grateful for',
+            journal: 'Write briefly about how you feel today',
+            reasons3: 'Remember 3 reasons why you quit',
+            visualize: 'Visualize your healthier life as a non-smoker for 5 min',
+            // Environment
+            cleanAshtray: 'Remove all ashtrays and smoking paraphernalia',
+            freshAir: 'Air out all rooms thoroughly',
+            avoidTrigger: 'Consciously avoid a place where you used to smoke',
+            newRoute: 'Take a different route to work or shopping',
+            // Social
+            tellSomeone: 'Tell someone about your quit-smoking success',
+            thankSupporter: 'Thank someone who supports you',
+            helpOther: 'Encourage someone else who wants to quit',
+            callFriend: 'Call a friend or family member',
+            // Health
+            healthySnack: 'Eat only healthy snacks today (fruits, vegetables, nuts)',
+            noAlcohol: 'Avoid alcohol today',
+            sleepEarly: 'Go to bed an hour earlier today',
+            vitaminC: 'Eat something rich in Vitamin C (orange, bell pepper, kiwi)',
+            brushTeeth: 'Brush your teeth after every meal',
+            // Rewards
+            treatYourself: 'Treat yourself to something nice with the money saved',
+            relaxBath: 'Take a relaxing bath or a long shower',
+            favoriteMusic: 'Listen to your favorite music for an hour',
+            // Progress
+            checkProgress: 'Check your progress in the app',
+            celebrateWin: 'Celebrate your success so far - you are doing great!'
+        }
+    },
+
     // Accessibility
     accessibility: {
         skipToContent: 'Skip to main content',

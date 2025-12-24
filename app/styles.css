@@ -30,6 +30,7 @@
 @import url('./css/components/weekly-summary.css');
 @import url('./css/components/mini-games.css');
 @import url('./css/components/breathing-exercises.css');
+@import url('./css/components/daily-mission.css');
 
 /* Theme and responsive */
 @import url('./css/dark-mode.css');
