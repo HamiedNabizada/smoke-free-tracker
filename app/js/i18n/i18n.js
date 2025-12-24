@@ -15,6 +15,10 @@ import en from './locales/en.js';
 // All available locales
 const LOCALES = { de, en };
 
+console.log('[i18n] Locales imported:', { de: !!de, en: !!en });
+console.log('[i18n] EN milestones:', en?.milestones);
+console.log('[i18n] DE milestones:', de?.milestones);
+
 // State
 let currentLocale = 'de';
 let translations = {};
@@ -145,7 +149,9 @@ export function t(key, params = {}) {
  * Translate all elements with data-i18n attributes
  */
 export function translatePage() {
-    console.log(`[i18n] translatePage called, locale: ${currentLocale}, translations loaded:`, !!translations);
+    console.log(`[i18n] translatePage called, locale: ${currentLocale}`);
+    console.log(`[i18n] translations.milestones:`, translations.milestones);
+    console.log(`[i18n] translations.achievements:`, translations.achievements);
 
     // Text content
     document.querySelectorAll('[data-i18n]').forEach(el => {
