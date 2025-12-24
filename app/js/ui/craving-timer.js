@@ -154,7 +154,14 @@ function initializeBreathingExercises() {
     }
 
     if (urgeSurfingBtn) {
-        urgeSurfingBtn.addEventListener('click', () => startUrgeSurfing());
+        urgeSurfingBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('[SOS] Urge Surfing button clicked');
+            startUrgeSurfing();
+        });
+        console.log('[SOS] Urge Surfing button listener attached');
+    } else {
+        console.warn('[SOS] Urge Surfing button not found');
     }
 }
 
@@ -212,8 +219,18 @@ let urgeSurfingTimeout = null;
 let urgeSurfingPhaseIndex = 0;
 
 function startUrgeSurfing() {
+    console.log('[SOS] startUrgeSurfing called');
+
     const optionsContainer = document.querySelector('.sos-breathing-options');
     const activeContainer = document.getElementById('sosBreathingActive');
+
+    console.log('[SOS] optionsContainer:', optionsContainer);
+    console.log('[SOS] activeContainer:', activeContainer);
+
+    if (!optionsContainer || !activeContainer) {
+        console.error('[SOS] Missing containers for urge surfing');
+        return;
+    }
 
     urgeSurfingPhaseIndex = 0;
     exerciseRunning = true;
@@ -227,6 +244,7 @@ function startUrgeSurfing() {
         stopBtn.onclick = stopUrgeSurfing;
     }
 
+    console.log('[SOS] Starting urge surfing phases');
     runUrgeSurfingPhase();
 }
 
