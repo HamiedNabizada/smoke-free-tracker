@@ -408,7 +408,7 @@ body {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding-top: 30px;
     text-align: center;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.75);
 }
 
 /* App Demo Section */
@@ -840,10 +840,11 @@ body {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-.label-content h4 {
+.label-content h3 {
     color: #333;
     font-size: 1rem;
     margin-bottom: 3px;
+    font-weight: 600;
 }
 
 .label-content p {
@@ -1044,7 +1045,7 @@ body {
         padding: 12px 15px;
     }
 
-    .label-content h4 {
+    .label-content h3 {
         font-size: 0.9rem;
     }
 
