@@ -1,4 +1,14 @@
 import { userData, chart, setChart } from '../config.js';
+import { t, isInitialized, getLocale } from '../i18n/i18n.js';
+
+// Helper for translation with fallback
+function tr(key, fallback, params = {}) {
+    if (isInitialized()) {
+        const translated = t(key, params);
+        if (translated !== key) return translated;
+    }
+    return fallback.replace(/\{(\w+)\}/g, (match, p) => params[p] !== undefined ? params[p] : match);
+}
 
 export function updateChart(stats) {
     const ctx = document.getElementById('progressChart');
@@ -24,7 +34,8 @@ export function updateChart(stats) {
         const pricePerCigarette = userData.pricePerPack / userData.cigarettesPerPack;
         const money = cigarettes * pricePerCigarette;
 
-        labels.push(date.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' }));
+        const locale = isInitialized() ? getLocale() : 'de';
+        labels.push(date.toLocaleDateString(locale === 'en' ? 'en-US' : 'de-DE', { day: '2-digit', month: '2-digit' }));
         moneyData.push(money.toFixed(2));
         cigaretteData.push(Math.floor(cigarettes));
     }
@@ -39,7 +50,7 @@ export function updateChart(stats) {
             labels: labels,
             datasets: [
                 {
-                    label: 'Geld gespart (€)',
+                    label: tr('charts.moneySaved', 'Geld gespart (€)'),
                     data: moneyData,
                     borderColor: '#11998e',
                     backgroundColor: 'rgba(17, 153, 142, 0.1)',
@@ -48,7 +59,7 @@ export function updateChart(stats) {
                     yAxisID: 'y'
                 },
                 {
-                    label: 'Zigaretten nicht geraucht',
+                    label: tr('charts.cigarettesNotSmoked', 'Zigaretten nicht geraucht'),
                     data: cigaretteData,
                     borderColor: '#667eea',
                     backgroundColor: 'rgba(102, 126, 234, 0.1)',
@@ -106,7 +117,7 @@ export function updateChart(stats) {
                     position: 'left',
                     title: {
                         display: window.innerWidth > 480,
-                        text: 'Euro (€)',
+                        text: tr('charts.euroAxis', 'Euro (€)'),
                         font: {
                             size: window.innerWidth < 768 ? 11 : 12
                         }
@@ -123,7 +134,7 @@ export function updateChart(stats) {
                     position: 'right',
                     title: {
                         display: window.innerWidth > 480,
-                        text: 'Zigaretten',
+                        text: tr('charts.cigarettesAxis', 'Zigaretten'),
                         font: {
                             size: window.innerWidth < 768 ? 11 : 12
                         }

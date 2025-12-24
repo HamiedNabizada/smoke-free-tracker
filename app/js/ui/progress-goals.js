@@ -5,6 +5,16 @@
 
 import { auth, db, isDemoMode, blockDemoWrite, checkWriteLimit, incrementWriteCount } from '../firebase-auth.js';
 import { doc, getDoc, updateDoc } from '../firebase-init.js';
+import { t, isInitialized } from '../i18n/i18n.js';
+
+// Helper for translation with fallback
+function tr(key, fallback, params = {}) {
+    if (isInitialized()) {
+        const translated = t(key, params);
+        if (translated !== key) return translated;
+    }
+    return fallback.replace(/\{(\w+)\}/g, (match, p) => params[p] !== undefined ? params[p] : match);
+}
 
 // Default goals
 const DEFAULT_GOALS = {
@@ -65,7 +75,7 @@ async function saveGoals() {
     if (!user) return;
 
     // Block write in demo mode
-    if (blockDemoWrite('Ziele speichern')) {
+    if (blockDemoWrite(tr('progressGoals.saveGoals', 'Ziele speichern'))) {
         return;
     }
 
@@ -97,37 +107,42 @@ function updateGoalDisplays() {
     const moneyGoal = document.getElementById('moneyGoalText');
     const cigarettesGoal = document.getElementById('cigarettesGoalText');
 
-    if (daysGoal) daysGoal.textContent = `Ziel: ${currentGoals.days} Tage`;
-    if (moneyGoal) moneyGoal.textContent = `Ziel: ${currentGoals.money}€`;
-    if (cigarettesGoal) cigarettesGoal.textContent = `Ziel: ${currentGoals.cigarettes}`;
+    if (daysGoal) daysGoal.textContent = tr('dashboard.progress.goalDays', 'Ziel: {count} Tage', { count: currentGoals.days });
+    if (moneyGoal) moneyGoal.textContent = tr('dashboard.progress.goalMoney', 'Ziel: {amount}€', { amount: currentGoals.money });
+    if (cigarettesGoal) cigarettesGoal.textContent = tr('dashboard.progress.goalCigarettes', 'Ziel: {count}', { count: currentGoals.cigarettes });
 }
 
 /**
  * Setup click listeners for goal editing
  */
 function setupGoalEditListeners() {
+    const clickToEdit = tr('progressGoals.clickToEdit', 'Klicken zum Bearbeiten');
+    const daysLabel = tr('progressGoals.days', 'Tage');
+    const moneyLabel = '€';
+    const cigarettesLabel = tr('progressGoals.cigarettes', 'Zigaretten');
+
     // Days goal
     const daysGoal = document.getElementById('daysGoalText');
     if (daysGoal) {
         daysGoal.style.cursor = 'pointer';
-        daysGoal.title = 'Klicken zum Bearbeiten';
-        daysGoal.addEventListener('click', () => editGoal('days', 'Tage-Ziel bearbeiten', 'Tage'));
+        daysGoal.title = clickToEdit;
+        daysGoal.addEventListener('click', () => editGoal('days', tr('progressGoals.editDaysGoal', 'Tage-Ziel bearbeiten'), daysLabel));
     }
 
     // Money goal
     const moneyGoal = document.getElementById('moneyGoalText');
     if (moneyGoal) {
         moneyGoal.style.cursor = 'pointer';
-        moneyGoal.title = 'Klicken zum Bearbeiten';
-        moneyGoal.addEventListener('click', () => editGoal('money', 'Geld-Ziel bearbeiten', '€'));
+        moneyGoal.title = clickToEdit;
+        moneyGoal.addEventListener('click', () => editGoal('money', tr('progressGoals.editMoneyGoal', 'Geld-Ziel bearbeiten'), moneyLabel));
     }
 
     // Cigarettes goal
     const cigarettesGoal = document.getElementById('cigarettesGoalText');
     if (cigarettesGoal) {
         cigarettesGoal.style.cursor = 'pointer';
-        cigarettesGoal.title = 'Klicken zum Bearbeiten';
-        cigarettesGoal.addEventListener('click', () => editGoal('cigarettes', 'Zigaretten-Ziel bearbeiten', 'Zigaretten'));
+        cigarettesGoal.title = clickToEdit;
+        cigarettesGoal.addEventListener('click', () => editGoal('cigarettes', tr('progressGoals.editCigarettesGoal', 'Zigaretten-Ziel bearbeiten'), cigarettesLabel));
     }
 }
 
@@ -136,6 +151,9 @@ function setupGoalEditListeners() {
  */
 function editGoal(goalType, title, unit) {
     const currentValue = currentGoals[goalType];
+    const newGoalLabel = tr('progressGoals.newGoal', 'Neues Ziel:');
+    const cancelText = tr('progressGoals.cancel', 'Abbrechen');
+    const saveText = tr('progressGoals.save', 'Speichern');
 
     // Create modal
     const modal = document.createElement('div');
@@ -144,14 +162,14 @@ function editGoal(goalType, title, unit) {
         <div class="goal-edit-content">
             <h3>${title}</h3>
             <div class="goal-edit-form">
-                <label for="goalInput">Neues Ziel:</label>
+                <label for="goalInput">${newGoalLabel}</label>
                 <div class="goal-input-group">
                     <input type="number" id="goalInput" value="${currentValue}" min="1" max="100000" step="1">
                     <span class="goal-unit">${unit}</span>
                 </div>
                 <div class="goal-edit-buttons">
-                    <button class="goal-btn goal-btn-cancel" id="cancelGoalEdit">Abbrechen</button>
-                    <button class="goal-btn goal-btn-save" id="saveGoalEdit">Speichern</button>
+                    <button class="goal-btn goal-btn-cancel" id="cancelGoalEdit">${cancelText}</button>
+                    <button class="goal-btn goal-btn-save" id="saveGoalEdit">${saveText}</button>
                 </div>
             </div>
         </div>
@@ -176,7 +194,7 @@ function editGoal(goalType, title, unit) {
         const newValue = parseInt(input.value);
 
         if (isNaN(newValue) || newValue < 1 || newValue > 100000) {
-            alert('Bitte gib einen gültigen Wert zwischen 1 und 100.000 ein.');
+            alert(tr('progressGoals.invalidValue', 'Bitte gib einen gültigen Wert zwischen 1 und 100.000 ein.'));
             return;
         }
 

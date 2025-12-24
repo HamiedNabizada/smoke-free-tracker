@@ -216,8 +216,14 @@ export default {
             }
         },
         lotus: {
-            previewButton: 'Wachstum ansehen',
+            title: '🪷 Deine Lotus',
+            subtitle: '– Gesundheitsscore',
+            outOf: 'von 100',
+            preview: 'Wachstum ansehen',
             previewPlaying: 'Läuft...',
+            stageFormat: '{name} (Stufe {current}/{total})',
+            nextStageAt: 'Bei {points} Punkten: {stage}',
+            fullBloomReached: 'Deine Lotus hat ihre volle Schönheit erreicht',
             stages: {
                 seed: 'Samen',
                 seedDesc: 'Ein Samen ruht in der Erde',
@@ -1069,6 +1075,64 @@ export default {
         totalDays: 'Tage rauchfrei insgesamt',
         message: 'Weiter so - du machst das großartig!',
         button: 'Alles klar!'
+    },
+
+    // Progress Goals
+    progressGoals: {
+        saveGoals: 'Ziele speichern',
+        clickToEdit: 'Klicken zum Bearbeiten',
+        days: 'Tage',
+        cigarettes: 'Zigaretten',
+        editDaysGoal: 'Tage-Ziel bearbeiten',
+        editMoneyGoal: 'Geld-Ziel bearbeiten',
+        editCigarettesGoal: 'Zigaretten-Ziel bearbeiten',
+        newGoal: 'Neues Ziel:',
+        cancel: 'Abbrechen',
+        save: 'Speichern',
+        invalidValue: 'Bitte gib einen gültigen Wert zwischen 1 und 100.000 ein.'
+    },
+
+    // Breathing Exercises
+    breathingExercises: {
+        inhale: 'Einatmen',
+        exhale: 'Ausatmen',
+        hold: 'Halten',
+        cycle: 'Zyklus {current} von {total}',
+        done: 'Geschafft!',
+        completed: 'Du hast die Übung abgeschlossen',
+        box: {
+            description: 'Gleichmäßige Atmung für Balance und Fokus',
+            totalTime: '~2 Minuten',
+            benefits: 'Reduziert Stress, verbessert Konzentration'
+        },
+        '478': {
+            name: '4-7-8 Technik',
+            description: 'Beruhigende Atmung für Entspannung',
+            totalTime: '~2.5 Minuten',
+            benefits: 'Hilft beim Einschlafen, reduziert Angst'
+        }
+    },
+
+    // Charts
+    charts: {
+        moneySaved: 'Geld gespart (€)',
+        cigarettesNotSmoked: 'Zigaretten nicht geraucht',
+        euroAxis: 'Euro (€)',
+        cigarettesAxis: 'Zigaretten'
+    },
+
+    // Craving Stats
+    cravingStats: {
+        trend: {
+            decreasing: 'Trend: Abnehmend',
+            increasing: 'Trend: Zunehmend',
+            stable: 'Trend: Stabil'
+        },
+        todayOvercome: 'Heute überwunden',
+        avgPerDay: 'Ø pro Tag (7 Tage)',
+        total30Days: 'Gesamt (30 Tage)',
+        loadError: 'Statistiken konnten nicht geladen werden.',
+        chartLabel: 'Überwundene Cravings'
     },
 
     // Days of week (short)

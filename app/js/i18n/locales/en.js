@@ -215,8 +215,14 @@ export default {
             }
         },
         lotus: {
-            previewButton: 'Watch growth',
+            title: '🪷 Your Lotus',
+            subtitle: '– Health Score',
+            outOf: 'out of 100',
+            preview: 'Watch growth',
             previewPlaying: 'Playing...',
+            stageFormat: '{name} (Stage {current}/{total})',
+            nextStageAt: 'At {points} points: {stage}',
+            fullBloomReached: 'Your lotus has reached its full beauty',
             stages: {
                 seed: 'Seed',
                 seedDesc: 'A seed rests in the soil',
@@ -1068,6 +1074,64 @@ export default {
         totalDays: 'Days smoke-free total',
         message: 'Keep going - you are doing great!',
         button: 'Got it!'
+    },
+
+    // Progress Goals
+    progressGoals: {
+        saveGoals: 'Save goals',
+        clickToEdit: 'Click to edit',
+        days: 'Days',
+        cigarettes: 'Cigarettes',
+        editDaysGoal: 'Edit days goal',
+        editMoneyGoal: 'Edit money goal',
+        editCigarettesGoal: 'Edit cigarettes goal',
+        newGoal: 'New goal:',
+        cancel: 'Cancel',
+        save: 'Save',
+        invalidValue: 'Please enter a valid value between 1 and 100,000.'
+    },
+
+    // Breathing Exercises
+    breathingExercises: {
+        inhale: 'Breathe in',
+        exhale: 'Breathe out',
+        hold: 'Hold',
+        cycle: 'Cycle {current} of {total}',
+        done: 'Done!',
+        completed: 'You have completed the exercise',
+        box: {
+            description: 'Even breathing for balance and focus',
+            totalTime: '~2 minutes',
+            benefits: 'Reduces stress, improves concentration'
+        },
+        '478': {
+            name: '4-7-8 Technique',
+            description: 'Calming breath for relaxation',
+            totalTime: '~2.5 minutes',
+            benefits: 'Helps with sleep, reduces anxiety'
+        }
+    },
+
+    // Charts
+    charts: {
+        moneySaved: 'Money saved (€)',
+        cigarettesNotSmoked: 'Cigarettes not smoked',
+        euroAxis: 'Euro (€)',
+        cigarettesAxis: 'Cigarettes'
+    },
+
+    // Craving Stats
+    cravingStats: {
+        trend: {
+            decreasing: 'Trend: Decreasing',
+            increasing: 'Trend: Increasing',
+            stable: 'Trend: Stable'
+        },
+        todayOvercome: 'Overcome today',
+        avgPerDay: 'Avg. per day (7 days)',
+        total30Days: 'Total (30 days)',
+        loadError: 'Could not load statistics.',
+        chartLabel: 'Cravings overcome'
     },
 
     // Days of week (short)

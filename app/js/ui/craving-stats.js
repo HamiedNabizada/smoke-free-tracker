@@ -12,6 +12,16 @@ import {
     CACHE_TTL
 } from '../firebase-auth.js';
 import { collection, query, where, getDocs } from '../firebase-init.js';
+import { t, isInitialized } from '../i18n/i18n.js';
+
+// Helper for translation with fallback
+function tr(key, fallback, params = {}) {
+    if (isInitialized()) {
+        const translated = t(key, params);
+        if (translated !== key) return translated;
+    }
+    return fallback.replace(/\{(\w+)\}/g, (match, p) => params[p] !== undefined ? params[p] : match);
+}
 
 // Get craving events for last N days (with caching)
 export async function getCravingHistory(days = 30) {
@@ -115,29 +125,33 @@ export async function updateCompactCravingStats() {
             const secondAvg = secondHalf.reduce((sum, d) => sum + d.count, 0) / secondHalf.length;
 
             if (secondAvg < firstAvg * 0.8) {
-                trendText = 'Trend: Abnehmend';
+                trendText = tr('cravingStats.trend.decreasing', 'Trend: Abnehmend');
                 trendIcon = '📉';
             } else if (secondAvg > firstAvg * 1.2) {
-                trendText = 'Trend: Zunehmend';
+                trendText = tr('cravingStats.trend.increasing', 'Trend: Zunehmend');
                 trendIcon = '📈';
             } else {
-                trendText = 'Trend: Stabil';
+                trendText = tr('cravingStats.trend.stable', 'Trend: Stabil');
                 trendIcon = '➡️';
             }
         }
 
+        const todayLabel = tr('cravingStats.todayOvercome', 'Heute überwunden');
+        const avgLabel = tr('cravingStats.avgPerDay', 'Ø pro Tag (7 Tage)');
+        const totalLabel = tr('cravingStats.total30Days', 'Gesamt (30 Tage)');
+
         container.innerHTML = `
             <div class="compact-craving-stat">
                 <div class="compact-stat-number">${todayCount}</div>
-                <div class="compact-stat-label">Heute überwunden</div>
+                <div class="compact-stat-label">${todayLabel}</div>
             </div>
             <div class="compact-craving-stat">
                 <div class="compact-stat-number">${weekAvg}</div>
-                <div class="compact-stat-label">Ø pro Tag (7 Tage)</div>
+                <div class="compact-stat-label">${avgLabel}</div>
             </div>
             <div class="compact-craving-stat">
                 <div class="compact-stat-number">${monthTotal}</div>
-                <div class="compact-stat-label">Gesamt (30 Tage)</div>
+                <div class="compact-stat-label">${totalLabel}</div>
             </div>
             ${trendText ? `
             <div class="compact-craving-trend">
@@ -148,7 +162,7 @@ export async function updateCompactCravingStats() {
         `;
     } catch (error) {
         console.error('Error updating compact craving stats:', error);
-        container.innerHTML = '<p class="error-message">Statistiken konnten nicht geladen werden.</p>';
+        container.innerHTML = `<p class="error-message">${tr('cravingStats.loadError', 'Statistiken konnten nicht geladen werden.')}</p>`;
     }
 }
 
@@ -195,7 +209,7 @@ export async function updateCravingChart() {
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'Überwundene Cravings',
+                    label: tr('cravingStats.chartLabel', 'Überwundene Cravings'),
                     data: data,
                     borderColor: '#f39c12',
                     backgroundColor: 'rgba(243, 156, 18, 0.1)',

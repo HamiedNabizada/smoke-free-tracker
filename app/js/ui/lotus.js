@@ -7,99 +7,74 @@
  * https://www.bu.edu/sph/news/articles/2024/novel-digital-pet-game-within-smoking-cessation-app-increases-user-engagement-with-apps-tools-to-quit-smoking/
  */
 
-// Growth stages with thresholds and descriptions (10 stages for gradual progress)
-const LOTUS_STAGES = [
-    {
-        minScore: 0,
-        maxScore: 10,
-        name: 'Samen',
-        description: 'Ein Samen ruht in der Erde',
-        nextStage: 'Bei 10 Punkten beginnt die Keimung'
-    },
-    {
-        minScore: 10,
-        maxScore: 20,
-        name: 'Keimling',
-        description: 'Der Samen beginnt zu keimen',
-        nextStage: 'Bei 20 Punkten durchbricht der Spross die Erde'
-    },
-    {
-        minScore: 20,
-        maxScore: 30,
-        name: 'Junger Spross',
-        description: 'Ein zarter Spross wächst empor',
-        nextStage: 'Bei 30 Punkten bilden sich die ersten Blätter'
-    },
-    {
-        minScore: 30,
-        maxScore: 40,
-        name: 'Spross mit Blättern',
-        description: 'Kleine Blätter entfalten sich',
-        nextStage: 'Bei 40 Punkten erreicht die Pflanze das Wasser'
-    },
-    {
-        minScore: 40,
-        maxScore: 50,
-        name: 'Schwimmendes Blatt',
-        description: 'Das erste Blatt schwimmt auf dem Wasser',
-        nextStage: 'Bei 50 Punkten wächst das Blatt weiter'
-    },
-    {
-        minScore: 50,
-        maxScore: 60,
-        name: 'Großes Lotusblatt',
-        description: 'Ein prächtiges Lotusblatt breitet sich aus',
-        nextStage: 'Bei 60 Punkten bildet sich eine kleine Knospe'
-    },
-    {
-        minScore: 60,
-        maxScore: 70,
-        name: 'Kleine Knospe',
-        description: 'Eine zarte Knospe formt sich',
-        nextStage: 'Bei 70 Punkten wächst die Knospe weiter'
-    },
-    {
-        minScore: 70,
-        maxScore: 80,
-        name: 'Große Knospe',
-        description: 'Die Knospe ist bereit sich zu öffnen',
-        nextStage: 'Bei 80 Punkten öffnen sich die ersten Blütenblätter'
-    },
-    {
-        minScore: 80,
-        maxScore: 90,
-        name: 'Öffnende Blüte',
-        description: 'Die Blüte beginnt sich zu entfalten',
-        nextStage: 'Bei 90 Punkten erblüht die Lotus vollständig'
-    },
-    {
-        minScore: 90,
-        maxScore: 100,
-        name: 'Volle Blüte',
-        description: 'Deine Lotus erstrahlt in voller Pracht!',
-        nextStage: 'Deine Lotus hat ihre volle Schönheit erreicht'
+import { t, isInitialized } from '../i18n/i18n.js';
+
+// Helper for translation with fallback
+function tr(key, fallback, params = {}) {
+    if (isInitialized()) {
+        const translated = t(key, params);
+        if (translated !== key) return translated;
     }
+    return fallback.replace(/\{(\w+)\}/g, (match, p) => params[p] !== undefined ? params[p] : match);
+}
+
+// Stage definitions with translation keys
+const LOTUS_STAGE_DEFS = [
+    { minScore: 0, maxScore: 10, id: 'seed', nextPoints: 10, nextId: 'sprout' },
+    { minScore: 10, maxScore: 20, id: 'sprout', nextPoints: 20, nextId: 'youngSprout' },
+    { minScore: 20, maxScore: 30, id: 'youngSprout', nextPoints: 30, nextId: 'sproutLeaves' },
+    { minScore: 30, maxScore: 40, id: 'sproutLeaves', nextPoints: 40, nextId: 'floatingLeaf' },
+    { minScore: 40, maxScore: 50, id: 'floatingLeaf', nextPoints: 50, nextId: 'largeLeaf' },
+    { minScore: 50, maxScore: 60, id: 'largeLeaf', nextPoints: 60, nextId: 'smallBud' },
+    { minScore: 60, maxScore: 70, id: 'smallBud', nextPoints: 70, nextId: 'largeBud' },
+    { minScore: 70, maxScore: 80, id: 'largeBud', nextPoints: 80, nextId: 'openingFlower' },
+    { minScore: 80, maxScore: 90, id: 'openingFlower', nextPoints: 90, nextId: 'fullBloom' },
+    { minScore: 90, maxScore: 100, id: 'fullBloom', nextPoints: null, nextId: null }
 ];
+
+// Get localized stage data
+function getLocalizedStage(stageDef) {
+    const name = tr(`statistics.lotus.stages.${stageDef.id}`, stageDef.id);
+    const description = tr(`statistics.lotus.stages.${stageDef.id}Desc`, '');
+
+    let nextStage;
+    if (stageDef.nextId) {
+        const nextName = tr(`statistics.lotus.stages.${stageDef.nextId}`, stageDef.nextId);
+        nextStage = tr('statistics.lotus.nextStageAt', `Bei ${stageDef.nextPoints} Punkten: ${nextName}`, {
+            points: stageDef.nextPoints,
+            stage: nextName
+        });
+    } else {
+        nextStage = tr('statistics.lotus.fullBloomReached', 'Deine Lotus hat ihre volle Schönheit erreicht');
+    }
+
+    return {
+        ...stageDef,
+        name,
+        description,
+        nextStage
+    };
+}
 
 /**
  * Get the current lotus stage based on score
  */
 export function getLotusStage(score) {
-    for (const stage of LOTUS_STAGES) {
-        if (score >= stage.minScore && score < stage.maxScore) {
-            return stage;
+    for (const stageDef of LOTUS_STAGE_DEFS) {
+        if (score >= stageDef.minScore && score < stageDef.maxScore) {
+            return getLocalizedStage(stageDef);
         }
     }
     // Score is 100
-    return LOTUS_STAGES[LOTUS_STAGES.length - 1];
+    return getLocalizedStage(LOTUS_STAGE_DEFS[LOTUS_STAGE_DEFS.length - 1]);
 }
 
 /**
  * Generate the Lotus SVG based on health score
  */
 export function generateLotusSVG(score) {
-    const stage = getLotusStage(score);
-    const stageIndex = LOTUS_STAGES.indexOf(stage);
+    const stageDef = LOTUS_STAGE_DEFS.find(s => score >= s.minScore && score < s.maxScore) || LOTUS_STAGE_DEFS[LOTUS_STAGE_DEFS.length - 1];
+    const stageIndex = LOTUS_STAGE_DEFS.indexOf(stageDef);
 
     // Water base color
     const waterColor = '#e8f4f8';
@@ -387,16 +362,17 @@ export function generateLotusSVG(score) {
  */
 export function getStageProgressInfo(score) {
     const stage = getLotusStage(score);
-    const stageIndex = LOTUS_STAGES.indexOf(stage);
+    const stageDef = LOTUS_STAGE_DEFS.find(s => score >= s.minScore && score < s.maxScore) || LOTUS_STAGE_DEFS[LOTUS_STAGE_DEFS.length - 1];
+    const stageIndex = LOTUS_STAGE_DEFS.indexOf(stageDef);
 
     // Calculate progress within current stage
-    const stageRange = stage.maxScore - stage.minScore;
-    const progressInStage = ((score - stage.minScore) / stageRange) * 100;
+    const stageRange = stageDef.maxScore - stageDef.minScore;
+    const progressInStage = ((score - stageDef.minScore) / stageRange) * 100;
 
     return {
         stageName: stage.name,
         stageIndex: stageIndex + 1,
-        totalStages: LOTUS_STAGES.length,
+        totalStages: LOTUS_STAGE_DEFS.length,
         description: stage.description,
         nextStage: stage.nextStage,
         progressInStage: Math.round(progressInStage)
@@ -435,7 +411,11 @@ function updateLotusDisplay(score) {
     const stageInfo = getStageProgressInfo(score);
 
     if (stageNameEl) {
-        stageNameEl.textContent = `${stageInfo.stageName} (Stufe ${stageInfo.stageIndex}/${stageInfo.totalStages})`;
+        stageNameEl.textContent = tr('statistics.lotus.stageFormat', '{name} (Stufe {current}/{total})', {
+            name: stageInfo.stageName,
+            current: stageInfo.stageIndex,
+            total: stageInfo.totalStages
+        });
     }
 
     if (stageProgressEl) {
@@ -459,7 +439,8 @@ export async function playLotusPreview() {
     isPreviewPlaying = true;
     btn.disabled = true;
     btn.classList.add('playing');
-    btn.innerHTML = '<span class="preview-icon">⏸</span> Läuft...';
+    const playingText = tr('statistics.lotus.previewPlaying', 'Läuft...');
+    btn.innerHTML = `<span class="preview-icon">⏸</span> ${playingText}`;
 
     // Preview scores for each stage (10 stages)
     const previewScores = [5, 15, 25, 35, 45, 55, 65, 75, 85, 95];
@@ -475,7 +456,8 @@ export async function playLotusPreview() {
     isPreviewPlaying = false;
     btn.disabled = false;
     btn.classList.remove('playing');
-    btn.innerHTML = '<span class="preview-icon">▶</span> Wachstum ansehen';
+    const previewText = tr('statistics.lotus.preview', 'Wachstum ansehen');
+    btn.innerHTML = `<span class="preview-icon">▶</span> ${previewText}`;
 }
 
 /**
