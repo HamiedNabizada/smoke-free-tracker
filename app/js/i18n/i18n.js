@@ -4,9 +4,16 @@
  * Lightweight i18n system for ByeByeSmoke
  * - Automatic language detection from browser
  * - Manual override via localStorage
- * - Dynamic locale loading
+ * - Static locale loading (no dynamic imports for reliability)
  * - Parameter interpolation
  */
+
+// Import locales statically to avoid caching issues
+import de from './locales/de.js';
+import en from './locales/en.js';
+
+// All available locales
+const LOCALES = { de, en };
 
 // State
 let currentLocale = 'de';
@@ -35,8 +42,8 @@ export async function initializeI18n() {
         currentLocale = 'de';
     }
 
-    // 4. Load locale file
-    await loadLocale(currentLocale);
+    // 4. Load locale (now synchronous)
+    translations = LOCALES[currentLocale] || LOCALES.de;
 
     // 5. Set HTML lang attribute
     document.documentElement.lang = currentLocale;
@@ -51,23 +58,6 @@ export async function initializeI18n() {
 }
 
 /**
- * Load locale file dynamically
- */
-async function loadLocale(locale) {
-    try {
-        const module = await import(`./locales/${locale}.js`);
-        translations = module.default;
-    } catch (error) {
-        console.error(`[i18n] Failed to load locale: ${locale}`, error);
-        // Fallback to German
-        if (locale !== 'de') {
-            const fallback = await import('./locales/de.js');
-            translations = fallback.default;
-        }
-    }
-}
-
-/**
  * Change locale
  */
 export async function setLocale(locale) {
@@ -79,7 +69,8 @@ export async function setLocale(locale) {
     currentLocale = locale;
     localStorage.setItem(STORAGE_KEY, locale);
 
-    await loadLocale(locale);
+    // Load locale (now synchronous)
+    translations = LOCALES[locale] || LOCALES.de;
 
     document.documentElement.lang = locale;
     translatePage();
