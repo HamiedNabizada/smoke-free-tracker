@@ -60,7 +60,15 @@ export default {
             favoriteMusic: 'Listen to your favorite music for an hour',
             // Progress
             checkProgress: 'Check your progress in the app',
-            celebrateWin: 'Celebrate your success so far - you are doing great!'
+            celebrateWin: 'Celebrate your success so far - you are doing great!',
+            // Bonus (Day 31+)
+            walkInPlace: 'Walk in place for 5 minutes',
+            jogging: 'Jog for 10 minutes - indoors or outdoors',
+            officeWalk: 'Get up and walk around the room for 5 minutes',
+            calfRaises: 'Do 20 calf raises',
+            neckRolls: 'Roll your head slowly - loosen your neck',
+            shoulderRolls: 'Roll your shoulders backward 10 times',
+            shakeItOff: 'Shake your whole body for 30 seconds'
         }
     },
 

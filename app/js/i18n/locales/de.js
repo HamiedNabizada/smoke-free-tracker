@@ -61,7 +61,15 @@ export default {
             favoriteMusic: 'Höre eine Stunde lang deine Lieblingsmusik',
             // Progress
             checkProgress: 'Schau dir deine Fortschritte in der App an',
-            celebrateWin: 'Feiere deinen bisherigen Erfolg - du machst das großartig!'
+            celebrateWin: 'Feiere deinen bisherigen Erfolg - du machst das großartig!',
+            // Bonus (Day 31+)
+            walkInPlace: 'Geh 5 Minuten auf der Stelle',
+            jogging: 'Jogge 10 Minuten - drinnen oder draußen',
+            officeWalk: 'Steh auf und geh 5 Minuten durch den Raum',
+            calfRaises: 'Mach 20 Wadenheben',
+            neckRolls: 'Kreise deinen Kopf langsam - Nacken lockern',
+            shoulderRolls: 'Kreise deine Schultern 10x nach hinten',
+            shakeItOff: 'Schüttel dich 30 Sekunden komplett aus'
         }
     },
 
