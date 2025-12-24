@@ -145,12 +145,16 @@ export function t(key, params = {}) {
  * Translate all elements with data-i18n attributes
  */
 export function translatePage() {
+    console.log(`[i18n] translatePage called, locale: ${currentLocale}, translations loaded:`, !!translations);
+
     // Text content
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.dataset.i18n;
         const translated = t(key);
         if (translated !== key) {
             el.textContent = translated;
+        } else {
+            console.warn(`[i18n] Failed to translate: ${key}`);
         }
     });
 
