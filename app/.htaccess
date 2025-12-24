@@ -16,8 +16,14 @@
     # X-XSS-Protection: Legacy XSS-Schutz (für ältere Browser)
     Header set X-XSS-Protection "1; mode=block"
 
-    # Strict-Transport-Security: Erzwingt HTTPS (nur wenn HTTPS aktiv)
-    Header set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+    # Strict-Transport-Security: Erzwingt HTTPS mit preload
+    Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" env=HTTPS
+
+    # Cross-Origin-Opener-Policy: Isoliert Browsing-Kontext
+    Header set Cross-Origin-Opener-Policy "same-origin-allow-popups"
+
+    # Content-Security-Policy: Schutz gegen XSS
+    Header set Content-Security-Policy "default-src 'self'; script-src 'self' https://www.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://firestore.googleapis.com; frame-ancestors 'self';"
 </IfModule>
 
 # Prevent directory listing
