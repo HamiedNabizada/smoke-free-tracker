@@ -4,6 +4,8 @@
  * Stored in localStorage (no Firebase costs)
  */
 
+import { t } from '../i18n/i18n.js';
+
 const STREAK_KEYS = {
     LAST_VISIT: 'streak_last_visit',
     COUNT: 'streak_count'
@@ -69,9 +71,9 @@ function updateStreakDisplay(streak) {
 
     container.style.display = 'flex';
 
-    const countEl = document.getElementById('streakCount');
-    if (countEl) {
-        countEl.textContent = streak;
+    const textEl = document.getElementById('streakText');
+    if (textEl) {
+        textEl.innerHTML = t('dashboard.streak.text', { count: `<strong>${streak}</strong>` });
     }
 
     // Add fire effect for high streaks

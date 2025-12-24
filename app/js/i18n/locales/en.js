@@ -259,7 +259,9 @@ export default {
         justReached: 'Just reached!',
         activePhase: 'Active Phase',
         nextPhase: 'Next phase ({title}) in {time}',
-        allAchieved: 'All health milestones achieved!'
+        allAchieved: 'All health milestones achieved!',
+        lessThanOneDay: 'less than 1 day',
+        yearsAndMonths: '{years} year(s) and {months} month(s)'
     },
 
     // Achievements (HTML data-i18n key)

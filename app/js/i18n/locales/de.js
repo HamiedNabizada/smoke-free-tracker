@@ -401,7 +401,9 @@ export default {
         justReached: 'Gerade erreicht!',
         activePhase: 'Aktive Phase',
         nextPhase: 'Nächste Phase ({title}) in {time}',
-        allAchieved: 'Alle Gesundheitsmeilensteine erreicht!'
+        allAchieved: 'Alle Gesundheitsmeilensteine erreicht!',
+        lessThanOneDay: 'weniger als 1 Tag',
+        yearsAndMonths: '{years} Jahr(e) und {months} Monat(e)'
     },
 
     // Achievements (HTML data-i18n key)
