@@ -41,6 +41,21 @@ export function updateDashboard() {
     document.getElementById('moneySaved').textContent = stats.money.toFixed(2) + ' €';
     document.getElementById('cigarettesNotSmoked').textContent = stats.cigarettes;
 
+    // Update dynamic info texts with i18n
+    const moneySavedInfo = document.getElementById('moneySavedInfo');
+    if (moneySavedInfo) {
+        moneySavedInfo.textContent = t('dashboard.stats.basedOn', {
+            cigs: stats.cigarettesPerDay,
+            price: stats.pricePerCigarette.toFixed(2) + '€'
+        });
+    }
+    const cigarettesInfo = document.getElementById('cigarettesNotSmokedInfo');
+    if (cigarettesInfo) {
+        cigarettesInfo.textContent = t('dashboard.stats.cigarettesAvoided', {
+            count: stats.cigarettesPerDay
+        });
+    }
+
     // Update lifetime gained
     let lifeDisplay;
     if (stats.lifeGained.days > 0) {

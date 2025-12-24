@@ -350,7 +350,11 @@ export function calculateStats() {
 
         // Legacy-Felder (für Rückwärtskompatibilität)
         lungHealth: lungRecovery,
-        skinImprovement: skinRecovery  // Prozent (0-100), nicht Jahre
+        skinImprovement: skinRecovery,  // Prozent (0-100), nicht Jahre
+
+        // User data for display
+        cigarettesPerDay: userData.cigarettesPerDay,
+        pricePerCigarette: pricePerCigarette
     };
 }
 
