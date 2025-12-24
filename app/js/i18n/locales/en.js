@@ -33,7 +33,75 @@ export default {
         banner: 'Demo mode active',
         hint: 'All data is sample data.',
         register: 'Register now',
-        login: 'Log in'
+        login: 'Log in',
+        actionBlocked: '{operation} is not available in test mode.\n\nRegister for free to use all features!'
+    },
+
+    // Authentication
+    auth: {
+        notLoggedIn: 'Not logged in',
+        registerFailed: 'Registration failed',
+        usernameTaken: 'Username already taken',
+        passwordWeak: 'Password too weak (at least 6 characters)',
+        loginFailed: 'Login failed',
+        invalidCredentials: 'Invalid username or password',
+        invalidUsername: 'Invalid username',
+        logoutFailed: 'Logout failed',
+        userDataNotFound: 'User data not found',
+        saveDataAction: 'Save data',
+        deleteAccountAction: 'Delete account',
+        deleteConfirm: 'Are you sure you want to delete your account? This action cannot be undone!',
+        deleteSuccess: 'Account successfully deleted',
+        deleteReloginRequired: 'Please log in again to delete your account.',
+        deleteError: 'Error deleting account: {message}'
+    },
+
+    // Rate limiting
+    rateLimit: {
+        limitReachedToast: 'Daily limit reached ({limit}x). Try again tomorrow.',
+        limitReachedAlert: 'You have reached the daily limit for this action ({limit}x per day).\n\nPlease try again tomorrow.',
+        lastChangeToast: 'Last change for today - keeps the app free!',
+        lastChangeAlert: 'Note: This is your last change for today.\n\nTo keep the app free, the number of saves per day is limited ({limit}x).',
+        cravingLimitReached: 'Daily limit reached - Timer works, but no longer counted'
+    },
+
+    // Network status
+    network: {
+        noConnection: 'No internet connection',
+        offlineWarning: 'Offline - Changes will not be saved',
+        backOnline: 'Back online',
+        connectionProblem: 'Connection problem'
+    },
+
+    // Login
+    login: {
+        button: 'Log in',
+        loggingIn: 'Logging in...',
+        tooManyAttempts: 'Too many login attempts. Please wait {time}.',
+        tooManyFailed: 'Too many failed attempts. Please wait {time}.',
+        attemptsRemaining: '{count} attempts remaining',
+        loadingDemo: 'Loading demo...',
+        tryDemo: 'Try it first',
+        demoNotSetup: 'Demo account is not set up yet. Please contact support.',
+        demoError: 'Demo login error: {message}'
+    },
+
+    // Register
+    register: {
+        button: 'Register',
+        registering: 'Registering...',
+        tooManyAttempts: 'Too many registration attempts. Please wait {time}.',
+        tooManyFailed: 'Too many failed attempts. Please wait {time}.',
+        attemptsRemaining: '{count} attempts remaining',
+        validation: {
+            usernameLength: 'Username must be between 3 and 50 characters',
+            usernameChars: 'Username may only contain letters, numbers, _ and -',
+            quitDateFuture: 'Quit date cannot be in the future',
+            cigarettesPerDay: 'Cigarettes per day must be between 1 and 200',
+            pricePerPack: 'Price per pack must be at least 0',
+            cigarettesPerPack: 'Cigarettes per pack must be between 1 and 100',
+            passwordLength: 'Password must be at least 6 characters'
+        }
     },
 
     // Dashboard / Overview
@@ -531,6 +599,10 @@ export default {
         cigarettesPerPack: 'Cigarettes per pack',
         notifications: 'Enable notifications',
         save: 'Save',
+        saving: 'Saving...',
+        saveSuccess: 'Data saved successfully! The page will reload.',
+        saveError: 'Error saving data: {message}',
+        logoutError: 'Logout failed. Please try again.',
         cancel: 'Cancel',
         dataManagement: 'Data Management',
         exportData: 'Export data',
@@ -542,6 +614,83 @@ export default {
         deleteAccount: 'Delete account',
         deleteAccountDesc: 'Delete your account and all data',
         deleteConfirm: 'Are you sure? This action cannot be undone.'
+    },
+
+    // Data Export
+    dataExport: {
+        notLoggedIn: 'You must be logged in to export data.',
+        exportSuccess: 'Your data has been downloaded successfully!',
+        exportError: 'Error exporting data: {message}'
+    },
+
+    // Share
+    share: {
+        title: 'My smoke-free success',
+        successText: '🎉 I have been smoke-free for {days} days!\n\n💰 Saved: {money}€\n🚭 Cigarettes avoided: {cigarettes}\n❤️ Life gained: {hours} hours\n\n#smokefree #byebyesmoke',
+        copiedToClipboard: '📋 Text copied to clipboard!\n\nYou can now paste it in WhatsApp, Facebook, or wherever you like.',
+        modalTitle: 'Share your success',
+        creatingImage: 'Creating image...',
+        imageText: '🎉 Check out my progress! #smokefree #byebyesmoke',
+        imageError: 'Error creating image: {message}',
+        imageDownloaded: '📸 Your success image has been downloaded!\n\nYou can now share it on Instagram, WhatsApp, Facebook, or wherever you like.'
+    },
+
+    // Badge
+    badge: {
+        smokeFree: 'Smoke-free!',
+        anonymousHero: 'Anonymous Hero',
+        days: 'Days',
+        smokeFreeSub: 'smoke-free',
+        daysSmokeFree: 'Days smoke-free',
+        saved: 'saved',
+        cigarettesAvoided: 'Cigarettes avoided',
+        lifeGained: 'Life gained',
+        lungHealth: 'Lung health',
+        createdWith: 'Created with ByeByeSmoke',
+        downloadSuccess: '🏆 Your success badge has been downloaded!\n\nYou can now use it as a profile picture, wallpaper, or for sharing.',
+        createTitle: 'Create success badge',
+        createDesc: 'Create a badge with your statistics'
+    },
+
+    // PDF Report
+    pdf: {
+        user: 'User',
+        libraryLoading: 'PDF library is loading, please try again.',
+        subtitle: 'Your Smoke-Free Report',
+        createdFor: 'Created for',
+        date: 'Date',
+        daysSmokeFree: 'Days smoke-free',
+        moneySaved: 'Money saved',
+        cigarettesAvoided: 'Cigarettes avoided',
+        lifeGained: 'Life gained',
+        lungHealth: 'Lung health',
+        timeSaved: 'Time saved',
+        co2Avoided: 'CO2 avoided',
+        environmentImpact: 'Environmental Impact',
+        waterSaved: 'Water saved',
+        liters: 'liters',
+        treesSaved: 'Trees saved',
+        footer: 'Created with ByeByeSmoke - byebyesmoke.de',
+        downloadSuccess: '📄 Your PDF report has been created and downloaded!'
+    },
+
+    // Heatmap
+    heatmap: {
+        loading: 'Loading heatmap...',
+        dataUnavailable: 'Heatmap data not available',
+        noData: 'No craving data yet.',
+        hint: 'Use the craving timer to track your cravings.',
+        loadError: 'Error loading heatmap',
+        cravings: 'cravings',
+        less: 'Less',
+        more: 'More',
+        insights: 'Insights',
+        total: 'Total',
+        cravingsLast30Days: 'cravings in the last 30 days',
+        peakDay: 'Highest cravings on <strong>{day}</strong>',
+        peakTime: 'Critical time: <strong>{time}</strong>',
+        noCravings: 'No cravings on <strong>{day}</strong> - well done!',
+        notEnoughData: 'Not enough data for insights yet'
     },
 
     // Tutorial
@@ -614,7 +763,16 @@ export default {
         years: '{count} years',
         remaining: '{time} remaining',
         ago: '{time} ago',
-        in: 'in {time}'
+        in: 'in {time}',
+        dayNamesShort: {
+            sunday: 'Sun',
+            monday: 'Mon',
+            tuesday: 'Tue',
+            wednesday: 'Wed',
+            thursday: 'Thu',
+            friday: 'Fri',
+            saturday: 'Sat'
+        }
     },
 
     // Common

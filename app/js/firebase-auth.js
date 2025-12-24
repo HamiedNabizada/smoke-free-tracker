@@ -1,5 +1,16 @@
 // Firebase Authentication Helper Functions (Modular API)
 
+import { t, isInitialized } from './i18n/i18n.js';
+
+// Helper for translation with fallback
+function tr(key, fallback, params = {}) {
+    if (isInitialized()) {
+        const translated = t(key, params);
+        if (translated !== key) return translated;
+    }
+    return fallback.replace(/\{(\w+)\}/g, (match, p) => params[p] !== undefined ? params[p] : match);
+}
+
 import {
   auth,
   db,
@@ -96,9 +107,9 @@ function checkWriteLimit(type, useToast = false) {
     // Limit reached
     if (current >= limit) {
         if (useToast) {
-            showToast(`Tageslimit erreicht (${limit}x). Versuche es morgen wieder.`, 5000, 'warning');
+            showToast(tr('rateLimit.limitReachedToast', 'Tageslimit erreicht ({limit}x). Versuche es morgen wieder.', { limit }), 5000, 'warning');
         } else {
-            alert(`Du hast das Tageslimit für diese Aktion erreicht (${limit}x pro Tag).\n\nVersuche es morgen wieder.`);
+            alert(tr('rateLimit.limitReachedAlert', 'Du hast das Tageslimit für diese Aktion erreicht ({limit}x pro Tag).\n\nVersuche es morgen wieder.', { limit }));
         }
         return false;
     }
@@ -106,9 +117,9 @@ function checkWriteLimit(type, useToast = false) {
     // Warning at second-to-last attempt
     if (current === limit - 1) {
         if (useToast) {
-            showToast('Letzte Änderung für heute - App bleibt so kostenlos!', 4000, 'info');
+            showToast(tr('rateLimit.lastChangeToast', 'Letzte Änderung für heute - App bleibt so kostenlos!'), 4000, 'info');
         } else {
-            alert(`Hinweis: Das ist deine letzte Änderung für heute.\n\nUm die App kostenlos zu halten, ist die Anzahl der Speichervorgänge pro Tag begrenzt (${limit}x).`);
+            alert(tr('rateLimit.lastChangeAlert', 'Hinweis: Das ist deine letzte Änderung für heute.\n\nUm die App kostenlos zu halten, ist die Anzahl der Speichervorgänge pro Tag begrenzt ({limit}x).', { limit }));
         }
     }
 
@@ -167,7 +178,7 @@ function showToast(message, duration = 4000, type = 'info') {
 // Show error toast with retry option for network errors
 function showErrorToast(message, isNetworkError = false) {
     if (isNetworkError && !navigator.onLine) {
-        showToast('Keine Internetverbindung', 5000, 'warning');
+        showToast(tr('network.noConnection', 'Keine Internetverbindung'), 5000, 'warning');
     } else {
         showToast(message, 4000, 'error');
     }
@@ -201,14 +212,14 @@ function updateOnlineStatus() {
                 font-size: 13px;
                 z-index: 10001;
             `;
-            offlineIndicator.textContent = 'Offline - Änderungen werden nicht gespeichert';
+            offlineIndicator.textContent = tr('network.offlineWarning', 'Offline - Änderungen werden nicht gespeichert');
             document.body.prepend(offlineIndicator);
         }
     } else {
         if (offlineIndicator) {
             offlineIndicator.remove();
             offlineIndicator = null;
-            showToast('Wieder online', 2000, 'success');
+            showToast(tr('network.backOnline', 'Wieder online'), 2000, 'success');
         }
     }
 }
@@ -223,7 +234,7 @@ document.addEventListener('DOMContentLoaded', updateOnlineStatus);
 window.addEventListener('unhandledrejection', (event) => {
     console.error('Unhandled error:', event.reason);
     if (isNetworkError(event.reason)) {
-        showErrorToast('Verbindungsproblem', true);
+        showErrorToast(tr('network.connectionProblem', 'Verbindungsproblem'), true);
     }
 });
 
@@ -240,7 +251,7 @@ function isDemoMode() {
 
 function blockDemoWrite(operation = 'Diese Aktion') {
   if (isDemoMode()) {
-    alert(`${operation} ist im Test-Modus nicht möglich.\n\nRegistriere dich kostenlos, um alle Funktionen zu nutzen!`);
+    alert(tr('demo.actionBlocked', '{operation} ist im Test-Modus nicht möglich.\n\nRegistriere dich kostenlos, um alle Funktionen zu nutzen!', { operation }));
     return true;
   }
   return false;
@@ -329,12 +340,12 @@ async function registerUser(username, password, userData) {
     return { success: true, user: user };
   } catch (error) {
     console.error('Registration error:', error);
-    let message = 'Registrierung fehlgeschlagen';
+    let message = tr('auth.registerFailed', 'Registrierung fehlgeschlagen');
 
     if (error.code === 'auth/email-already-in-use') {
-      message = 'Benutzername bereits vergeben';
+      message = tr('auth.usernameTaken', 'Benutzername bereits vergeben');
     } else if (error.code === 'auth/weak-password') {
-      message = 'Passwort zu schwach (mindestens 6 Zeichen)';
+      message = tr('auth.passwordWeak', 'Passwort zu schwach (mindestens 6 Zeichen)');
     }
 
     throw new Error(message);
@@ -349,12 +360,12 @@ async function loginUser(username, password) {
     return { success: true, user: userCredential.user };
   } catch (error) {
     console.error('Login error:', error);
-    let message = 'Login fehlgeschlagen';
+    let message = tr('auth.loginFailed', 'Login fehlgeschlagen');
 
     if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
-      message = 'Ungültiger Benutzername oder Passwort';
+      message = tr('auth.invalidCredentials', 'Ungültiger Benutzername oder Passwort');
     } else if (error.code === 'auth/invalid-email') {
-      message = 'Ungültiger Benutzername';
+      message = tr('auth.invalidUsername', 'Ungültiger Benutzername');
     }
 
     throw new Error(message);
@@ -370,7 +381,7 @@ async function logoutUser() {
     window.location.href = 'login.html';
   } catch (error) {
     console.error('Logout error:', error);
-    throw new Error('Logout fehlgeschlagen');
+    throw new Error(tr('auth.logoutFailed', 'Logout fehlgeschlagen'));
   }
 }
 
@@ -379,7 +390,7 @@ async function getUserData(forceRefresh = false) {
   try {
     const user = auth.currentUser;
     if (!user) {
-      throw new Error('Nicht angemeldet');
+      throw new Error(tr('auth.notLoggedIn', 'Nicht angemeldet'));
     }
 
     // Return demo data if in demo mode
@@ -400,7 +411,7 @@ async function getUserData(forceRefresh = false) {
     const docSnap = await getDoc(doc(db, 'users', user.uid));
 
     if (!docSnap.exists()) {
-      throw new Error('Benutzerdaten nicht gefunden');
+      throw new Error(tr('auth.userDataNotFound', 'Benutzerdaten nicht gefunden'));
     }
 
     const data = docSnap.data();
@@ -418,11 +429,11 @@ async function updateUserData(updates) {
   try {
     const user = auth.currentUser;
     if (!user) {
-      throw new Error('Nicht angemeldet');
+      throw new Error(tr('auth.notLoggedIn', 'Nicht angemeldet'));
     }
 
     // Block write in demo mode
-    if (blockDemoWrite('Daten speichern')) {
+    if (blockDemoWrite(tr('auth.saveDataAction', 'Daten speichern'))) {
       return { success: false };
     }
 
@@ -449,18 +460,18 @@ async function updateUserData(updates) {
 // Delete user account
 async function deleteAccount() {
   // Block delete in demo mode
-  if (blockDemoWrite('Account löschen')) {
+  if (blockDemoWrite(tr('auth.deleteAccountAction', 'Account löschen'))) {
     return false;
   }
 
-  if (!confirm('Bist du sicher, dass du deinen Account löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden!')) {
+  if (!confirm(tr('auth.deleteConfirm', 'Bist du sicher, dass du deinen Account löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden!'))) {
     return false;
   }
 
   try {
     const user = auth.currentUser;
     if (!user) {
-      throw new Error('Nicht angemeldet');
+      throw new Error(tr('auth.notLoggedIn', 'Nicht angemeldet'));
     }
 
     // Delete user data from Firestore
@@ -482,17 +493,17 @@ async function deleteAccount() {
     // Delete Firebase Auth user
     await user.delete();
 
-    alert('Account erfolgreich gelöscht');
+    alert(tr('auth.deleteSuccess', 'Account erfolgreich gelöscht'));
     window.location.href = 'login.html';
     return true;
   } catch (error) {
     console.error('Delete account error:', error);
 
     if (error.code === 'auth/requires-recent-login') {
-      alert('Bitte melde dich erneut an, um deinen Account zu löschen.');
+      alert(tr('auth.deleteReloginRequired', 'Bitte melde dich erneut an, um deinen Account zu löschen.'));
       await logoutUser();
     } else {
-      alert('Fehler beim Löschen des Accounts: ' + error.message);
+      alert(tr('auth.deleteError', 'Fehler beim Löschen des Accounts: {message}', { message: error.message }));
     }
     return false;
   }
@@ -503,7 +514,7 @@ async function recordCraving() {
   try {
     const user = auth.currentUser;
     if (!user) {
-      throw new Error('Nicht angemeldet');
+      throw new Error(tr('auth.notLoggedIn', 'Nicht angemeldet'));
     }
 
     // Block write in demo mode (silently - craving timer still works)
@@ -516,7 +527,7 @@ async function recordCraving() {
     if (getWriteCount('craving') >= WRITE_LIMITS.craving) {
       console.log('[RateLimit] Craving limit reached, not recording');
       if (!_cravingLimitToastShown) {
-        showToast('Tageslimit erreicht - Timer funktioniert, wird aber nicht mehr gezählt', 5000);
+        showToast(tr('rateLimit.cravingLimitReached', 'Tageslimit erreicht - Timer funktioniert, wird aber nicht mehr gezählt'), 5000);
         _cravingLimitToastShown = true;
       }
       return true;

@@ -3,7 +3,31 @@
  * Shows when cravings typically occur (day of week x hour of day)
  */
 
-const DAY_NAMES = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
+import { t, isInitialized, getLocale } from '../i18n/i18n.js';
+
+// Helper for translation with fallback
+function tr(key, fallback, params = {}) {
+    if (isInitialized()) {
+        const translated = t(key, params);
+        if (translated !== key) return translated;
+    }
+    return fallback.replace(/\{(\w+)\}/g, (match, p) => params[p] !== undefined ? params[p] : match);
+}
+
+// Day names are loaded dynamically based on locale
+function getDayNames() {
+    return [
+        tr('time.dayNamesShort.sunday', 'So'),
+        tr('time.dayNamesShort.monday', 'Mo'),
+        tr('time.dayNamesShort.tuesday', 'Di'),
+        tr('time.dayNamesShort.wednesday', 'Mi'),
+        tr('time.dayNamesShort.thursday', 'Do'),
+        tr('time.dayNamesShort.friday', 'Fr'),
+        tr('time.dayNamesShort.saturday', 'Sa')
+    ];
+}
+
+const DAY_NAMES = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']; // Fallback
 const HOUR_LABELS = ['00', '03', '06', '09', '12', '15', '18', '21'];
 
 /**
@@ -14,12 +38,12 @@ export async function updateCravingHeatmap() {
     if (!container) return;
 
     // Show loading state
-    container.innerHTML = '<p class="heatmap-loading">Lade Heatmap...</p>';
+    container.innerHTML = `<p class="heatmap-loading">${tr('heatmap.loading', 'Lade Heatmap...')}</p>`;
 
     try {
         // Get heatmap data from Firebase
         if (typeof getCravingHeatmapData !== 'function') {
-            container.innerHTML = '<p class="heatmap-error">Heatmap-Daten nicht verfügbar</p>';
+            container.innerHTML = `<p class="heatmap-error">${tr('heatmap.dataUnavailable', 'Heatmap-Daten nicht verfügbar')}</p>`;
             return;
         }
 
@@ -28,8 +52,8 @@ export async function updateCravingHeatmap() {
         if (totalCravings === 0) {
             container.innerHTML = `
                 <div class="heatmap-empty">
-                    <p>Noch keine Verlangen-Daten vorhanden.</p>
-                    <p class="heatmap-hint">Nutze den Craving-Timer, um deine Verlangen zu tracken.</p>
+                    <p>${tr('heatmap.noData', 'Noch keine Verlangen-Daten vorhanden.')}</p>
+                    <p class="heatmap-hint">${tr('heatmap.hint', 'Nutze den Craving-Timer, um deine Verlangen zu tracken.')}</p>
                 </div>
             `;
             return;
@@ -48,7 +72,7 @@ export async function updateCravingHeatmap() {
 
     } catch (error) {
         console.error('[CravingHeatmap] Error:', error);
-        container.innerHTML = '<p class="heatmap-error">Fehler beim Laden der Heatmap</p>';
+        container.innerHTML = `<p class="heatmap-error">${tr('heatmap.loadError', 'Fehler beim Laden der Heatmap')}</p>`;
     }
 }
 
@@ -58,6 +82,8 @@ export async function updateCravingHeatmap() {
 function renderHeatmap(container, heatmap, maxValue, totalCravings) {
     // Find peak times
     const peakTimes = findPeakTimes(heatmap);
+    const dayNames = getDayNames();
+    const cravingsText = tr('heatmap.cravings', 'Verlangen');
 
     let html = `
         <div class="heatmap-wrapper">
@@ -76,7 +102,7 @@ function renderHeatmap(container, heatmap, maxValue, totalCravings) {
 
         html += `
             <div class="heatmap-row">
-                <div class="heatmap-day-label">${DAY_NAMES[adjustedDay]}</div>
+                <div class="heatmap-day-label">${dayNames[adjustedDay]}</div>
         `;
 
         // Render each 3-hour block (8 blocks per day)
@@ -94,7 +120,7 @@ function renderHeatmap(container, heatmap, maxValue, totalCravings) {
 
             html += `
                 <div class="heatmap-cell ${colorClass}"
-                     title="${DAY_NAMES[adjustedDay]} ${startHour}:00-${startHour + 3}:00: ${blockTotal} Verlangen"
+                     title="${dayNames[adjustedDay]} ${startHour}:00-${startHour + 3}:00: ${blockTotal} ${cravingsText}"
                      data-count="${blockTotal}">
                 </div>
             `;
@@ -106,7 +132,7 @@ function renderHeatmap(container, heatmap, maxValue, totalCravings) {
     html += `
             </div>
             <div class="heatmap-legend">
-                <span class="legend-label">Weniger</span>
+                <span class="legend-label">${tr('heatmap.less', 'Weniger')}</span>
                 <div class="legend-scale">
                     <div class="legend-cell level-0"></div>
                     <div class="legend-cell level-1"></div>
@@ -114,15 +140,15 @@ function renderHeatmap(container, heatmap, maxValue, totalCravings) {
                     <div class="legend-cell level-3"></div>
                     <div class="legend-cell level-4"></div>
                 </div>
-                <span class="legend-label">Mehr</span>
+                <span class="legend-label">${tr('heatmap.more', 'Mehr')}</span>
             </div>
         </div>
         <div class="heatmap-insights">
-            <h4>Erkenntnisse</h4>
+            <h4>${tr('heatmap.insights', 'Erkenntnisse')}</h4>
             <ul>
                 ${peakTimes.map(p => `<li>${p}</li>`).join('')}
             </ul>
-            <p class="heatmap-total">Gesamt: <strong>${totalCravings}</strong> Verlangen in den letzten 30 Tagen</p>
+            <p class="heatmap-total">${tr('heatmap.total', 'Gesamt')}: <strong>${totalCravings}</strong> ${tr('heatmap.cravingsLast30Days', 'Verlangen in den letzten 30 Tagen')}</p>
         </div>
     `;
 
@@ -145,6 +171,7 @@ function getColorClass(intensity) {
  */
 function findPeakTimes(heatmap) {
     const insights = [];
+    const dayNames = getDayNames();
 
     // Find peak day
     const dayTotals = heatmap.map((day, i) => ({
@@ -154,7 +181,7 @@ function findPeakTimes(heatmap) {
     dayTotals.sort((a, b) => b.total - a.total);
 
     if (dayTotals[0].total > 0) {
-        insights.push(`Höchstes Verlangen am <strong>${DAY_NAMES[dayTotals[0].day]}</strong>`);
+        insights.push(tr('heatmap.peakDay', 'Höchstes Verlangen am <strong>{day}</strong>', { day: dayNames[dayTotals[0].day] }));
     }
 
     // Find peak time blocks
@@ -171,17 +198,17 @@ function findPeakTimes(heatmap) {
     if (hourTotals[0].total > 0) {
         const peakHour = hourTotals[0].hour;
         const timeRange = `${peakHour}:00 - ${peakHour + 1}:00`;
-        insights.push(`Kritischste Uhrzeit: <strong>${timeRange} Uhr</strong>`);
+        insights.push(tr('heatmap.peakTime', 'Kritischste Uhrzeit: <strong>{time}</strong>', { time: timeRange }));
     }
 
     // Find low activity periods
     if (dayTotals[dayTotals.length - 1].total === 0) {
-        const lowDay = DAY_NAMES[dayTotals[dayTotals.length - 1].day];
-        insights.push(`Kein Verlangen am <strong>${lowDay}</strong> - gut gemacht!`);
+        const lowDay = dayNames[dayTotals[dayTotals.length - 1].day];
+        insights.push(tr('heatmap.noCravings', 'Kein Verlangen am <strong>{day}</strong> - gut gemacht!', { day: lowDay }));
     }
 
     if (insights.length === 0) {
-        insights.push('Noch nicht genug Daten für Erkenntnisse');
+        insights.push(tr('heatmap.notEnoughData', 'Noch nicht genug Daten für Erkenntnisse'));
     }
 
     return insights;

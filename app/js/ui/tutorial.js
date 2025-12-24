@@ -3,6 +3,17 @@
  * Handles the tutorial modal with slides
  */
 
+import { t, isInitialized } from '../i18n/i18n.js';
+
+// Helper for translation with fallback
+function tr(key, fallback, params = {}) {
+    if (isInitialized()) {
+        const translated = t(key, params);
+        if (translated !== key) return translated;
+    }
+    return fallback.replace(/\{(\w+)\}/g, (match, p) => params[p] !== undefined ? params[p] : match);
+}
+
 let currentSlide = 1;
 const totalSlides = 5;
 
@@ -114,8 +125,8 @@ function showSlide(slideNum) {
     prevBtn.disabled = slideNum === 1;
 
     if (slideNum === totalSlides) {
-        nextBtn.textContent = 'Fertig ✓';
+        nextBtn.textContent = tr('tutorial.finish', 'Fertig') + ' ✓';
     } else {
-        nextBtn.textContent = 'Weiter →';
+        nextBtn.textContent = tr('tutorial.next', 'Weiter') + ' →';
     }
 }

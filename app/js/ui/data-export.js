@@ -5,6 +5,16 @@
 import { calculateStats } from '../utils/calculations.js';
 import { auth, db, getUserData, isDemoMode, getDemoCravingEvents } from '../firebase-auth.js';
 import { collection, query, where, getDocs, orderBy } from '../firebase-init.js';
+import { t, isInitialized } from '../i18n/i18n.js';
+
+// Helper for translation with fallback
+function tr(key, fallback, params = {}) {
+    if (isInitialized()) {
+        const translated = t(key, params);
+        if (translated !== key) return translated;
+    }
+    return fallback.replace(/\{(\w+)\}/g, (match, p) => params[p] !== undefined ? params[p] : match);
+}
 
 /**
  * Initialize data export features
@@ -43,7 +53,7 @@ export function initializeDataExport() {
 async function exportUserDataToFile() {
     const user = auth.currentUser;
     if (!user) {
-        alert('Du musst eingeloggt sein um Daten zu exportieren.');
+        alert(tr('dataExport.notLoggedIn', 'Du musst eingeloggt sein um Daten zu exportieren.'));
         return;
     }
 
@@ -84,10 +94,10 @@ async function exportUserDataToFile() {
         URL.revokeObjectURL(url);
 
         console.log('[DataExport] User data exported successfully');
-        alert('Deine Daten wurden erfolgreich heruntergeladen!');
+        alert(tr('dataExport.exportSuccess', 'Deine Daten wurden erfolgreich heruntergeladen!'));
     } catch (error) {
         console.error('[DataExport] Error exporting data:', error);
-        alert('Fehler beim Exportieren der Daten: ' + error.message);
+        alert(tr('dataExport.exportError', 'Fehler beim Exportieren der Daten: {message}', { message: error.message }));
     }
 }
 
@@ -132,17 +142,18 @@ async function getCravingEventsForExport() {
 async function shareSuccess() {
     const stats = calculateStats();
 
-    const shareText = `🎉 Ich bin seit ${stats.days} Tagen rauchfrei!\n\n` +
-        `💰 Gespart: ${stats.money.toFixed(2)}€\n` +
-        `🚭 Zigaretten vermieden: ${stats.cigarettes}\n` +
-        `❤️ Lebenszeit gewonnen: ${stats.lifeGained.totalHours} Stunden\n\n` +
-        `#rauchfrei #byebyesmoke`;
+    const shareText = tr('share.successText', '🎉 Ich bin seit {days} Tagen rauchfrei!\n\n💰 Gespart: {money}€\n🚭 Zigaretten vermieden: {cigarettes}\n❤️ Lebenszeit gewonnen: {hours} Stunden\n\n#rauchfrei #byebyesmoke', {
+        days: stats.days,
+        money: stats.money.toFixed(2),
+        cigarettes: stats.cigarettes,
+        hours: stats.lifeGained.totalHours
+    });
 
     // Check if Web Share API is supported
     if (navigator.share) {
         try {
             await navigator.share({
-                title: 'Mein rauchfreier Erfolg',
+                title: tr('share.title', 'Mein rauchfreier Erfolg'),
                 text: shareText,
                 url: 'https://byebyesmoke.de'
             });
@@ -167,7 +178,7 @@ function fallbackShare(text) {
     if (navigator.clipboard) {
         navigator.clipboard.writeText(text)
             .then(() => {
-                alert('📋 Text wurde in die Zwischenablage kopiert!\n\nDu kannst ihn jetzt in WhatsApp, Facebook oder wo du möchtest einfügen.');
+                alert(tr('share.copiedToClipboard', '📋 Text wurde in die Zwischenablage kopiert!\n\nDu kannst ihn jetzt in WhatsApp, Facebook oder wo du möchtest einfügen.'));
             })
             .catch(err => {
                 console.error('[Share] Error copying to clipboard:', err);
@@ -189,9 +200,9 @@ function showTextModal(text) {
     content.style.cssText = 'background:white;padding:30px;border-radius:15px;max-width:500px;width:90%;';
 
     content.innerHTML = `
-        <h3 style="margin-top:0;">Teile deinen Erfolg</h3>
+        <h3 style="margin-top:0;">${tr('share.modalTitle', 'Teile deinen Erfolg')}</h3>
         <textarea readonly style="width:100%;height:200px;padding:10px;border:2px solid #ddd;border-radius:5px;font-family:monospace;font-size:14px;">${text}</textarea>
-        <button id="closeShareModal" style="margin-top:15px;padding:10px 20px;background:#667eea;color:white;border:none;border-radius:8px;cursor:pointer;width:100%;">Schließen</button>
+        <button id="closeShareModal" style="margin-top:15px;padding:10px 20px;background:#667eea;color:white;border:none;border-radius:8px;cursor:pointer;width:100%;">${tr('common.close', 'Schließen')}</button>
     `;
 
     modal.appendChild(content);
@@ -230,12 +241,12 @@ function generateBadge() {
 
     <!-- Title -->
     <text x="400" y="60" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="white" text-anchor="middle">
-        🎉 Rauchfrei!
+        🎉 ${tr('badge.smokeFree', 'Rauchfrei!')}
     </text>
 
     <!-- Username -->
     <text x="400" y="100" font-family="Arial, sans-serif" font-size="20" fill="rgba(255,255,255,0.9)" text-anchor="middle">
-        ${user.displayName || 'Anonymer Held'}
+        ${user.displayName || tr('badge.anonymousHero', 'Anonymer Held')}
     </text>
 
     <!-- Stats Box -->
@@ -243,10 +254,10 @@ function generateBadge() {
 
     <!-- Days -->
     <text x="400" y="180" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="white" text-anchor="middle">
-        ${stats.days} Tage
+        ${stats.days} ${tr('badge.days', 'Tage')}
     </text>
     <text x="400" y="210" font-family="Arial, sans-serif" font-size="18" fill="rgba(255,255,255,0.9)" text-anchor="middle">
-        rauchfrei
+        ${tr('badge.smokeFreeSub', 'rauchfrei')}
     </text>
 
     <!-- Money & Cigarettes -->
@@ -254,19 +265,19 @@ function generateBadge() {
         ${stats.money.toFixed(0)}€
     </text>
     <text x="200" y="295" font-family="Arial, sans-serif" font-size="16" fill="rgba(255,255,255,0.9)" text-anchor="middle">
-        gespart
+        ${tr('badge.saved', 'gespart')}
     </text>
 
     <text x="600" y="270" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">
         ${stats.cigarettes}
     </text>
     <text x="600" y="295" font-family="Arial, sans-serif" font-size="16" fill="rgba(255,255,255,0.9)" text-anchor="middle">
-        Zigaretten vermieden
+        ${tr('badge.cigarettesAvoided', 'Zigaretten vermieden')}
     </text>
 
     <!-- Life Gained -->
     <text x="400" y="335" font-family="Arial, sans-serif" font-size="20" fill="rgba(255,255,255,0.95)" text-anchor="middle">
-        ❤️ ${stats.lifeGained.totalHours}h Lebenszeit gewonnen
+        ❤️ ${stats.lifeGained.totalHours}h ${tr('badge.lifeGained', 'Lebenszeit gewonnen')}
     </text>
 
     <!-- Footer -->
@@ -287,7 +298,7 @@ function generateBadge() {
     URL.revokeObjectURL(url);
 
     console.log('[Badge] Badge generated and downloaded');
-    alert('🏆 Dein Erfolgs-Badge wurde heruntergeladen!\n\nDu kannst es jetzt als Profilbild, Wallpaper oder zum Teilen verwenden.');
+    alert(tr('badge.downloadSuccess', '🏆 Dein Erfolgs-Badge wurde heruntergeladen!\n\nDu kannst es jetzt als Profilbild, Wallpaper oder zum Teilen verwenden.'));
 }
 
 /**
@@ -296,7 +307,7 @@ function generateBadge() {
 export async function generateShareImage() {
     const stats = calculateStats();
     const user = auth.currentUser;
-    const username = user?.displayName || 'Anonymer Held';
+    const username = user?.displayName || tr('badge.anonymousHero', 'Anonymer Held');
 
     // Create canvas
     const canvas = document.createElement('canvas');
@@ -323,7 +334,7 @@ export async function generateShareImage() {
 
     // Title with emoji
     ctx.font = 'bold 64px Arial, sans-serif';
-    ctx.fillText('🎉 Rauchfrei!', 540, 140);
+    ctx.fillText(`🎉 ${tr('badge.smokeFree', 'Rauchfrei!')}`, 540, 140);
 
     // Username
     ctx.font = '36px Arial, sans-serif';
@@ -336,7 +347,7 @@ export async function generateShareImage() {
     ctx.fillText(stats.days.toString(), 540, 420);
 
     ctx.font = '48px Arial, sans-serif';
-    ctx.fillText('Tage rauchfrei', 540, 490);
+    ctx.fillText(tr('badge.daysSmokeFree', 'Tage rauchfrei'), 540, 490);
 
     // Stats row
     const statsY = 620;
@@ -346,7 +357,7 @@ export async function generateShareImage() {
     ctx.fillText(`${stats.money.toFixed(0)}€`, 270, statsY);
     ctx.font = '28px Arial, sans-serif';
     ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
-    ctx.fillText('gespart', 270, statsY + 40);
+    ctx.fillText(tr('badge.saved', 'gespart'), 270, statsY + 40);
 
     // Cigarettes avoided
     ctx.fillStyle = 'white';
@@ -354,23 +365,23 @@ export async function generateShareImage() {
     ctx.fillText(stats.cigarettes.toString(), 810, statsY);
     ctx.font = '28px Arial, sans-serif';
     ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
-    ctx.fillText('Zigaretten vermieden', 810, statsY + 40);
+    ctx.fillText(tr('badge.cigarettesAvoided', 'Zigaretten vermieden'), 810, statsY + 40);
 
     // Life gained
     ctx.fillStyle = 'white';
     ctx.font = 'bold 48px Arial, sans-serif';
-    ctx.fillText(`❤️ ${stats.lifeGained.totalHours}h Lebenszeit gewonnen`, 540, 780);
+    ctx.fillText(`❤️ ${stats.lifeGained.totalHours}h ${tr('badge.lifeGained', 'Lebenszeit gewonnen')}`, 540, 780);
 
     // Lung health
     ctx.font = '36px Arial, sans-serif';
     ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-    ctx.fillText(`🫁 Lungengesundheit: ${stats.lungHealth}%`, 540, 850);
+    ctx.fillText(`🫁 ${tr('badge.lungHealth', 'Lungengesundheit')}: ${stats.lungHealth}%`, 540, 850);
 
     // Footer
     ctx.font = '28px Arial, sans-serif';
     ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
-    ctx.fillText('Erstellt mit ByeByeSmoke', 540, 960);
-    ctx.fillText('tracker.hamied.de', 540, 1000);
+    ctx.fillText(tr('badge.createdWith', 'Erstellt mit ByeByeSmoke'), 540, 960);
+    ctx.fillText('byebyesmoke.de', 540, 1000);
 
     return canvas;
 }
@@ -384,7 +395,7 @@ export async function shareAsImage() {
         const badgeBtn = document.getElementById('generateBadgeBtn');
         if (badgeBtn) {
             badgeBtn.disabled = true;
-            badgeBtn.innerHTML = '<span class="btn-icon">⏳</span><div class="btn-content"><div class="btn-title">Erstelle Bild...</div></div>';
+            badgeBtn.innerHTML = `<span class="btn-icon">⏳</span><div class="btn-content"><div class="btn-title">${tr('share.creatingImage', 'Erstelle Bild...')}</div></div>`;
         }
 
         const canvas = await generateShareImage();
@@ -398,8 +409,8 @@ export async function shareAsImage() {
             try {
                 await navigator.share({
                     files: [file],
-                    title: 'Mein rauchfreier Erfolg',
-                    text: '🎉 Schau dir meinen Fortschritt an! #rauchfrei #byebyesmoke'
+                    title: tr('share.title', 'Mein rauchfreier Erfolg'),
+                    text: tr('share.imageText', '🎉 Schau dir meinen Fortschritt an! #rauchfrei #byebyesmoke')
                 });
                 console.log('[Share] Image shared via Web Share API');
             } catch (error) {
@@ -414,13 +425,13 @@ export async function shareAsImage() {
         }
     } catch (error) {
         console.error('[Share] Error creating share image:', error);
-        alert('Fehler beim Erstellen des Bildes: ' + error.message);
+        alert(tr('share.imageError', 'Fehler beim Erstellen des Bildes: {message}', { message: error.message }));
     } finally {
         // Reset button
         const badgeBtn = document.getElementById('generateBadgeBtn');
         if (badgeBtn) {
             badgeBtn.disabled = false;
-            badgeBtn.innerHTML = '<span class="btn-icon">🏆</span><div class="btn-content"><div class="btn-title">Erfolgs-Badge erstellen</div><div class="btn-description">Erstelle ein Badge mit deinen Statistiken</div></div>';
+            badgeBtn.innerHTML = `<span class="btn-icon">🏆</span><div class="btn-content"><div class="btn-title">${tr('badge.createTitle', 'Erfolgs-Badge erstellen')}</div><div class="btn-description">${tr('badge.createDesc', 'Erstelle ein Badge mit deinen Statistiken')}</div></div>`;
         }
     }
 }
@@ -438,7 +449,7 @@ function downloadCanvas(canvas) {
     document.body.removeChild(a);
 
     console.log('[Share] Image downloaded as PNG');
-    alert('📸 Dein Erfolgs-Bild wurde heruntergeladen!\n\nDu kannst es jetzt auf Instagram, WhatsApp, Facebook oder wo du möchtest teilen.');
+    alert(tr('share.imageDownloaded', '📸 Dein Erfolgs-Bild wurde heruntergeladen!\n\nDu kannst es jetzt auf Instagram, WhatsApp, Facebook oder wo du möchtest teilen.'));
 }
 
 /**
@@ -447,11 +458,11 @@ function downloadCanvas(canvas) {
 async function exportPdf() {
     const stats = calculateStats();
     const user = auth.currentUser;
-    const username = user?.displayName || 'Benutzer';
+    const username = user?.displayName || tr('pdf.user', 'Benutzer');
 
     // Check if jsPDF is loaded
     if (typeof window.jspdf === 'undefined') {
-        alert('PDF-Bibliothek wird geladen, bitte versuche es erneut.');
+        alert(tr('pdf.libraryLoading', 'PDF-Bibliothek wird geladen, bitte versuche es erneut.'));
         return;
     }
 
@@ -475,13 +486,13 @@ async function exportPdf() {
 
     doc.setFontSize(14);
     doc.setFont('helvetica', 'normal');
-    doc.text('Dein Rauchfrei-Report', 105, 35, { align: 'center' });
+    doc.text(tr('pdf.subtitle', 'Dein Rauchfrei-Report'), 105, 35, { align: 'center' });
 
     // User info
     doc.setTextColor(...darkColor);
     doc.setFontSize(12);
-    doc.text(`Erstellt für: ${username}`, 20, 65);
-    doc.text(`Datum: ${new Date().toLocaleDateString('de-DE')}`, 20, 72);
+    doc.text(`${tr('pdf.createdFor', 'Erstellt für')}: ${username}`, 20, 65);
+    doc.text(`${tr('pdf.date', 'Datum')}: ${new Date().toLocaleDateString('de-DE')}`, 20, 72);
 
     // Main Statistics Box
     doc.setDrawColor(...primaryColor);
@@ -496,7 +507,7 @@ async function exportPdf() {
 
     doc.setFontSize(16);
     doc.setTextColor(...grayColor);
-    doc.text('Tage rauchfrei', 105, 130, { align: 'center' });
+    doc.text(tr('pdf.daysSmokeFree', 'Tage rauchfrei'), 105, 130, { align: 'center' });
 
     // Statistics Grid
     const startY = 160;
@@ -505,9 +516,9 @@ async function exportPdf() {
     // Row 1
     doc.setFontSize(10);
     doc.setTextColor(...grayColor);
-    doc.text('Geld gespart', 20 + colWidth/2, startY, { align: 'center' });
-    doc.text('Zigaretten vermieden', 80 + colWidth/2, startY, { align: 'center' });
-    doc.text('Lebenszeit gewonnen', 140 + colWidth/2, startY, { align: 'center' });
+    doc.text(tr('pdf.moneySaved', 'Geld gespart'), 20 + colWidth/2, startY, { align: 'center' });
+    doc.text(tr('pdf.cigarettesAvoided', 'Zigaretten vermieden'), 80 + colWidth/2, startY, { align: 'center' });
+    doc.text(tr('pdf.lifeGained', 'Lebenszeit gewonnen'), 140 + colWidth/2, startY, { align: 'center' });
 
     doc.setFontSize(18);
     doc.setTextColor(...darkColor);
@@ -521,9 +532,9 @@ async function exportPdf() {
     doc.setFontSize(10);
     doc.setTextColor(...grayColor);
     doc.setFont('helvetica', 'normal');
-    doc.text('Lungengesundheit', 20 + colWidth/2, row2Y, { align: 'center' });
-    doc.text('Zeit gespart', 80 + colWidth/2, row2Y, { align: 'center' });
-    doc.text('CO₂ vermieden', 140 + colWidth/2, row2Y, { align: 'center' });
+    doc.text(tr('pdf.lungHealth', 'Lungengesundheit'), 20 + colWidth/2, row2Y, { align: 'center' });
+    doc.text(tr('pdf.timeSaved', 'Zeit gespart'), 80 + colWidth/2, row2Y, { align: 'center' });
+    doc.text(tr('pdf.co2Avoided', 'CO2 vermieden'), 140 + colWidth/2, row2Y, { align: 'center' });
 
     doc.setFontSize(18);
     doc.setTextColor(...darkColor);
@@ -536,24 +547,24 @@ async function exportPdf() {
     doc.setFontSize(14);
     doc.setTextColor(...primaryColor);
     doc.setFont('helvetica', 'bold');
-    doc.text('Umwelt-Impact', 20, 230);
+    doc.text(tr('pdf.environmentImpact', 'Umwelt-Impact'), 20, 230);
 
     doc.setFontSize(11);
     doc.setTextColor(...darkColor);
     doc.setFont('helvetica', 'normal');
-    doc.text(`Wasser gespart: ${stats.waterSaved.toLocaleString('de-DE')} Liter`, 25, 240);
-    doc.text(`Bäume gerettet: ${(stats.cigarettes / 300).toFixed(1)}`, 25, 248);
-    doc.text(`CO₂ vermieden: ${stats.co2Avoided.toFixed(2)} kg`, 25, 256);
+    doc.text(`${tr('pdf.waterSaved', 'Wasser gespart')}: ${stats.waterSaved.toLocaleString('de-DE')} ${tr('pdf.liters', 'Liter')}`, 25, 240);
+    doc.text(`${tr('pdf.treesSaved', 'Bäume gerettet')}: ${(stats.cigarettes / 300).toFixed(1)}`, 25, 248);
+    doc.text(`${tr('pdf.co2Avoided', 'CO2 vermieden')}: ${stats.co2Avoided.toFixed(2)} kg`, 25, 256);
 
     // Footer
     doc.setFontSize(9);
     doc.setTextColor(...grayColor);
-    doc.text('Erstellt mit ByeByeSmoke - tracker.hamied.de', 105, 285, { align: 'center' });
+    doc.text(tr('pdf.footer', 'Erstellt mit ByeByeSmoke - byebyesmoke.de'), 105, 285, { align: 'center' });
 
     // Save PDF
     doc.save(`byebyesmoke-report-${new Date().toISOString().split('T')[0]}.pdf`);
 
     console.log('[PDF] Report generated');
-    alert('📄 Dein PDF-Report wurde erstellt und heruntergeladen!');
+    alert(tr('pdf.downloadSuccess', '📄 Dein PDF-Report wurde erstellt und heruntergeladen!'));
 }
 

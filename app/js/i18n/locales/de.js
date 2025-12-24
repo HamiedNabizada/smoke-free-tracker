@@ -34,7 +34,75 @@ export default {
         banner: 'Demo-Modus aktiv',
         hint: 'Alle Daten sind Beispieldaten.',
         register: 'Jetzt registrieren',
-        login: 'Anmelden'
+        login: 'Anmelden',
+        actionBlocked: '{operation} ist im Test-Modus nicht möglich.\n\nRegistriere dich kostenlos, um alle Funktionen zu nutzen!'
+    },
+
+    // Authentication
+    auth: {
+        notLoggedIn: 'Nicht angemeldet',
+        registerFailed: 'Registrierung fehlgeschlagen',
+        usernameTaken: 'Benutzername bereits vergeben',
+        passwordWeak: 'Passwort zu schwach (mindestens 6 Zeichen)',
+        loginFailed: 'Login fehlgeschlagen',
+        invalidCredentials: 'Ungültiger Benutzername oder Passwort',
+        invalidUsername: 'Ungültiger Benutzername',
+        logoutFailed: 'Logout fehlgeschlagen',
+        userDataNotFound: 'Benutzerdaten nicht gefunden',
+        saveDataAction: 'Daten speichern',
+        deleteAccountAction: 'Account löschen',
+        deleteConfirm: 'Bist du sicher, dass du deinen Account löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden!',
+        deleteSuccess: 'Account erfolgreich gelöscht',
+        deleteReloginRequired: 'Bitte melde dich erneut an, um deinen Account zu löschen.',
+        deleteError: 'Fehler beim Löschen des Accounts: {message}'
+    },
+
+    // Rate limiting
+    rateLimit: {
+        limitReachedToast: 'Tageslimit erreicht ({limit}x). Versuche es morgen wieder.',
+        limitReachedAlert: 'Du hast das Tageslimit für diese Aktion erreicht ({limit}x pro Tag).\n\nVersuche es morgen wieder.',
+        lastChangeToast: 'Letzte Änderung für heute - App bleibt so kostenlos!',
+        lastChangeAlert: 'Hinweis: Das ist deine letzte Änderung für heute.\n\nUm die App kostenlos zu halten, ist die Anzahl der Speichervorgänge pro Tag begrenzt ({limit}x).',
+        cravingLimitReached: 'Tageslimit erreicht - Timer funktioniert, wird aber nicht mehr gezählt'
+    },
+
+    // Network status
+    network: {
+        noConnection: 'Keine Internetverbindung',
+        offlineWarning: 'Offline - Änderungen werden nicht gespeichert',
+        backOnline: 'Wieder online',
+        connectionProblem: 'Verbindungsproblem'
+    },
+
+    // Login
+    login: {
+        button: 'Anmelden',
+        loggingIn: 'Anmelden...',
+        tooManyAttempts: 'Zu viele Login-Versuche. Bitte warte {time}.',
+        tooManyFailed: 'Zu viele fehlgeschlagene Versuche. Bitte warte {time}.',
+        attemptsRemaining: '{count} Versuche übrig',
+        loadingDemo: 'Lade Demo...',
+        tryDemo: 'Erst mal ausprobieren',
+        demoNotSetup: 'Demo-Account ist noch nicht eingerichtet. Bitte kontaktiere den Support.',
+        demoError: 'Fehler beim Demo-Login: {message}'
+    },
+
+    // Register
+    register: {
+        button: 'Registrieren',
+        registering: 'Registriere...',
+        tooManyAttempts: 'Zu viele Registrierungsversuche. Bitte warte {time}.',
+        tooManyFailed: 'Zu viele fehlgeschlagene Versuche. Bitte warte {time}.',
+        attemptsRemaining: '{count} Versuche übrig',
+        validation: {
+            usernameLength: 'Benutzername muss zwischen 3 und 50 Zeichen lang sein',
+            usernameChars: 'Benutzername darf nur Buchstaben, Zahlen, _ und - enthalten',
+            quitDateFuture: 'Rauchstopp-Datum darf nicht in der Zukunft liegen',
+            cigarettesPerDay: 'Zigaretten pro Tag muss zwischen 1 und 200 liegen',
+            pricePerPack: 'Preis pro Packung muss mindestens 0 sein',
+            cigarettesPerPack: 'Zigaretten pro Packung muss zwischen 1 und 100 liegen',
+            passwordLength: 'Passwort muss mindestens 6 Zeichen lang sein'
+        }
     },
 
     // Dashboard / Overview
@@ -532,6 +600,10 @@ export default {
         cigarettesPerPack: 'Zigaretten pro Packung',
         notifications: 'Benachrichtigungen aktivieren',
         save: 'Speichern',
+        saving: 'Speichern...',
+        saveSuccess: 'Daten erfolgreich gespeichert! Die Seite wird neu geladen.',
+        saveError: 'Fehler beim Speichern der Daten: {message}',
+        logoutError: 'Logout fehlgeschlagen. Bitte versuche es erneut.',
         cancel: 'Abbrechen',
         dataManagement: 'Datenverwaltung',
         exportData: 'Daten exportieren',
@@ -543,6 +615,83 @@ export default {
         deleteAccount: 'Account löschen',
         deleteAccountDesc: 'Lösche deinen Account und alle Daten',
         deleteConfirm: 'Bist du sicher? Diese Aktion kann nicht rückgängig gemacht werden.'
+    },
+
+    // Data Export
+    dataExport: {
+        notLoggedIn: 'Du musst eingeloggt sein um Daten zu exportieren.',
+        exportSuccess: 'Deine Daten wurden erfolgreich heruntergeladen!',
+        exportError: 'Fehler beim Exportieren der Daten: {message}'
+    },
+
+    // Share
+    share: {
+        title: 'Mein rauchfreier Erfolg',
+        successText: '🎉 Ich bin seit {days} Tagen rauchfrei!\n\n💰 Gespart: {money}€\n🚭 Zigaretten vermieden: {cigarettes}\n❤️ Lebenszeit gewonnen: {hours} Stunden\n\n#rauchfrei #byebyesmoke',
+        copiedToClipboard: '📋 Text wurde in die Zwischenablage kopiert!\n\nDu kannst ihn jetzt in WhatsApp, Facebook oder wo du möchtest einfügen.',
+        modalTitle: 'Teile deinen Erfolg',
+        creatingImage: 'Erstelle Bild...',
+        imageText: '🎉 Schau dir meinen Fortschritt an! #rauchfrei #byebyesmoke',
+        imageError: 'Fehler beim Erstellen des Bildes: {message}',
+        imageDownloaded: '📸 Dein Erfolgs-Bild wurde heruntergeladen!\n\nDu kannst es jetzt auf Instagram, WhatsApp, Facebook oder wo du möchtest teilen.'
+    },
+
+    // Badge
+    badge: {
+        smokeFree: 'Rauchfrei!',
+        anonymousHero: 'Anonymer Held',
+        days: 'Tage',
+        smokeFreeSub: 'rauchfrei',
+        daysSmokeFree: 'Tage rauchfrei',
+        saved: 'gespart',
+        cigarettesAvoided: 'Zigaretten vermieden',
+        lifeGained: 'Lebenszeit gewonnen',
+        lungHealth: 'Lungengesundheit',
+        createdWith: 'Erstellt mit ByeByeSmoke',
+        downloadSuccess: '🏆 Dein Erfolgs-Badge wurde heruntergeladen!\n\nDu kannst es jetzt als Profilbild, Wallpaper oder zum Teilen verwenden.',
+        createTitle: 'Erfolgs-Badge erstellen',
+        createDesc: 'Erstelle ein Badge mit deinen Statistiken'
+    },
+
+    // PDF Report
+    pdf: {
+        user: 'Benutzer',
+        libraryLoading: 'PDF-Bibliothek wird geladen, bitte versuche es erneut.',
+        subtitle: 'Dein Rauchfrei-Report',
+        createdFor: 'Erstellt für',
+        date: 'Datum',
+        daysSmokeFree: 'Tage rauchfrei',
+        moneySaved: 'Geld gespart',
+        cigarettesAvoided: 'Zigaretten vermieden',
+        lifeGained: 'Lebenszeit gewonnen',
+        lungHealth: 'Lungengesundheit',
+        timeSaved: 'Zeit gespart',
+        co2Avoided: 'CO2 vermieden',
+        environmentImpact: 'Umwelt-Impact',
+        waterSaved: 'Wasser gespart',
+        liters: 'Liter',
+        treesSaved: 'Bäume gerettet',
+        footer: 'Erstellt mit ByeByeSmoke - byebyesmoke.de',
+        downloadSuccess: '📄 Dein PDF-Report wurde erstellt und heruntergeladen!'
+    },
+
+    // Heatmap
+    heatmap: {
+        loading: 'Lade Heatmap...',
+        dataUnavailable: 'Heatmap-Daten nicht verfügbar',
+        noData: 'Noch keine Verlangen-Daten vorhanden.',
+        hint: 'Nutze den Craving-Timer, um deine Verlangen zu tracken.',
+        loadError: 'Fehler beim Laden der Heatmap',
+        cravings: 'Verlangen',
+        less: 'Weniger',
+        more: 'Mehr',
+        insights: 'Erkenntnisse',
+        total: 'Gesamt',
+        cravingsLast30Days: 'Verlangen in den letzten 30 Tagen',
+        peakDay: 'Höchstes Verlangen am <strong>{day}</strong>',
+        peakTime: 'Kritischste Uhrzeit: <strong>{time}</strong>',
+        noCravings: 'Kein Verlangen am <strong>{day}</strong> - gut gemacht!',
+        notEnoughData: 'Noch nicht genug Daten für Erkenntnisse'
     },
 
     // Tutorial
@@ -615,7 +764,16 @@ export default {
         years: '{count} Jahre',
         remaining: 'Noch {time}',
         ago: 'vor {time}',
-        in: 'in {time}'
+        in: 'in {time}',
+        dayNamesShort: {
+            sunday: 'So',
+            monday: 'Mo',
+            tuesday: 'Di',
+            wednesday: 'Mi',
+            thursday: 'Do',
+            friday: 'Fr',
+            saturday: 'Sa'
+        }
     },
 
     // Common

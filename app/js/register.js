@@ -4,6 +4,16 @@
 
 import { checkRateLimit, recordFailedAttempt, recordSuccessfulAttempt, formatRemainingTime } from './utils/rate-limiter.js';
 import { registerUser } from './firebase-auth.js';
+import { t, isInitialized } from './i18n/i18n.js';
+
+// Helper for translation with fallback
+function tr(key, fallback, params = {}) {
+    if (isInitialized()) {
+        const translated = t(key, params);
+        if (translated !== key) return translated;
+    }
+    return fallback.replace(/\{(\w+)\}/g, (match, p) => params[p] !== undefined ? params[p] : match);
+}
 
 const form = document.getElementById('registerForm');
 const errorMessage = document.getElementById('errorMessage');
@@ -21,7 +31,7 @@ form.addEventListener('submit', async (e) => {
     const rateLimitCheck = checkRateLimit('register');
     if (!rateLimitCheck.allowed) {
         const timeRemaining = formatRemainingTime(rateLimitCheck.remainingMinutes);
-        errorMessage.textContent = `Zu viele Registrierungsversuche. Bitte warte ${timeRemaining}.`;
+        errorMessage.textContent = tr('register.tooManyAttempts', 'Zu viele Registrierungsversuche. Bitte warte {time}.', { time: timeRemaining });
         errorMessage.style.display = 'block';
         return;
     }
@@ -35,7 +45,7 @@ form.addEventListener('submit', async (e) => {
 
     // Validation
     if (username.length < 3 || username.length > 50) {
-        errorMessage.textContent = 'Benutzername muss zwischen 3 und 50 Zeichen lang sein';
+        errorMessage.textContent = tr('register.validation.usernameLength', 'Benutzername muss zwischen 3 und 50 Zeichen lang sein');
         errorMessage.style.display = 'block';
         return;
     }
@@ -43,7 +53,7 @@ form.addEventListener('submit', async (e) => {
     // Username: nur Buchstaben, Zahlen, Unterstrich und Bindestrich
     const usernameRegex = /^[a-zA-Z0-9_-]+$/;
     if (!usernameRegex.test(username)) {
-        errorMessage.textContent = 'Benutzername darf nur Buchstaben, Zahlen, _ und - enthalten';
+        errorMessage.textContent = tr('register.validation.usernameChars', 'Benutzername darf nur Buchstaben, Zahlen, _ und - enthalten');
         errorMessage.style.display = 'block';
         return;
     }
@@ -52,41 +62,41 @@ form.addEventListener('submit', async (e) => {
     const quitDate = new Date(quit_date);
     const nowCheck = new Date();
     if (quitDate > nowCheck) {
-        errorMessage.textContent = 'Rauchstopp-Datum darf nicht in der Zukunft liegen';
+        errorMessage.textContent = tr('register.validation.quitDateFuture', 'Rauchstopp-Datum darf nicht in der Zukunft liegen');
         errorMessage.style.display = 'block';
         return;
     }
 
     // Cigarettes per day: 1-200
     if (isNaN(cigarettes_per_day) || cigarettes_per_day < 1 || cigarettes_per_day > 200) {
-        errorMessage.textContent = 'Zigaretten pro Tag muss zwischen 1 und 200 liegen';
+        errorMessage.textContent = tr('register.validation.cigarettesPerDay', 'Zigaretten pro Tag muss zwischen 1 und 200 liegen');
         errorMessage.style.display = 'block';
         return;
     }
 
     // Price: >= 0
     if (isNaN(price_per_pack) || price_per_pack < 0) {
-        errorMessage.textContent = 'Preis pro Packung muss mindestens 0 sein';
+        errorMessage.textContent = tr('register.validation.pricePerPack', 'Preis pro Packung muss mindestens 0 sein');
         errorMessage.style.display = 'block';
         return;
     }
 
     // Cigarettes per pack: 1-100
     if (isNaN(cigarettes_per_pack) || cigarettes_per_pack < 1 || cigarettes_per_pack > 100) {
-        errorMessage.textContent = 'Zigaretten pro Packung muss zwischen 1 und 100 liegen';
+        errorMessage.textContent = tr('register.validation.cigarettesPerPack', 'Zigaretten pro Packung muss zwischen 1 und 100 liegen');
         errorMessage.style.display = 'block';
         return;
     }
 
     if (password.length < 6) {
-        errorMessage.textContent = 'Passwort muss mindestens 6 Zeichen lang sein';
+        errorMessage.textContent = tr('register.validation.passwordLength', 'Passwort muss mindestens 6 Zeichen lang sein');
         errorMessage.style.display = 'block';
         return;
     }
 
     errorMessage.style.display = 'none';
     registerBtn.disabled = true;
-    registerBtn.textContent = 'Registriere...';
+    registerBtn.textContent = tr('register.registering', 'Registriere...');
 
     try {
         await registerUser(username, password, {
@@ -105,13 +115,13 @@ form.addEventListener('submit', async (e) => {
         const newCheck = checkRateLimit('register');
         if (!newCheck.allowed) {
             const timeRemaining = formatRemainingTime(newCheck.remainingMinutes);
-            errorMessage.textContent = `Zu viele fehlgeschlagene Versuche. Bitte warte ${timeRemaining}.`;
+            errorMessage.textContent = tr('register.tooManyFailed', 'Zu viele fehlgeschlagene Versuche. Bitte warte {time}.', { time: timeRemaining });
         } else {
-            errorMessage.textContent = error.message + ` (${newCheck.remainingAttempts} Versuche übrig)`;
+            errorMessage.textContent = error.message + ` (${tr('register.attemptsRemaining', '{count} Versuche übrig', { count: newCheck.remainingAttempts })})`;
         }
 
         errorMessage.style.display = 'block';
         registerBtn.disabled = false;
-        registerBtn.textContent = 'Registrieren';
+        registerBtn.textContent = tr('register.button', 'Registrieren');
     }
 });

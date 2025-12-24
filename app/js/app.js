@@ -17,7 +17,7 @@ import { initializeLotusPreview } from './ui/lotus.js';
 import { initializeOfflineQueue } from './utils/offline-queue.js';
 import { initializePerformanceMonitoring } from './utils/performance.js';
 import { setUserData } from './config.js';
-import { checkAuth, getUserData, logoutUser, isDemoMode } from './firebase-auth.js';
+import { checkAuth, getUserData, updateUserData, logoutUser, isDemoMode, deleteAccount } from './firebase-auth.js';
 
 // Register Service Worker for PWA functionality
 if ('serviceWorker' in navigator) {
@@ -87,8 +87,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 await logoutUser();
                 window.location.href = 'login.html';
             } catch (error) {
-                console.error('Logout Fehler:', error);
-                alert('Logout fehlgeschlagen. Bitte versuche es erneut.');
+                console.error('Logout error:', error);
+                alert(t('settings.logoutError'));
             }
         });
     }
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 const submitBtn = settingsDataForm.querySelector('.save-settings-btn');
                 submitBtn.disabled = true;
-                submitBtn.textContent = 'Speichern...';
+                submitBtn.textContent = t('settings.saving');
 
                 try {
                     const updates = {
@@ -159,13 +159,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                     setUserData(updates);
 
                     // Reload page to update all statistics
-                    alert('Daten erfolgreich gespeichert! Die Seite wird neu geladen.');
+                    alert(t('settings.saveSuccess'));
                     window.location.reload();
                 } catch (error) {
                     console.error('Error updating user data:', error);
-                    alert('Fehler beim Speichern der Daten: ' + error.message);
+                    alert(t('settings.saveError', { message: error.message }));
                     submitBtn.disabled = false;
-                    submitBtn.textContent = 'Speichern';
+                    submitBtn.textContent = t('settings.save');
                 }
             });
         }
