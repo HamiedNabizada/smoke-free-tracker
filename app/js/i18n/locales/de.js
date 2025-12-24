@@ -769,6 +769,11 @@ export default {
                 games: '🎮 Spiele'
             }
         },
+        // Exercise prompt section (HTML data-i18n keys)
+        exercise: {
+            badge: 'Sofort-Hilfe',
+            source: 'Bewegung reduziert Verlangen sofort (12 Studien)'
+        },
         // Breathing exercises (HTML data-i18n keys)
         breathing: {
             title: 'Atemübungen',
@@ -849,13 +854,38 @@ export default {
             healing: 'Dein Körper heilt sich gerade. Jede Sekunde zählt!',
             achieved: 'Du hast schon so viel geschafft. Gib jetzt nicht auf!',
             stronger: 'Jedes überwundene Verlangen macht dich stärker!',
-            roleModel: 'Du bist ein Vorbild für andere. Bleib stark!',
-            // Exercise prompts - evidence: 12 studies show up to 50 min reduced cravings (smokefree.gov)
-            squats: 'Mach jetzt 10 Kniebeugen! Bewegung reduziert Verlangen sofort.',
-            stairs: 'Lauf eine Treppe hoch und runter - das hilft wissenschaftlich belegt!',
-            stretch: 'Strecke dich 1 Minute lang. Arme hoch, zur Seite, nach vorne!',
-            walk: 'Geh 2 Minuten auf der Stelle. Jede Bewegung zählt!',
-            pushups: 'Schaffst du 5 Liegestütze? Oder gegen die Wand? Probier es!'
+            roleModel: 'Du bist ein Vorbild für andere. Bleib stark!'
+        },
+        // Exercise prompts - evidence: 12 studies show up to 50 min reduced cravings
+        // Source: https://smokefree.gov/challenges-when-quitting/cravings-triggers/fight-cravings-exercise
+        exercise: {
+            // Quick exercises (10-30 seconds)
+            squats: 'Mach jetzt 10 Kniebeugen!',
+            pushups: '5 Liegestütze - auch gegen die Wand!',
+            lunges: '10 Ausfallschritte - 5 pro Bein!',
+            jumpingJacks: '15 Hampelmänner - los geht\'s!',
+            calfRaises: '20 Wadenheben - auf die Zehenspitzen!',
+            // Movement (1-2 minutes)
+            walkInPlace: '2 Minuten auf der Stelle gehen!',
+            jogging: '1 Minute auf der Stelle joggen!',
+            stairs: 'Lauf eine Treppe hoch und runter!',
+            walkAround: 'Geh einmal um den Block - frische Luft hilft!',
+            officeWalk: 'Steh auf und geh 2 Minuten durch den Raum!',
+            // Stretching
+            stretchArms: 'Arme hoch strecken und 30 Sek. halten!',
+            neckRolls: 'Kopf langsam kreisen - Nacken lockern!',
+            shoulderRolls: 'Schultern 10x nach hinten kreisen!',
+            tipToes: 'Auf Zehenspitzen stehen, 20 Sek. halten!',
+            touchToes: 'Versuch deine Zehen zu berühren - 30 Sek.!',
+            // Chair/desk exercises
+            chairSquats: 'Aufstehen, hinsetzen - 10x ohne Hände!',
+            legLifts: 'Sitzend: Beine 10x anheben und strecken!',
+            deskPushups: '5 Liegestütze gegen die Tischkante!',
+            wallSit: '30 Sekunden Wandsitzen - hältst du durch?',
+            // Fun/dance
+            dance: 'Tanz 1 Minute zu deinem Lieblingslied!',
+            jumpToMusic: 'Spring 30 Sek. zur Musik - egal wie!',
+            shakeItOff: 'Schüttel dich 30 Sek. komplett aus!'
         },
         breathing: {
             inhale: 'Einatmen',

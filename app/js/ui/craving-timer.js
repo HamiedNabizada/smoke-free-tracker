@@ -27,15 +27,49 @@ function getCravingTips() {
         { icon: '💚', text: tr('cravingTimer.tips.healing', 'Dein Körper heilt sich gerade. Jede Sekunde zählt!') },
         { icon: '🏆', text: tr('cravingTimer.tips.achieved', 'Du hast schon so viel geschafft. Gib jetzt nicht auf!') },
         { icon: '⭐', text: tr('cravingTimer.tips.stronger', 'Jedes überwundene Verlangen macht dich stärker!') },
-        { icon: '🌟', text: tr('cravingTimer.tips.roleModel', 'Du bist ein Vorbild für andere. Bleib stark!') },
-        // Exercise prompts - evidence: 12 studies show up to 50 min reduced cravings after short exercise
-        { icon: '🏃', text: tr('cravingTimer.tips.squats', 'Mach jetzt 10 Kniebeugen! Bewegung reduziert Verlangen sofort.'), isExercise: true },
-        { icon: '🦵', text: tr('cravingTimer.tips.stairs', 'Lauf eine Treppe hoch und runter - das hilft wissenschaftlich belegt!'), isExercise: true },
-        { icon: '🙆', text: tr('cravingTimer.tips.stretch', 'Strecke dich 1 Minute lang. Arme hoch, zur Seite, nach vorne!'), isExercise: true },
-        { icon: '🚶', text: tr('cravingTimer.tips.walk', 'Geh 2 Minuten auf der Stelle. Jede Bewegung zählt!'), isExercise: true },
-        { icon: '💪', text: tr('cravingTimer.tips.pushups', 'Schaffst du 5 Liegestütze? Oder gegen die Wand? Probier es!'), isExercise: true }
+        { icon: '🌟', text: tr('cravingTimer.tips.roleModel', 'Du bist ein Vorbild für andere. Bleib stark!') }
     ];
 }
+
+// Exercise prompts - evidence: 12 studies show up to 50 min reduced cravings after short exercise
+// Source: https://smokefree.gov/challenges-when-quitting/cravings-triggers/fight-cravings-exercise
+function getExercisePrompts() {
+    return [
+        // Quick exercises (10-30 seconds)
+        { icon: '🏃', text: tr('cravingTimer.exercise.squats', 'Mach jetzt 10 Kniebeugen!') },
+        { icon: '💪', text: tr('cravingTimer.exercise.pushups', '5 Liegestütze - auch gegen die Wand!') },
+        { icon: '🦵', text: tr('cravingTimer.exercise.lunges', '10 Ausfallschritte - 5 pro Bein!') },
+        { icon: '🙆', text: tr('cravingTimer.exercise.jumpingJacks', '15 Hampelmänner - los geht\'s!') },
+        { icon: '🧍', text: tr('cravingTimer.exercise.calfRaises', '20 Wadenheben - auf die Zehenspitzen!') },
+
+        // Movement (1-2 minutes)
+        { icon: '🚶', text: tr('cravingTimer.exercise.walkInPlace', '2 Minuten auf der Stelle gehen!') },
+        { icon: '🏃', text: tr('cravingTimer.exercise.jogging', '1 Minute auf der Stelle joggen!') },
+        { icon: '🦵', text: tr('cravingTimer.exercise.stairs', 'Lauf eine Treppe hoch und runter!') },
+        { icon: '🚪', text: tr('cravingTimer.exercise.walkAround', 'Geh einmal um den Block - frische Luft hilft!') },
+        { icon: '🏢', text: tr('cravingTimer.exercise.officeWalk', 'Steh auf und geh 2 Minuten durch den Raum!') },
+
+        // Stretching
+        { icon: '🙆', text: tr('cravingTimer.exercise.stretchArms', 'Arme hoch strecken und 30 Sek. halten!') },
+        { icon: '🧘', text: tr('cravingTimer.exercise.neckRolls', 'Kopf langsam kreisen - Nacken lockern!') },
+        { icon: '🔄', text: tr('cravingTimer.exercise.shoulderRolls', 'Schultern 10x nach hinten kreisen!') },
+        { icon: '⬆️', text: tr('cravingTimer.exercise.tipToes', 'Auf Zehenspitzen stehen, 20 Sek. halten!') },
+        { icon: '🙇', text: tr('cravingTimer.exercise.touchToes', 'Versuch deine Zehen zu berühren - 30 Sek.!') },
+
+        // Chair/desk exercises
+        { icon: '🪑', text: tr('cravingTimer.exercise.chairSquats', 'Aufstehen, hinsetzen - 10x ohne Hände!') },
+        { icon: '🦿', text: tr('cravingTimer.exercise.legLifts', 'Sitzend: Beine 10x anheben und strecken!') },
+        { icon: '🤚', text: tr('cravingTimer.exercise.deskPushups', '5 Liegestütze gegen die Tischkante!') },
+        { icon: '🧎', text: tr('cravingTimer.exercise.wallSit', '30 Sekunden Wandsitzen - hältst du durch?') },
+
+        // Fun/dance
+        { icon: '💃', text: tr('cravingTimer.exercise.dance', 'Tanz 1 Minute zu deinem Lieblingslied!') },
+        { icon: '🎵', text: tr('cravingTimer.exercise.jumpToMusic', 'Spring 30 Sek. zur Musik - egal wie!') },
+        { icon: '🤸', text: tr('cravingTimer.exercise.shakeItOff', 'Schüttel dich 30 Sek. komplett aus!') }
+    ];
+}
+
+let lastExerciseIndex = -1;
 
 // Breathing exercises
 function getBreathingExercises() {
@@ -111,8 +145,49 @@ export function initializeCravingTimer() {
     // Initialize breathing exercises
     initializeBreathingExercises();
 
+    // Initialize exercise prompt refresh button
+    initializeExercisePrompts();
+
     // Populate games list
     populateGamesList();
+}
+
+function initializeExercisePrompts() {
+    const refreshBtn = document.getElementById('exerciseRefreshBtn');
+    if (refreshBtn) {
+        refreshBtn.addEventListener('click', showRandomExercise);
+    }
+}
+
+function showRandomExercise() {
+    const exercises = getExercisePrompts();
+    const iconElement = document.getElementById('exercisePromptIcon');
+    const textElement = document.getElementById('exercisePromptText');
+
+    if (!iconElement || !textElement) return;
+
+    // Get a different exercise than the last one
+    let randomIndex;
+    do {
+        randomIndex = Math.floor(Math.random() * exercises.length);
+    } while (randomIndex === lastExerciseIndex && exercises.length > 1);
+
+    lastExerciseIndex = randomIndex;
+    const exercise = exercises[randomIndex];
+
+    // Animate the change
+    iconElement.style.opacity = '0';
+    textElement.style.opacity = '0';
+    iconElement.style.transform = 'scale(0.8)';
+
+    setTimeout(() => {
+        iconElement.textContent = exercise.icon;
+        textElement.textContent = exercise.text;
+
+        iconElement.style.opacity = '1';
+        textElement.style.opacity = '1';
+        iconElement.style.transform = 'scale(1)';
+    }, 200);
 }
 
 function initializeTabs() {
@@ -156,12 +231,8 @@ function initializeBreathingExercises() {
     if (urgeSurfingBtn) {
         urgeSurfingBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            console.log('[SOS] Urge Surfing button clicked');
             startUrgeSurfing();
         });
-        console.log('[SOS] Urge Surfing button listener attached');
-    } else {
-        console.warn('[SOS] Urge Surfing button not found');
     }
 }
 
@@ -219,16 +290,10 @@ let urgeSurfingTimeout = null;
 let urgeSurfingPhaseIndex = 0;
 
 function startUrgeSurfing() {
-    console.log('[SOS] startUrgeSurfing called');
-
     const optionsContainer = document.querySelector('.sos-breathing-options');
     const activeContainer = document.getElementById('sosBreathingActive');
 
-    console.log('[SOS] optionsContainer:', optionsContainer);
-    console.log('[SOS] activeContainer:', activeContainer);
-
     if (!optionsContainer || !activeContainer) {
-        console.error('[SOS] Missing containers for urge surfing');
         return;
     }
 
@@ -244,7 +309,6 @@ function startUrgeSurfing() {
         stopBtn.onclick = stopUrgeSurfing;
     }
 
-    console.log('[SOS] Starting urge surfing phases');
     runUrgeSurfingPhase();
 }
 
@@ -865,6 +929,9 @@ function endMemoryGame(container, moves) {
 function openSosHub() {
     const overlay = document.getElementById('cravingOverlay');
     overlay.classList.remove('hidden');
+
+    // Show a random exercise prompt
+    showRandomExercise();
 
     // Start timer immediately
     startCravingTimer();

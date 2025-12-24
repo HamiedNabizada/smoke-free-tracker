@@ -1109,3 +1109,131 @@
         font-size: 1.3rem;
     }
 }
+
+/* Exercise Prompt Section */
+.exercise-prompt-section {
+    background: linear-gradient(135deg, rgba(17, 153, 142, 0.3) 0%, rgba(56, 239, 125, 0.2) 100%);
+    border: 2px solid rgba(56, 239, 125, 0.4);
+    border-radius: 16px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.exercise-prompt-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.exercise-prompt-badge {
+    background: linear-gradient(135deg, #11998e, #38ef7d);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.25rem 0.6rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.exercise-prompt-refresh {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.exercise-prompt-refresh:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(180deg);
+}
+
+.exercise-prompt-refresh .refresh-icon {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.exercise-prompt-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.exercise-prompt-icon {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.exercise-prompt-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+    line-height: 1.4;
+    text-align: left;
+    transition: opacity 0.2s ease;
+}
+
+.exercise-prompt-source {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    font-style: italic;
+}
+
+/* Mobile responsive for exercise prompts */
+@media (max-width: 768px) {
+    .exercise-prompt-section {
+        padding: 0.85rem 1rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .exercise-prompt-badge {
+        font-size: 0.65rem;
+        padding: 0.2rem 0.5rem;
+    }
+
+    .exercise-prompt-refresh {
+        width: 28px;
+        height: 28px;
+    }
+
+    .exercise-prompt-refresh .refresh-icon {
+        font-size: 1rem;
+    }
+
+    .exercise-prompt-icon {
+        font-size: 2rem;
+    }
+
+    .exercise-prompt-text {
+        font-size: 0.95rem;
+    }
+
+    .exercise-prompt-source {
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 380px) {
+    .exercise-prompt-section {
+        padding: 0.75rem 0.85rem;
+    }
+
+    .exercise-prompt-icon {
+        font-size: 1.8rem;
+    }
+
+    .exercise-prompt-text {
+        font-size: 0.9rem;
+    }
+}

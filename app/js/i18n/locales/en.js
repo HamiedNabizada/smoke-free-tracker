@@ -624,6 +624,11 @@ export default {
                 games: '🎮 Games'
             }
         },
+        // Exercise prompt section (HTML data-i18n keys)
+        exercise: {
+            badge: 'Instant Help',
+            source: 'Exercise reduces cravings immediately (12 studies)'
+        },
         // Breathing exercises (HTML data-i18n keys)
         breathing: {
             title: 'Breathing Exercises',
@@ -704,13 +709,38 @@ export default {
             healing: 'Your body is healing right now. Every second counts!',
             achieved: 'You have already achieved so much. Don\'t give up now!',
             stronger: 'Every craving you overcome makes you stronger!',
-            roleModel: 'You are a role model for others. Stay strong!',
-            // Exercise prompts - evidence: 12 studies show up to 50 min reduced cravings (smokefree.gov)
-            squats: 'Do 10 squats now! Exercise reduces cravings instantly.',
-            stairs: 'Walk up and down a staircase - scientifically proven to help!',
-            stretch: 'Stretch for 1 minute. Arms up, to the sides, forward!',
-            walk: 'Walk in place for 2 minutes. Every movement counts!',
-            pushups: 'Can you do 5 push-ups? Or against the wall? Try it!'
+            roleModel: 'You are a role model for others. Stay strong!'
+        },
+        // Exercise prompts - evidence: 12 studies show up to 50 min reduced cravings
+        // Source: https://smokefree.gov/challenges-when-quitting/cravings-triggers/fight-cravings-exercise
+        exercise: {
+            // Quick exercises (10-30 seconds)
+            squats: 'Do 10 squats now!',
+            pushups: '5 push-ups - against the wall works too!',
+            lunges: '10 lunges - 5 per leg!',
+            jumpingJacks: '15 jumping jacks - let\'s go!',
+            calfRaises: '20 calf raises - up on your toes!',
+            // Movement (1-2 minutes)
+            walkInPlace: 'Walk in place for 2 minutes!',
+            jogging: 'Jog in place for 1 minute!',
+            stairs: 'Walk up and down a staircase!',
+            walkAround: 'Walk around the block - fresh air helps!',
+            officeWalk: 'Get up and walk around the room for 2 minutes!',
+            // Stretching
+            stretchArms: 'Reach your arms up and hold for 30 sec!',
+            neckRolls: 'Roll your head slowly - loosen your neck!',
+            shoulderRolls: 'Roll your shoulders backward 10 times!',
+            tipToes: 'Stand on your tiptoes for 20 seconds!',
+            touchToes: 'Try to touch your toes - 30 seconds!',
+            // Chair/desk exercises
+            chairSquats: 'Stand up, sit down - 10 times without hands!',
+            legLifts: 'Sitting: Lift and extend your legs 10 times!',
+            deskPushups: '5 push-ups against your desk edge!',
+            wallSit: '30 seconds wall sit - can you hold it?',
+            // Fun/dance
+            dance: 'Dance for 1 minute to your favorite song!',
+            jumpToMusic: 'Jump around to music for 30 seconds - any way!',
+            shakeItOff: 'Shake your whole body for 30 seconds!'
         },
         breathing: {
             inhale: 'Breathe in',
