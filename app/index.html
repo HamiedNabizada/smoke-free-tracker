@@ -23,8 +23,8 @@
 </head>
 <body>
     <!-- Skip Links for keyboard navigation -->
-    <a href="#dashboard" class="skip-link">Zum Hauptinhalt springen</a>
-    <a href="#tab-navigation" class="skip-link">Zur Navigation springen</a>
+    <a href="#dashboard" class="skip-link" data-i18n="accessibility.skipToContent">Zum Hauptinhalt springen</a>
+    <a href="#tab-navigation" class="skip-link" data-i18n="accessibility.skipToNav">Zur Navigation springen</a>
 
     <div class="container" role="application" aria-label="ByeByeSmoke Rauchstopp-Tracker">
         <header>
@@ -32,34 +32,35 @@
                 <img src="logo_small.png" alt="ByeByeSmoke Logo" class="logo-image" width="400" height="150">
             </div>
             <div class="header-buttons">
-                <button id="darkModeToggle" class="dark-mode-toggle" aria-label="Dark Mode umschalten">🌙</button>
-                <button id="tutorialBtn" class="tutorial-btn" aria-label="Hilfe & Anleitung">ℹ️</button>
-                <button id="settingsBtn" class="settings-btn" aria-label="Einstellungen">⚙️</button>
-                <button id="logoutBtn" class="logout-btn" aria-label="Abmelden">🚪</button>
+                <button id="languageToggle" class="language-toggle" data-i18n-aria="header.language" aria-label="Sprache wechseln">🇩🇪</button>
+                <button id="darkModeToggle" class="dark-mode-toggle" data-i18n-aria="header.darkMode" aria-label="Dark Mode umschalten">🌙</button>
+                <button id="tutorialBtn" class="tutorial-btn" data-i18n-aria="header.tutorial" aria-label="Hilfe & Anleitung">ℹ️</button>
+                <button id="settingsBtn" class="settings-btn" data-i18n-aria="header.settings" aria-label="Einstellungen">⚙️</button>
+                <button id="logoutBtn" class="logout-btn" data-i18n-aria="header.logout" aria-label="Abmelden">🚪</button>
             </div>
         </header>
 
         <!-- Tab Navigation -->
-        <nav class="tab-navigation" id="tab-navigation" role="tablist" aria-label="Hauptnavigation">
+        <nav class="tab-navigation" id="tab-navigation" role="tablist" data-i18n-aria="nav.mainNavigation" aria-label="Hauptnavigation">
             <button class="tab-button active" data-tab="overview" role="tab" aria-selected="true" aria-controls="panel-overview" id="tab-overview">
                 <span class="tab-icon" aria-hidden="true">📊</span>
-                <span class="tab-label">Übersicht</span>
+                <span class="tab-label" data-i18n="nav.overview">Übersicht</span>
             </button>
             <button class="tab-button" data-tab="milestones" role="tab" aria-selected="false" aria-controls="panel-milestones" id="tab-milestones">
                 <span class="tab-icon" aria-hidden="true">🏥</span>
-                <span class="tab-label">Meilensteine</span>
+                <span class="tab-label" data-i18n="nav.milestones">Meilensteine</span>
             </button>
             <button class="tab-button" data-tab="achievements" role="tab" aria-selected="false" aria-controls="panel-achievements" id="tab-achievements">
                 <span class="tab-icon" aria-hidden="true">🏆</span>
-                <span class="tab-label">Erfolge</span>
+                <span class="tab-label" data-i18n="nav.achievements">Erfolge</span>
             </button>
             <button class="tab-button" data-tab="statistics" role="tab" aria-selected="false" aria-controls="panel-statistics" id="tab-statistics">
                 <span class="tab-icon" aria-hidden="true">📈</span>
-                <span class="tab-label">Statistiken</span>
+                <span class="tab-label" data-i18n="nav.statistics">Statistiken</span>
             </button>
             <button class="tab-button" data-tab="help" role="tab" aria-selected="false" aria-controls="panel-help" id="tab-help">
                 <span class="tab-icon" aria-hidden="true">🆘</span>
-                <span class="tab-label">Hilfe</span>
+                <span class="tab-label" data-i18n="nav.help">Hilfe</span>
             </button>
         </nav>
 
@@ -75,8 +76,8 @@
 
                 <!-- Health Avatar -->
                 <div class="card health-avatar-card">
-                    <h2>🫁 Dein Körper erholt sich</h2>
-                    <p class="health-avatar-subtitle">Sieh live, wie sich dein Körper regeneriert!</p>
+                    <h2 data-i18n="dashboard.healthAvatar.title">🫁 Dein Körper erholt sich</h2>
+                    <p class="health-avatar-subtitle" data-i18n="dashboard.healthAvatar.subtitle">Sieh live, wie sich dein Körper regeneriert!</p>
 
                     <div class="health-avatar-container">
                         <!-- Tooltip -->
@@ -133,7 +134,7 @@
                             <div class="health-stat-item" data-organ="lungs">
                                 <div class="health-stat-icon">🫁</div>
                                 <div class="health-stat-content">
-                                    <div class="health-stat-label">Lungen</div>
+                                    <div class="health-stat-label" data-i18n="dashboard.healthAvatar.lungs">Lungen</div>
                                     <div class="health-stat-bar">
                                         <div class="health-stat-fill" id="lungRegenBar"></div>
                                     </div>
@@ -144,7 +145,7 @@
                             <div class="health-stat-item" data-organ="heart">
                                 <div class="health-stat-icon">❤️</div>
                                 <div class="health-stat-content">
-                                    <div class="health-stat-label">Herz</div>
+                                    <div class="health-stat-label" data-i18n="dashboard.healthAvatar.heart">Herz</div>
                                     <div class="health-stat-bar">
                                         <div class="health-stat-fill" id="heartRegenBar"></div>
                                     </div>
@@ -155,7 +156,7 @@
                             <div class="health-stat-item" data-organ="blood">
                                 <div class="health-stat-icon">🩸</div>
                                 <div class="health-stat-content">
-                                    <div class="health-stat-label">Blutkreislauf</div>
+                                    <div class="health-stat-label" data-i18n="dashboard.healthAvatar.blood">Blutkreislauf</div>
                                     <div class="health-stat-bar">
                                         <div class="health-stat-fill" id="bloodRegenBar"></div>
                                     </div>
@@ -166,7 +167,7 @@
                             <div class="health-stat-item" data-organ="skin">
                                 <div class="health-stat-icon">✨</div>
                                 <div class="health-stat-content">
-                                    <div class="health-stat-label">Haut</div>
+                                    <div class="health-stat-label" data-i18n="dashboard.healthAvatar.skin">Haut</div>
                                     <div class="health-stat-bar">
                                         <div class="health-stat-fill" id="skinRegenBar"></div>
                                     </div>
@@ -179,13 +180,13 @@
 
                 <!-- Next Milestone Progress -->
                 <div class="card">
-                    <h2>Nächstes Ziel</h2>
+                    <h2 data-i18n="dashboard.nextMilestone.title">Nächstes Ziel</h2>
                     <div id="nextMilestoneProgress"></div>
                 </div>
 
                 <!-- Progress Visualizations -->
                 <div class="card progress-visuals-card">
-                    <h2>Dein Fortschritt</h2>
+                    <h2 data-i18n="dashboard.progress.title">Dein Fortschritt</h2>
                     <div class="gauges-container">
                         <!-- Days Gauge -->
                         <div class="gauge-item">
@@ -201,7 +202,7 @@
                             </div>
                             <div class="gauge-label">
                                 <span class="gauge-icon">📅</span>
-                                <span class="gauge-title">Tage rauchfrei</span>
+                                <span class="gauge-title" data-i18n="dashboard.progress.daysSmokeFree">Tage rauchfrei</span>
                             </div>
                             <div class="gauge-goal" id="daysGoalText">Ziel: 365 Tage</div>
                         </div>
@@ -220,7 +221,7 @@
                             </div>
                             <div class="gauge-label">
                                 <span class="gauge-icon">💰</span>
-                                <span class="gauge-title">Geld gespart</span>
+                                <span class="gauge-title" data-i18n="dashboard.progress.moneySaved">Geld gespart</span>
                             </div>
                             <div class="gauge-goal" id="moneyGoalText">Ziel: 1000€</div>
                         </div>
@@ -239,7 +240,7 @@
                             </div>
                             <div class="gauge-label">
                                 <span class="gauge-icon">🚭</span>
-                                <span class="gauge-title">Zigaretten vermieden</span>
+                                <span class="gauge-title" data-i18n="dashboard.progress.cigarettesAvoided">Zigaretten vermieden</span>
                             </div>
                             <div class="gauge-goal" id="cigarettesGoalText">Ziel: 1000</div>
                         </div>
@@ -251,79 +252,79 @@
                 <div class="stat-card primary">
                     <div class="stat-icon">📅</div>
                     <div class="stat-value" id="daysSmokeFree">0</div>
-                    <div class="stat-label">Zeit rauchfrei</div>
-                    <div class="stat-info">Seit deinem Rauchstopp</div>
+                    <div class="stat-label" data-i18n="dashboard.stats.daysSmokeFree">Zeit rauchfrei</div>
+                    <div class="stat-info" data-i18n="dashboard.stats.daysSmokeFreeInfo">Seit deinem Rauchstopp</div>
                 </div>
                 <div class="stat-card success">
                     <div class="stat-icon">💰</div>
                     <div class="stat-value" id="moneySaved">0 €</div>
-                    <div class="stat-label">Geld gespart</div>
-                    <div class="stat-info">Basierend auf 12 Zig./Tag à 0,50€</div>
+                    <div class="stat-label" data-i18n="dashboard.stats.moneySaved">Geld gespart</div>
+                    <div class="stat-info" id="moneySavedInfo">Basierend auf 12 Zig./Tag à 0,50€</div>
                 </div>
                 <div class="stat-card info">
                     <div class="stat-icon">🚬</div>
                     <div class="stat-value" id="cigarettesNotSmoked">0</div>
-                    <div class="stat-label">Nicht geraucht</div>
-                    <div class="stat-info">12 Zigaretten pro Tag vermieden</div>
+                    <div class="stat-label" data-i18n="dashboard.stats.cigarettesNotSmoked">Nicht geraucht</div>
+                    <div class="stat-info" id="cigarettesNotSmokedInfo">12 Zigaretten pro Tag vermieden</div>
                 </div>
                 <div class="stat-card warning">
                     <div class="stat-icon">⏳</div>
                     <div class="stat-value" id="lifeGained">0</div>
-                    <div class="stat-label">Lebenszeit gewonnen</div>
-                    <div class="stat-info">17-22 Min pro Zigarette (Jackson 2025)</div>
+                    <div class="stat-label" data-i18n="dashboard.stats.lifeGained">Lebenszeit gewonnen</div>
+                    <div class="stat-info" data-i18n="dashboard.stats.lifeGainedInfo">17-22 Min pro Zigarette (Jackson 2025)</div>
                 </div>
                 <div class="stat-card danger">
                     <div class="stat-icon">☠️</div>
                     <div class="stat-value" id="toxinsAvoided">0 g</div>
-                    <div class="stat-label">Schadstoffe vermieden</div>
-                    <div class="stat-info">Nikotin, Teer & Co.</div>
+                    <div class="stat-label" data-i18n="dashboard.stats.toxinsAvoided">Schadstoffe vermieden</div>
+                    <div class="stat-info" data-i18n="dashboard.stats.toxinsAvoidedInfo">Nikotin, Teer & Co.</div>
                 </div>
                 <div class="stat-card health">
                     <div class="stat-icon" id="lungIcon">🫁</div>
                     <div class="stat-value" id="lungHealth">0%</div>
-                    <div class="stat-label">Lungengesundheit</div>
-                    <div class="stat-info">Regeneration über 10 Jahre</div>
+                    <div class="stat-label" data-i18n="dashboard.stats.lungHealth">Lungengesundheit</div>
+                    <div class="stat-info" data-i18n="dashboard.stats.lungHealthInfo">Regeneration über 10 Jahre</div>
                 </div>
                 <div class="stat-card accent">
                     <div class="stat-icon">⏱️</div>
                     <div class="stat-value" id="timeSaved">0</div>
-                    <div class="stat-label">Zeit gespart</div>
-                    <div class="stat-info">~5 Min. pro Zigarette (inkl. Vorbereitung)</div>
+                    <div class="stat-label" data-i18n="dashboard.stats.timeSaved">Zeit gespart</div>
+                    <div class="stat-info" data-i18n="dashboard.stats.timeSavedInfo">~5 Min. pro Zigarette (inkl. Vorbereitung)</div>
                 </div>
                 <div class="stat-card beauty">
                     <div class="stat-icon">✨</div>
                     <div class="stat-value" id="skinImprovement">0%</div>
-                    <div class="stat-label">Hautverbesserung</div>
-                    <div class="stat-info">Signifikante Verbesserung ab 6 Monaten (Mailänder Studie)</div>
+                    <div class="stat-label" data-i18n="dashboard.stats.skinImprovement">Hautverbesserung</div>
+                    <div class="stat-info" data-i18n="dashboard.stats.skinImprovementInfo">Signifikante Verbesserung ab 6 Monaten (Mailänder Studie)</div>
                 </div>
             </div>
 
                 <!-- Environmental Impact -->
                 <div class="card environmental-card">
-                    <h2>🌱 Dein Beitrag für die Umwelt</h2>
+                    <h2 data-i18n="dashboard.environment.title">🌱 Dein Beitrag für die Umwelt</h2>
                     <div class="environmental-stats">
                         <div class="environmental-item">
                             <div class="environmental-icon">💧</div>
                             <div class="environmental-content">
                                 <div class="environmental-value" id="waterSaved">0</div>
-                                <div class="environmental-label">Liter Wasser gespart</div>
-                                <div class="environmental-info">Zigarettenproduktion verbraucht ~3.7L pro Zigarette</div>
+                                <div class="environmental-label" data-i18n="dashboard.environment.water">Liter Wasser gespart</div>
+                                <div class="environmental-info" data-i18n="dashboard.environment.waterInfo">Zigarettenproduktion verbraucht ~3.7L pro Zigarette</div>
                             </div>
                         </div>
                         <div class="environmental-item">
                             <div class="environmental-icon">🌳</div>
                             <div class="environmental-content">
                                 <div class="environmental-value" id="treesSaved">0</div>
-                                <div class="environmental-label">Bäume geschützt</div>
-                                <div class="environmental-info">Pro 300 Zigaretten wird ~1 Baum für Trocknung benötigt</div>
+                                <div class="environmental-label" data-i18n="dashboard.environment.trees">Bäume geschützt</div>
+                                <div class="environmental-info" data-i18n="dashboard.environment.treesInfo">Pro 300 Zigaretten wird ~1 Baum für Trocknung benötigt</div>
                             </div>
                         </div>
                         <div class="environmental-item">
                             <div class="environmental-icon">🌍</div>
                             <div class="environmental-content">
                                 <div class="environmental-value" id="co2Avoided">0 kg</div>
-                                <div class="environmental-label">CO₂ vermieden</div>
-                                <div class="environmental-info">~14g CO₂ pro Zigarette (Produktion + Transport)</div>
+                                <div class="environmental-label" data-i18n="dashboard.environment.co2">CO₂ vermieden</div>
+                                <div class="environmental-info" data-i18n="dashboard.environment.co2Info">~14g CO₂ pro Zigarette (Produktion + Transport)</div>
                             </div>
                         </div>
                     </div>
@@ -334,8 +335,8 @@
                     <div class="streak-content">
                         <span id="streakFire" class="streak-fire">🔥</span>
                         <div class="streak-info">
-                            <span class="streak-title">Du bist am Ball!</span>
-                            <span class="streak-text">Du nutzt die App bereits <strong id="streakCount">0</strong> Tage in Folge. Weiter so!</span>
+                            <span class="streak-title" data-i18n="dashboard.streak.title">Du bist am Ball!</span>
+                            <span class="streak-text" id="streakText">Du nutzt die App bereits <strong id="streakCount">0</strong> Tage in Folge. Weiter so!</span>
                         </div>
                     </div>
                 </div>
@@ -345,7 +346,7 @@
             <div class="tab-panel" data-panel="milestones" role="tabpanel" id="panel-milestones" aria-labelledby="tab-milestones" tabindex="0">
                 <!-- What's Happening NOW -->
                 <div class="card happening-now-card">
-                    <h2>⏰ Was passiert gerade JETZT in deinem Körper?</h2>
+                    <h2 data-i18n="milestones.happeningNow.title">⏰ Was passiert gerade JETZT in deinem Körper?</h2>
                     <div class="happening-now-content" id="happeningNowContent">
                         <div class="happening-icon" id="happeningIcon">🫁</div>
                         <div class="happening-text">
@@ -360,7 +361,7 @@
                 </div>
 
                 <div class="card">
-                    <h2>Gesundheits-Meilensteine</h2>
+                    <h2 data-i18n="milestones.healthMilestones.title">Gesundheits-Meilensteine</h2>
                     <div id="healthMilestones" class="milestones"></div>
                 </div>
             </div>
@@ -368,7 +369,7 @@
             <!-- Tab Panel: Erfolge -->
             <div class="tab-panel" data-panel="achievements" role="tabpanel" id="panel-achievements" aria-labelledby="tab-achievements" tabindex="0">
                 <div class="card">
-                    <h2>Erfolge</h2>
+                    <h2 data-i18n="achievements.title">Erfolge</h2>
                     <div id="achievements" class="achievements-grid"></div>
                 </div>
             </div>
@@ -377,13 +378,13 @@
             <div class="tab-panel" data-panel="statistics" role="tabpanel" id="panel-statistics" aria-labelledby="tab-statistics" tabindex="0">
                 <!-- Health Score with Lotus -->
                 <div class="card health-score-card lotus-card">
-                    <h2>🪷 Deine Lotus</h2>
+                    <h2 data-i18n="statistics.lotus.title">🪷 Deine Lotus</h2>
                     <div class="lotus-score-container">
                         <div class="lotus-visual">
                             <div id="lotusContainer" class="lotus-container"></div>
                             <div class="lotus-score-display">
                                 <span id="lotusScore" class="lotus-score-value">0</span>
-                                <span class="lotus-score-label">von 100</span>
+                                <span class="lotus-score-label" data-i18n="statistics.lotus.outOf">von 100</span>
                             </div>
                         </div>
                         <div class="lotus-info">
@@ -392,7 +393,7 @@
                             <div id="lotusNextStage" class="lotus-next-stage">Bei 20 Punkten erscheint der erste Spross</div>
                         </div>
                         <button id="lotusPreviewBtn" class="lotus-preview-btn">
-                            <span class="preview-icon">▶</span> Wachstum ansehen
+                            <span class="preview-icon">▶</span> <span data-i18n="statistics.lotus.preview">Wachstum ansehen</span>
                         </button>
                         <div class="health-score-details" id="healthScoreDetails"></div>
                     </div>
@@ -400,32 +401,32 @@
 
                 <!-- Future Projection -->
                 <div class="card projection-card">
-                    <h2>🔮 Deine Zukunftsprognose</h2>
+                    <h2 data-i18n="statistics.projection.title">🔮 Deine Zukunftsprognose</h2>
                     <div id="futureProjection" class="projection-content"></div>
                 </div>
 
                 <!-- Custom Goal Calculator -->
                 <div class="card goal-calculator-card">
-                    <h2>🎯 Dein persönliches Ziel</h2>
-                    <p class="goal-calculator-intro">Berechne, wie lange es dauert oder was du erreichen wirst!</p>
+                    <h2 data-i18n="statistics.goalCalculator.title">🎯 Dein persönliches Ziel</h2>
+                    <p class="goal-calculator-intro" data-i18n="statistics.goalCalculator.intro">Berechne, wie lange es dauert oder was du erreichen wirst!</p>
 
                     <!-- Toggle Mode -->
                     <div class="goal-toggle">
-                        <button class="goal-toggle-btn active" data-mode="days">Nach Tagen</button>
-                        <button class="goal-toggle-btn" data-mode="money">Nach Geld</button>
+                        <button class="goal-toggle-btn active" data-mode="days" data-i18n="statistics.goalCalculator.byDays">Nach Tagen</button>
+                        <button class="goal-toggle-btn" data-mode="money" data-i18n="statistics.goalCalculator.byMoney">Nach Geld</button>
                     </div>
 
                     <!-- Input Section -->
                     <div class="goal-input-section">
                         <div class="goal-input-group" id="daysInputGroup">
-                            <label for="goalDaysInput">Wie viele Tage?</label>
-                            <input type="number" id="goalDaysInput" placeholder="z.B. 100" min="1" />
+                            <label for="goalDaysInput" data-i18n="statistics.goalCalculator.howManyDays">Wie viele Tage?</label>
+                            <input type="number" id="goalDaysInput" data-i18n-placeholder="statistics.goalCalculator.daysPlaceholder" placeholder="z.B. 100" min="1" />
                         </div>
                         <div class="goal-input-group hidden" id="moneyInputGroup">
-                            <label for="goalMoneyInput">Wie viel Geld (€)?</label>
-                            <input type="number" id="goalMoneyInput" placeholder="z.B. 2000" min="1" />
+                            <label for="goalMoneyInput" data-i18n="statistics.goalCalculator.howMuchMoney">Wie viel Geld (€)?</label>
+                            <input type="number" id="goalMoneyInput" data-i18n-placeholder="statistics.goalCalculator.moneyPlaceholder" placeholder="z.B. 2000" min="1" />
                         </div>
-                        <button id="calculateGoalBtn" class="calculate-goal-btn">Berechnen</button>
+                        <button id="calculateGoalBtn" class="calculate-goal-btn" data-i18n="statistics.goalCalculator.calculate">Berechnen</button>
                     </div>
 
                     <!-- Results Section -->
@@ -443,41 +444,41 @@
 
                 <!-- Progress Chart -->
                 <div class="card">
-                    <h2>Fortschritt</h2>
+                    <h2 data-i18n="statistics.progressChart.title">Fortschritt</h2>
                     <canvas id="progressChart"></canvas>
                 </div>
 
                 <!-- Craving Chart -->
                 <div class="card craving-chart-card">
-                    <h2>📊 Deine überwundenen Verlangen</h2>
-                    <p class="chart-subtitle">Verlauf der letzten 30 Tage</p>
+                    <h2 data-i18n="statistics.cravingChart.title">📊 Deine überwundenen Verlangen</h2>
+                    <p class="chart-subtitle" data-i18n="statistics.cravingChart.subtitle">Verlauf der letzten 30 Tage</p>
                     <canvas id="cravingChart"></canvas>
                     <div id="cravingSummary" class="craving-summary"></div>
                 </div>
 
                 <!-- Craving Heatmap -->
                 <div class="card craving-heatmap-card">
-                    <h2>🔥 Wann tritt Verlangen auf?</h2>
-                    <p class="chart-subtitle">Muster der letzten 30 Tage nach Wochentag und Uhrzeit</p>
+                    <h2 data-i18n="statistics.heatmap.title">🔥 Wann tritt Verlangen auf?</h2>
+                    <p class="chart-subtitle" data-i18n="statistics.heatmap.subtitle">Muster der letzten 30 Tage nach Wochentag und Uhrzeit</p>
                     <div id="cravingHeatmap"></div>
                 </div>
 
                 <!-- Detailed Comparison -->
                 <div class="card comparison-card">
-                    <h2>🏆 Du bist stärker als der Durchschnitt!</h2>
+                    <h2 data-i18n="statistics.comparison.title">🏆 Du bist stärker als der Durchschnitt!</h2>
                     <div id="comparisonStats" class="comparison-content"></div>
                     <div id="detailedComparison" class="detailed-comparison"></div>
                 </div>
 
                 <!-- Age Group Comparison -->
                 <div class="card age-comparison-card">
-                    <h2>👥 Vergleich mit deiner Altersgruppe</h2>
+                    <h2 data-i18n="statistics.ageComparison.title">👥 Vergleich mit deiner Altersgruppe</h2>
                     <div id="ageGroupComparison" class="age-comparison-content"></div>
                 </div>
 
                 <!-- Milestone Timeline -->
                 <div class="card timeline-card">
-                    <h2>🎯 Deine Meilenstein-Reise</h2>
+                    <h2 data-i18n="statistics.timeline.title">🎯 Deine Meilenstein-Reise</h2>
                     <div id="milestoneTimeline" class="milestone-timeline"></div>
                 </div>
             </div>
@@ -486,63 +487,63 @@
             <div class="tab-panel" data-panel="help" role="tabpanel" id="panel-help" aria-labelledby="tab-help" tabindex="0">
                 <!-- Craving Button -->
                 <div class="card craving-button-card">
-                    <button id="cravingButton" class="craving-button">
+                    <button id="cravingButton" class="craving-button" data-i18n="sos.button">
                         🆘 Akutes Verlangen - Jetzt Hilfe!
                     </button>
-                    <p class="craving-button-hint">Klicke hier für sofortige Unterstützung mit einem 5-Minuten-Timer</p>
+                    <p class="craving-button-hint" data-i18n="sos.buttonHint">Klicke hier für sofortige Unterstützung mit einem 5-Minuten-Timer</p>
                 </div>
 
                 <!-- Compact Craving Stats -->
                 <div class="card compact-craving-stats-card">
-                    <h2>💪 Deine Erfolge gegen Verlangen</h2>
+                    <h2 data-i18n="sos.cravingStats.title">💪 Deine Erfolge gegen Verlangen</h2>
                     <div id="compactCravingStats" class="compact-craving-stats">
-                        <p class="loading-message">Lade Statistiken...</p>
+                        <p class="loading-message" data-i18n="common.loading">Lade Statistiken...</p>
                     </div>
                 </div>
 
                 <div class="card craving-tips-card">
-                <h2>💡 Tipps gegen akutes Verlangen</h2>
+                <h2 data-i18n="sos.tips.title">💡 Tipps gegen akutes Verlangen</h2>
                 <div class="craving-tips">
                     <div class="tip">
                         <div class="tip-icon">⏱️</div>
                         <div class="tip-content">
-                            <h3>5-Minuten-Regel</h3>
-                            <p>Warte 5 Minuten. Das Verlangen wird von selbst schwächer!</p>
+                            <h3 data-i18n="sos.tips.fiveMinRule.title">5-Minuten-Regel</h3>
+                            <p data-i18n="sos.tips.fiveMinRule.text">Warte 5 Minuten. Das Verlangen wird von selbst schwächer!</p>
                         </div>
                     </div>
                     <div class="tip">
                         <div class="tip-icon">💧</div>
                         <div class="tip-content">
-                            <h3>Wasser trinken</h3>
-                            <p>Ein großes Glas Wasser trinken lenkt ab und hilft.</p>
+                            <h3 data-i18n="sos.tips.water.title">Wasser trinken</h3>
+                            <p data-i18n="sos.tips.water.text">Ein großes Glas Wasser trinken lenkt ab und hilft.</p>
                         </div>
                     </div>
                     <div class="tip">
                         <div class="tip-icon">🚶</div>
                         <div class="tip-content">
-                            <h3>Kurzer Spaziergang</h3>
-                            <p>Bewege dich 5-10 Minuten. Frische Luft hilft!</p>
+                            <h3 data-i18n="sos.tips.walk.title">Kurzer Spaziergang</h3>
+                            <p data-i18n="sos.tips.walk.text">Bewege dich 5-10 Minuten. Frische Luft hilft!</p>
                         </div>
                     </div>
                     <div class="tip">
                         <div class="tip-icon">🫁</div>
                         <div class="tip-content">
-                            <h3>Tief durchatmen</h3>
-                            <p>10x tief ein- und ausatmen. Beruhigt sofort.</p>
+                            <h3 data-i18n="sos.tips.breathe.title">Tief durchatmen</h3>
+                            <p data-i18n="sos.tips.breathe.text">10x tief ein- und ausatmen. Beruhigt sofort.</p>
                         </div>
                     </div>
                     <div class="tip">
                         <div class="tip-icon">📱</div>
                         <div class="tip-content">
-                            <h3>Jemanden anrufen</h3>
-                            <p>Ruf eine unterstützende Person an und rede.</p>
+                            <h3 data-i18n="sos.tips.call.title">Jemanden anrufen</h3>
+                            <p data-i18n="sos.tips.call.text">Ruf eine unterstützende Person an und rede.</p>
                         </div>
                     </div>
                     <div class="tip">
                         <div class="tip-icon">🍎</div>
                         <div class="tip-content">
-                            <h3>Gesunder Snack</h3>
-                            <p>Obst, Gemüse oder Kaugummi lenken den Mund ab.</p>
+                            <h3 data-i18n="sos.tips.snack.title">Gesunder Snack</h3>
+                            <p data-i18n="sos.tips.snack.text">Obst, Gemüse oder Kaugummi lenken den Mund ab.</p>
                         </div>
                     </div>
                 </div>
@@ -550,17 +551,17 @@
 
                 <!-- Shocking Facts -->
                 <div class="card shocking-facts-card">
-                    <h2>⚠️ Warum du aufgehört hast</h2>
-                    <p class="shocking-intro">Diese Fakten erinnern dich daran, warum jede Zigarette ein Fehler wäre:</p>
+                    <h2 data-i18n="sos.shockingFacts.title">⚠️ Warum du aufgehört hast</h2>
+                    <p class="shocking-intro" data-i18n="sos.shockingFacts.intro">Diese Fakten erinnern dich daran, warum jede Zigarette ein Fehler wäre:</p>
 
                     <div class="shocking-facts-grid">
                         <!-- Fact 1 -->
                         <div class="shocking-fact">
                             <div class="shocking-icon">💀</div>
                             <div class="shocking-content">
-                                <div class="shocking-number">170.000</div>
-                                <div class="shocking-label">Tote pro Jahr in Deutschland</div>
-                                <div class="shocking-detail">Jeder 7. Todesfall durch Rauchen</div>
+                                <div class="shocking-number" data-i18n="sos.shockingFacts.fact1.number">170.000</div>
+                                <div class="shocking-label" data-i18n="sos.shockingFacts.fact1.label">Tote pro Jahr in Deutschland</div>
+                                <div class="shocking-detail" data-i18n="sos.shockingFacts.fact1.detail">Jeder 7. Todesfall durch Rauchen</div>
                             </div>
                         </div>
 
@@ -568,9 +569,9 @@
                         <div class="shocking-fact">
                             <div class="shocking-icon">🌍</div>
                             <div class="shocking-content">
-                                <div class="shocking-number">8 Mio.</div>
-                                <div class="shocking-label">Tote weltweit pro Jahr</div>
-                                <div class="shocking-detail">Mehr als Alkohol, AIDS & Drogen zusammen</div>
+                                <div class="shocking-number" data-i18n="sos.shockingFacts.fact2.number">8 Mio.</div>
+                                <div class="shocking-label" data-i18n="sos.shockingFacts.fact2.label">Tote weltweit pro Jahr</div>
+                                <div class="shocking-detail" data-i18n="sos.shockingFacts.fact2.detail">Mehr als Alkohol, AIDS & Drogen zusammen</div>
                             </div>
                         </div>
 
@@ -578,9 +579,9 @@
                         <div class="shocking-fact">
                             <div class="shocking-icon">⏳</div>
                             <div class="shocking-content">
-                                <div class="shocking-number">-10 Jahre</div>
-                                <div class="shocking-label">Lebenserwartung</div>
-                                <div class="shocking-detail">Raucher sterben im Schnitt 10 Jahre früher</div>
+                                <div class="shocking-number" data-i18n="sos.shockingFacts.fact3.number">-10 Jahre</div>
+                                <div class="shocking-label" data-i18n="sos.shockingFacts.fact3.label">Lebenserwartung</div>
+                                <div class="shocking-detail" data-i18n="sos.shockingFacts.fact3.detail">Raucher sterben im Schnitt 10 Jahre früher</div>
                             </div>
                         </div>
 
@@ -588,9 +589,9 @@
                         <div class="shocking-fact">
                             <div class="shocking-icon">🫁</div>
                             <div class="shocking-content">
-                                <div class="shocking-number">90%</div>
-                                <div class="shocking-label">Lungenkrebs durch Rauchen</div>
-                                <div class="shocking-detail">7x höheres Risiko als Nichtraucher</div>
+                                <div class="shocking-number" data-i18n="sos.shockingFacts.fact4.number">90%</div>
+                                <div class="shocking-label" data-i18n="sos.shockingFacts.fact4.label">Lungenkrebs durch Rauchen</div>
+                                <div class="shocking-detail" data-i18n="sos.shockingFacts.fact4.detail">7x höheres Risiko als Nichtraucher</div>
                             </div>
                         </div>
 
@@ -598,9 +599,9 @@
                         <div class="shocking-fact">
                             <div class="shocking-icon">🫀</div>
                             <div class="shocking-content">
-                                <div class="shocking-number">3x</div>
-                                <div class="shocking-label">Herzinfarktrisiko</div>
-                                <div class="shocking-detail">Schlaganfallrisiko 2-3x höher</div>
+                                <div class="shocking-number" data-i18n="sos.shockingFacts.fact5.number">3x</div>
+                                <div class="shocking-label" data-i18n="sos.shockingFacts.fact5.label">Herzinfarktrisiko</div>
+                                <div class="shocking-detail" data-i18n="sos.shockingFacts.fact5.detail">Schlaganfallrisiko 2-3x höher</div>
                             </div>
                         </div>
 
@@ -608,9 +609,9 @@
                         <div class="shocking-fact">
                             <div class="shocking-icon">🦠</div>
                             <div class="shocking-content">
-                                <div class="shocking-number">88.000</div>
-                                <div class="shocking-label">Neue Krebsfälle/Jahr (DE)</div>
-                                <div class="shocking-detail">Nur durch Rauchen verursacht</div>
+                                <div class="shocking-number" data-i18n="sos.shockingFacts.fact6.number">88.000</div>
+                                <div class="shocking-label" data-i18n="sos.shockingFacts.fact6.label">Neue Krebsfälle/Jahr (DE)</div>
+                                <div class="shocking-detail" data-i18n="sos.shockingFacts.fact6.detail">Nur durch Rauchen verursacht</div>
                             </div>
                         </div>
 
@@ -618,9 +619,9 @@
                         <div class="shocking-fact">
                             <div class="shocking-icon">💨</div>
                             <div class="shocking-content">
-                                <div class="shocking-number">90%</div>
-                                <div class="shocking-label">COPD-Patienten</div>
-                                <div class="shocking-detail">Sind oder waren Raucher</div>
+                                <div class="shocking-number" data-i18n="sos.shockingFacts.fact7.number">90%</div>
+                                <div class="shocking-label" data-i18n="sos.shockingFacts.fact7.label">COPD-Patienten</div>
+                                <div class="shocking-detail" data-i18n="sos.shockingFacts.fact7.detail">Sind oder waren Raucher</div>
                             </div>
                         </div>
 
@@ -628,9 +629,9 @@
                         <div class="shocking-fact">
                             <div class="shocking-icon">⏱️</div>
                             <div class="shocking-content">
-                                <div class="shocking-number">17-22 Min</div>
-                                <div class="shocking-label">Lebenszeit pro Zigarette</div>
-                                <div class="shocking-detail">Jede Zigarette verkürzt dein Leben (Jackson 2025)</div>
+                                <div class="shocking-number" data-i18n="sos.shockingFacts.fact8.number">17-22 Min</div>
+                                <div class="shocking-label" data-i18n="sos.shockingFacts.fact8.label">Lebenszeit pro Zigarette</div>
+                                <div class="shocking-detail" data-i18n="sos.shockingFacts.fact8.detail">Jede Zigarette verkürzt dein Leben (Jackson 2025)</div>
                             </div>
                         </div>
 
@@ -638,9 +639,9 @@
                         <div class="shocking-fact">
                             <div class="shocking-icon">🦵</div>
                             <div class="shocking-content">
-                                <div class="shocking-number">Raucherbein</div>
-                                <div class="shocking-label">Amputation droht</div>
-                                <div class="shocking-detail">Durchblutungsstörungen in Beinen</div>
+                                <div class="shocking-number" data-i18n="sos.shockingFacts.fact9.number">Raucherbein</div>
+                                <div class="shocking-label" data-i18n="sos.shockingFacts.fact9.label">Amputation droht</div>
+                                <div class="shocking-detail" data-i18n="sos.shockingFacts.fact9.detail">Durchblutungsstörungen in Beinen</div>
                             </div>
                         </div>
 
@@ -648,9 +649,9 @@
                         <div class="shocking-fact">
                             <div class="shocking-icon">👁️</div>
                             <div class="shocking-content">
-                                <div class="shocking-number">Erblindung</div>
-                                <div class="shocking-label">Netzhautdegeneration</div>
-                                <div class="shocking-detail">Rauchen schädigt die Augen</div>
+                                <div class="shocking-number" data-i18n="sos.shockingFacts.fact10.number">Erblindung</div>
+                                <div class="shocking-label" data-i18n="sos.shockingFacts.fact10.label">Netzhautdegeneration</div>
+                                <div class="shocking-detail" data-i18n="sos.shockingFacts.fact10.detail">Rauchen schädigt die Augen</div>
                             </div>
                         </div>
 
@@ -658,9 +659,9 @@
                         <div class="shocking-fact">
                             <div class="shocking-icon">🍼</div>
                             <div class="shocking-content">
-                                <div class="shocking-number">Unfruchtbarkeit</div>
-                                <div class="shocking-label">Potenzstörungen</div>
-                                <div class="shocking-detail">Schlechte Spermienqualität</div>
+                                <div class="shocking-number" data-i18n="sos.shockingFacts.fact11.number">Unfruchtbarkeit</div>
+                                <div class="shocking-label" data-i18n="sos.shockingFacts.fact11.label">Potenzstörungen</div>
+                                <div class="shocking-detail" data-i18n="sos.shockingFacts.fact11.detail">Schlechte Spermienqualität</div>
                             </div>
                         </div>
 
@@ -668,14 +669,14 @@
                         <div class="shocking-fact">
                             <div class="shocking-icon">🦷</div>
                             <div class="shocking-content">
-                                <div class="shocking-number">Zahnverlust</div>
-                                <div class="shocking-label">Zahnfleischerkrankungen</div>
-                                <div class="shocking-detail">2x höheres Risiko für Zahnausfall</div>
+                                <div class="shocking-number" data-i18n="sos.shockingFacts.fact12.number">Zahnverlust</div>
+                                <div class="shocking-label" data-i18n="sos.shockingFacts.fact12.label">Zahnfleischerkrankungen</div>
+                                <div class="shocking-detail" data-i18n="sos.shockingFacts.fact12.detail">2x höheres Risiko für Zahnausfall</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="shocking-reminder">
+                    <div class="shocking-reminder" data-i18n-html="sos.shockingFacts.reminder">
                         <strong>Du hast RICHTIG entschieden!</strong> Mit jedem rauchfreien Tag rettest du dein Leben.
                     </div>
                 </div>
@@ -685,13 +686,13 @@
         <!-- Footer -->
         <footer class="app-footer">
             <div class="footer-links">
-                <a href="info.html">Über ByeByeSmoke</a>
-                <a href="quellen.html">Quellen</a>
-                <a href="datenschutz.html">Datenschutz</a>
-                <a href="impressum.html">Impressum</a>
+                <a href="info.html" data-i18n="footer.about">Über ByeByeSmoke</a>
+                <a href="quellen.html" data-i18n="footer.sources">Quellen</a>
+                <a href="datenschutz.html" data-i18n="footer.privacy">Datenschutz</a>
+                <a href="impressum.html" data-i18n="footer.imprint">Impressum</a>
                 <a href="https://github.com/HamiedNabizada/smoke-free-tracker" target="_blank">GitHub</a>
             </div>
-            <div class="footer-disclaimer">
+            <div class="footer-disclaimer" data-i18n="footer.disclaimer">
                 ⚠️ ByeByeSmoke ist kein medizinisches Gerät. Bei gesundheitlichen Fragen konsultiere einen Arzt.
             </div>
         </footer>
@@ -701,8 +702,8 @@
     <div id="cravingOverlay" class="craving-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="cravingTimerTitle">
         <div class="craving-overlay-content">
             <!-- Close Button -->
-            <button id="cravingCloseBtn" class="craving-close-btn" aria-label="Schließen">✕</button>
-            <h2 id="cravingTimerTitle" class="sr-only">SOS Hilfe</h2>
+            <button id="cravingCloseBtn" class="craving-close-btn" data-i18n-aria="sos.overlay.close" aria-label="Schließen">✕</button>
+            <h2 id="cravingTimerTitle" class="sr-only" data-i18n="sos.overlay.title">SOS Hilfe</h2>
 
             <!-- Timer Header (always visible) -->
             <div class="sos-timer-header">
@@ -712,7 +713,7 @@
                 </div>
                 <div class="timer-compact">
                     <div class="timer-display" id="timerDisplay">5:00</div>
-                    <div class="timer-label">verbleibend</div>
+                    <div class="timer-label" data-i18n="sos.overlay.remaining">verbleibend</div>
                 </div>
             </div>
 
@@ -720,15 +721,15 @@
             <div class="craving-count-option">
                 <label class="craving-checkbox-label">
                     <input type="checkbox" id="countCravingCheckbox" checked>
-                    <span class="checkbox-text">Als Verlangen zählen</span>
+                    <span class="checkbox-text" data-i18n="sos.overlay.countAsCraving">Als Verlangen zählen</span>
                 </label>
             </div>
 
             <!-- Content Tabs -->
             <div class="sos-tabs">
-                <button class="sos-tab active" data-content="tips">💡 Tipps</button>
-                <button class="sos-tab" data-content="breathing">🧘 Atmen</button>
-                <button class="sos-tab" data-content="games">🎮 Spiele</button>
+                <button class="sos-tab active" data-content="tips" data-i18n="sos.overlay.tabs.tips">💡 Tipps</button>
+                <button class="sos-tab" data-content="breathing" data-i18n="sos.overlay.tabs.breathing">🧘 Atmen</button>
+                <button class="sos-tab" data-content="games" data-i18n="sos.overlay.tabs.games">🎮 Spiele</button>
             </div>
 
             <!-- Content Areas -->
@@ -747,15 +748,15 @@
                         <button class="sos-breathing-btn" id="startBoxBreathing">
                             <span class="exercise-icon">◻️</span>
                             <span class="exercise-info">
-                                <span class="exercise-name">Box Breathing</span>
-                                <span class="exercise-detail">4-4-4-4 | ~2 Min | Fokus</span>
+                                <span class="exercise-name" data-i18n="sos.breathing.box.name">Box Breathing</span>
+                                <span class="exercise-detail" data-i18n="sos.breathing.box.detail">4-4-4-4 | ~2 Min | Fokus</span>
                             </span>
                         </button>
                         <button class="sos-breathing-btn" id="start478Breathing">
                             <span class="exercise-icon">🌙</span>
                             <span class="exercise-info">
-                                <span class="exercise-name">4-7-8 Technik</span>
-                                <span class="exercise-detail">4-7-8 | ~2.5 Min | Entspannung</span>
+                                <span class="exercise-name" data-i18n="sos.breathing.478.name">4-7-8 Technik</span>
+                                <span class="exercise-detail" data-i18n="sos.breathing.478.detail">4-7-8 | ~2.5 Min | Entspannung</span>
                             </span>
                         </button>
                     </div>
@@ -767,7 +768,7 @@
                             <div class="breathing-phase-timer" id="sosBreathingTimer">4</div>
                         </div>
                         <div class="breathing-progress" id="sosBreathingProgress">Zyklus 1 von 4</div>
-                        <button class="breathing-stop-btn" id="sosBreathingStop">Übung beenden</button>
+                        <button class="breathing-stop-btn" id="sosBreathingStop" data-i18n="sos.breathing.stop">Übung beenden</button>
                     </div>
                 </div>
 
@@ -786,10 +787,10 @@
             <!-- Success Message (hidden initially) -->
             <div class="craving-success hidden" id="cravingSuccess">
                 <div class="success-icon">🎉</div>
-                <h2>Geschafft!</h2>
-                <p>Du hast das Verlangen überwunden!</p>
+                <h2 data-i18n="sos.success.title">Geschafft!</h2>
+                <p data-i18n="sos.success.message">Du hast das Verlangen überwunden!</p>
                 <div class="success-stats" id="successStats"></div>
-                <button class="success-close-btn" id="successCloseBtn">Schließen</button>
+                <button class="success-close-btn" id="successCloseBtn" data-i18n="common.close">Schließen</button>
             </div>
         </div>
     </div>
@@ -797,50 +798,50 @@
     <!-- Settings Modal -->
     <div id="settingsModal" class="settings-modal hidden" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
         <div class="settings-modal-content">
-            <button id="settingsCloseBtn" class="settings-close-btn" aria-label="Einstellungen schließen">✕</button>
-            <h2 id="settingsModalTitle">⚙️ Einstellungen</h2>
+            <button id="settingsCloseBtn" class="settings-close-btn" data-i18n-aria="settings.close" aria-label="Einstellungen schließen">✕</button>
+            <h2 id="settingsModalTitle" data-i18n="settings.title">⚙️ Einstellungen</h2>
 
             <div class="settings-section">
-                <h3>Account</h3>
-                <p class="settings-username">Eingeloggt als: <strong id="usernameDisplay">-</strong></p>
+                <h3 data-i18n="settings.account.title">Account</h3>
+                <p class="settings-username"><span data-i18n="settings.account.loggedInAs">Eingeloggt als:</span> <strong id="usernameDisplay">-</strong></p>
             </div>
 
             <div class="settings-section">
-                <h3>📊 Meine Daten bearbeiten</h3>
+                <h3 data-i18n="settings.data.title">📊 Meine Daten bearbeiten</h3>
                 <form id="settingsDataForm">
                     <div class="form-group">
-                        <label for="settingsQuitDate">Rauchstopp-Datum & Uhrzeit</label>
+                        <label for="settingsQuitDate" data-i18n="settings.data.quitDate">Rauchstopp-Datum & Uhrzeit</label>
                         <input type="datetime-local" id="settingsQuitDate" name="quit_date" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="settingsCigarettesPerDay">Zigaretten pro Tag (vorher)</label>
+                        <label for="settingsCigarettesPerDay" data-i18n="settings.data.cigarettesPerDay">Zigaretten pro Tag (vorher)</label>
                         <input type="number" id="settingsCigarettesPerDay" name="cigarettes_per_day" min="1" max="200" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="settingsPricePerPack">Preis pro Packung (€)</label>
+                        <label for="settingsPricePerPack" data-i18n="settings.data.pricePerPack">Preis pro Packung (€)</label>
                         <input type="number" step="0.01" id="settingsPricePerPack" name="price_per_pack" min="0" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="settingsCigarettesPerPack">Zigaretten pro Packung</label>
+                        <label for="settingsCigarettesPerPack" data-i18n="settings.data.cigarettesPerPack">Zigaretten pro Packung</label>
                         <input type="number" id="settingsCigarettesPerPack" name="cigarettes_per_pack" min="1" required>
                     </div>
 
-                    <button type="submit" class="save-settings-btn">Speichern</button>
+                    <button type="submit" class="save-settings-btn" data-i18n="settings.data.save">Speichern</button>
                 </form>
             </div>
 
             <div class="settings-section">
-                <h3>🔔 Benachrichtigungen</h3>
-                <p class="settings-description">Erhalte motivierende Push-Benachrichtigungen, wenn du wichtige Meilensteine erreichst.</p>
+                <h3 data-i18n="settings.notifications.title">🔔 Benachrichtigungen</h3>
+                <p class="settings-description" data-i18n="settings.notifications.description">Erhalte motivierende Push-Benachrichtigungen, wenn du wichtige Meilensteine erreichst.</p>
 
                 <div class="notification-settings">
                     <div class="notification-option">
                         <div class="notification-info">
-                            <div class="notification-label">Push-Benachrichtigungen aktivieren</div>
-                            <div class="notification-description">Erlaube der App, dir Benachrichtigungen zu senden</div>
+                            <div class="notification-label" data-i18n="settings.notifications.push.label">Push-Benachrichtigungen aktivieren</div>
+                            <div class="notification-description" data-i18n="settings.notifications.push.description">Erlaube der App, dir Benachrichtigungen zu senden</div>
                         </div>
                         <label class="toggle-switch">
                             <input type="checkbox" id="notificationsEnabled">
@@ -850,8 +851,8 @@
 
                     <div class="notification-option" id="milestoneNotificationOption">
                         <div class="notification-info">
-                            <div class="notification-label">Meilenstein-Benachrichtigungen</div>
-                            <div class="notification-description">Erhalte eine Benachrichtigung, wenn du einen Gesundheitsmeilenstein erreichst</div>
+                            <div class="notification-label" data-i18n="settings.notifications.milestones.label">Meilenstein-Benachrichtigungen</div>
+                            <div class="notification-description" data-i18n="settings.notifications.milestones.description">Erhalte eine Benachrichtigung, wenn du einen Gesundheitsmeilenstein erreichst</div>
                         </div>
                         <label class="toggle-switch">
                             <input type="checkbox" id="milestonesEnabled" disabled>
@@ -861,8 +862,8 @@
 
                     <div class="notification-option" id="dailyMotivationOption">
                         <div class="notification-info">
-                            <div class="notification-label">Tägliche Motivation</div>
-                            <div class="notification-description">Erhalte einmal täglich eine motivierende Nachricht (10:00 Uhr)</div>
+                            <div class="notification-label" data-i18n="settings.notifications.daily.label">Tägliche Motivation</div>
+                            <div class="notification-description" data-i18n="settings.notifications.daily.description">Erhalte einmal täglich eine motivierende Nachricht (10:00 Uhr)</div>
                         </div>
                         <label class="toggle-switch">
                             <input type="checkbox" id="dailyMotivationEnabled" disabled>
@@ -873,56 +874,56 @@
             </div>
 
             <div class="settings-section">
-                <h3>📦 Deine Daten</h3>
-                <p class="settings-description">Exportiere deine Daten oder teile deine Erfolge.</p>
+                <h3 data-i18n="settings.export.title">📦 Deine Daten</h3>
+                <p class="settings-description" data-i18n="settings.export.description">Exportiere deine Daten oder teile deine Erfolge.</p>
 
                 <div class="data-actions">
                     <button id="exportDataBtn" class="data-action-btn export-btn">
                         <span class="btn-icon">📥</span>
                         <div class="btn-content">
-                            <div class="btn-title">Daten exportieren</div>
-                            <div class="btn-description">Lade alle deine Daten als JSON-Datei herunter</div>
+                            <div class="btn-title" data-i18n="settings.export.exportData.title">Daten exportieren</div>
+                            <div class="btn-description" data-i18n="settings.export.exportData.description">Lade alle deine Daten als JSON-Datei herunter</div>
                         </div>
                     </button>
 
                     <button id="shareSuccessBtn" class="data-action-btn share-btn">
                         <span class="btn-icon">📤</span>
                         <div class="btn-content">
-                            <div class="btn-title">Erfolg teilen</div>
-                            <div class="btn-description">Teile deine rauchfreie Zeit mit anderen</div>
+                            <div class="btn-title" data-i18n="settings.export.shareSuccess.title">Erfolg teilen</div>
+                            <div class="btn-description" data-i18n="settings.export.shareSuccess.description">Teile deine rauchfreie Zeit mit anderen</div>
                         </div>
                     </button>
 
                     <button id="generateBadgeBtn" class="data-action-btn badge-btn">
                         <span class="btn-icon">🏆</span>
                         <div class="btn-content">
-                            <div class="btn-title">Erfolgs-Badge erstellen</div>
-                            <div class="btn-description">Erstelle ein Badge mit deinen Statistiken</div>
+                            <div class="btn-title" data-i18n="settings.export.badge.title">Erfolgs-Badge erstellen</div>
+                            <div class="btn-description" data-i18n="settings.export.badge.description">Erstelle ein Badge mit deinen Statistiken</div>
                         </div>
                     </button>
 
                     <button id="shareImageBtn" class="data-action-btn image-btn">
                         <span class="btn-icon">📸</span>
                         <div class="btn-content">
-                            <div class="btn-title">Als Bild teilen</div>
-                            <div class="btn-description">Erstelle ein Bild für Instagram, WhatsApp & Co.</div>
+                            <div class="btn-title" data-i18n="settings.export.shareImage.title">Als Bild teilen</div>
+                            <div class="btn-description" data-i18n="settings.export.shareImage.description">Erstelle ein Bild für Instagram, WhatsApp & Co.</div>
                         </div>
                     </button>
 
                     <button id="exportPdfBtn" class="data-action-btn pdf-btn">
                         <span class="btn-icon">📄</span>
                         <div class="btn-content">
-                            <div class="btn-title">PDF-Report erstellen</div>
-                            <div class="btn-description">Exportiere deine Statistiken als PDF-Dokument</div>
+                            <div class="btn-title" data-i18n="settings.export.pdf.title">PDF-Report erstellen</div>
+                            <div class="btn-description" data-i18n="settings.export.pdf.description">Exportiere deine Statistiken als PDF-Dokument</div>
                         </div>
                     </button>
                 </div>
             </div>
 
             <div class="settings-section danger-zone">
-                <h3>⚠️ Gefahrenzone</h3>
-                <p class="danger-warning">Diese Aktion kann nicht rückgängig gemacht werden!</p>
-                <button id="deleteAccountBtn" class="delete-account-btn">Account löschen</button>
+                <h3 data-i18n="settings.danger.title">⚠️ Gefahrenzone</h3>
+                <p class="danger-warning" data-i18n="settings.danger.warning">Diese Aktion kann nicht rückgängig gemacht werden!</p>
+                <button id="deleteAccountBtn" class="delete-account-btn" data-i18n="settings.danger.deleteAccount">Account löschen</button>
             </div>
         </div>
     </div>
@@ -930,55 +931,55 @@
     <!-- Tutorial Modal -->
     <div id="tutorialModal" class="tutorial-modal hidden" role="dialog" aria-modal="true" aria-labelledby="tutorialTitle">
         <div class="tutorial-modal-content">
-            <button id="tutorialCloseBtn" class="tutorial-close-btn" aria-label="Tutorial schließen">✕</button>
-            <h2 id="tutorialTitle" class="sr-only">Tutorial</h2>
+            <button id="tutorialCloseBtn" class="tutorial-close-btn" data-i18n-aria="tutorial.close" aria-label="Tutorial schließen">✕</button>
+            <h2 id="tutorialTitle" class="sr-only" data-i18n="tutorial.srTitle">Tutorial</h2>
 
             <div class="tutorial-slides">
                 <!-- Slide 1: Willkommen -->
                 <div class="tutorial-slide active" data-slide="1">
                     <div class="tutorial-icon">👋</div>
-                    <h2>Willkommen bei ByeByeSmoke!</h2>
-                    <p>Lass uns dir die wichtigsten Features zeigen und wie du die App als PWA installieren kannst.</p>
+                    <h2 data-i18n="tutorial.slide1.title">Willkommen bei ByeByeSmoke!</h2>
+                    <p data-i18n="tutorial.slide1.text">Lass uns dir die wichtigsten Features zeigen und wie du die App als PWA installieren kannst.</p>
                     <ul class="tutorial-features">
-                        <li>📊 Verfolge deinen Fortschritt</li>
-                        <li>🏥 Gesundheitsmeilensteine</li>
-                        <li>🆘 Hilfe bei Verlangen</li>
-                        <li>🔔 Push-Benachrichtigungen</li>
-                        <li>📱 Als App installieren</li>
+                        <li data-i18n="tutorial.slide1.feature1">📊 Verfolge deinen Fortschritt</li>
+                        <li data-i18n="tutorial.slide1.feature2">🏥 Gesundheitsmeilensteine</li>
+                        <li data-i18n="tutorial.slide1.feature3">🆘 Hilfe bei Verlangen</li>
+                        <li data-i18n="tutorial.slide1.feature4">🔔 Push-Benachrichtigungen</li>
+                        <li data-i18n="tutorial.slide1.feature5">📱 Als App installieren</li>
                     </ul>
                 </div>
 
                 <!-- Slide 2: Hauptfunktionen -->
                 <div class="tutorial-slide" data-slide="2">
                     <div class="tutorial-icon">📊</div>
-                    <h2>Die wichtigsten Features</h2>
+                    <h2 data-i18n="tutorial.slide2.title">Die wichtigsten Features</h2>
                     <div class="tutorial-feature-list">
                         <div class="tutorial-feature-item">
                             <div class="feature-icon">📈</div>
                             <div class="feature-content">
-                                <h3>Statistiken</h3>
-                                <p>Sieh wie viel Geld du gespart hast und wie sich deine Gesundheit verbessert.</p>
+                                <h3 data-i18n="tutorial.slide2.stats.title">Statistiken</h3>
+                                <p data-i18n="tutorial.slide2.stats.text">Sieh wie viel Geld du gespart hast und wie sich deine Gesundheit verbessert.</p>
                             </div>
                         </div>
                         <div class="tutorial-feature-item">
                             <div class="feature-icon">🏥</div>
                             <div class="feature-content">
-                                <h3>Meilensteine</h3>
-                                <p>28 Gesundheitsmeilensteine zeigen dir, wie sich dein Körper regeneriert.</p>
+                                <h3 data-i18n="tutorial.slide2.milestones.title">Meilensteine</h3>
+                                <p data-i18n="tutorial.slide2.milestones.text">28 Gesundheitsmeilensteine zeigen dir, wie sich dein Körper regeneriert.</p>
                             </div>
                         </div>
                         <div class="tutorial-feature-item">
                             <div class="feature-icon">🆘</div>
                             <div class="feature-content">
-                                <h3>Craving-Timer</h3>
-                                <p>5-Minuten-Timer mit Atemübungen hilft dir, Verlangen zu überwinden.</p>
+                                <h3 data-i18n="tutorial.slide2.craving.title">Craving-Timer</h3>
+                                <p data-i18n="tutorial.slide2.craving.text">5-Minuten-Timer mit Atemübungen hilft dir, Verlangen zu überwinden.</p>
                             </div>
                         </div>
                         <div class="tutorial-feature-item">
                             <div class="feature-icon">🔔</div>
                             <div class="feature-content">
-                                <h3>Benachrichtigungen</h3>
-                                <p>Aktiviere Push-Benachrichtigungen in den Einstellungen für Meilensteine und tägliche Motivation.</p>
+                                <h3 data-i18n="tutorial.slide2.notifications.title">Benachrichtigungen</h3>
+                                <p data-i18n="tutorial.slide2.notifications.text">Aktiviere Push-Benachrichtigungen in den Einstellungen für Meilensteine und tägliche Motivation.</p>
                             </div>
                         </div>
                     </div>
@@ -987,31 +988,31 @@
                 <!-- Slide 3: Android Installation -->
                 <div class="tutorial-slide" data-slide="3">
                     <div class="tutorial-icon">🤖</div>
-                    <h2>Installation auf Android</h2>
+                    <h2 data-i18n="tutorial.slide3.title">Installation auf Android</h2>
                     <div class="install-steps">
                         <div class="install-step">
                             <div class="step-number">1</div>
                             <div class="step-content">
-                                <h3>Chrome-Menü öffnen</h3>
-                                <p>Tippe auf die drei Punkte (⋮) oben rechts im Browser.</p>
+                                <h3 data-i18n="tutorial.slide3.step1.title">Chrome-Menü öffnen</h3>
+                                <p data-i18n="tutorial.slide3.step1.text">Tippe auf die drei Punkte (⋮) oben rechts im Browser.</p>
                             </div>
                         </div>
                         <div class="install-step">
                             <div class="step-number">2</div>
                             <div class="step-content">
-                                <h3>"App installieren" wählen</h3>
-                                <p>Tippe auf "App installieren" oder "Zum Startbildschirm hinzufügen".</p>
+                                <h3 data-i18n="tutorial.slide3.step2.title">"App installieren" wählen</h3>
+                                <p data-i18n="tutorial.slide3.step2.text">Tippe auf "App installieren" oder "Zum Startbildschirm hinzufügen".</p>
                             </div>
                         </div>
                         <div class="install-step">
                             <div class="step-number">3</div>
                             <div class="step-content">
-                                <h3>Bestätigen</h3>
-                                <p>Bestätige die Installation. Die App erscheint nun auf deinem Homescreen!</p>
+                                <h3 data-i18n="tutorial.slide3.step3.title">Bestätigen</h3>
+                                <p data-i18n="tutorial.slide3.step3.text">Bestätige die Installation. Die App erscheint nun auf deinem Homescreen!</p>
                             </div>
                         </div>
                     </div>
-                    <div class="install-note">
+                    <div class="install-note" data-i18n="tutorial.slide3.note">
                         💡 Die App funktioniert dann wie eine normale App und kann auch offline genutzt werden.
                     </div>
                 </div>
@@ -1019,38 +1020,38 @@
                 <!-- Slide 4: iOS Installation -->
                 <div class="tutorial-slide" data-slide="4">
                     <div class="tutorial-icon">🍎</div>
-                    <h2>Installation auf iOS (iPhone/iPad)</h2>
+                    <h2 data-i18n="tutorial.slide4.title">Installation auf iOS (iPhone/iPad)</h2>
                     <div class="install-steps">
                         <div class="install-step">
                             <div class="step-number">1</div>
                             <div class="step-content">
-                                <h3>Safari öffnen</h3>
-                                <p>Öffne diese Seite in Safari (nicht Chrome oder andere Browser!).</p>
+                                <h3 data-i18n="tutorial.slide4.step1.title">Safari öffnen</h3>
+                                <p data-i18n="tutorial.slide4.step1.text">Öffne diese Seite in Safari (nicht Chrome oder andere Browser!).</p>
                             </div>
                         </div>
                         <div class="install-step">
                             <div class="step-number">2</div>
                             <div class="step-content">
-                                <h3>Teilen-Button tippen</h3>
-                                <p>Tippe unten auf das Teilen-Symbol (□↑).</p>
+                                <h3 data-i18n="tutorial.slide4.step2.title">Teilen-Button tippen</h3>
+                                <p data-i18n="tutorial.slide4.step2.text">Tippe unten auf das Teilen-Symbol (□↑).</p>
                             </div>
                         </div>
                         <div class="install-step">
                             <div class="step-number">3</div>
                             <div class="step-content">
-                                <h3>"Zum Home-Bildschirm"</h3>
-                                <p>Scrolle runter und wähle "Zum Home-Bildschirm".</p>
+                                <h3 data-i18n="tutorial.slide4.step3.title">"Zum Home-Bildschirm"</h3>
+                                <p data-i18n="tutorial.slide4.step3.text">Scrolle runter und wähle "Zum Home-Bildschirm".</p>
                             </div>
                         </div>
                         <div class="install-step">
                             <div class="step-number">4</div>
                             <div class="step-content">
-                                <h3>Hinzufügen bestätigen</h3>
-                                <p>Tippe oben rechts auf "Hinzufügen". Fertig!</p>
+                                <h3 data-i18n="tutorial.slide4.step4.title">Hinzufügen bestätigen</h3>
+                                <p data-i18n="tutorial.slide4.step4.text">Tippe oben rechts auf "Hinzufügen". Fertig!</p>
                             </div>
                         </div>
                     </div>
-                    <div class="install-note install-note-warning">
+                    <div class="install-note install-note-warning" data-i18n="tutorial.slide4.warning">
                         ⚠️ Wichtig: Die Installation funktioniert nur in Safari, nicht in Chrome oder anderen Browsern!
                     </div>
                 </div>
@@ -1058,23 +1059,23 @@
                 <!-- Slide 5: Fertig -->
                 <div class="tutorial-slide" data-slide="5">
                     <div class="tutorial-icon">🎉</div>
-                    <h2>Alles klar!</h2>
-                    <p>Du kennst jetzt die wichtigsten Features und weißt, wie du die App installieren kannst.</p>
+                    <h2 data-i18n="tutorial.slide5.title">Alles klar!</h2>
+                    <p data-i18n="tutorial.slide5.text">Du kennst jetzt die wichtigsten Features und weißt, wie du die App installieren kannst.</p>
                     <div class="tutorial-final-tips">
-                        <h3>Noch ein paar Tipps:</h3>
+                        <h3 data-i18n="tutorial.slide5.tipsTitle">Noch ein paar Tipps:</h3>
                         <ul>
-                            <li>🌙 Nutze den Dark Mode für bessere Lesbarkeit nachts</li>
-                            <li>⚙️ Passe deine Daten in den Einstellungen an</li>
-                            <li>🔔 Aktiviere Benachrichtigungen für Extra-Motivation</li>
-                            <li>📊 Schau dir regelmäßig deine Erfolge an!</li>
+                            <li data-i18n="tutorial.slide5.tip1">🌙 Nutze den Dark Mode für bessere Lesbarkeit nachts</li>
+                            <li data-i18n="tutorial.slide5.tip2">⚙️ Passe deine Daten in den Einstellungen an</li>
+                            <li data-i18n="tutorial.slide5.tip3">🔔 Aktiviere Benachrichtigungen für Extra-Motivation</li>
+                            <li data-i18n="tutorial.slide5.tip4">📊 Schau dir regelmäßig deine Erfolge an!</li>
                         </ul>
                     </div>
-                    <p class="tutorial-final-message">Viel Erfolg auf deinem Weg! 💪</p>
+                    <p class="tutorial-final-message" data-i18n="tutorial.slide5.finalMessage">Viel Erfolg auf deinem Weg! 💪</p>
                 </div>
             </div>
 
             <div class="tutorial-navigation">
-                <button id="tutorialPrevBtn" class="tutorial-nav-btn" disabled>← Zurück</button>
+                <button id="tutorialPrevBtn" class="tutorial-nav-btn" disabled data-i18n="tutorial.nav.prev">← Zurück</button>
                 <div class="tutorial-dots" id="tutorialDots">
                     <span class="tutorial-dot active" data-slide="1"></span>
                     <span class="tutorial-dot" data-slide="2"></span>
@@ -1082,7 +1083,7 @@
                     <span class="tutorial-dot" data-slide="4"></span>
                     <span class="tutorial-dot" data-slide="5"></span>
                 </div>
-                <button id="tutorialNextBtn" class="tutorial-nav-btn">Weiter →</button>
+                <button id="tutorialNextBtn" class="tutorial-nav-btn" data-i18n="tutorial.nav.next">Weiter →</button>
             </div>
         </div>
     </div>
@@ -1090,9 +1091,9 @@
     <!-- Breathing Exercise Overlay -->
     <div id="breathingExerciseOverlay" class="breathing-exercise-overlay hidden" role="dialog" aria-modal="true">
         <div class="breathing-exercise-content">
-            <button id="breathingExerciseCloseBtn" class="breathing-exercise-close-btn" aria-label="Übung beenden">✕</button>
+            <button id="breathingExerciseCloseBtn" class="breathing-exercise-close-btn" data-i18n-aria="sos.breathing.closeExercise" aria-label="Übung beenden">✕</button>
 
-            <h2 id="breathingExerciseTitle" class="breathing-exercise-title">Atemübung</h2>
+            <h2 id="breathingExerciseTitle" class="breathing-exercise-title" data-i18n="sos.breathing.exerciseTitle">Atemübung</h2>
 
             <div class="breathing-exercise-visual">
                 <div class="breathing-exercise-circle"></div>

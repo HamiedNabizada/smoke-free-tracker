@@ -1,4 +1,6 @@
 // Main application entry point
+import { initializeI18n, t } from './i18n/i18n.js';
+import { initializeLanguageToggle } from './ui/language-toggle.js';
 import { initializeDarkMode } from './ui/dark-mode.js';
 import { initializeTabs } from './ui/tabs.js';
 import { updateDashboard } from './ui/dashboard.js';
@@ -32,6 +34,9 @@ if ('serviceWorker' in navigator) {
 
 // Initialize app
 document.addEventListener('DOMContentLoaded', async () => {
+    // Initialize i18n first (before any UI)
+    await initializeI18n();
+
     // Check authentication (redirects to login if not authenticated)
     const user = await checkAuth();
     if (!user) return;
@@ -47,7 +52,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         banner.innerHTML = `
             <div class="demo-banner-content">
                 <span class="demo-banner-icon">👀</span>
-                <span class="demo-banner-text">Du siehst die App im Test-Modus. <a href="register.html" class="demo-banner-link">Jetzt kostenlos registrieren</a> um deine eigenen Daten zu tracken!</span>
+                <span class="demo-banner-text">${t('demo.banner')} <a href="register.html" class="demo-banner-link">${t('demo.registerLink')}</a></span>
             </div>
         `;
         document.body.prepend(banner);
@@ -55,6 +60,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Initialize app components
     initializeDarkMode();
+    initializeLanguageToggle();
     initializeTabs();
     initializeCravingTimer();
     initializeGoalCalculator();

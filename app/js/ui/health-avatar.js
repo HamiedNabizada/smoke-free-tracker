@@ -1,3 +1,5 @@
+import { t } from '../i18n/i18n.js';
+
 // Store regeneration values for tooltips
 let currentRegenValues = {
     lung: 0,
@@ -36,10 +38,10 @@ export function updateHealthAvatar(stats) {
     const bloodValue = document.getElementById('bloodRegenValue');
     const skinValue = document.getElementById('skinRegenValue');
 
-    if (lungValue) lungValue.textContent = `${lungRegen}% regeneriert`;
-    if (heartValue) heartValue.textContent = `${heartRegen}% normalisiert`;
-    if (bloodValue) bloodValue.textContent = `${bloodRegen}% verbessert`;
-    if (skinValue) skinValue.textContent = `${skinRegen}% verjüngt`;
+    if (lungValue) lungValue.textContent = t('healthAvatar.lung.status', { percent: lungRegen });
+    if (heartValue) heartValue.textContent = t('healthAvatar.heart.status', { percent: heartRegen });
+    if (bloodValue) bloodValue.textContent = t('healthAvatar.blood.status', { percent: bloodRegen });
+    if (skinValue) skinValue.textContent = t('healthAvatar.skin.status', { percent: skinRegen });
 
     // Store values for tooltips
     currentRegenValues = {
@@ -85,7 +87,7 @@ function initializeTooltips() {
     const lungs = document.querySelector('.organ-lungs');
     if (lungs) {
         lungs.addEventListener('mouseenter', (e) => {
-            showTooltip(e, `🫁 Lungen: ${Math.round(currentRegenValues.lung)}% regeneriert`);
+            showTooltip(e, t('healthAvatar.lung.tooltip', { percent: Math.round(currentRegenValues.lung) }));
         });
         lungs.addEventListener('mouseleave', hideTooltip);
         lungs.dataset.tooltipInitialized = 'true';
@@ -94,7 +96,7 @@ function initializeTooltips() {
     // Heart (already defined above for check)
     if (heart) {
         heart.addEventListener('mouseenter', (e) => {
-            showTooltip(e, `❤️ Herz: ${Math.round(currentRegenValues.heart)}% normalisiert`);
+            showTooltip(e, t('healthAvatar.heart.tooltip', { percent: Math.round(currentRegenValues.heart) }));
         });
         heart.addEventListener('mouseleave', hideTooltip);
         heart.dataset.tooltipInitialized = 'true';
@@ -104,7 +106,7 @@ function initializeTooltips() {
     const blood = document.querySelector('.organ-blood');
     if (blood) {
         blood.addEventListener('mouseenter', (e) => {
-            showTooltip(e, `🩸 Blutkreislauf: ${Math.round(currentRegenValues.blood)}% verbessert`);
+            showTooltip(e, t('healthAvatar.blood.tooltip', { percent: Math.round(currentRegenValues.blood) }));
         });
         blood.addEventListener('mouseleave', hideTooltip);
         blood.dataset.tooltipInitialized = 'true';
@@ -114,7 +116,7 @@ function initializeTooltips() {
     const skin = document.getElementById('skin-glow');
     if (skin) {
         skin.addEventListener('mouseenter', (e) => {
-            showTooltip(e, `✨ Haut: ${Math.round(currentRegenValues.skin)}% verjüngt`);
+            showTooltip(e, t('healthAvatar.skin.tooltip', { percent: Math.round(currentRegenValues.skin) }));
         });
         skin.addEventListener('mouseleave', hideTooltip);
         skin.dataset.tooltipInitialized = 'true';

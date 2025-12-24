@@ -1,4 +1,16 @@
 import { achievements } from '../data/achievements.js';
+import { t, isInitialized } from '../i18n/i18n.js';
+
+// Get achievement text with i18n fallback
+function getAchievementText(achievement, field) {
+    if (isInitialized()) {
+        const translated = t(`achievements.${achievement.id}.${field}`);
+        if (translated !== `achievements.${achievement.id}.${field}`) {
+            return translated;
+        }
+    }
+    return achievement[field] || '';
+}
 
 export function updateAchievements(stats) {
     const container = document.getElementById('achievements');
@@ -42,10 +54,13 @@ export function updateAchievements(stats) {
             div.classList.add('locked');
         }
 
+        const title = getAchievementText(achievement, 'title');
+        const description = getAchievementText(achievement, 'description');
+
         div.innerHTML = `
             <div class="achievement-icon">${achievement.icon}</div>
-            <div class="achievement-title">${achievement.title}</div>
-            <div class="achievement-description">${achievement.description}</div>
+            <div class="achievement-title">${title}</div>
+            <div class="achievement-description">${description}</div>
         `;
 
         container.appendChild(div);

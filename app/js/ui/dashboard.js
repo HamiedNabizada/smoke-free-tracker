@@ -10,6 +10,8 @@ import { updateHealthAvatar } from './health-avatar.js';
 import { updateProgressVisuals } from './progress-visuals.js';
 import { updateHappeningNow } from './happening-now.js';
 import { checkMilestoneNotifications } from './notifications.js';
+import { t } from '../i18n/i18n.js';
+import { formatNumber } from '../i18n/formatters.js';
 
 export function updateDashboard() {
     const stats = calculateStats();
@@ -140,8 +142,8 @@ export function updateNextMilestoneProgress(stats) {
             <div class="next-milestone-content">
                 <div class="next-milestone-icon">🎉</div>
                 <div>
-                    <div class="next-milestone-title">Alle Meilensteine erreicht!</div>
-                    <div class="next-milestone-desc">Du hast alle Gesundheitsmeilensteine gemeistert!</div>
+                    <div class="next-milestone-title">${t('dashboard.nextMilestone.allComplete')}</div>
+                    <div class="next-milestone-desc">${t('dashboard.nextMilestone.allCompleteDesc')}</div>
                 </div>
             </div>
         `;
@@ -155,27 +157,37 @@ export function updateNextMilestoneProgress(stats) {
     let timeRemaining;
     if (daysRemaining < 1) {
         const hoursRemaining = Math.ceil(daysRemaining * 24);
-        timeRemaining = `${hoursRemaining} Std.`;
+        timeRemaining = t('time.hoursShort', { count: hoursRemaining });
     } else if (daysRemaining < 7) {
-        timeRemaining = `${Math.ceil(daysRemaining)} Tag${Math.ceil(daysRemaining) === 1 ? '' : 'en'}`;
+        const days = Math.ceil(daysRemaining);
+        timeRemaining = days === 1 ? t('time.day') : t('time.days', { count: days });
     } else if (daysRemaining < 30) {
         const weeks = Math.ceil(daysRemaining / 7);
-        timeRemaining = `${weeks} Woche${weeks === 1 ? '' : 'n'}`;
+        timeRemaining = weeks === 1 ? t('time.week') : t('time.weeks', { count: weeks });
     } else if (daysRemaining < 365) {
         const months = Math.ceil(daysRemaining / 30);
-        timeRemaining = `${months} Monat${months === 1 ? '' : 'en'}`;
+        timeRemaining = months === 1 ? t('time.month') : t('time.months', { count: months });
     } else {
         const years = Math.floor(daysRemaining / 365);
-        timeRemaining = `${years} Jahr${years === 1 ? '' : 'en'}`;
+        timeRemaining = years === 1 ? t('time.year') : t('time.years', { count: years });
     }
+
+    // Get milestone text from translations (using ID)
+    const milestoneId = nextMilestone.id || nextMilestone.title.toLowerCase().replace(/\s+/g, '_');
+    const milestoneTitle = t(`milestones.${milestoneId}.title`) !== `milestones.${milestoneId}.title`
+        ? t(`milestones.${milestoneId}.title`)
+        : nextMilestone.title;
+    const milestoneDesc = t(`milestones.${milestoneId}.description`) !== `milestones.${milestoneId}.description`
+        ? t(`milestones.${milestoneId}.description`)
+        : nextMilestone.description;
 
     container.innerHTML = `
         <div class="next-milestone-content">
             <div class="next-milestone-icon">${nextMilestone.icon}</div>
             <div class="next-milestone-info">
-                <div class="next-milestone-title">${nextMilestone.title}</div>
-                <div class="next-milestone-desc">${nextMilestone.description}</div>
-                <div class="next-milestone-time">Noch ${timeRemaining}</div>
+                <div class="next-milestone-title">${milestoneTitle}</div>
+                <div class="next-milestone-desc">${milestoneDesc}</div>
+                <div class="next-milestone-time">${t('time.remaining', { time: timeRemaining })}</div>
             </div>
         </div>
         <div class="next-milestone-progress-bar">
@@ -203,18 +215,18 @@ export function updateComparisonStats(stats) {
         const statDiv = document.createElement('div');
         statDiv.className = 'comparison-stat';
         statDiv.innerHTML = `
-            <h3>🏆 Du bist außergewöhnlich!</h3>
+            <h3>${t('dashboard.comparison.exceptional')}</h3>
             <p>${comparisonStat.message}</p>
-            <p style="margin-top: 10px; font-weight: 600;">Du gehörst zu den stärksten ${100 - comparisonStat.failRate}%!</p>
+            <p style="margin-top: 10px; font-weight: 600;">${t('dashboard.comparison.topPercent', { percent: 100 - comparisonStat.failRate })}</p>
         `;
         container.appendChild(statDiv);
     } else {
         const statDiv = document.createElement('div');
         statDiv.className = 'comparison-stat';
         statDiv.innerHTML = `
-            <h3>💪 Jede Minute zählt!</h3>
-            <p>Du bist bereits stärker als viele, die es gar nicht erst versuchen.</p>
-            <p style="margin-top: 10px;">Die ersten Stunden sind entscheidend - du schaffst das!</p>
+            <h3>${t('dashboard.comparison.everyMinuteCounts')}</h3>
+            <p>${t('dashboard.comparison.strongerThanMany')}</p>
+            <p style="margin-top: 10px;">${t('dashboard.comparison.firstHoursCritical')}</p>
         `;
         container.appendChild(statDiv);
     }

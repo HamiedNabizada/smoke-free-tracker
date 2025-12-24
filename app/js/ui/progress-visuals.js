@@ -1,6 +1,7 @@
 // Progress Gauges Visualization
 
 import { getCurrentGoals } from './progress-goals.js';
+import { t } from '../i18n/i18n.js';
 
 // Arc length for half-circle gauge (π * radius = π * 80 ≈ 251.2)
 const ARC_LENGTH = 251.2;
@@ -86,16 +87,16 @@ function updateCigarettesGauge(stats, goals) {
 function updateGoalTexts(goals) {
     const daysGoal = document.getElementById('daysGoalText');
     if (daysGoal) {
-        daysGoal.textContent = `Ziel: ${goals.days} Tage`;
+        daysGoal.textContent = t('dashboard.progress.goalDays', { count: goals.days });
     }
 
     const moneyGoal = document.getElementById('moneyGoalText');
     if (moneyGoal) {
-        moneyGoal.textContent = `Ziel: ${goals.money}€`;
+        moneyGoal.textContent = t('dashboard.progress.goalMoney', { amount: goals.money });
     }
 
     const cigarettesGoal = document.getElementById('cigarettesGoalText');
     if (cigarettesGoal) {
-        cigarettesGoal.textContent = `Ziel: ${goals.cigarettes}`;
+        cigarettesGoal.textContent = t('dashboard.progress.goalCigarettes', { count: goals.cigarettes });
     }
 }

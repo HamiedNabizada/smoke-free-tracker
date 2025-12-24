@@ -1,6 +1,6 @@
-// Achievement definitions
+// Achievement definitions (ID-based with fallback texts for tests)
 export const achievements = [
-    // Zeit-basierte Achievements (Tage)
+    // Time-based Achievements (days)
     { id: 'first_hour', icon: '⏰', title: 'Erste Stunde', description: '60 Minuten stark!', days: 0.042 },
     { id: 'first_day', icon: '🌱', title: 'Erster Tag', description: '24 Stunden rauchfrei', days: 1 },
     { id: 'two_days', icon: '🌿', title: 'Zwei Tage', description: '48 Stunden geschafft', days: 2 },
@@ -31,7 +31,7 @@ export const achievements = [
     { id: 'five_years', icon: '🥉', title: 'Fünf Jahre', description: '1825 Tage Meister', days: 1825 },
     { id: 'ten_years', icon: '👑', title: 'Zehn Jahre', description: 'Absolute Ikone!', days: 3650 },
 
-    // Geld-basierte Achievements
+    // Money-based Achievements
     { id: 'save_50', icon: '🪙', title: 'Erste 50€', description: '50€ gespart', threshold: 50, type: 'money' },
     { id: 'save_100', icon: '💵', title: 'Hundert Euro', description: '100€ gespart', threshold: 100, type: 'money' },
     { id: 'save_250', icon: '💶', title: 'Vierteljahresgehalt', description: '250€ gespart', threshold: 250, type: 'money' },
@@ -44,7 +44,7 @@ export const achievements = [
     { id: 'save_5000', icon: '🏆', title: 'Fünftausend', description: '5000€ gespart', threshold: 5000, type: 'money' },
     { id: 'save_10000', icon: '👑', title: 'Zehntausend', description: '10000€ gespart!', threshold: 10000, type: 'money' },
 
-    // Zigaretten-basierte Achievements
+    // Cigarettes-based Achievements
     { id: 'cigs_10', icon: '🚫', title: 'Erste Zehn', description: '10 nicht geraucht', threshold: 10, type: 'cigarettes' },
     { id: 'cigs_50', icon: '⛔', title: 'Fünfzig weg', description: '50 nicht geraucht', threshold: 50, type: 'cigarettes' },
     { id: 'cigs_100', icon: '🚭', title: 'Zähler', description: '100 nicht geraucht', threshold: 100, type: 'cigarettes' },
@@ -55,7 +55,7 @@ export const achievements = [
     { id: 'cigs_5000', icon: '🥇', title: 'Fünftausend', description: '5000 nicht geraucht', threshold: 5000, type: 'cigarettes' },
     { id: 'cigs_10000', icon: '👑', title: 'Zehntausend', description: '10000 nicht geraucht!', threshold: 10000, type: 'cigarettes' },
 
-    // Lebenszeit-Achievements (Stunden gewonnen)
+    // Life time Achievements (hours gained)
     { id: 'life_1h', icon: '❤️', title: 'Erste Stunde', description: '1 Stunde Leben gewonnen', threshold: 1, type: 'lifeHours' },
     { id: 'life_12h', icon: '💓', title: 'Halber Tag', description: '12 Stunden Leben gewonnen', threshold: 12, type: 'lifeHours' },
     { id: 'life_24h', icon: '💗', title: 'Ein Tag Leben', description: '24 Stunden Leben gewonnen', threshold: 24, type: 'lifeHours' },
@@ -65,7 +65,7 @@ export const achievements = [
     { id: 'life_500h', icon: '💞', title: 'Fünfhundert Stunden', description: '500 Stunden Leben gewonnen', threshold: 500, type: 'lifeHours' },
     { id: 'life_1000h', icon: '💟', title: 'Tausend Stunden', description: '1000 Stunden Leben gewonnen', threshold: 1000, type: 'lifeHours' },
 
-    // Lungengesundheit-Achievements
+    // Lung health Achievements
     { id: 'lung_5', icon: '🫁', title: 'Erste Erholung', description: '5% Lungengesundheit', threshold: 5, type: 'lungHealth' },
     { id: 'lung_10', icon: '🌬️', title: 'Atme auf', description: '10% Lungengesundheit', threshold: 10, type: 'lungHealth' },
     { id: 'lung_25', icon: '🍃', title: 'Viertel Weg', description: '25% Lungengesundheit', threshold: 25, type: 'lungHealth' },
@@ -73,14 +73,14 @@ export const achievements = [
     { id: 'lung_75', icon: '🌲', title: 'Fast da', description: '75% Lungengesundheit', threshold: 75, type: 'lungHealth' },
     { id: 'lung_90', icon: '🏔️', title: 'Bergluft', description: '90% Lungengesundheit', threshold: 90, type: 'lungHealth' },
 
-    // Umwelt-Achievements (Wasser gespart in Litern)
+    // Water saved Achievements (liters)
     { id: 'water_100', icon: '💧', title: 'Erste Tropfen', description: '100 Liter Wasser gespart', threshold: 100, type: 'water' },
     { id: 'water_500', icon: '🚿', title: 'Dusche gespart', description: '500 Liter Wasser gespart', threshold: 500, type: 'water' },
     { id: 'water_1000', icon: '🛁', title: 'Badewanne voll', description: '1000 Liter Wasser gespart', threshold: 1000, type: 'water' },
     { id: 'water_5000', icon: '🏊', title: 'Kleiner Pool', description: '5000 Liter Wasser gespart', threshold: 5000, type: 'water' },
     { id: 'water_10000', icon: '🌊', title: 'Wasserheld', description: '10000 Liter Wasser gespart', threshold: 10000, type: 'water' },
 
-    // CO2-Achievements (kg vermieden)
+    // CO2 Achievements (kg avoided)
     { id: 'co2_1', icon: '🌱', title: 'Grüner Start', description: '1 kg CO₂ vermieden', threshold: 1, type: 'co2' },
     { id: 'co2_5', icon: '🌳', title: 'Baumpfleger', description: '5 kg CO₂ vermieden', threshold: 5, type: 'co2' },
     { id: 'co2_10', icon: '🌲', title: 'Waldfreund', description: '10 kg CO₂ vermieden', threshold: 10, type: 'co2' },
@@ -88,7 +88,7 @@ export const achievements = [
     { id: 'co2_50', icon: '🌍', title: 'Klimaheld', description: '50 kg CO₂ vermieden', threshold: 50, type: 'co2' },
     { id: 'co2_100', icon: '🌏', title: 'Erdbewahrer', description: '100 kg CO₂ vermieden', threshold: 100, type: 'co2' },
 
-    // Zeit gespart Achievements (Stunden)
+    // Time saved Achievements (hours)
     { id: 'time_10h', icon: '⏱️', title: 'Zehn Stunden', description: '10 Stunden Zeit gespart', threshold: 10, type: 'timeSaved' },
     { id: 'time_24h', icon: '📅', title: 'Ein Tag Zeit', description: '24 Stunden Zeit gespart', threshold: 24, type: 'timeSaved' },
     { id: 'time_50h', icon: '⏳', title: 'Fünfzig Stunden', description: '50 Stunden Zeit gespart', threshold: 50, type: 'timeSaved' },

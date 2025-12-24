@@ -1,5 +1,17 @@
 // What's Happening NOW - Shows current regeneration phase
 import { healthMilestones } from '../data/milestones.js';
+import { t, isInitialized } from '../i18n/i18n.js';
+
+// Get milestone text with i18n fallback
+function getMilestoneText(milestone, field) {
+    if (isInitialized()) {
+        const translated = t(`milestones.${milestone.id}.${field}`);
+        if (translated !== `milestones.${milestone.id}.${field}`) {
+            return translated;
+        }
+    }
+    return milestone[field] || '';
+}
 
 export function updateHappeningNow(stats) {
     const container = document.getElementById('happeningNowContent');
@@ -30,14 +42,21 @@ export function updateHappeningNow(stats) {
 
     // Update title based on time since last milestone
     const timeSinceMilestone = totalDays - currentMilestone.days;
+    const milestoneTitle = getMilestoneText(currentMilestone, 'title');
     let title = '';
 
     if (timeSinceMilestone < 0.1) {
         // Just achieved
-        title = `${currentMilestone.title} - Gerade erreicht!`;
+        const justReached = t('happeningNow.justReached') !== 'happeningNow.justReached'
+            ? t('happeningNow.justReached')
+            : 'Gerade erreicht!';
+        title = `${milestoneTitle} - ${justReached}`;
     } else {
         // In progress
-        title = `${currentMilestone.title} - Aktive Phase`;
+        const activePhase = t('happeningNow.activePhase') !== 'happeningNow.activePhase'
+            ? t('happeningNow.activePhase')
+            : 'Aktive Phase';
+        title = `${milestoneTitle} - ${activePhase}`;
     }
 
     document.getElementById('happeningTitle').textContent = title;
@@ -54,11 +73,18 @@ export function updateHappeningNow(stats) {
         // Calculate time to next milestone
         const daysRemaining = nextMilestone.days - totalDays;
         const timeText = formatTimeRemaining(daysRemaining);
-        document.getElementById('happeningNext').textContent = `Nächste Phase (${nextMilestone.title}) in ${timeText}`;
+        const nextMilestoneTitle = getMilestoneText(nextMilestone, 'title');
+        const nextPhaseText = t('happeningNow.nextPhase', { title: nextMilestoneTitle, time: timeText }) !== 'happeningNow.nextPhase'
+            ? t('happeningNow.nextPhase', { title: nextMilestoneTitle, time: timeText })
+            : `Nächste Phase (${nextMilestoneTitle}) in ${timeText}`;
+        document.getElementById('happeningNext').textContent = nextPhaseText;
     } else {
         // All milestones achieved
         document.getElementById('happeningBar').style.width = '100%';
-        document.getElementById('happeningNext').textContent = 'Alle Gesundheitsmeilensteine erreicht! 🎉';
+        const allAchieved = t('happeningNow.allAchieved') !== 'happeningNow.allAchieved'
+            ? t('happeningNow.allAchieved')
+            : 'Alle Gesundheitsmeilensteine erreicht!';
+        document.getElementById('happeningNext').textContent = allAchieved;
     }
 }
 

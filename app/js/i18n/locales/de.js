@@ -1,0 +1,878 @@
+/**
+ * German (Deutsch) Locale
+ * Default language for ByeByeSmoke
+ */
+
+export default {
+    // App-wide
+    app: {
+        name: 'ByeByeSmoke',
+        tagline: 'Dein Weg in ein rauchfreies Leben'
+    },
+
+    // Navigation tabs
+    nav: {
+        overview: 'Übersicht',
+        milestones: 'Meilensteine',
+        achievements: 'Erfolge',
+        statistics: 'Statistiken',
+        help: 'Hilfe'
+    },
+
+    // Header
+    header: {
+        skipToContent: 'Zum Inhalt springen',
+        language: 'Sprache wechseln',
+        darkMode: 'Dark Mode umschalten',
+        tutorial: 'Hilfe & Anleitung',
+        settings: 'Einstellungen',
+        logout: 'Abmelden'
+    },
+
+    // Demo mode
+    demo: {
+        banner: 'Demo-Modus aktiv',
+        hint: 'Alle Daten sind Beispieldaten.',
+        register: 'Jetzt registrieren',
+        login: 'Anmelden'
+    },
+
+    // Dashboard / Overview
+    dashboard: {
+        motivation: {
+            title: 'Tägliche Motivation'
+        },
+        bodyRecovery: {
+            title: 'Dein Körper erholt sich',
+            subtitle: 'Sieh live, wie sich dein Körper regeneriert!'
+        },
+        progress: {
+            title: 'Dein Fortschritt',
+            days: 'Tage',
+            money: 'Geld',
+            cigarettes: 'Zigaretten',
+            goalDays: 'Ziel: {count} Tage',
+            goalMoney: 'Ziel: {amount}€',
+            goalCigarettes: 'Ziel: {count}'
+        },
+        stats: {
+            daysSmokeFree: 'Zeit rauchfrei',
+            sinceStopped: 'Seit deinem Rauchstopp',
+            moneySaved: 'Geld gespart',
+            basedOn: 'Basierend auf {cigs} Zig./Tag à {price}',
+            cigarettesNotSmoked: 'Nicht geraucht',
+            cigarettesAvoided: '{count} Zigaretten pro Tag vermieden',
+            lifeGained: 'Lebenszeit gewonnen',
+            lifeGainedInfo: '17-22 Min pro Zigarette (Jackson 2025)',
+            toxinsAvoided: 'Schadstoffe vermieden',
+            toxinsInfo: 'Nikotin, Teer & Co.',
+            lungHealth: 'Lungengesundheit',
+            lungHealthInfo: 'Regeneration über 10 Jahre',
+            timeSaved: 'Zeit gespart',
+            timeSavedInfo: '~5 Min. pro Zigarette (inkl. Vorbereitung)',
+            co2Avoided: 'CO₂ vermieden',
+            co2Info: '~14g CO₂ pro Zigarette',
+            skinImprovement: 'Hautverbesserung',
+            skinInfo: 'Signifikante Verbesserung ab 6 Monaten'
+        },
+        environment: {
+            title: 'Dein Beitrag für die Umwelt',
+            waterSaved: 'Liter Wasser gespart',
+            waterInfo: 'Zigarettenproduktion verbraucht ~3.7L pro Zigarette',
+            treesProtected: 'Bäume geschützt',
+            treesInfo: 'Pro 300 Zigaretten wird ~1 Baum benötigt',
+            co2Avoided: 'CO₂ vermieden',
+            co2Info: '~14g CO₂ pro Zigarette'
+        },
+        streak: {
+            title: 'App-Streak',
+            days: 'Tage in Folge',
+            text: 'Du nutzt die App bereits {count} Tage in Folge. Weiter so!'
+        },
+        nextMilestone: {
+            title: 'Nächstes Ziel',
+            allComplete: 'Alle Meilensteine erreicht!',
+            allCompleteDesc: 'Du hast alle Gesundheitsmeilensteine gemeistert!'
+        },
+        comparison: {
+            exceptional: 'Du bist außergewöhnlich!',
+            topPercent: 'Du gehörst zu den stärksten {percent}%!',
+            everyMinuteCounts: 'Jede Minute zählt!',
+            strongerThanMany: 'Du bist bereits stärker als viele, die es gar nicht erst versuchen.',
+            firstHoursCritical: 'Die ersten Stunden sind entscheidend - du schaffst das!'
+        }
+    },
+
+    // Health Avatar
+    avatar: {
+        heart: 'Herz',
+        lungs: 'Lungen',
+        blood: 'Blutgefäße',
+        brain: 'Gehirn',
+        skin: 'Haut'
+    },
+
+    // Health Avatar Status & Tooltips
+    healthAvatar: {
+        lung: {
+            status: '{percent}% regeneriert',
+            tooltip: '🫁 Lungen: {percent}% regeneriert'
+        },
+        heart: {
+            status: '{percent}% normalisiert',
+            tooltip: '❤️ Herz: {percent}% normalisiert'
+        },
+        blood: {
+            status: '{percent}% verbessert',
+            tooltip: '🩸 Blutkreislauf: {percent}% verbessert'
+        },
+        skin: {
+            status: '{percent}% verjüngt',
+            tooltip: '✨ Haut: {percent}% verjüngt'
+        }
+    },
+
+    // Milestones
+    milestonesSection: {
+        title: 'Gesundheitsmeilensteine',
+        subtitle: 'Dein Körper erholt sich mit jedem Tag',
+        happeningNow: 'Was passiert JETZT in deinem Körper',
+        reached: 'Erreicht',
+        inProgress: 'In Bearbeitung',
+        upcoming: 'Kommend',
+        timeRemaining: 'Noch {time}'
+    },
+
+    // Happening Now
+    happeningNow: {
+        justReached: 'Gerade erreicht!',
+        activePhase: 'Aktive Phase',
+        nextPhase: 'Nächste Phase ({title}) in {time}',
+        allAchieved: 'Alle Gesundheitsmeilensteine erreicht!'
+    },
+
+    // Achievements
+    achievementsSection: {
+        title: 'Deine Erfolge',
+        subtitle: 'Feiere deine Meilensteine',
+        unlocked: 'Freigeschaltet',
+        locked: 'Noch nicht erreicht',
+        progress: '{current} von {total}',
+        categories: {
+            time: 'Zeit',
+            money: 'Geld',
+            cigarettes: 'Zigaretten',
+            life: 'Lebenszeit',
+            lung: 'Lungengesundheit',
+            water: 'Wasser',
+            co2: 'CO₂',
+            timeSaved: 'Zeit gespart'
+        }
+    },
+
+    // Statistics
+    statistics: {
+        title: 'Deine Statistiken',
+        healthScore: {
+            title: 'Health Score',
+            subtitle: 'Gewichteter Durchschnitt aus 5 Erholungsmetriken',
+            ratingExcellent: 'Exzellent!',
+            ratingVeryGood: 'Sehr gut!',
+            ratingGood: 'Gut!',
+            ratingProgress: 'Fortschritt!',
+            ratingStarted: 'Gestartet!',
+            messageExcellent: 'Deine Gesundheit hat sich hervorragend erholt!',
+            messageVeryGood: 'Du machst großartige Fortschritte!',
+            messageGood: 'Dein Körper erholt sich stetig.',
+            messageProgress: 'Die Erholung hat begonnen.',
+            messageStarted: 'Erste positive Veränderungen laufen.',
+            explanation: 'Gewichteter Durchschnitt aus 5 Erholungsmetriken, basierend auf WHO, JAMA und PMC-Studien.',
+            viewSources: 'Quellen einsehen'
+        },
+        components: {
+            cardiovascular: 'Herz-Kreislauf',
+            cardiovascularDesc: 'Häufigste Todesursache bei Rauchern. 15 Jahre bis Nichtraucher-Niveau.',
+            lung: 'Lungenfunktion',
+            lungDesc: 'COPD, Lungenkrebs. 10 Jahre bis volle Erholung.',
+            circulation: 'Durchblutung',
+            circulationDesc: 'Periphere Gefäße. Schnelle Erholung in 6 Monaten.',
+            riskReduction: 'Risikoreduktion',
+            riskReductionDesc: 'Herzinfarkt, Schlaganfall, Krebs. Langfristiger Schutz.',
+            skin: 'Hautgesundheit',
+            skinDesc: 'Sichtbarer Indikator für Regeneration. 9 Monate.'
+        },
+        lotus: {
+            previewButton: 'Wachstum ansehen',
+            previewPlaying: 'Läuft...',
+            stages: {
+                seed: 'Samen',
+                seedDesc: 'Ein Samen ruht in der Erde',
+                sprout: 'Keimling',
+                sproutDesc: 'Der Samen beginnt zu keimen',
+                youngSprout: 'Junger Spross',
+                youngSproutDesc: 'Ein zarter Spross wächst empor',
+                sproutLeaves: 'Spross mit Blättern',
+                sproutLeavesDesc: 'Kleine Blätter entfalten sich',
+                floatingLeaf: 'Schwimmendes Blatt',
+                floatingLeafDesc: 'Das erste Blatt schwimmt auf dem Wasser',
+                largeLeaf: 'Großes Lotusblatt',
+                largeLeafDesc: 'Ein prächtiges Lotusblatt breitet sich aus',
+                smallBud: 'Kleine Knospe',
+                smallBudDesc: 'Eine zarte Knospe formt sich',
+                largeBud: 'Große Knospe',
+                largeBudDesc: 'Die Knospe ist bereit sich zu öffnen',
+                openingFlower: 'Öffnende Blüte',
+                openingFlowerDesc: 'Die Blüte beginnt sich zu entfalten',
+                fullBloom: 'Volle Blüte',
+                fullBloomDesc: 'Deine Lotus erstrahlt in voller Pracht!'
+            },
+            nextStage: 'Bei {points} Punkten: {stage}'
+        },
+        comparison: {
+            title: 'Vergleich',
+            milestone: 'Meilenstein',
+            averageSuccess: 'Durchschnittlich schaffen es',
+            yourStatus: 'Dein Status',
+            achieved: 'Erreicht',
+            notYet: 'Noch nicht',
+            ofPeople: '{percent}% der Menschen'
+        },
+        ageGroup: {
+            title: 'Altersgruppen-Vergleich',
+            ageGroup: '25-45',
+            exceptional: 'Du bist eine absolute Ausnahme!',
+            strong: 'Du bist außergewöhnlich stark!',
+            impressive: 'Beeindruckende Leistung!',
+            great: 'Großartig gemacht!',
+            goodStart: 'Starker Start!',
+            topPercent: 'Du gehörst zu den Top {percent}%!',
+            giveUp: 'geben vorher auf',
+            fail: 'scheitern vorher',
+            youAreHere: 'Du bist hier!',
+            stayStrong: 'bleiben dran'
+        },
+        timeline: {
+            title: 'Meilenstein-Timeline',
+            daysRemaining: 'Noch {days} Tage'
+        },
+        projection: {
+            title: 'Zukunftsprojektion',
+            inOneMonth: 'In 1 Monat',
+            inThreeMonths: 'In 3 Monaten',
+            inSixMonths: 'In 6 Monaten',
+            inOneYear: 'In 1 Jahr',
+            saved: 'gespart',
+            avoided: 'vermieden',
+            lifeGained: 'Leben gewonnen'
+        },
+        goalCalculator: {
+            title: 'Ziel-Rechner',
+            byDays: 'Nach Tagen',
+            byMoney: 'Nach Geld',
+            daysLabel: 'In wie vielen Tagen?',
+            moneyLabel: 'Wie viel Geld sparen?',
+            calculate: 'Berechnen',
+            result: 'Ergebnis',
+            inDays: 'In {days} Tagen wirst du:',
+            toSave: 'Um {amount} zu sparen:',
+            needDays: 'brauchst du {days} Tage',
+            willSave: '{amount} gespart haben',
+            willAvoid: '{count} Zigaretten vermieden haben',
+            willGain: '{time} Lebenszeit gewonnen haben'
+        }
+    },
+
+    // SOS / Help
+    sos: {
+        button: 'Akutes Verlangen',
+        hint: 'Klicke hier für sofortige Unterstützung',
+        timer: {
+            title: 'Craving-Timer',
+            remaining: 'verbleibend',
+            breatheIn: 'Einatmen',
+            breatheOut: 'Ausatmen',
+            hold: 'Halten',
+            tip: 'Tipp'
+        },
+        tabs: {
+            tips: 'Tipps',
+            breathing: 'Atmen',
+            games: 'Spiele'
+        },
+        breathing: {
+            title: 'Atemübungen',
+            boxBreathing: 'Box Breathing',
+            boxBreathingDesc: '4 Sekunden ein, 4 halten, 4 aus, 4 halten',
+            technique478: '4-7-8 Technik',
+            technique478Desc: '4 Sekunden ein, 7 halten, 8 aus'
+        },
+        games: {
+            title: 'Ablenkungsspiele',
+            tapChallenge: 'Tap Challenge',
+            tapChallengeDesc: 'Tippe so schnell du kannst',
+            memory: 'Memory',
+            memoryDesc: 'Finde die Paare',
+            breathTrainer: 'Atem-Trainer',
+            breathTrainerDesc: 'Folge dem Atemrhythmus'
+        },
+        success: {
+            title: 'Geschafft!',
+            message: 'Du hast das Verlangen überwunden!',
+            timeHeld: 'Du hast {time} durchgehalten.',
+            cravingCount: 'Das war dein {count}. überwundenes Verlangen heute!',
+            notCounted: 'Nicht als Verlangen gezählt.'
+        },
+        countAsCraving: 'Als Verlangen zählen',
+        dontCount: 'Nicht zählen',
+        stop: 'Beenden',
+        cravingStats: {
+            title: 'Deine Verlangen-Statistik',
+            today: 'Heute überwunden',
+            weekAvg: 'Ø pro Tag (7 Tage)',
+            monthTotal: 'Gesamt (30 Tage)',
+            trendDecreasing: 'Trend: Abnehmend',
+            trendIncreasing: 'Trend: Zunehmend',
+            trendStable: 'Trend: Stabil'
+        },
+        heatmap: {
+            title: 'Verlangen-Heatmap',
+            loading: 'Lade Heatmap...',
+            noData: 'Noch keine Verlangen-Daten vorhanden.',
+            hint: 'Nutze den Craving-Timer, um deine Verlangen zu tracken.',
+            insights: 'Erkenntnisse',
+            peakDay: 'Höchstes Verlangen am {day}',
+            peakTime: 'Kritischste Uhrzeit: {time} Uhr',
+            noCravingDay: 'Kein Verlangen am {day} - gut gemacht!',
+            notEnoughData: 'Noch nicht genug Daten für Erkenntnisse',
+            total: 'Gesamt: {count} Verlangen in den letzten 30 Tagen',
+            less: 'Weniger',
+            more: 'Mehr'
+        }
+    },
+
+    // Craving tips
+    cravingTips: [
+        'Atme tief ein und langsam aus. Zähle dabei bis 4.',
+        'Trinke ein großes Glas kaltes Wasser.',
+        'Geh kurz an die frische Luft.',
+        'Kaue einen Kaugummi oder lutsche einen Bonbon.',
+        'Lenke dich mit einem kurzen Spiel ab.',
+        'Erinnere dich an deine Gründe aufzuhören.',
+        'Das Verlangen vergeht in wenigen Minuten!',
+        'Du bist stärker als jedes Verlangen. Du schaffst das!',
+        'Denk an das Geld, das du sparst.',
+        'Stell dir vor, wie gut sich freies Atmen anfühlt.',
+        'Ruf einen Freund an oder schreib eine Nachricht.',
+        'Mach 10 Kniebeugen oder Liegestütze.'
+    ],
+
+    // Shocking facts
+    shockingFacts: {
+        title: 'Wusstest du?',
+        facts: [
+            'Eine Zigarette enthält über 7.000 Chemikalien, davon mindestens 70 krebserregend.',
+            'Rauchen verkürzt das Leben im Schnitt um 10 Jahre.',
+            'Alle 6 Sekunden stirbt weltweit jemand an den Folgen des Rauchens.',
+            'Passivrauchen tötet jährlich über 600.000 Menschen weltweit.',
+            'Zigarettenfilter brauchen bis zu 15 Jahre, um sich zu zersetzen.',
+            'Raucher haben ein 25x höheres Lungenkrebsrisiko als Nichtraucher.',
+            'Eine Schachtel Zigaretten reduziert dein Leben um ca. 5 Stunden.',
+            'Tabakanbau verbraucht 22 Milliarden Tonnen Wasser pro Jahr.',
+            'Rauchen verursacht 90% aller Lungenkrebsfälle.',
+            'Ex-Raucher leben im Schnitt 10 Jahre länger als aktive Raucher.',
+            'Dein Herzinfarktrisiko sinkt bereits 24 Stunden nach der letzten Zigarette.',
+            'Nach 15 Jahren ist dein Risiko für Herzkrankheiten wie bei Nichtrauchern.'
+        ]
+    },
+
+    // Settings
+    settings: {
+        title: 'Einstellungen',
+        accountInfo: 'Account-Info',
+        username: 'Benutzername',
+        email: 'E-Mail',
+        memberSince: 'Mitglied seit',
+        quitSettings: 'Rauchstopp-Einstellungen',
+        quitDate: 'Aufhördatum',
+        cigarettesPerDay: 'Zigaretten pro Tag',
+        pricePerPack: 'Preis pro Packung (€)',
+        cigarettesPerPack: 'Zigaretten pro Packung',
+        notifications: 'Benachrichtigungen aktivieren',
+        save: 'Speichern',
+        cancel: 'Abbrechen',
+        dataManagement: 'Datenverwaltung',
+        exportData: 'Daten exportieren',
+        exportDataDesc: 'Lade alle deine Daten als JSON-Datei herunter',
+        shareSuccess: 'Erfolg teilen',
+        shareSuccessDesc: 'Teile deinen Fortschritt mit anderen',
+        shareImage: 'Als Bild teilen',
+        shareImageDesc: 'Erstelle ein Bild deines Fortschritts',
+        deleteAccount: 'Account löschen',
+        deleteAccountDesc: 'Lösche deinen Account und alle Daten',
+        deleteConfirm: 'Bist du sicher? Diese Aktion kann nicht rückgängig gemacht werden.'
+    },
+
+    // Tutorial
+    tutorial: {
+        title: 'Willkommen bei ByeByeSmoke!',
+        skip: 'Überspringen',
+        next: 'Weiter',
+        prev: 'Zurück',
+        finish: 'Fertig',
+        slides: [
+            {
+                title: 'Dein Begleiter',
+                content: 'Diese App begleitet dich auf deinem Weg in ein rauchfreies Leben. Verfolge deinen Fortschritt und bleib motiviert!'
+            },
+            {
+                title: 'Dashboard',
+                content: 'Im Dashboard siehst du alle wichtigen Statistiken auf einen Blick: gesparte Zeit, Geld und deine Gesundheitsfortschritte.'
+            },
+            {
+                title: 'Meilensteine',
+                content: 'Feiere jeden Erfolg! Dein Körper erholt sich kontinuierlich - hier siehst du genau, was passiert.'
+            },
+            {
+                title: 'SOS-Hilfe',
+                content: 'Bei akutem Verlangen hilft dir der Craving-Timer mit Atemübungen und Ablenkungsspielen.'
+            },
+            {
+                title: 'Los geht\'s!',
+                content: 'Du bist bereit! Jeder Tag ohne Zigarette ist ein Erfolg. Wir glauben an dich!'
+            }
+        ]
+    },
+
+    // Weekly summary
+    weeklySummary: {
+        title: 'Wochenrückblick',
+        thisWeek: 'Diese Woche',
+        daysSmokeFree: 'Tage rauchfrei',
+        moneySaved: 'gespart',
+        cigarettesAvoided: 'Zigaretten vermieden',
+        cravingsOvercome: 'Verlangen überwunden',
+        keepGoing: 'Weiter so!'
+    },
+
+    // Footer
+    footer: {
+        madeWith: 'Mit Herz für deine Gesundheit',
+        privacy: 'Datenschutz',
+        imprint: 'Impressum',
+        sources: 'Quellen',
+        disclaimer: 'Kein Ersatz für medizinische Beratung.'
+    },
+
+    // Time units
+    time: {
+        second: 'Sekunde',
+        seconds: 'Sekunden',
+        minute: 'Minute',
+        minutes: 'Minuten',
+        hour: 'Stunde',
+        hours: 'Stunden',
+        hoursShort: '{count} Std.',
+        day: 'Tag',
+        days: '{count} Tage',
+        week: 'Woche',
+        weeks: '{count} Wochen',
+        month: 'Monat',
+        months: '{count} Monate',
+        year: 'Jahr',
+        years: '{count} Jahre',
+        remaining: 'Noch {time}',
+        ago: 'vor {time}',
+        in: 'in {time}'
+    },
+
+    // Common
+    common: {
+        yes: 'Ja',
+        no: 'Nein',
+        ok: 'OK',
+        cancel: 'Abbrechen',
+        save: 'Speichern',
+        close: 'Schließen',
+        loading: 'Laden...',
+        error: 'Fehler',
+        success: 'Erfolg',
+        confirm: 'Bestätigen',
+        back: 'Zurück',
+        next: 'Weiter',
+        of: 'von'
+    },
+
+    // Auth
+    auth: {
+        login: 'Anmelden',
+        register: 'Registrieren',
+        logout: 'Abmelden',
+        email: 'E-Mail',
+        password: 'Passwort',
+        confirmPassword: 'Passwort bestätigen',
+        forgotPassword: 'Passwort vergessen?',
+        noAccount: 'Noch kein Account?',
+        hasAccount: 'Schon registriert?',
+        loginError: 'Anmeldung fehlgeschlagen',
+        registerError: 'Registrierung fehlgeschlagen',
+        tryDemo: 'Demo testen'
+    },
+
+    // Milestones data
+    milestones: {
+        '20min': {
+            title: '20 Minuten',
+            description: 'Herzfrequenz und Blutdruck normalisieren sich',
+            detailedInfo: 'Bereits nach 20 Minuten beginnt dein Körper mit der Regeneration. Deine Herzfrequenz und dein Blutdruck sinken auf ein normaleres Niveau. Die Durchblutung in Händen und Füßen verbessert sich spürbar - sie werden wärmer. Dies ist der Beginn eines langen Heilungsprozesses, den du erfolgreich gestartet hast.'
+        },
+        '1hour': {
+            title: '1 Stunde',
+            description: 'Körper beginnt, Nikotin abzubauen',
+            detailedInfo: 'Nach einer Stunde hat dein Körper bereits begonnen, das Nikotin aktiv abzubauen. Die Nikotinrezeptoren in deinem Gehirn beginnen sich zu normalisieren. Dein Körper startet den Entgiftungsprozess und die ersten positiven Veränderungen sind bereits in Gang gesetzt.'
+        },
+        '2hours': {
+            title: '2 Stunden',
+            description: 'Nikotinentzug kann beginnen, aber Körper erholt sich',
+            detailedInfo: 'Jetzt können erste Entzugserscheinungen auftreten - das ist ein gutes Zeichen! Es zeigt, dass dein Körper das Nikotin nicht mehr hat und sich daran gewöhnen muss. Gleichzeitig arbeitet dein Kreislaufsystem bereits effizienter. Deine peripheren Nervenenden beginnen, sich zu erholen.'
+        },
+        '8hours': {
+            title: '8 Stunden',
+            description: 'Sauerstoffgehalt im Blut normalisiert sich',
+            detailedInfo: 'Ein wichtiger Meilenstein! Der Sauerstoffgehalt in deinem Blut hat sich normalisiert und das gefährliche Kohlenmonoxid wird weiter abgebaut. Deine Organe werden jetzt besser mit Sauerstoff versorgt. Du wirst merken, dass Anstrengungen bereits etwas leichter fallen. Das Risiko für Herzprobleme beginnt zu sinken.'
+        },
+        '12hours': {
+            title: '12 Stunden',
+            description: 'Kohlenmonoxid-Spiegel im Blut sinkt auf normal',
+            detailedInfo: 'Großartig! Das giftige Kohlenmonoxid ist nun fast vollständig aus deinem Blut verschwunden. Dein Blut kann jetzt wieder optimal Sauerstoff transportieren. Deine Organe, besonders Herz und Gehirn, profitieren von der verbesserten Sauerstoffversorgung. Du atmest buchstäblich auf!'
+        },
+        '24hours': {
+            title: '24 Stunden',
+            description: 'Herzinfarktrisiko beginnt zu sinken',
+            detailedInfo: 'Ein ganzer Tag geschafft - dein Herzinfarktrisiko beginnt bereits zu sinken! Dein Herz-Kreislauf-System erholt sich merklich. Der Blutdruck stabilisiert sich weiter und dein Herz arbeitet effizienter. Die akute Belastung durch Rauchen ist vorbei. Dies ist ein bedeutender Schritt für deine langfristige Herzgesundheit.'
+        },
+        '2days': {
+            title: '2 Tage',
+            description: 'Geruchs- und Geschmackssinn verbessern sich stark',
+            detailedInfo: 'Die Nervenenden in Nase und Mund beginnen sich zu regenerieren. Du wirst Gerüche und Geschmäcker wieder intensiver wahrnehmen - Essen schmeckt besser, Düfte werden klarer. Die durch Rauchen abgestumpften Sinne erwachen wieder zum Leben. Viele Ex-Raucher berichten, dass dies einer der motivierendsten Effekte ist!'
+        },
+        '3days': {
+            title: '3 Tage',
+            description: 'Nikotin vollständig aus dem Körper, Atmung wird leichter',
+            detailedInfo: 'Meilenstein erreicht! Das Nikotin ist nun vollständig aus deinem Körper verschwunden. Die Bronchien beginnen sich zu entspannen und zu öffnen - das Atmen fällt merklich leichter. Deine Lungenkapazität verbessert sich bereits. Die körperliche Abhängigkeit ist auf ihrem Höhepunkt, aber ab jetzt wird es kontinuierlich besser. Du hast das Schlimmste geschafft!'
+        },
+        '5days': {
+            title: '5 Tage',
+            description: 'Körperliche Nikotinentzugssymptome lassen nach',
+            detailedInfo: 'Die intensivsten Entzugserscheinungen lassen nach. Dein Körper gewöhnt sich an das Leben ohne Nikotin. Die Dopamin-Rezeptoren in deinem Gehirn beginnen sich zu normalisieren. Viele berichten von einem Gefühl der Klarheit und mehr Energie. Der Hustenreiz kann zunehmen - das ist positiv, denn deine Lungen beginnen, sich zu reinigen.'
+        },
+        '1week': {
+            title: '1 Woche',
+            description: 'Bronchien beginnen sich zu erholen',
+            detailedInfo: 'Eine Woche rauchfrei - ein großer Erfolg! Deine Bronchien beginnen aktiv mit der Heilung. Die durch Rauchen verursachten Entzündungen gehen zurück. Du kannst tiefer durchatmen und hustest möglicherweise mehr - ein Zeichen dafür, dass deine Lungen den angesammelten Schleim abtransportieren. Dein Energielevel steigt merklich.'
+        },
+        '10days': {
+            title: '10 Tage',
+            description: 'Flimmerhärchen in der Lunge regenerieren sich',
+            detailedInfo: 'Die Flimmerhärchen (Zilien) in deinen Atemwegen, die durch Rauchen gelähmt waren, beginnen sich zu regenerieren. Sie können nun wieder ihre wichtige Funktion erfüllen: Schleim und Schadstoffe aus der Lunge zu transportieren. Dies ist ein entscheidender Schritt für deine Lungengesundheit und Infektabwehr.'
+        },
+        '2weeks': {
+            title: '2 Wochen',
+            description: 'Kreislauf und Lungenfunktion verbessern sich merklich',
+            detailedInfo: 'Zwei Wochen - dein Körper hat bereits enorme Fortschritte gemacht! Dein Kreislauf funktioniert deutlich besser, Treppen steigen fällt leichter. Die Lungenfunktion verbessert sich kontinuierlich. Sport wird zunehmend angenehmer. Viele Ex-Raucher berichten von besserem Schlaf und mehr Ausdauer im Alltag. Die psychische Abhängigkeit wird schwächer.'
+        },
+        '3weeks': {
+            title: '3 Wochen',
+            description: 'Körperliche Abhängigkeit ist überwunden',
+            detailedInfo: 'Ein wichtiger psychologischer und physischer Meilenstein! Die körperliche Nikotinabhängigkeit ist weitgehend überwunden. Dein Körper verlangt nicht mehr nach Nikotin. Die Herausforderung ist nun primär psychisch - Gewohnheiten und Trigger. Aber dein Körper ist frei! Die Dopamin-Produktion normalisiert sich. Du spürst mehr echte Lebensfreude.'
+        },
+        '1month': {
+            title: '1 Monat',
+            description: 'Lungenkapazität steigt um bis zu 30%',
+            detailedInfo: 'Ein ganzer Monat - fantastisch! Deine Lungenkapazität hat sich um bis zu 30% erhöht. Du kannst deutlich tiefer atmen und hast mehr Ausdauer. Die Flimmerhärchen in der Lunge arbeiten wieder effektiv und schützen dich besser vor Infektionen. Husten und Kurzatmigkeit haben merklich nachgelassen. Dein Immunsystem ist bereits stärker.'
+        },
+        '2months': {
+            title: '2 Monate',
+            description: 'Hautbild verbessert sich deutlich',
+            detailedInfo: 'Deine Haut erholt sich! Die Durchblutung der Haut hat sich normalisiert, was zu einem frischeren, gesünderen Aussehen führt. Falten können sich etwas glätten, der Teint wird ebenmäßiger. Die Hautalterung verlangsamt sich. Viele berichten von einem jugendlicheren Aussehen. Die Wundheilung verbessert sich ebenfalls deutlich.'
+        },
+        '3months': {
+            title: '3 Monate',
+            description: 'Lungenfunktion verbessert sich um bis zu 10%',
+            detailedInfo: 'Drei Monate rauchfrei - ein enormer Erfolg! Die Lungenfunktion hat sich um bis zu 10% verbessert und verbessert sich weiter. Husten und Kurzatmigkeit gehören zunehmend der Vergangenheit an. Das Infektionsrisiko ist gesunken. Körperliche Aktivitäten fallen deutlich leichter. Die psychische Abhängigkeit ist stark zurückgegangen. Du hast es wirklich geschafft!'
+        },
+        '4months': {
+            title: '4 Monate',
+            description: 'Immunsystem ist deutlich gestärkt',
+            detailedInfo: 'Dein Immunsystem arbeitet wieder auf einem höheren Niveau. Du wirst seltener krank und erholst dich schneller von Infektionen. Die weißen Blutkörperchen funktionieren wieder optimal. Deine allgemeine Widerstandskraft gegen Krankheiten ist deutlich gestiegen. Die Energieversorgung deiner Zellen hat sich normalisiert.'
+        },
+        '5months': {
+            title: '5 Monate',
+            description: 'Ausdauer und Belastbarkeit stark verbessert',
+            detailedInfo: 'Deine körperliche Leistungsfähigkeit ist auf einem neuen Level! Ausdauer und Belastbarkeit haben sich massiv verbessert. Sport macht wieder Spaß. Treppen sind kein Problem mehr. Dein Herz-Kreislauf-System arbeitet effizient. Die Sauerstoffaufnahme ist deutlich besser. Du fühlst dich fitter und vitaler als seit langem.'
+        },
+        '6months': {
+            title: '6 Monate',
+            description: 'Husten und Kurzatmigkeit lassen stark nach',
+            detailedInfo: 'Ein halbes Jahr rauchfrei - unglaublich! Der chronische Raucherhusten ist weitgehend verschwunden. Kurzatmigkeit gehört der Vergangenheit an. Deine Lungen haben einen Großteil ihrer Funktion zurückgewonnen. Die Flimmerhärchen arbeiten wieder normal und schützen dich effektiv. Das Infektionsrisiko für Atemwegserkrankungen ist deutlich gesunken. Du atmest frei!'
+        },
+        '9months': {
+            title: '9 Monate',
+            description: 'Flimmerhärchen vollständig regeneriert',
+            detailedInfo: 'Die Flimmerhärchen in deinen Atemwegen sind vollständig regeneriert! Sie können jetzt wieder ihre volle Schutzfunktion ausüben. Die Lunge kann Schleim und Partikel effektiv abtransportieren. Deine Anfälligkeit für Atemwegsinfekte ist auf dem Niveau von Nichtrauchern. Die Selbstreinigungskraft deiner Lungen ist wiederhergestellt. Ein medizinischer Meilenstein!'
+        },
+        '1year': {
+            title: '1 Jahr',
+            description: 'Herzinfarktrisiko ist halb so hoch wie bei Rauchern',
+            detailedInfo: 'Ein ganzes Jahr rauchfrei - du bist ein Champion! Dein Herzinfarktrisiko hat sich halbiert im Vergleich zu einem Raucher. Die Blutgefäße haben sich erholt, Verkalkungen gehen zurück. Dein Herz arbeitet effizienter und ist weniger belastet. Das Schlaganfallrisiko sinkt ebenfalls deutlich. Dies ist ein gewaltiger Schritt für deine langfristige Gesundheit und Lebenserwartung!'
+        },
+        '18months': {
+            title: '18 Monate',
+            description: 'Lungenfunktion nahezu normalisiert',
+            detailedInfo: 'Deine Lungenfunktion hat sich nahezu vollständig normalisiert! Die Leistungsfähigkeit deiner Lungen entspricht fast der eines Nichtrauchers. Strukturelle Schäden heilen weiter. Die Lungenbläschen (Alveolen) haben sich teilweise regeneriert. Deine Atemkapazität ist deutlich gestiegen. Sportliche Höchstleistungen sind wieder möglich.'
+        },
+        '2years': {
+            title: '2 Jahre',
+            description: 'Herz-Kreislauf-System erheblich erholt',
+            detailedInfo: 'Zwei Jahre rauchfrei - beeindruckend! Dein Herz-Kreislauf-System hat sich erheblich erholt. Die Gefäßwände sind elastischer, die Durchblutung ist optimal. Das Risiko für koronare Herzkrankheit sinkt kontinuierlich. Blutdruck und Puls haben sich dauerhaft normalisiert. Die Belastbarkeit deines Herzens hat sich deutlich verbessert. Deine Lebensqualität und -erwartung sind erheblich gestiegen.'
+        },
+        '3years': {
+            title: '3 Jahre',
+            description: 'Herzkrankheitsrisiko deutlich reduziert',
+            detailedInfo: 'Drei Jahre - ein großartiger Meilenstein! Dein Risiko für Herzkrankheiten hat sich dem eines Nichtrauchers stark angenähert. Die Koronararterien sind deutlich gesünder. Gefäßablagerungen (Arteriosklerose) werden abgebaut. Die Herzmuskelversorgung ist optimal. Das Risiko für Herzrhythmusstörungen ist gesunken. Dein Herz ist deutlich jünger geworden!'
+        },
+        '5years': {
+            title: '5 Jahre',
+            description: 'Schlaganfallrisiko wie bei Nichtrauchern',
+            detailedInfo: 'Fünf Jahre rauchfrei - eine unglaubliche Leistung! Dein Schlaganfallrisiko ist jetzt auf dem gleichen Niveau wie bei Menschen, die nie geraucht haben. Die Blutgefäße im Gehirn sind gesund. Das Risiko für Herzerkrankungen hat sich weiter deutlich reduziert. Auch das Risiko für verschiedene Krebsarten ist erheblich gesunken. Du hast dir Jahre zusätzliches Leben geschenkt!'
+        },
+        '10years': {
+            title: '10 Jahre',
+            description: 'Lungenkrebsrisiko halbiert sich',
+            detailedInfo: 'Zehn Jahre rauchfrei - du bist eine absolute Legende! Dein Lungenkrebsrisiko hat sich halbiert im Vergleich zu jemandem, der weitergeraucht hätte. Das Risiko für andere Krebsarten (Mund, Rachen, Speiseröhre, Bauchspeicheldrüse, Blase) ist ebenfalls deutlich gesunken. Deine Lungen haben sich maximal regeneriert. Die Lebenserwartung hat sich erheblich erhöht. Du hast eine beispiellose gesundheitliche Transformation vollzogen!'
+        },
+        '15years': {
+            title: '15 Jahre',
+            description: 'Herzerkrankungsrisiko wie bei Nichtrauchern',
+            detailedInfo: 'Fünfzehn Jahre rauchfrei - unvorstellbar großartig! Dein Risiko für koronare Herzkrankheiten entspricht nun dem eines lebenslangen Nichtrauchers. Dein Herz-Kreislauf-System ist vollständig erholt. Die durch Rauchen verursachten Schäden sind weitgehend rückgängig gemacht. Deine Gesundheit und Lebenserwartung haben sich dramatisch verbessert. Du bist ein leuchtendes Beispiel für die Kraft der Entscheidung!'
+        },
+        '20years': {
+            title: '20 Jahre',
+            description: 'Gesundheitsrisiken fast wie bei lebenslangen Nichtrauchern',
+            detailedInfo: 'Zwanzig Jahre rauchfrei - du hast Geschichte geschrieben! Deine gesundheitlichen Risiken sind jetzt nahezu identisch mit denen von Menschen, die niemals geraucht haben. Die meisten durch Rauchen verursachten Schäden sind vollständig geheilt. Dein Körper hat eine komplette Transformation durchlaufen. Du hast dir Jahrzehnte zusätzliches, gesundes Leben geschenkt. Dies ist der ultimative Triumph über die Sucht und ein Testament an menschliche Willenskraft und Regenerationsfähigkeit!'
+        }
+    },
+
+    // Achievements data
+    achievements: {
+        // Time-based
+        first_hour: { title: 'Erste Stunde', description: '60 Minuten stark!' },
+        first_day: { title: 'Erster Tag', description: '24 Stunden rauchfrei' },
+        two_days: { title: 'Zwei Tage', description: '48 Stunden geschafft' },
+        three_days: { title: 'Durchbruch', description: '3 Tage geschafft' },
+        five_days: { title: 'Fünf Tage', description: 'Fast eine Woche!' },
+        one_week: { title: 'Eine Woche', description: '7 Tage stark' },
+        ten_days: { title: 'Zehn Tage', description: 'Zweistellig!' },
+        two_weeks: { title: 'Zweite Woche', description: '14 Tage frei' },
+        three_weeks: { title: 'Drei Wochen', description: '21 Tage Power' },
+        one_month: { title: 'Ein Monat', description: '30 Tage Erfolg' },
+        forty_days: { title: 'Vierzig Tage', description: 'Fantastisch!' },
+        fifty_days: { title: 'Champion', description: '50 Tage durch' },
+        two_months: { title: 'Zwei Monate', description: '60 Tage stark' },
+        seventy_days: { title: 'Siebzig Tage', description: 'Unaufhaltbar!' },
+        three_months: { title: 'Drei Monate', description: '90 Tage Freiheit' },
+        hundred_days: { title: 'Hundert Tage', description: '100 Tage Freiheit' },
+        four_months: { title: 'Vier Monate', description: '120 Tage stark' },
+        five_months: { title: 'Fünf Monate', description: '150 Tage durch' },
+        six_months: { title: 'Halbjahr', description: '6 Monate stark' },
+        seven_months: { title: 'Sieben Monate', description: '210 Tage Erfolg' },
+        nine_months: { title: 'Neun Monate', description: '270 Tage frei' },
+        ten_months: { title: 'Zehn Monate', description: '300 Tage Power' },
+        one_year: { title: 'Ein Jahr', description: '365 Tage Erfolg' },
+        five_hundred: { title: 'Fünfhundert', description: '500 Tage Legende' },
+        two_years: { title: 'Zwei Jahre', description: '730 Tage frei' },
+        thousand: { title: 'Tausend Tage', description: 'Absolute Legende!' },
+        three_years: { title: 'Drei Jahre', description: '1095 Tage stark' },
+        five_years: { title: 'Fünf Jahre', description: '1825 Tage Meister' },
+        ten_years: { title: 'Zehn Jahre', description: 'Absolute Ikone!' },
+
+        // Money-based
+        save_50: { title: 'Erste 50€', description: '50€ gespart' },
+        save_100: { title: 'Hundert Euro', description: '100€ gespart' },
+        save_250: { title: 'Vierteljahresgehalt', description: '250€ gespart' },
+        save_500: { title: 'Sparer', description: '500€ gespart' },
+        save_750: { title: 'Dreiviertel', description: '750€ gespart' },
+        save_1000: { title: 'Geldmagnet', description: '1000€ gespart' },
+        save_1500: { title: 'Sparschwein', description: '1500€ gespart' },
+        save_2000: { title: 'Zweitausend', description: '2000€ gespart' },
+        save_3000: { title: 'Vermögensaufbau', description: '3000€ gespart' },
+        save_5000: { title: 'Fünftausend', description: '5000€ gespart' },
+        save_10000: { title: 'Zehntausend', description: '10000€ gespart!' },
+
+        // Cigarettes-based
+        cigs_10: { title: 'Erste Zehn', description: '10 nicht geraucht' },
+        cigs_50: { title: 'Fünfzig weg', description: '50 nicht geraucht' },
+        cigs_100: { title: 'Zähler', description: '100 nicht geraucht' },
+        cigs_250: { title: 'Viertelpack', description: '250 nicht geraucht' },
+        cigs_500: { title: 'Fünfhundert', description: '500 nicht geraucht' },
+        cigs_1000: { title: 'Meister', description: '1000 nicht geraucht' },
+        cigs_2000: { title: 'Zweitausend', description: '2000 nicht geraucht' },
+        cigs_5000: { title: 'Fünftausend', description: '5000 nicht geraucht' },
+        cigs_10000: { title: 'Zehntausend', description: '10000 nicht geraucht!' },
+
+        // Life hours
+        life_1h: { title: 'Erste Stunde', description: '1 Stunde Leben gewonnen' },
+        life_12h: { title: 'Halber Tag', description: '12 Stunden Leben gewonnen' },
+        life_24h: { title: 'Ein Tag Leben', description: '24 Stunden Leben gewonnen' },
+        life_48h: { title: 'Zwei Tage Leben', description: '48 Stunden Leben gewonnen' },
+        life_100h: { title: 'Hundert Stunden', description: '100 Stunden Leben gewonnen' },
+        life_1w: { title: 'Eine Woche Leben', description: '168 Stunden Leben gewonnen' },
+        life_500h: { title: 'Fünfhundert Stunden', description: '500 Stunden Leben gewonnen' },
+        life_1000h: { title: 'Tausend Stunden', description: '1000 Stunden Leben gewonnen' },
+
+        // Lung health
+        lung_5: { title: 'Erste Erholung', description: '5% Lungengesundheit' },
+        lung_10: { title: 'Atme auf', description: '10% Lungengesundheit' },
+        lung_25: { title: 'Viertel Weg', description: '25% Lungengesundheit' },
+        lung_50: { title: 'Halbzeit', description: '50% Lungengesundheit' },
+        lung_75: { title: 'Fast da', description: '75% Lungengesundheit' },
+        lung_90: { title: 'Bergluft', description: '90% Lungengesundheit' },
+
+        // Water saved
+        water_100: { title: 'Erste Tropfen', description: '100 Liter Wasser gespart' },
+        water_500: { title: 'Dusche gespart', description: '500 Liter Wasser gespart' },
+        water_1000: { title: 'Badewanne voll', description: '1000 Liter Wasser gespart' },
+        water_5000: { title: 'Kleiner Pool', description: '5000 Liter Wasser gespart' },
+        water_10000: { title: 'Wasserheld', description: '10000 Liter Wasser gespart' },
+
+        // CO2
+        co2_1: { title: 'Grüner Start', description: '1 kg CO₂ vermieden' },
+        co2_5: { title: 'Baumpfleger', description: '5 kg CO₂ vermieden' },
+        co2_10: { title: 'Waldfreund', description: '10 kg CO₂ vermieden' },
+        co2_25: { title: 'Naturschützer', description: '25 kg CO₂ vermieden' },
+        co2_50: { title: 'Klimaheld', description: '50 kg CO₂ vermieden' },
+        co2_100: { title: 'Erdbewahrer', description: '100 kg CO₂ vermieden' },
+
+        // Time saved
+        time_10h: { title: 'Zehn Stunden', description: '10 Stunden Zeit gespart' },
+        time_24h: { title: 'Ein Tag Zeit', description: '24 Stunden Zeit gespart' },
+        time_50h: { title: 'Fünfzig Stunden', description: '50 Stunden Zeit gespart' },
+        time_100h: { title: 'Hundert Stunden', description: '100 Stunden Zeit gespart' },
+        time_168h: { title: 'Eine Woche Zeit', description: '168 Stunden Zeit gespart' },
+        time_500h: { title: 'Fünfhundert Stunden', description: '500 Stunden Zeit gespart' }
+    },
+
+    // Motivations
+    motivations: [
+        "Jeder Tag ohne Zigarette ist ein Sieg für deine Gesundheit!",
+        "Dein Körper dankt dir für jeden rauchfreien Tag. Du schaffst das!",
+        "Die ersten Tage sind die härtesten - und du meisterst sie!",
+        "Mit jedem Tag wirst du stärker und gesünder. Weiter so!",
+        "Deine Lungen reinigen sich jeden Tag ein bisschen mehr.",
+        "Du investierst in dein Leben und deine Zukunft. Fantastisch!",
+        "Jede nicht gerauchte Zigarette ist Zeit, die du deinem Leben hinzufügst.",
+        "Du bist stärker als die Sucht. Beweise es dir selbst!",
+        "Dein Geruchs- und Geschmackssinn kehren zurück. Genieße es!",
+        "Stolz auf dich! Du gehst deinen Weg konsequent weiter.",
+        "Dein Herz schlägt gesünder mit jedem rauchfreien Tag.",
+        "Die Freiheit von der Sucht ist unbezahlbar. Du erreichst sie!",
+        "Denk daran: Das Verlangen vergeht, aber dein Stolz bleibt!",
+        "Du bist ein Vorbild für andere! Bleib stark!",
+        "Jeder rauchfreie Atemzug ist ein Geschenk an dich selbst."
+    ],
+
+    // Quit statistics
+    quitStatistics: {
+        day1: '85% geben in den ersten 24 Stunden auf',
+        day3: '90% schaffen nicht die ersten 3 Tage',
+        week1: '95% scheitern in der ersten Woche',
+        month1: '97% geben im ersten Monat auf',
+        month3: 'Nur 2% schaffen 3 Monate',
+        month6: 'Nur 1% erreichen 6 Monate',
+        year1: 'Du gehörst zu den Top 0.5%!'
+    },
+
+    // Landing page
+    landing: {
+        hero: {
+            title: 'Werde rauchfrei.',
+            titleHighlight: 'Für immer.',
+            subtitle: 'Die kostenlose App, die dich beim Aufhören begleitet. Wissenschaftlich fundiert, ohne Werbung, ohne versteckte Kosten.',
+            cta: 'Jetzt starten',
+            demo: 'Oder erst mal testen'
+        },
+        features: {
+            title: 'Alles, was du brauchst',
+            subtitle: 'Wissenschaftlich fundierte Features für deinen Erfolg',
+            healthTracking: {
+                title: 'Gesundheits-Tracking',
+                description: 'Verfolge, wie sich dein Körper Tag für Tag erholt'
+            },
+            savings: {
+                title: 'Ersparnis-Rechner',
+                description: 'Sieh, wie viel Geld du bereits gespart hast'
+            },
+            milestones: {
+                title: 'Meilensteine',
+                description: '28 wissenschaftliche Gesundheitsmeilensteine'
+            },
+            sosHelp: {
+                title: 'SOS-Hilfe',
+                description: 'Atemübungen und Spiele gegen akutes Verlangen'
+            },
+            statistics: {
+                title: 'Detaillierte Statistiken',
+                description: 'Health Score und Fortschrittsanalysen'
+            },
+            privacy: {
+                title: 'Datenschutz',
+                description: 'Deine Daten gehören dir. Keine Werbung, kein Tracking.'
+            },
+            offline: {
+                title: 'Offline verfügbar',
+                description: 'Funktioniert auch ohne Internetverbindung'
+            },
+            free: {
+                title: '100% Kostenlos',
+                description: 'Keine versteckten Kosten, keine Premium-Version'
+            }
+        },
+        howItWorks: {
+            title: 'So funktioniert\'s',
+            step1: {
+                title: 'Registrieren',
+                description: 'Erstelle kostenlos einen Account'
+            },
+            step2: {
+                title: 'Einrichten',
+                description: 'Gib dein Aufhördatum und deine Rauchgewohnheiten an'
+            },
+            step3: {
+                title: 'Durchhalten',
+                description: 'Verfolge deinen Fortschritt und bleib motiviert'
+            }
+        },
+        stats: {
+            title: 'Wusstest du schon?',
+            cigarettesPerYear: 'Zigaretten raucht ein durchschnittlicher Raucher pro Jahr',
+            costPerYear: 'gibt ein Raucher durchschnittlich pro Jahr aus',
+            lifeYearsLost: 'Lebensjahre verliert ein Raucher im Durchschnitt'
+        },
+        cta: {
+            title: 'Bereit für dein rauchfreies Leben?',
+            subtitle: 'Tausende haben es geschafft. Du kannst das auch.',
+            button: 'Kostenlos starten'
+        },
+        footer: {
+            privacy: 'Datenschutz',
+            imprint: 'Impressum',
+            sources: 'Quellen',
+            github: 'GitHub'
+        }
+    },
+
+    // Days of week (short)
+    weekdays: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
+
+    // Months
+    months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember']
+};
