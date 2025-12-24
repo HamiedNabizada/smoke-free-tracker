@@ -946,18 +946,18 @@ export default {
         // Notifications section (HTML data-i18n keys)
         notifications: {
             title: '🔔 Benachrichtigungen',
-            description: 'Erhalte motivierende Push-Benachrichtigungen, wenn du wichtige Meilensteine erreichst.',
+            description: 'Erhalte Benachrichtigungen während die App geöffnet ist.',
             push: {
-                label: 'Push-Benachrichtigungen aktivieren',
+                label: 'Benachrichtigungen aktivieren',
                 description: 'Erlaube der App, dir Benachrichtigungen zu senden'
             },
             milestones: {
                 label: 'Meilenstein-Benachrichtigungen',
-                description: 'Erhalte eine Benachrichtigung, wenn du einen Gesundheitsmeilenstein erreichst'
+                description: 'Bei Erreichen eines Gesundheitsmeilensteins'
             },
             daily: {
                 label: 'Tägliche Motivation',
-                description: 'Erhalte einmal täglich eine motivierende Nachricht (10:00 Uhr)'
+                description: 'Einmal täglich um 10:00 Uhr (wenn App geöffnet)'
             }
         },
         // Export section (HTML data-i18n keys)

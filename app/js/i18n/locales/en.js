@@ -801,18 +801,18 @@ export default {
         // Notifications section (HTML data-i18n keys)
         notifications: {
             title: '🔔 Notifications',
-            description: 'Receive motivational push notifications when you reach important milestones.',
+            description: 'Receive notifications while the app is open.',
             push: {
-                label: 'Enable push notifications',
+                label: 'Enable notifications',
                 description: 'Allow the app to send you notifications'
             },
             milestones: {
                 label: 'Milestone notifications',
-                description: 'Receive a notification when you reach a health milestone'
+                description: 'When reaching a health milestone'
             },
             daily: {
                 label: 'Daily motivation',
-                description: 'Receive a motivational message once a day (10:00 AM)'
+                description: 'Once daily at 10:00 AM (when app is open)'
             }
         },
         // Export section (HTML data-i18n keys)
