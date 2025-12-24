@@ -9,6 +9,12 @@ export default {
         tagline: 'Your path to a smoke-free life'
     },
 
+    // Common
+    common: {
+        loading: 'Loading...',
+        close: 'Close'
+    },
+
     // Accessibility
     accessibility: {
         skipToContent: 'Skip to main content',
@@ -618,6 +624,7 @@ export default {
         // Breathing exercises (HTML data-i18n keys)
         breathing: {
             title: 'Breathing Exercises',
+            exerciseTitle: 'Breathing Exercise',
             boxBreathing: 'Box Breathing',
             boxBreathingDesc: '4 seconds in, 4 hold, 4 out, 4 hold',
             technique478: '4-7-8 Technique',
@@ -946,7 +953,12 @@ export default {
         next: 'Next',
         prev: 'Back',
         finish: 'Finish',
-        // Slide-specific keys (HTML data-i18n)
+        // Navigation (HTML data-i18n keys)
+        nav: {
+            next: 'Next',
+            prev: 'Back'
+        },
+        // Slide 1: Welcome
         slide1: {
             title: 'Welcome to ByeByeSmoke!',
             text: 'Let us show you the most important features and how to install the app as a PWA.',
@@ -956,37 +968,76 @@ export default {
             feature4: '🔔 Push notifications',
             feature5: '📱 Install as app'
         },
+        // Slide 2: Features
         slide2: {
-            title: 'Your Dashboard',
-            text: 'The dashboard shows all important statistics at a glance.',
-            feature1: '⏱️ Time without cigarettes',
-            feature2: '💰 Money saved',
-            feature3: '🚭 Cigarettes avoided',
-            feature4: '❤️ Life time gained'
+            title: 'The 4 main areas',
+            stats: {
+                title: '📊 Dashboard',
+                text: 'Your statistics at a glance'
+            },
+            milestones: {
+                title: '🏥 Milestones',
+                text: 'Track your health progress'
+            },
+            craving: {
+                title: '🆘 SOS Help',
+                text: '5-minute timer for cravings'
+            },
+            notifications: {
+                title: '🔔 Notifications',
+                text: 'Motivational push messages'
+            }
         },
+        // Slide 3: Install app
         slide3: {
-            title: 'Health Milestones',
-            text: 'Track how your body recovers - based on scientific studies.',
-            feature1: '🫁 Lung regeneration',
-            feature2: '❤️ Heart health',
-            feature3: '🩸 Circulation',
-            feature4: '✨ Skin improvement'
-        },
-        slide4: {
-            title: 'SOS Help for Cravings',
-            text: 'The craving timer helps you through difficult moments.',
-            feature1: '⏰ 5-minute timer',
-            feature2: '🧘 Breathing exercises',
-            feature3: '🎮 Distraction games',
-            feature4: '💡 Helpful tips'
-        },
-        slide5: {
             title: 'Install as App',
-            text: 'Install ByeByeSmoke as an app on your device for quick access.',
-            ios: 'iOS: Tap "Share" → "Add to Home Screen"',
-            android: 'Android: Tap ⋮ → "Install app"',
-            desktop: 'Desktop: Click the install icon in the address bar'
+            step1: {
+                title: 'iOS (Safari)',
+                text: 'Tap "Share" → "Add to Home Screen"'
+            },
+            step2: {
+                title: 'Android (Chrome)',
+                text: 'Tap ⋮ → "Install app"'
+            },
+            step3: {
+                title: 'Desktop',
+                text: 'Click the install icon in the address bar'
+            },
+            note: 'After installation, the app behaves like a native app!'
         },
+        // Slide 4: Tips
+        slide4: {
+            title: 'Tips for your success',
+            warning: '💡 These tips help you through difficult moments:',
+            step1: {
+                title: '5-minute rule',
+                text: 'Wait 5 minutes - the craving will pass!'
+            },
+            step2: {
+                title: 'Drink water',
+                text: 'A large glass of water helps immediately.'
+            },
+            step3: {
+                title: 'Movement',
+                text: 'Short walk or stretching.'
+            },
+            step4: {
+                title: 'Breathing exercises',
+                text: 'Use the integrated breathing exercises.'
+            }
+        },
+        // Slide 5: Let's go
+        slide5: {
+            title: 'You are ready!',
+            text: 'Every day without a cigarette is a success. We believe in you!',
+            tipsTitle: 'Remember:',
+            tip1: '💪 You are stronger than any craving',
+            tip2: '📊 Use the app daily for motivation',
+            tip3: '🆘 When craving: press the SOS button',
+            tip4: '🎉 Celebrate every milestone!',
+            finalMessage: 'Let\'s go - you can do this!'
+        },
+        // Legacy slides array
         slides: [
             {
                 title: 'Your Companion',

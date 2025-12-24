@@ -10,6 +10,12 @@ export default {
         tagline: 'Dein Weg in ein rauchfreies Leben'
     },
 
+    // Common
+    common: {
+        loading: 'Lade...',
+        close: 'Schließen'
+    },
+
     // Accessibility
     accessibility: {
         skipToContent: 'Zum Hauptinhalt springen',
@@ -760,6 +766,7 @@ export default {
         // Breathing exercises (HTML data-i18n keys)
         breathing: {
             title: 'Atemübungen',
+            exerciseTitle: 'Atemübung',
             boxBreathing: 'Box Breathing',
             boxBreathingDesc: '4 Sekunden ein, 4 halten, 4 aus, 4 halten',
             technique478: '4-7-8 Technik',
@@ -1088,7 +1095,12 @@ export default {
         next: 'Weiter',
         prev: 'Zurück',
         finish: 'Fertig',
-        // Slide-specific keys (HTML data-i18n)
+        // Navigation (HTML data-i18n keys)
+        nav: {
+            next: 'Weiter',
+            prev: 'Zurück'
+        },
+        // Slide 1: Willkommen
         slide1: {
             title: 'Willkommen bei ByeByeSmoke!',
             text: 'Lass uns dir die wichtigsten Features zeigen und wie du die App als PWA installieren kannst.',
@@ -1098,37 +1110,76 @@ export default {
             feature4: '🔔 Push-Benachrichtigungen',
             feature5: '📱 Als App installieren'
         },
+        // Slide 2: Features
         slide2: {
-            title: 'Dein Dashboard',
-            text: 'Im Dashboard siehst du alle wichtigen Statistiken auf einen Blick.',
-            feature1: '⏱️ Zeit ohne Zigaretten',
-            feature2: '💰 Gespartes Geld',
-            feature3: '🚭 Vermiedene Zigaretten',
-            feature4: '❤️ Gewonnene Lebenszeit'
+            title: 'Die 4 Hauptbereiche',
+            stats: {
+                title: '📊 Dashboard',
+                text: 'Deine Statistiken auf einen Blick'
+            },
+            milestones: {
+                title: '🏥 Meilensteine',
+                text: 'Verfolge deine Gesundheitsfortschritte'
+            },
+            craving: {
+                title: '🆘 SOS-Hilfe',
+                text: '5-Minuten-Timer bei Verlangen'
+            },
+            notifications: {
+                title: '🔔 Benachrichtigungen',
+                text: 'Motivierende Push-Nachrichten'
+            }
         },
+        // Slide 3: App installieren
         slide3: {
-            title: 'Gesundheitsmeilensteine',
-            text: 'Verfolge, wie sich dein Körper erholt - basierend auf wissenschaftlichen Studien.',
-            feature1: '🫁 Lungenregeneration',
-            feature2: '❤️ Herzgesundheit',
-            feature3: '🩸 Durchblutung',
-            feature4: '✨ Hautverbesserung'
-        },
-        slide4: {
-            title: 'SOS-Hilfe bei Verlangen',
-            text: 'Der Craving-Timer hilft dir durch schwierige Momente.',
-            feature1: '⏰ 5-Minuten-Timer',
-            feature2: '🧘 Atemübungen',
-            feature3: '🎮 Ablenkungsspiele',
-            feature4: '💡 Hilfreiche Tipps'
-        },
-        slide5: {
             title: 'Als App installieren',
-            text: 'Installiere ByeByeSmoke als App auf deinem Gerät für schnellen Zugriff.',
-            ios: 'iOS: Tippe auf "Teilen" → "Zum Home-Bildschirm"',
-            android: 'Android: Tippe auf ⋮ → "App installieren"',
-            desktop: 'Desktop: Klicke auf das Installations-Symbol in der Adressleiste'
+            step1: {
+                title: 'iOS (Safari)',
+                text: 'Tippe auf "Teilen" → "Zum Home-Bildschirm"'
+            },
+            step2: {
+                title: 'Android (Chrome)',
+                text: 'Tippe auf ⋮ → "App installieren"'
+            },
+            step3: {
+                title: 'Desktop',
+                text: 'Klicke auf das Installations-Symbol in der Adressleiste'
+            },
+            note: 'Nach der Installation verhält sich die App wie eine native App!'
         },
+        // Slide 4: Tipps
+        slide4: {
+            title: 'Tipps für deinen Erfolg',
+            warning: '💡 Diese Tipps helfen dir durch schwierige Momente:',
+            step1: {
+                title: '5-Minuten-Regel',
+                text: 'Warte 5 Minuten - das Verlangen vergeht!'
+            },
+            step2: {
+                title: 'Wasser trinken',
+                text: 'Ein großes Glas Wasser hilft sofort.'
+            },
+            step3: {
+                title: 'Bewegung',
+                text: 'Kurzer Spaziergang oder Stretching.'
+            },
+            step4: {
+                title: 'Atemübungen',
+                text: 'Nutze die integrierten Atemübungen.'
+            }
+        },
+        // Slide 5: Los geht's
+        slide5: {
+            title: 'Du bist bereit!',
+            text: 'Jeder Tag ohne Zigarette ist ein Erfolg. Wir glauben an dich!',
+            tipsTitle: 'Denk daran:',
+            tip1: '💪 Du bist stärker als jedes Verlangen',
+            tip2: '📊 Nutze die App täglich für Motivation',
+            tip3: '🆘 Bei Verlangen: SOS-Button drücken',
+            tip4: '🎉 Feiere jeden Meilenstein!',
+            finalMessage: 'Los geht\'s - du schaffst das!'
+        },
+        // Legacy slides array
         slides: [
             {
                 title: 'Dein Begleiter',
