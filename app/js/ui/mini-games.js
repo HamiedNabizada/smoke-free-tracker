@@ -2,11 +2,30 @@
  * Mini-Games for Craving Distraction
  */
 
-// Exported games list for SOS hub
+import { t, isInitialized } from '../i18n/i18n.js';
+
+// Helper for translation with fallback
+function tr(key, fallback, params = {}) {
+    if (isInitialized()) {
+        const translated = t(key, params);
+        if (translated !== key) return translated;
+    }
+    return fallback.replace(/\{(\w+)\}/g, (match, p) => params[p] !== undefined ? params[p] : match);
+}
+
+// Exported games list for SOS hub (with fallback texts)
 export const MINI_GAMES = [
     { id: 'tap', name: 'Tap Challenge', icon: '👆', description: 'Tippe auf die Ziele!' },
     { id: 'memory', name: 'Memory', icon: '🧠', description: 'Finde die Paare!' }
 ];
+
+// Get localized games list
+export function getLocalizedGames() {
+    return [
+        { id: 'tap', name: 'Tap Challenge', icon: '👆', description: tr('miniGames.tap.description', 'Tippe auf die Ziele!') },
+        { id: 'memory', name: 'Memory', icon: '🧠', description: tr('miniGames.memory.description', 'Finde die Paare!') }
+    ];
+}
 
 let gameActive = false;
 let gameScore = 0;
@@ -28,32 +47,39 @@ export function initializeMiniGames() {
  * Show game selection modal
  */
 function showGameSelection() {
+    const titleText = tr('miniGames.title', 'Ablenkungsspiele');
+    const introText = tr('miniGames.intro', 'Lenke dich für ein paar Minuten ab!');
+    const tapDesc = tr('miniGames.tap.fullDesc', 'Tippe auf die Ziele so schnell wie möglich!');
+    const breatheTitle = tr('miniGames.breathe.title', 'Atem-Trainer');
+    const breatheDesc = tr('miniGames.breathe.desc', 'Folge dem Rhythmus und atme tief durch.');
+    const memoryDesc = tr('miniGames.memory.fullDesc', 'Finde die passenden Paare!');
+
     const modal = document.createElement('div');
     modal.className = 'mini-game-modal';
     modal.id = 'miniGameModal';
     modal.innerHTML = `
         <div class="mini-game-content">
             <button class="mini-game-close" id="closeGameModal">✕</button>
-            <h2>🎮 Ablenkungsspiele</h2>
-            <p class="game-intro">Lenke dich für ein paar Minuten ab!</p>
+            <h2>🎮 ${titleText}</h2>
+            <p class="game-intro">${introText}</p>
 
             <div class="game-selection">
                 <button class="game-option" data-game="tap">
                     <span class="game-icon">👆</span>
                     <span class="game-name">Tap Challenge</span>
-                    <span class="game-desc">Tippe auf die Ziele so schnell wie möglich!</span>
+                    <span class="game-desc">${tapDesc}</span>
                 </button>
 
                 <button class="game-option" data-game="breathe">
                     <span class="game-icon">🫁</span>
-                    <span class="game-name">Atem-Trainer</span>
-                    <span class="game-desc">Folge dem Rhythmus und atme tief durch.</span>
+                    <span class="game-name">${breatheTitle}</span>
+                    <span class="game-desc">${breatheDesc}</span>
                 </button>
 
                 <button class="game-option" data-game="memory">
                     <span class="game-icon">🧠</span>
                     <span class="game-name">Memory</span>
-                    <span class="game-desc">Finde die passenden Paare!</span>
+                    <span class="game-desc">${memoryDesc}</span>
                 </button>
             </div>
         </div>
@@ -130,23 +156,27 @@ function startTapGame(container) {
     timeRemaining = 30;
     gameActive = true;
 
+    const pointsLabel = tr('miniGames.labels.points', 'Punkte');
+    const timeLabel = tr('miniGames.labels.time', 'Zeit');
+    const hintText = tr('miniGames.tap.hint', 'Tippe auf die Kreise!');
+
     container.innerHTML = `
         <button class="mini-game-close" id="closeGameModal">✕</button>
         <h2>👆 Tap Challenge</h2>
         <div class="game-stats">
             <div class="game-stat">
-                <span class="stat-label">Punkte</span>
+                <span class="stat-label">${pointsLabel}</span>
                 <span class="stat-value" id="tapScore">0</span>
             </div>
             <div class="game-stat">
-                <span class="stat-label">Zeit</span>
+                <span class="stat-label">${timeLabel}</span>
                 <span class="stat-value" id="tapTime">30s</span>
             </div>
         </div>
         <div class="tap-arena" id="tapArena">
             <div class="tap-target" id="tapTarget"></div>
         </div>
-        <p class="game-hint">Tippe auf die Kreise!</p>
+        <p class="game-hint">${hintText}</p>
     `;
 
     document.getElementById('closeGameModal').addEventListener('click', closeGameModal);
@@ -214,28 +244,38 @@ function endTapGame(container) {
     if (gameTimer) clearInterval(gameTimer);
     if (targetTimer) clearTimeout(targetTimer);
 
+    const incredibleText = tr('miniGames.results.incredible', 'Unglaublich! Du bist ein Profi!');
+    const veryGoodText = tr('miniGames.results.veryGood', 'Sehr gut gemacht!');
+    const goodWorkText = tr('miniGames.results.goodWork', 'Gute Arbeit!');
+    const keepPracticingText = tr('miniGames.results.keepPracticing', 'Weiter üben!');
+
     let message = '';
     if (gameScore >= 30) {
-        message = '🏆 Unglaublich! Du bist ein Profi!';
+        message = '🏆 ' + incredibleText;
     } else if (gameScore >= 20) {
-        message = '🌟 Sehr gut gemacht!';
+        message = '🌟 ' + veryGoodText;
     } else if (gameScore >= 10) {
-        message = '👍 Gute Arbeit!';
+        message = '👍 ' + goodWorkText;
     } else {
-        message = '💪 Weiter üben!';
+        message = '💪 ' + keepPracticingText;
     }
+
+    const doneTitle = tr('miniGames.done', 'Geschafft!');
+    const pointsLabel = tr('miniGames.labels.points', 'Punkte');
+    const playAgainText = tr('miniGames.playAgain', 'Nochmal spielen');
+    const otherGamesText = tr('miniGames.otherGames', 'Andere Spiele');
 
     container.innerHTML = `
         <button class="mini-game-close" id="closeGameModal">✕</button>
-        <h2>🎉 Geschafft!</h2>
+        <h2>🎉 ${doneTitle}</h2>
         <div class="game-result">
             <div class="result-score">${gameScore}</div>
-            <div class="result-label">Punkte</div>
+            <div class="result-label">${pointsLabel}</div>
             <p class="result-message">${message}</p>
         </div>
         <div class="game-actions">
-            <button class="game-btn game-btn-primary" id="playAgainBtn">Nochmal spielen</button>
-            <button class="game-btn game-btn-secondary" id="backToGamesBtn">Andere Spiele</button>
+            <button class="game-btn game-btn-primary" id="playAgainBtn">${playAgainText}</button>
+            <button class="game-btn game-btn-secondary" id="backToGamesBtn">${otherGamesText}</button>
         </div>
     `;
 

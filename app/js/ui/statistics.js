@@ -2,6 +2,17 @@ import { userData } from '../config.js';
 import { healthMilestones } from '../data/milestones.js';
 import { calculateTimeRemaining } from '../utils/calculations.js';
 import { generateLotusSVG, getStageProgressInfo, setCurrentScore, initializeLotusPreview } from './lotus.js';
+import { t, isInitialized } from '../i18n/i18n.js';
+
+// Helper for translation with fallback
+function tr(key, fallback, params = {}) {
+    if (isInitialized()) {
+        const translated = t(key, params);
+        if (translated !== key) return translated;
+    }
+    // Replace params in fallback
+    return fallback.replace(/\{(\w+)\}/g, (match, p) => params[p] !== undefined ? params[p] : match);
+}
 
 
 /**
@@ -87,77 +98,89 @@ export function updateHealthScore(stats) {
         let message = '';
 
         if (finalScore >= 90) {
-            rating = 'Exzellent!';
-            message = 'Deine Gesundheit hat sich hervorragend erholt!';
+            rating = tr('statistics.healthScore.rating.excellent', 'Exzellent!');
+            message = tr('statistics.healthScore.message.excellent', 'Deine Gesundheit hat sich hervorragend erholt!');
         } else if (finalScore >= 75) {
-            rating = 'Sehr gut!';
-            message = 'Du machst großartige Fortschritte!';
+            rating = tr('statistics.healthScore.rating.veryGood', 'Sehr gut!');
+            message = tr('statistics.healthScore.message.veryGood', 'Du machst großartige Fortschritte!');
         } else if (finalScore >= 50) {
-            rating = 'Gut!';
-            message = 'Dein Körper erholt sich stetig.';
+            rating = tr('statistics.healthScore.rating.good', 'Gut!');
+            message = tr('statistics.healthScore.message.good', 'Dein Körper erholt sich stetig.');
         } else if (finalScore >= 25) {
-            rating = 'Fortschritt!';
-            message = 'Die Erholung hat begonnen.';
+            rating = tr('statistics.healthScore.rating.progress', 'Fortschritt!');
+            message = tr('statistics.healthScore.message.progress', 'Die Erholung hat begonnen.');
         } else {
-            rating = 'Gestartet!';
-            message = 'Erste positive Veränderungen laufen.';
+            rating = tr('statistics.healthScore.rating.started', 'Gestartet!');
+            message = tr('statistics.healthScore.message.started', 'Erste positive Veränderungen laufen.');
         }
+
+        const explanation = tr('statistics.healthScore.explanation', 'Gewichteter Durchschnitt aus 5 Erholungsmetriken, basierend auf WHO, JAMA und PMC-Studien.');
+        const viewSources = tr('statistics.healthScore.viewSources', 'Quellen einsehen');
+
+        const cardioLabel = tr('statistics.healthScore.components.cardiovascular.label', 'Herz-Kreislauf');
+        const cardioDesc = tr('statistics.healthScore.components.cardiovascular.desc', 'Häufigste Todesursache bei Rauchern. 15 Jahre bis Nichtraucher-Niveau.');
+        const lungLabel = tr('statistics.healthScore.components.lung.label', 'Lungenfunktion');
+        const lungDesc = tr('statistics.healthScore.components.lung.desc', 'COPD, Lungenkrebs. 10 Jahre bis volle Erholung.');
+        const circulationLabel = tr('statistics.healthScore.components.circulation.label', 'Durchblutung');
+        const circulationDesc = tr('statistics.healthScore.components.circulation.desc', 'Periphere Gefäße. Schnelle Erholung in 6 Monaten.');
+        const riskLabel = tr('statistics.healthScore.components.risk.label', 'Risikoreduktion');
+        const riskDesc = tr('statistics.healthScore.components.risk.desc', 'Herzinfarkt, Schlaganfall, Krebs. Langfristiger Schutz.');
+        const skinLabel = tr('statistics.healthScore.components.skin.label', 'Hautgesundheit');
+        const skinDesc = tr('statistics.healthScore.components.skin.desc', 'Sichtbarer Indikator für Regeneration. 9 Monate.');
 
         detailsContainer.innerHTML = `
             <div class="health-score-rating">${rating}</div>
             <div class="health-score-message">${message}</div>
-            <div class="health-score-explanation">
-                Gewichteter Durchschnitt aus 5 Erholungsmetriken, basierend auf WHO, JAMA und PMC-Studien.
-            </div>
+            <div class="health-score-explanation">${explanation}</div>
             <div class="health-score-breakdown">
                 <div class="score-component">
                     <div class="component-header">
-                        <span class="component-label">❤️ Herz-Kreislauf</span>
+                        <span class="component-label">❤️ ${cardioLabel}</span>
                         <span class="component-value">${cardiovascular}%</span>
                         <span class="component-weight">×30%</span>
                     </div>
                     <span class="component-bar"><span class="component-fill" style="width: ${cardiovascular}%"></span></span>
-                    <span class="component-desc">Häufigste Todesursache bei Rauchern. 15 Jahre bis Nichtraucher-Niveau.</span>
+                    <span class="component-desc">${cardioDesc}</span>
                 </div>
                 <div class="score-component">
                     <div class="component-header">
-                        <span class="component-label">🫁 Lungenfunktion</span>
+                        <span class="component-label">🫁 ${lungLabel}</span>
                         <span class="component-value">${lung}%</span>
                         <span class="component-weight">×25%</span>
                     </div>
                     <span class="component-bar"><span class="component-fill" style="width: ${lung}%"></span></span>
-                    <span class="component-desc">COPD, Lungenkrebs. 10 Jahre bis volle Erholung.</span>
+                    <span class="component-desc">${lungDesc}</span>
                 </div>
                 <div class="score-component">
                     <div class="component-header">
-                        <span class="component-label">🩸 Durchblutung</span>
+                        <span class="component-label">🩸 ${circulationLabel}</span>
                         <span class="component-value">${circulation}%</span>
                         <span class="component-weight">×20%</span>
                     </div>
                     <span class="component-bar"><span class="component-fill" style="width: ${circulation}%"></span></span>
-                    <span class="component-desc">Periphere Gefäße. Schnelle Erholung in 6 Monaten.</span>
+                    <span class="component-desc">${circulationDesc}</span>
                 </div>
                 <div class="score-component">
                     <div class="component-header">
-                        <span class="component-label">🎗️ Risikoreduktion</span>
+                        <span class="component-label">🎗️ ${riskLabel}</span>
                         <span class="component-value">${Math.round(riskReduction)}%</span>
                         <span class="component-weight">×15%</span>
                     </div>
                     <span class="component-bar"><span class="component-fill" style="width: ${Math.round(riskReduction)}%"></span></span>
-                    <span class="component-desc">Herzinfarkt, Schlaganfall, Krebs. Langfristiger Schutz.</span>
+                    <span class="component-desc">${riskDesc}</span>
                 </div>
                 <div class="score-component">
                     <div class="component-header">
-                        <span class="component-label">✨ Hautgesundheit</span>
+                        <span class="component-label">✨ ${skinLabel}</span>
                         <span class="component-value">${skin}%</span>
                         <span class="component-weight">×10%</span>
                     </div>
                     <span class="component-bar"><span class="component-fill" style="width: ${skin}%"></span></span>
-                    <span class="component-desc">Sichtbarer Indikator für Regeneration. 9 Monate.</span>
+                    <span class="component-desc">${skinDesc}</span>
                 </div>
             </div>
             <div class="health-score-source">
-                <a href="quellen.html">Quellen einsehen</a>
+                <a href="quellen.html">${viewSources}</a>
             </div>
         `;
     }
@@ -168,31 +191,38 @@ export function updateDetailedComparison(stats) {
     if (!container) return;
 
     const comparisonData = [
-        { milestone: '24 Stunden', days: 1, failRate: 85, yourStatus: stats.days >= 1 },
-        { milestone: '3 Tage', days: 3, failRate: 90, yourStatus: stats.days >= 3 },
-        { milestone: '1 Woche', days: 7, failRate: 95, yourStatus: stats.days >= 7 },
-        { milestone: '2 Wochen', days: 14, failRate: 96, yourStatus: stats.days >= 14 },
-        { milestone: '1 Monat', days: 30, failRate: 97, yourStatus: stats.days >= 30 },
-        { milestone: '3 Monate', days: 90, failRate: 98, yourStatus: stats.days >= 90 },
-        { milestone: '6 Monate', days: 180, failRate: 99, yourStatus: stats.days >= 180 },
-        { milestone: '1 Jahr', days: 365, failRate: 99.5, yourStatus: stats.days >= 365 }
+        { milestone: tr('statistics.comparison.milestones.24h', '24 Stunden'), days: 1, failRate: 85, yourStatus: stats.days >= 1 },
+        { milestone: tr('statistics.comparison.milestones.3d', '3 Tage'), days: 3, failRate: 90, yourStatus: stats.days >= 3 },
+        { milestone: tr('statistics.comparison.milestones.1w', '1 Woche'), days: 7, failRate: 95, yourStatus: stats.days >= 7 },
+        { milestone: tr('statistics.comparison.milestones.2w', '2 Wochen'), days: 14, failRate: 96, yourStatus: stats.days >= 14 },
+        { milestone: tr('statistics.comparison.milestones.1m', '1 Monat'), days: 30, failRate: 97, yourStatus: stats.days >= 30 },
+        { milestone: tr('statistics.comparison.milestones.3m', '3 Monate'), days: 90, failRate: 98, yourStatus: stats.days >= 90 },
+        { milestone: tr('statistics.comparison.milestones.6m', '6 Monate'), days: 180, failRate: 99, yourStatus: stats.days >= 180 },
+        { milestone: tr('statistics.comparison.milestones.1y', '1 Jahr'), days: 365, failRate: 99.5, yourStatus: stats.days >= 365 }
     ];
+
+    const headerMilestone = tr('statistics.comparison.header.milestone', 'Meilenstein');
+    const headerAverage = tr('statistics.comparison.header.average', 'Durchschnittlich schaffen es');
+    const headerStatus = tr('statistics.comparison.header.status', 'Dein Status');
+    const ofPeople = tr('statistics.comparison.ofPeople', '% der Menschen');
+    const achieved = tr('statistics.comparison.achieved', 'Erreicht');
+    const notYet = tr('statistics.comparison.notYet', 'Noch nicht');
 
     const tableHTML = `
         <table class="comparison-table">
             <thead>
                 <tr>
-                    <th>Meilenstein</th>
-                    <th>Durchschnittlich schaffen es</th>
-                    <th>Dein Status</th>
+                    <th>${headerMilestone}</th>
+                    <th>${headerAverage}</th>
+                    <th>${headerStatus}</th>
                 </tr>
             </thead>
             <tbody>
                 ${comparisonData.map(row => `
                     <tr class="${row.yourStatus ? 'achieved' : 'pending'}">
                         <td><strong>${row.milestone}</strong></td>
-                        <td>${100 - row.failRate}% der Menschen</td>
-                        <td>${row.yourStatus ? '✓ Erreicht' : '⏳ Noch nicht'}</td>
+                        <td>${100 - row.failRate}${ofPeople}</td>
+                        <td>${row.yourStatus ? `✓ ${achieved}` : `⏳ ${notYet}`}</td>
                     </tr>
                 `).join('')}
             </tbody>
@@ -206,8 +236,8 @@ export function updateAgeGroupComparison(stats) {
     const container = document.getElementById('ageGroupComparison');
     if (!container) return;
 
-    // Assume user is in 25-45 age group (most common age for quitting)
     const ageGroup = '25-45';
+    const youAreHere = tr('statistics.ageGroup.youAreHere', 'Du bist hier!');
 
     let comparisonHTML = '';
 
@@ -216,19 +246,19 @@ export function updateAgeGroupComparison(stats) {
             <div class="age-comparison-hero">
                 <div class="age-comparison-icon">🏆</div>
                 <div class="age-comparison-text">
-                    <h3>Du bist eine absolute Ausnahme!</h3>
-                    <p>In der Altersgruppe ${ageGroup} schaffen nur <strong>1% der Menschen</strong> die ersten 6 Monate rauchfrei zu bleiben.</p>
-                    <p class="age-highlight">Du gehörst zu den Top 1%! 🌟</p>
+                    <h3>${tr('statistics.ageGroup.6m.title', 'Du bist eine absolute Ausnahme!')}</h3>
+                    <p>${tr('statistics.ageGroup.6m.text', 'In der Altersgruppe {ageGroup} schaffen nur <strong>1% der Menschen</strong> die ersten 6 Monate rauchfrei zu bleiben.', { ageGroup })}</p>
+                    <p class="age-highlight">${tr('statistics.ageGroup.6m.highlight', 'Du gehörst zu den Top 1%!')}</p>
                 </div>
             </div>
             <div class="age-stats-grid">
                 <div class="age-stat">
                     <div class="age-stat-value">99%</div>
-                    <div class="age-stat-label">geben vorher auf</div>
+                    <div class="age-stat-label">${tr('statistics.ageGroup.giveUpBefore', 'geben vorher auf')}</div>
                 </div>
                 <div class="age-stat highlight">
                     <div class="age-stat-value">1%</div>
-                    <div class="age-stat-label">Du bist hier! 🎯</div>
+                    <div class="age-stat-label">${youAreHere}</div>
                 </div>
             </div>
         `;
@@ -237,19 +267,19 @@ export function updateAgeGroupComparison(stats) {
             <div class="age-comparison-hero">
                 <div class="age-comparison-icon">💪</div>
                 <div class="age-comparison-text">
-                    <h3>Du bist außergewöhnlich stark!</h3>
-                    <p>In der Altersgruppe ${ageGroup} schaffen nur <strong>2% der Menschen</strong> die ersten 3 Monate.</p>
-                    <p class="age-highlight">Du gehörst zu den Top 2%! 🌟</p>
+                    <h3>${tr('statistics.ageGroup.3m.title', 'Du bist außergewöhnlich stark!')}</h3>
+                    <p>${tr('statistics.ageGroup.3m.text', 'In der Altersgruppe {ageGroup} schaffen nur <strong>2% der Menschen</strong> die ersten 3 Monate.', { ageGroup })}</p>
+                    <p class="age-highlight">${tr('statistics.ageGroup.3m.highlight', 'Du gehörst zu den Top 2%!')}</p>
                 </div>
             </div>
             <div class="age-stats-grid">
                 <div class="age-stat">
                     <div class="age-stat-value">98%</div>
-                    <div class="age-stat-label">scheitern vorher</div>
+                    <div class="age-stat-label">${tr('statistics.ageGroup.failBefore', 'scheitern vorher')}</div>
                 </div>
                 <div class="age-stat highlight">
                     <div class="age-stat-value">2%</div>
-                    <div class="age-stat-label">Du bist hier! 🎯</div>
+                    <div class="age-stat-label">${youAreHere}</div>
                 </div>
             </div>
         `;
@@ -258,19 +288,19 @@ export function updateAgeGroupComparison(stats) {
             <div class="age-comparison-hero">
                 <div class="age-comparison-icon">🎖️</div>
                 <div class="age-comparison-text">
-                    <h3>Beeindruckende Leistung!</h3>
-                    <p>In der Altersgruppe ${ageGroup} schaffen nur <strong>3% der Menschen</strong> den ersten Monat.</p>
-                    <p class="age-highlight">Du gehörst zu den Top 3%! 💎</p>
+                    <h3>${tr('statistics.ageGroup.1m.title', 'Beeindruckende Leistung!')}</h3>
+                    <p>${tr('statistics.ageGroup.1m.text', 'In der Altersgruppe {ageGroup} schaffen nur <strong>3% der Menschen</strong> den ersten Monat.', { ageGroup })}</p>
+                    <p class="age-highlight">${tr('statistics.ageGroup.1m.highlight', 'Du gehörst zu den Top 3%!')}</p>
                 </div>
             </div>
             <div class="age-stats-grid">
                 <div class="age-stat">
                     <div class="age-stat-value">97%</div>
-                    <div class="age-stat-label">geben auf</div>
+                    <div class="age-stat-label">${tr('statistics.ageGroup.giveUp', 'geben auf')}</div>
                 </div>
                 <div class="age-stat highlight">
                     <div class="age-stat-value">3%</div>
-                    <div class="age-stat-label">Du bist hier! 🎯</div>
+                    <div class="age-stat-label">${youAreHere}</div>
                 </div>
             </div>
         `;
@@ -279,19 +309,19 @@ export function updateAgeGroupComparison(stats) {
             <div class="age-comparison-hero">
                 <div class="age-comparison-icon">⭐</div>
                 <div class="age-comparison-text">
-                    <h3>Großartig gemacht!</h3>
-                    <p>In der Altersgruppe ${ageGroup} schaffen nur <strong>5% der Menschen</strong> die erste Woche.</p>
-                    <p class="age-highlight">Du gehörst zu den Top 5%! 🔥</p>
+                    <h3>${tr('statistics.ageGroup.1w.title', 'Großartig gemacht!')}</h3>
+                    <p>${tr('statistics.ageGroup.1w.text', 'In der Altersgruppe {ageGroup} schaffen nur <strong>5% der Menschen</strong> die erste Woche.', { ageGroup })}</p>
+                    <p class="age-highlight">${tr('statistics.ageGroup.1w.highlight', 'Du gehörst zu den Top 5%!')}</p>
                 </div>
             </div>
             <div class="age-stats-grid">
                 <div class="age-stat">
                     <div class="age-stat-value">95%</div>
-                    <div class="age-stat-label">scheitern in Woche 1</div>
+                    <div class="age-stat-label">${tr('statistics.ageGroup.failWeek1', 'scheitern in Woche 1')}</div>
                 </div>
                 <div class="age-stat highlight">
                     <div class="age-stat-value">5%</div>
-                    <div class="age-stat-label">Du bist hier! 🎯</div>
+                    <div class="age-stat-label">${youAreHere}</div>
                 </div>
             </div>
         `;
@@ -300,19 +330,19 @@ export function updateAgeGroupComparison(stats) {
             <div class="age-comparison-hero">
                 <div class="age-comparison-icon">🚀</div>
                 <div class="age-comparison-text">
-                    <h3>Starker Start!</h3>
-                    <p>In der Altersgruppe ${ageGroup} versuchen viele aufzuhören, aber die meisten geben in den ersten Tagen auf.</p>
-                    <p class="age-highlight">Du hast bereits den wichtigsten Schritt gemacht! 💪</p>
+                    <h3>${tr('statistics.ageGroup.start.title', 'Starker Start!')}</h3>
+                    <p>${tr('statistics.ageGroup.start.text', 'In der Altersgruppe {ageGroup} versuchen viele aufzuhören, aber die meisten geben in den ersten Tagen auf.', { ageGroup })}</p>
+                    <p class="age-highlight">${tr('statistics.ageGroup.start.highlight', 'Du hast bereits den wichtigsten Schritt gemacht!')}</p>
                 </div>
             </div>
             <div class="age-stats-grid">
                 <div class="age-stat">
                     <div class="age-stat-value">85%</div>
-                    <div class="age-stat-label">geben in 24h auf</div>
+                    <div class="age-stat-label">${tr('statistics.ageGroup.giveUp24h', 'geben in 24h auf')}</div>
                 </div>
                 <div class="age-stat highlight">
                     <div class="age-stat-value">15%</div>
-                    <div class="age-stat-label">bleiben dran</div>
+                    <div class="age-stat-label">${tr('statistics.ageGroup.stayStrong', 'bleiben dran')}</div>
                 </div>
             </div>
         `;
@@ -329,18 +359,21 @@ export function updateMilestoneTimeline(stats) {
 
     // Select key milestones for timeline
     const keyMilestones = [
-        { days: 1, icon: '🌱', title: '1 Tag' },
-        { days: 3, icon: '🔥', title: '3 Tage' },
-        { days: 7, icon: '⭐', title: '1 Woche' },
-        { days: 14, icon: '💎', title: '2 Wochen' },
-        { days: 30, icon: '🏅', title: '1 Monat' },
-        { days: 90, icon: '🎗️', title: '3 Monate' },
-        { days: 180, icon: '🎊', title: '6 Monate' },
-        { days: 365, icon: '❤️', title: '1 Jahr' },
-        { days: 730, icon: '🏆', title: '2 Jahre' },
-        { days: 1825, icon: '🥉', title: '5 Jahre' },
-        { days: 3650, icon: '👑', title: '10 Jahre' }
+        { days: 1, icon: '🌱', title: tr('statistics.timeline.1d', '1 Tag') },
+        { days: 3, icon: '🔥', title: tr('statistics.timeline.3d', '3 Tage') },
+        { days: 7, icon: '⭐', title: tr('statistics.timeline.1w', '1 Woche') },
+        { days: 14, icon: '💎', title: tr('statistics.timeline.2w', '2 Wochen') },
+        { days: 30, icon: '🏅', title: tr('statistics.timeline.1m', '1 Monat') },
+        { days: 90, icon: '🎗️', title: tr('statistics.timeline.3m', '3 Monate') },
+        { days: 180, icon: '🎊', title: tr('statistics.timeline.6m', '6 Monate') },
+        { days: 365, icon: '❤️', title: tr('statistics.timeline.1y', '1 Jahr') },
+        { days: 730, icon: '🏆', title: tr('statistics.timeline.2y', '2 Jahre') },
+        { days: 1825, icon: '🥉', title: tr('statistics.timeline.5y', '5 Jahre') },
+        { days: 3650, icon: '👑', title: tr('statistics.timeline.10y', '10 Jahre') }
     ];
+
+    const stillText = tr('statistics.timeline.still', 'Noch');
+    const daysText = tr('statistics.timeline.days', 'Tage');
 
     const timelineHTML = keyMilestones.map((milestone, index) => {
         const achieved = stats.days >= milestone.days;
@@ -357,7 +390,7 @@ export function updateMilestoneTimeline(stats) {
                 </div>
                 <div class="timeline-content">
                     <div class="timeline-title">${milestone.title}</div>
-                    ${!achieved && isCurrent ? `<div class="timeline-progress">Noch ${Math.ceil(milestone.days - stats.days)} Tage</div>` : ''}
+                    ${!achieved && isCurrent ? `<div class="timeline-progress">${stillText} ${Math.ceil(milestone.days - stats.days)} ${daysText}</div>` : ''}
                 </div>
                 ${index < keyMilestones.length - 1 ? '<div class="timeline-connector"></div>' : ''}
             </div>
@@ -375,11 +408,15 @@ export function updateFutureProjection(stats) {
 
     // Calculate projections for different time periods
     const projections = [
-        { label: 'In 1 Monat', days: 30 },
-        { label: 'In 3 Monaten', days: 90 },
-        { label: 'In 6 Monaten', days: 180 },
-        { label: 'In 1 Jahr', days: 365 }
+        { label: tr('statistics.projection.in1m', 'In 1 Monat'), days: 30 },
+        { label: tr('statistics.projection.in3m', 'In 3 Monaten'), days: 90 },
+        { label: tr('statistics.projection.in6m', 'In 6 Monaten'), days: 180 },
+        { label: tr('statistics.projection.in1y', 'In 1 Jahr'), days: 365 }
     ];
+
+    const savedLabel = tr('statistics.projection.saved', 'gespart');
+    const avoidedLabel = tr('statistics.projection.avoided', 'vermieden');
+    const lifeGainedLabel = tr('statistics.projection.lifeGained', 'Leben gewonnen');
 
     const projectionsHTML = projections.map(projection => {
         const futureDays = stats.days + projection.days;
@@ -396,17 +433,17 @@ export function updateFutureProjection(stats) {
                     <div class="projection-stat">
                         <span class="projection-icon">💰</span>
                         <span class="projection-value">${futureMoney.toFixed(0)}€</span>
-                        <span class="projection-label">gespart</span>
+                        <span class="projection-label">${savedLabel}</span>
                     </div>
                     <div class="projection-stat">
                         <span class="projection-icon">🚬</span>
                         <span class="projection-value">${futureCigarettes}</span>
-                        <span class="projection-label">vermieden</span>
+                        <span class="projection-label">${avoidedLabel}</span>
                     </div>
                     <div class="projection-stat">
                         <span class="projection-icon">⏳</span>
                         <span class="projection-value">${futureLifeDays}d</span>
-                        <span class="projection-label">Leben gewonnen</span>
+                        <span class="projection-label">${lifeGainedLabel}</span>
                     </div>
                 </div>
             </div>

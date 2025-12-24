@@ -2,45 +2,63 @@ import { calculateStats } from '../utils/calculations.js';
 import { updateCompactCravingStats } from './craving-stats.js';
 import { recordCraving, getCravingCount } from '../firebase-auth.js';
 import { MINI_GAMES } from './mini-games.js';
+import { t, isInitialized } from '../i18n/i18n.js';
 
-// Craving tips that rotate during the timer
-const cravingTips = [
-    { icon: '🫁', text: 'Atme tief ein und langsam aus. Zähle dabei bis 4.' },
-    { icon: '💪', text: 'Du bist stärker als jedes Verlangen. Du schaffst das!' },
-    { icon: '⏱️', text: 'Nur noch ein paar Minuten. Das Verlangen wird schwächer!' },
-    { icon: '🌊', text: 'Lass das Verlangen wie eine Welle über dich hinwegziehen.' },
-    { icon: '🎯', text: 'Denk an dein Ziel: Ein gesünderes, freies Leben!' },
-    { icon: '💧', text: 'Trink ein großes Glas Wasser - das hilft sofort.' },
-    { icon: '🚶', text: 'Bewege dich! Geh ein paar Schritte oder strecke dich.' },
-    { icon: '🧘', text: 'Konzentriere dich auf deinen Atem. Ein... Aus... Ein... Aus...' },
-    { icon: '💚', text: 'Dein Körper heilt sich gerade. Jede Sekunde zählt!' },
-    { icon: '🏆', text: 'Du hast schon so viel geschafft. Gib jetzt nicht auf!' },
-    { icon: '⭐', text: 'Jedes überwundene Verlangen macht dich stärker!' },
-    { icon: '🌟', text: 'Du bist ein Vorbild für andere. Bleib stark!' }
-];
+// Helper for translation with fallback
+function tr(key, fallback, params = {}) {
+    if (isInitialized()) {
+        const translated = t(key, params);
+        if (translated !== key) return translated;
+    }
+    return fallback.replace(/\{(\w+)\}/g, (match, p) => params[p] !== undefined ? params[p] : match);
+}
+
+// Craving tips that rotate during the timer (with fallbacks)
+function getCravingTips() {
+    return [
+        { icon: '🫁', text: tr('cravingTimer.tips.breathe', 'Atme tief ein und langsam aus. Zähle dabei bis 4.') },
+        { icon: '💪', text: tr('cravingTimer.tips.strong', 'Du bist stärker als jedes Verlangen. Du schaffst das!') },
+        { icon: '⏱️', text: tr('cravingTimer.tips.fewMinutes', 'Nur noch ein paar Minuten. Das Verlangen wird schwächer!') },
+        { icon: '🌊', text: tr('cravingTimer.tips.wave', 'Lass das Verlangen wie eine Welle über dich hinwegziehen.') },
+        { icon: '🎯', text: tr('cravingTimer.tips.goal', 'Denk an dein Ziel: Ein gesünderes, freies Leben!') },
+        { icon: '💧', text: tr('cravingTimer.tips.water', 'Trink ein großes Glas Wasser - das hilft sofort.') },
+        { icon: '🚶', text: tr('cravingTimer.tips.move', 'Bewege dich! Geh ein paar Schritte oder strecke dich.') },
+        { icon: '🧘', text: tr('cravingTimer.tips.focus', 'Konzentriere dich auf deinen Atem. Ein... Aus... Ein... Aus...') },
+        { icon: '💚', text: tr('cravingTimer.tips.healing', 'Dein Körper heilt sich gerade. Jede Sekunde zählt!') },
+        { icon: '🏆', text: tr('cravingTimer.tips.achieved', 'Du hast schon so viel geschafft. Gib jetzt nicht auf!') },
+        { icon: '⭐', text: tr('cravingTimer.tips.stronger', 'Jedes überwundene Verlangen macht dich stärker!') },
+        { icon: '🌟', text: tr('cravingTimer.tips.roleModel', 'Du bist ein Vorbild für andere. Bleib stark!') }
+    ];
+}
 
 // Breathing exercises
-const BREATHING_EXERCISES = {
-    'box': {
-        name: 'Box Breathing',
-        phases: [
-            { action: 'Einatmen', duration: 4 },
-            { action: 'Halten', duration: 4 },
-            { action: 'Ausatmen', duration: 4 },
-            { action: 'Halten', duration: 4 }
-        ],
-        cycles: 4
-    },
-    '478': {
-        name: '4-7-8 Technik',
-        phases: [
-            { action: 'Einatmen', duration: 4 },
-            { action: 'Halten', duration: 7 },
-            { action: 'Ausatmen', duration: 8 }
-        ],
-        cycles: 4
-    }
-};
+function getBreathingExercises() {
+    const inhale = tr('cravingTimer.breathing.inhale', 'Einatmen');
+    const exhale = tr('cravingTimer.breathing.exhale', 'Ausatmen');
+    const hold = tr('cravingTimer.breathing.hold', 'Halten');
+
+    return {
+        'box': {
+            name: 'Box Breathing',
+            phases: [
+                { action: inhale, duration: 4 },
+                { action: hold, duration: 4 },
+                { action: exhale, duration: 4 },
+                { action: hold, duration: 4 }
+            ],
+            cycles: 4
+        },
+        '478': {
+            name: '4-7-8 Technik',
+            phases: [
+                { action: inhale, duration: 4 },
+                { action: hold, duration: 7 },
+                { action: exhale, duration: 8 }
+            ],
+            cycles: 4
+        }
+    };
+}
 
 let timerInterval = null;
 let breathingInterval = null;
@@ -130,7 +148,8 @@ function initializeBreathingExercises() {
 }
 
 function startBreathingExercise(type) {
-    currentExercise = BREATHING_EXERCISES[type];
+    const exercises = getBreathingExercises();
+    currentExercise = exercises[type];
     if (!currentExercise) return;
 
     const optionsContainer = document.querySelector('.sos-breathing-options');
@@ -174,7 +193,9 @@ function runBreathingPhase() {
     circle.style.animationDuration = phase.duration + 's';
 
     // Update progress
-    progress.textContent = `Zyklus ${currentCycle} von ${currentExercise.cycles}`;
+    const cycleText = tr('cravingTimer.breathing.cycle', 'Zyklus {current} von {total}',
+        { current: currentCycle, total: currentExercise.cycles });
+    progress.textContent = cycleText;
 
     // Countdown timer
     let secondsLeft = phase.duration;
@@ -216,12 +237,15 @@ function runBreathingPhase() {
 }
 
 function getPhaseClass(action) {
-    switch (action) {
-        case 'Einatmen': return 'inhale';
-        case 'Ausatmen': return 'exhale';
-        case 'Halten': return 'hold';
-        default: return '';
-    }
+    // Support both German and English action names
+    const inhaleTerms = ['Einatmen', 'Breathe in', 'Inhale'];
+    const exhaleTerms = ['Ausatmen', 'Breathe out', 'Exhale'];
+    const holdTerms = ['Halten', 'Hold'];
+
+    if (inhaleTerms.includes(action)) return 'inhale';
+    if (exhaleTerms.includes(action)) return 'exhale';
+    if (holdTerms.includes(action)) return 'hold';
+    return '';
 }
 
 function showBreathingCompletion() {
@@ -232,10 +256,10 @@ function showBreathingCompletion() {
 
     exerciseRunning = false;
 
-    instruction.textContent = 'Geschafft!';
+    instruction.textContent = tr('cravingTimer.breathing.done', 'Geschafft!');
     instruction.className = 'breathing-instruction complete';
     timer.textContent = '';
-    progress.textContent = 'Übung abgeschlossen';
+    progress.textContent = tr('cravingTimer.breathing.completed', 'Übung abgeschlossen');
     circle.className = 'breathing-exercise-circle complete';
 
     // Auto-close after 2 seconds
@@ -345,16 +369,20 @@ function renderTapGame(container) {
     timeRemaining = 30;
     gameActive = true;
 
+    const pointsLabel = tr('cravingTimer.games.points', 'Punkte');
+    const timeLabel = tr('cravingTimer.games.time', 'Zeit');
+    const backLabel = tr('cravingTimer.games.back', 'Zurück');
+
     container.innerHTML = `
         <div class="inline-game tap-game">
             <div class="game-header">
-                <span class="game-score">Punkte: <strong id="tapScore">0</strong></span>
-                <span class="game-time">Zeit: <strong id="tapTime">30s</strong></span>
+                <span class="game-score">${pointsLabel}: <strong id="tapScore">0</strong></span>
+                <span class="game-time">${timeLabel}: <strong id="tapTime">30s</strong></span>
             </div>
             <div class="tap-arena" id="tapArena">
                 <div class="tap-target" id="tapTarget"></div>
             </div>
-            <button class="game-back-btn" id="gameBackBtn">Zurück</button>
+            <button class="game-back-btn" id="gameBackBtn">${backLabel}</button>
         </div>
     `;
 
@@ -418,16 +446,23 @@ function endTapGame(container) {
     if (gameTimer) clearInterval(gameTimer);
     if (targetTimer) clearTimeout(targetTimer);
 
-    let message = gameScore >= 25 ? 'Super!' : gameScore >= 15 ? 'Gut!' : 'Weiter üben!';
+    const superText = tr('cravingTimer.games.super', 'Super!');
+    const goodText = tr('cravingTimer.games.good', 'Gut!');
+    const keepPracticingText = tr('cravingTimer.games.keepPracticing', 'Weiter üben!');
+    let message = gameScore >= 25 ? superText : gameScore >= 15 ? goodText : keepPracticingText;
+
+    const pointsLabel = tr('cravingTimer.games.points', 'Punkte');
+    const playAgainLabel = tr('cravingTimer.games.playAgain', 'Nochmal');
+    const backLabel = tr('cravingTimer.games.back', 'Zurück');
 
     container.innerHTML = `
         <div class="inline-game game-result">
             <div class="result-score">${gameScore}</div>
-            <div class="result-label">Punkte</div>
+            <div class="result-label">${pointsLabel}</div>
             <p class="result-message">${message}</p>
             <div class="game-actions">
-                <button class="game-btn-primary" id="playAgainBtn">Nochmal</button>
-                <button class="game-btn-secondary" id="gameBackBtn">Zurück</button>
+                <button class="game-btn-primary" id="playAgainBtn">${playAgainLabel}</button>
+                <button class="game-btn-secondary" id="gameBackBtn">${backLabel}</button>
             </div>
         </div>
     `;
@@ -443,16 +478,21 @@ function renderBreatheGame(container) {
     gameActive = true;
     breatheGameTimeouts = []; // Clear previous timeouts
 
+    const breatheInText = tr('cravingTimer.games.breatheIn', 'Atme ein...');
+    const breatheOutText = tr('cravingTimer.games.breatheOut', 'Atme aus...');
+    const breathsLabel = tr('cravingTimer.games.breaths', 'Atemzüge');
+    const backLabel = tr('cravingTimer.games.back', 'Zurück');
+
     container.innerHTML = `
         <div class="inline-game breathe-game">
-            <p class="breathe-instruction" id="breatheInstruction">Atme ein...</p>
+            <p class="breathe-instruction" id="breatheInstruction">${breatheInText}</p>
             <div class="breathe-circle-container">
                 <div class="breathe-circle" id="breatheCircle"></div>
             </div>
             <div class="breathe-progress">
-                <span id="breatheCount">0</span> / ${totalBreaths} Atemzüge
+                <span id="breatheCount">0</span> / ${totalBreaths} ${breathsLabel}
             </div>
-            <button class="game-back-btn" id="gameBackBtn">Zurück</button>
+            <button class="game-back-btn" id="gameBackBtn">${backLabel}</button>
         </div>
     `;
 
@@ -468,14 +508,14 @@ function renderBreatheGame(container) {
         if (!gameActive) return;
 
         if (phase === 'inhale') {
-            instruction.textContent = 'Atme ein...';
+            instruction.textContent = breatheInText;
             circle.classList.add('inhale');
             circle.classList.remove('exhale');
 
             const t1 = setTimeout(() => {
                 if (!gameActive) return;
                 phase = 'exhale';
-                instruction.textContent = 'Atme aus...';
+                instruction.textContent = breatheOutText;
                 circle.classList.add('exhale');
                 circle.classList.remove('inhale');
 
@@ -504,13 +544,17 @@ function renderBreatheGame(container) {
 function endBreatheGame(container) {
     gameActive = false;
 
+    const resultMessage = tr('cravingTimer.games.breatheResult', '5 tiefe Atemzüge - gut gemacht!');
+    const playAgainLabel = tr('cravingTimer.games.playAgain', 'Nochmal');
+    const backLabel = tr('cravingTimer.games.back', 'Zurück');
+
     container.innerHTML = `
         <div class="inline-game game-result">
             <div class="result-icon">✨</div>
-            <p class="result-message">5 tiefe Atemzüge - gut gemacht!</p>
+            <p class="result-message">${resultMessage}</p>
             <div class="game-actions">
-                <button class="game-btn-primary" id="playAgainBtn">Nochmal</button>
-                <button class="game-btn-secondary" id="gameBackBtn">Zurück</button>
+                <button class="game-btn-primary" id="playAgainBtn">${playAgainLabel}</button>
+                <button class="game-btn-secondary" id="gameBackBtn">${backLabel}</button>
             </div>
         </div>
     `;
@@ -527,11 +571,15 @@ function renderMemoryGame(container) {
     let moves = 0;
     gameActive = true;
 
+    const movesLabel = tr('cravingTimer.games.moves', 'Züge');
+    const foundLabel = tr('cravingTimer.games.found', 'Gefunden');
+    const backLabel = tr('cravingTimer.games.back', 'Zurück');
+
     container.innerHTML = `
         <div class="inline-game memory-game">
             <div class="game-header">
-                <span>Züge: <strong id="memoryMoves">0</strong></span>
-                <span>Gefunden: <strong id="memoryMatched">0/6</strong></span>
+                <span>${movesLabel}: <strong id="memoryMoves">0</strong></span>
+                <span>${foundLabel}: <strong id="memoryMatched">0/6</strong></span>
             </div>
             <div class="memory-grid-inline" id="memoryGrid">
                 ${cards.map((emoji, i) => `
@@ -541,7 +589,7 @@ function renderMemoryGame(container) {
                     </div>
                 `).join('')}
             </div>
-            <button class="game-back-btn" id="gameBackBtn">Zurück</button>
+            <button class="game-back-btn" id="gameBackBtn">${backLabel}</button>
         </div>
     `;
 
@@ -589,16 +637,23 @@ function renderMemoryGame(container) {
 function endMemoryGame(container, moves) {
     gameActive = false;
 
-    let message = moves <= 10 ? 'Perfekt!' : moves <= 15 ? 'Sehr gut!' : 'Gut gemacht!';
+    const perfectText = tr('cravingTimer.games.perfect', 'Perfekt!');
+    const veryGoodText = tr('cravingTimer.games.veryGood', 'Sehr gut!');
+    const wellDoneText = tr('cravingTimer.games.wellDone', 'Gut gemacht!');
+    let message = moves <= 10 ? perfectText : moves <= 15 ? veryGoodText : wellDoneText;
+
+    const movesLabel = tr('cravingTimer.games.moves', 'Züge');
+    const playAgainLabel = tr('cravingTimer.games.playAgain', 'Nochmal');
+    const backLabel = tr('cravingTimer.games.back', 'Zurück');
 
     container.innerHTML = `
         <div class="inline-game game-result">
             <div class="result-score">${moves}</div>
-            <div class="result-label">Züge</div>
+            <div class="result-label">${movesLabel}</div>
             <p class="result-message">${message}</p>
             <div class="game-actions">
-                <button class="game-btn-primary" id="playAgainBtn">Nochmal</button>
-                <button class="game-btn-secondary" id="gameBackBtn">Zurück</button>
+                <button class="game-btn-primary" id="playAgainBtn">${playAgainLabel}</button>
+                <button class="game-btn-secondary" id="gameBackBtn">${backLabel}</button>
             </div>
         </div>
     `;
@@ -663,7 +718,8 @@ function startCravingTimer() {
 }
 
 function showRandomTip() {
-    const randomTip = cravingTips[Math.floor(Math.random() * cravingTips.length)];
+    const tips = getCravingTips();
+    const randomTip = tips[Math.floor(Math.random() * tips.length)];
     const iconElement = document.querySelector('.tip-icon-large');
     const textElement = document.getElementById('cravingTipText');
 
@@ -713,24 +769,36 @@ async function showSuccessMessage() {
     const secondsHeld = 300 - secondsRemaining;
     const minutesHeld = Math.floor(secondsHeld / 60);
     const secondsRemainder = secondsHeld % 60;
+
+    const minuteText = tr('cravingTimer.success.minute', 'Minute');
+    const minutesText = tr('cravingTimer.success.minutes', 'Minuten');
+    const secondsText = tr('cravingTimer.success.seconds', 'Sekunden');
+    const andText = tr('cravingTimer.success.and', 'und');
+
     const timeHeldText = minutesHeld > 0
-        ? `${minutesHeld} Minute${minutesHeld > 1 ? 'n' : ''}${secondsRemainder > 0 ? ` und ${secondsRemainder} Sekunden` : ''}`
-        : `${secondsHeld} Sekunden`;
+        ? `${minutesHeld} ${minutesHeld > 1 ? minutesText : minuteText}${secondsRemainder > 0 ? ` ${andText} ${secondsRemainder} ${secondsText}` : ''}`
+        : `${secondsHeld} ${secondsText}`;
+
+    const cravingCountText = tr('cravingTimer.success.cravingCount', 'Das war dein {count}. überwundenes Verlangen heute!', { count: currentCount });
+    const heldOnText = tr('cravingTimer.success.heldOn', 'Du hast <strong>{time}</strong> durchgehalten.', { time: timeHeldText });
+    const notCountedText = tr('cravingTimer.success.notCounted', 'Nicht als Verlangen gezählt.');
+    const totalSmokeFreeDaysText = tr('cravingTimer.success.totalDays', 'Gesamt rauchfrei: <strong>{days} Tage</strong>', { days: stats.days });
+    const savedText = tr('cravingTimer.success.saved', 'Gespart: <strong>{amount}€</strong>', { amount: stats.money.toFixed(2) });
 
     // Create success message with stats
     if (shouldCount) {
         successStats.innerHTML = `
-            <p><strong>Das war dein ${currentCount}. überwundenes Verlangen heute!</strong></p>
-            <p>Du hast <strong>${timeHeldText}</strong> durchgehalten.</p>
-            <p>Gesamt rauchfrei: <strong>${stats.days} Tage</strong></p>
-            <p>Gespart: <strong>${stats.money.toFixed(2)}€</strong></p>
+            <p><strong>${cravingCountText}</strong></p>
+            <p>${heldOnText}</p>
+            <p>${totalSmokeFreeDaysText}</p>
+            <p>${savedText}</p>
         `;
     } else {
         successStats.innerHTML = `
-            <p>Du hast <strong>${timeHeldText}</strong> durchgehalten.</p>
-            <p>Nicht als Verlangen gezählt.</p>
-            <p>Gesamt rauchfrei: <strong>${stats.days} Tage</strong></p>
-            <p>Gespart: <strong>${stats.money.toFixed(2)}€</strong></p>
+            <p>${heldOnText}</p>
+            <p>${notCountedText}</p>
+            <p>${totalSmokeFreeDaysText}</p>
+            <p>${savedText}</p>
         `;
     }
 
@@ -745,13 +813,16 @@ function startBreathingAnimation() {
 
     if (breathingInterval) clearInterval(breathingInterval);
 
-    breathingText.textContent = 'Einatmen';
+    const inhaleText = tr('cravingTimer.breathing.inhale', 'Einatmen');
+    const exhaleText = tr('cravingTimer.breathing.exhale', 'Ausatmen');
+
+    breathingText.textContent = inhaleText;
 
     breathingInterval = setInterval(() => {
-        if (breathingText.textContent === 'Einatmen') {
-            breathingText.textContent = 'Ausatmen';
+        if (breathingText.textContent === inhaleText) {
+            breathingText.textContent = exhaleText;
         } else {
-            breathingText.textContent = 'Einatmen';
+            breathingText.textContent = inhaleText;
         }
     }, 4000);
 }

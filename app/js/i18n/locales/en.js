@@ -175,30 +175,44 @@ export default {
         healthScore: {
             title: 'Health Score',
             subtitle: 'Weighted average of 5 recovery metrics',
-            ratingExcellent: 'Excellent!',
-            ratingVeryGood: 'Very good!',
-            ratingGood: 'Good!',
-            ratingProgress: 'Progress!',
-            ratingStarted: 'Started!',
-            messageExcellent: 'Your health has recovered excellently!',
-            messageVeryGood: 'You are making great progress!',
-            messageGood: 'Your body is steadily recovering.',
-            messageProgress: 'Recovery has begun.',
-            messageStarted: 'First positive changes are underway.',
+            rating: {
+                excellent: 'Excellent!',
+                veryGood: 'Very good!',
+                good: 'Good!',
+                progress: 'Progress!',
+                started: 'Started!'
+            },
+            message: {
+                excellent: 'Your health has recovered excellently!',
+                veryGood: 'You are making great progress!',
+                good: 'Your body is steadily recovering.',
+                progress: 'Recovery has begun.',
+                started: 'First positive changes are underway.'
+            },
             explanation: 'Weighted average of 5 recovery metrics, based on WHO, JAMA and PMC studies.',
-            viewSources: 'View sources'
-        },
-        components: {
-            cardiovascular: 'Cardiovascular',
-            cardiovascularDesc: 'Leading cause of death in smokers. 15 years to non-smoker level.',
-            lung: 'Lung function',
-            lungDesc: 'COPD, lung cancer. 10 years to full recovery.',
-            circulation: 'Circulation',
-            circulationDesc: 'Peripheral vessels. Quick recovery in 6 months.',
-            riskReduction: 'Risk reduction',
-            riskReductionDesc: 'Heart attack, stroke, cancer. Long-term protection.',
-            skin: 'Skin health',
-            skinDesc: 'Visible indicator of regeneration. 9 months.'
+            viewSources: 'View sources',
+            components: {
+                cardiovascular: {
+                    label: 'Cardiovascular',
+                    desc: 'Leading cause of death in smokers. 15 years to non-smoker level.'
+                },
+                lung: {
+                    label: 'Lung function',
+                    desc: 'COPD, lung cancer. 10 years to full recovery.'
+                },
+                circulation: {
+                    label: 'Circulation',
+                    desc: 'Peripheral vessels. Quick recovery in 6 months.'
+                },
+                risk: {
+                    label: 'Risk reduction',
+                    desc: 'Heart attack, stroke, cancer. Long-term protection.'
+                },
+                skin: {
+                    label: 'Skin health',
+                    desc: 'Visible indicator of regeneration. 9 months.'
+                }
+            }
         },
         lotus: {
             previewButton: 'Watch growth',
@@ -229,37 +243,82 @@ export default {
         },
         comparison: {
             title: 'Comparison',
-            milestone: 'Milestone',
-            averageSuccess: 'On average succeed',
-            yourStatus: 'Your status',
+            header: {
+                milestone: 'Milestone',
+                average: 'On average succeed',
+                status: 'Your status'
+            },
+            milestones: {
+                '24h': '24 hours',
+                '3d': '3 days',
+                '1w': '1 week',
+                '2w': '2 weeks',
+                '1m': '1 month',
+                '3m': '3 months',
+                '6m': '6 months',
+                '1y': '1 year'
+            },
+            ofPeople: '% of people',
             achieved: 'Achieved',
-            notYet: 'Not yet',
-            ofPeople: '{percent}% of people'
+            notYet: 'Not yet'
         },
         ageGroup: {
             title: 'Age group comparison',
-            ageGroup: '25-45',
-            exceptional: 'You are absolutely exceptional!',
-            strong: 'You are extraordinarily strong!',
-            impressive: 'Impressive achievement!',
-            great: 'Great job!',
-            goodStart: 'Strong start!',
-            topPercent: 'You are in the top {percent}%!',
-            giveUp: 'give up before',
-            fail: 'fail before',
             youAreHere: 'You are here!',
-            stayStrong: 'stay on track'
+            giveUpBefore: 'give up before',
+            failBefore: 'fail before',
+            giveUp: 'give up',
+            failWeek1: 'fail in week 1',
+            giveUp24h: 'give up in 24h',
+            stayStrong: 'stay on track',
+            '6m': {
+                title: 'You are absolutely exceptional!',
+                text: 'In the age group {ageGroup}, only <strong>1% of people</strong> manage to stay smoke-free for the first 6 months.',
+                highlight: 'You are in the top 1%!'
+            },
+            '3m': {
+                title: 'You are extraordinarily strong!',
+                text: 'In the age group {ageGroup}, only <strong>2% of people</strong> make it through the first 3 months.',
+                highlight: 'You are in the top 2%!'
+            },
+            '1m': {
+                title: 'Impressive achievement!',
+                text: 'In the age group {ageGroup}, only <strong>3% of people</strong> make it through the first month.',
+                highlight: 'You are in the top 3%!'
+            },
+            '1w': {
+                title: 'Great job!',
+                text: 'In the age group {ageGroup}, only <strong>5% of people</strong> make it through the first week.',
+                highlight: 'You are in the top 5%!'
+            },
+            start: {
+                title: 'Strong start!',
+                text: 'In the age group {ageGroup}, many try to quit, but most give up in the first few days.',
+                highlight: 'You have already taken the most important step!'
+            }
         },
         timeline: {
             title: 'Milestone Timeline',
-            daysRemaining: '{days} days remaining'
+            '1d': '1 day',
+            '3d': '3 days',
+            '1w': '1 week',
+            '2w': '2 weeks',
+            '1m': '1 month',
+            '3m': '3 months',
+            '6m': '6 months',
+            '1y': '1 year',
+            '2y': '2 years',
+            '5y': '5 years',
+            '10y': '10 years',
+            still: 'Still',
+            days: 'days'
         },
         projection: {
             title: 'Future Projection',
-            inOneMonth: 'In 1 month',
-            inThreeMonths: 'In 3 months',
-            inSixMonths: 'In 6 months',
-            inOneYear: 'In 1 year',
+            in1m: 'In 1 month',
+            in3m: 'In 3 months',
+            in6m: 'In 6 months',
+            in1y: 'In 1 year',
             saved: 'saved',
             avoided: 'avoided',
             lifeGained: 'life gained'
@@ -277,7 +336,20 @@ export default {
             needDays: 'you need {days} days',
             willSave: 'have saved {amount}',
             willAvoid: 'have avoided {count} cigarettes',
-            willGain: 'have gained {time} of life'
+            willGain: 'have gained {time} of life',
+            alerts: {
+                invalidDays: 'Please enter a valid number of days!',
+                invalidMoney: 'Please enter a valid amount!'
+            },
+            achieved: '{percent}% achieved',
+            days: 'days',
+            yourGoal: 'Your goal',
+            reachedOn: 'Reached on: {date}',
+            moneySaved: 'Money saved',
+            cigarettesAvoided: 'Cigarettes avoided',
+            lifeGained: 'Life gained',
+            savingsGoal: 'Your savings goal',
+            timeNeeded: 'Time needed'
         }
     },
 
@@ -346,6 +418,61 @@ export default {
             total: 'Total: {count} cravings in the last 30 days',
             less: 'Less',
             more: 'More'
+        }
+    },
+
+    // Craving Timer (inline game/breathing translations)
+    cravingTimer: {
+        tips: {
+            breathe: 'Breathe in deeply and exhale slowly. Count to 4.',
+            strong: 'You are stronger than any craving. You can do this!',
+            fewMinutes: 'Just a few more minutes. The craving is getting weaker!',
+            wave: 'Let the craving wash over you like a wave.',
+            goal: 'Think of your goal: A healthier, free life!',
+            water: 'Drink a large glass of water - it helps immediately.',
+            move: 'Move! Take a few steps or stretch.',
+            focus: 'Focus on your breath. In... Out... In... Out...',
+            healing: 'Your body is healing right now. Every second counts!',
+            achieved: 'You have already achieved so much. Don\'t give up now!',
+            stronger: 'Every craving you overcome makes you stronger!',
+            roleModel: 'You are a role model for others. Stay strong!'
+        },
+        breathing: {
+            inhale: 'Breathe in',
+            exhale: 'Breathe out',
+            hold: 'Hold',
+            cycle: 'Cycle {current} of {total}',
+            done: 'Done!',
+            completed: 'Exercise completed'
+        },
+        games: {
+            points: 'Points',
+            time: 'Time',
+            back: 'Back',
+            playAgain: 'Play again',
+            super: 'Super!',
+            good: 'Good!',
+            keepPracticing: 'Keep practicing!',
+            breatheIn: 'Breathe in...',
+            breatheOut: 'Breathe out...',
+            breaths: 'breaths',
+            breatheResult: '5 deep breaths - well done!',
+            moves: 'Moves',
+            found: 'Found',
+            perfect: 'Perfect!',
+            veryGood: 'Very good!',
+            wellDone: 'Well done!'
+        },
+        success: {
+            minute: 'minute',
+            minutes: 'minutes',
+            seconds: 'seconds',
+            and: 'and',
+            cravingCount: 'That was your {count}. craving overcome today!',
+            heldOn: 'You held on for <strong>{time}</strong>.',
+            notCounted: 'Not counted as craving.',
+            totalDays: 'Total smoke-free: <strong>{days} days</strong>',
+            saved: 'Saved: <strong>{amount}€</strong>'
         }
     },
 
@@ -867,6 +994,80 @@ export default {
             sources: 'Sources',
             github: 'GitHub'
         }
+    },
+
+    // Notifications
+    notifications: {
+        enableNotifications: 'Enable notifications',
+        alerts: {
+            notSupported: 'Your browser does not support push notifications.',
+            blocked: 'You have blocked notifications. Please enable them in your browser settings.'
+        },
+        milestoneReached: 'Milestone reached!',
+        dailyMotivation: 'Daily motivation',
+        motivation: {
+            success: 'Every smoke-free day is a success!',
+            stronger: 'You are stronger than your craving!',
+            health: 'Your health thanks you!',
+            easier: 'Keep going - it gets easier every day!',
+            future: 'You are investing in your future!',
+            proud: 'Proud of you - keep it up!',
+            lungs: 'Your lungs are regenerating more every day!',
+            roleModel: 'You are a role model for others!',
+            freedom: 'Freedom instead of addiction - you can do it!'
+        },
+        testSuccess: 'Notifications are working!'
+    },
+
+    // Mini Games
+    miniGames: {
+        title: 'Distraction Games',
+        intro: 'Distract yourself for a few minutes!',
+        tap: {
+            description: 'Tap the targets!',
+            fullDesc: 'Tap the targets as fast as you can!',
+            hint: 'Tap the circles!'
+        },
+        breathe: {
+            title: 'Breath Trainer',
+            desc: 'Follow the rhythm and breathe deeply.',
+            instruction: 'Breathe in...',
+            breaths: 'breaths',
+            relaxed: 'Relaxed!',
+            feelBetter: 'You took 5 deep breaths. Feel better?'
+        },
+        memory: {
+            description: 'Find the pairs!',
+            fullDesc: 'Find the matching pairs!',
+            moves: 'Moves',
+            found: 'Found'
+        },
+        labels: {
+            points: 'Points',
+            time: 'Time'
+        },
+        results: {
+            incredible: 'Incredible! You are a pro!',
+            veryGood: 'Very well done!',
+            goodWork: 'Good work!',
+            keepPracticing: 'Keep practicing!',
+            perfect: 'Perfect! Amazing memory!',
+            practiceMoreMemory: 'Practice makes perfect!'
+        },
+        done: 'Done!',
+        playAgain: 'Play again',
+        otherGames: 'Other games'
+    },
+
+    // Weekly Summary
+    weeklySummary: {
+        title: 'Your weekly summary',
+        saved: 'saved',
+        avoided: 'Cigarettes avoided',
+        cravingsOvercome: 'Cravings overcome',
+        totalDays: 'Days smoke-free total',
+        message: 'Keep going - you are doing great!',
+        button: 'Got it!'
     },
 
     // Days of week (short)

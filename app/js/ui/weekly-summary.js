@@ -4,6 +4,16 @@
  */
 
 import { calculateStats } from '../utils/calculations.js';
+import { t, isInitialized } from '../i18n/i18n.js';
+
+// Helper for translation with fallback
+function tr(key, fallback, params = {}) {
+    if (isInitialized()) {
+        const translated = t(key, params);
+        if (translated !== key) return translated;
+    }
+    return fallback.replace(/\{(\w+)\}/g, (match, p) => params[p] !== undefined ? params[p] : match);
+}
 
 const STORAGE_KEY = 'weekly_summary_last_shown';
 
@@ -61,40 +71,49 @@ function showWeeklySummary() {
     // Get craving count from last week (from localStorage if available)
     const lastWeekCravings = getLastWeekCravings();
 
+    // Translations
+    const titleText = tr('weeklySummary.title', 'Dein Wochenrückblick');
+    const savedText = tr('weeklySummary.saved', 'gespart');
+    const avoidedText = tr('weeklySummary.avoided', 'Zigaretten vermieden');
+    const cravingsText = tr('weeklySummary.cravingsOvercome', 'Cravings überwunden');
+    const totalDaysText = tr('weeklySummary.totalDays', 'Tage rauchfrei insgesamt');
+    const messageText = tr('weeklySummary.message', 'Weiter so - du machst das großartig!');
+    const buttonText = tr('weeklySummary.button', 'Alles klar!');
+
     const modal = document.createElement('div');
     modal.className = 'weekly-summary-overlay';
     modal.innerHTML = `
         <div class="weekly-summary-modal">
             <div class="weekly-summary-header">
                 <span class="weekly-summary-icon">📊</span>
-                <h2>Dein Wochenrückblick</h2>
+                <h2>${titleText}</h2>
             </div>
             <div class="weekly-summary-content">
                 <div class="weekly-stat">
                     <span class="weekly-stat-icon">💰</span>
                     <span class="weekly-stat-value">${weekMoney}€</span>
-                    <span class="weekly-stat-label">gespart</span>
+                    <span class="weekly-stat-label">${savedText}</span>
                 </div>
                 <div class="weekly-stat">
                     <span class="weekly-stat-icon">🚭</span>
                     <span class="weekly-stat-value">${weekCigarettes}</span>
-                    <span class="weekly-stat-label">Zigaretten vermieden</span>
+                    <span class="weekly-stat-label">${avoidedText}</span>
                 </div>
                 ${lastWeekCravings > 0 ? `
                 <div class="weekly-stat">
                     <span class="weekly-stat-icon">💪</span>
                     <span class="weekly-stat-value">${lastWeekCravings}</span>
-                    <span class="weekly-stat-label">Cravings überwunden</span>
+                    <span class="weekly-stat-label">${cravingsText}</span>
                 </div>
                 ` : ''}
                 <div class="weekly-stat highlight">
                     <span class="weekly-stat-icon">📅</span>
                     <span class="weekly-stat-value">${daysSmokeFree}</span>
-                    <span class="weekly-stat-label">Tage rauchfrei insgesamt</span>
+                    <span class="weekly-stat-label">${totalDaysText}</span>
                 </div>
             </div>
-            <p class="weekly-summary-message">Weiter so - du machst das großartig!</p>
-            <button class="weekly-summary-close">Alles klar!</button>
+            <p class="weekly-summary-message">${messageText}</p>
+            <button class="weekly-summary-close">${buttonText}</button>
         </div>
     `;
 

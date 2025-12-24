@@ -1,5 +1,15 @@
 import { userData } from '../config.js';
 import { calculateStats } from '../utils/calculations.js';
+import { t, isInitialized, getLocale } from '../i18n/i18n.js';
+
+// Helper for translation with fallback
+function tr(key, fallback, params = {}) {
+    if (isInitialized()) {
+        const translated = t(key, params);
+        if (translated !== key) return translated;
+    }
+    return fallback.replace(/\{(\w+)\}/g, (match, p) => params[p] !== undefined ? params[p] : match);
+}
 
 let currentMode = 'days'; // 'days' or 'money'
 
@@ -63,7 +73,7 @@ function calculateGoal() {
         const targetDays = parseFloat(daysInput.value);
 
         if (!targetDays || targetDays <= 0) {
-            alert('Bitte gib eine gültige Anzahl an Tagen ein!');
+            alert(tr('statistics.goalCalculator.alerts.invalidDays', 'Bitte gib eine gültige Anzahl an Tagen ein!'));
             return;
         }
 
@@ -95,7 +105,7 @@ function calculateGoal() {
         const targetMoney = parseFloat(moneyInput.value);
 
         if (!targetMoney || targetMoney <= 0) {
-            alert('Bitte gib einen gültigen Geldbetrag ein!');
+            alert(tr('statistics.goalCalculator.alerts.invalidMoney', 'Bitte gib einen gültigen Geldbetrag ein!'));
             return;
         }
 
@@ -137,11 +147,26 @@ function displayGoalResults(data) {
 
     // Update progress bar
     progressFill.style.width = `${data.progress}%`;
-    progressText.textContent = `${data.progress.toFixed(1)}% erreicht`;
+    const achievedText = tr('statistics.goalCalculator.achieved', '{percent}% erreicht', { percent: data.progress.toFixed(1) });
+    progressText.textContent = achievedText;
 
-    // Format target date
+    // Format target date using locale
+    const locale = isInitialized() ? getLocale() : 'de';
     const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-    const formattedDate = data.targetDate.toLocaleDateString('de-DE', dateOptions);
+    const formattedDate = data.targetDate.toLocaleDateString(locale === 'en' ? 'en-US' : 'de-DE', dateOptions);
+
+    // Translations
+    const daysLabel = tr('statistics.goalCalculator.days', 'Tage');
+    const yourGoalLabel = tr('statistics.goalCalculator.yourGoal', 'Dein Ziel');
+    const reachedOnLabel = tr('statistics.goalCalculator.reachedOn', 'Erreicht am: {date}', { date: formattedDate });
+    const moneySavedLabel = tr('statistics.goalCalculator.moneySaved', 'Geld gespart');
+    const cigarettesAvoidedLabel = tr('statistics.goalCalculator.cigarettesAvoided', 'Zigaretten vermieden');
+    const lifeGainedLabel = tr('statistics.goalCalculator.lifeGained', 'Leben gewonnen');
+    const savingsGoalLabel = tr('statistics.goalCalculator.savingsGoal', 'Dein Sparziel');
+    const timeNeededLabel = tr('statistics.goalCalculator.timeNeeded', 'Benötigte Zeit');
+
+    // Number formatting based on locale
+    const numberLocale = locale === 'en' ? 'en-US' : 'de-DE';
 
     // Build stats grid
     let statsHTML = '';
@@ -150,24 +175,24 @@ function displayGoalResults(data) {
         statsHTML = `
             <div class="goal-stat-box">
                 <div class="goal-stat-icon">📅</div>
-                <div class="goal-stat-value">${Math.floor(data.targetDays)} Tage</div>
-                <div class="goal-stat-label">Dein Ziel</div>
-                <div class="goal-stat-date">Erreicht am: ${formattedDate}</div>
+                <div class="goal-stat-value">${Math.floor(data.targetDays)} ${daysLabel}</div>
+                <div class="goal-stat-label">${yourGoalLabel}</div>
+                <div class="goal-stat-date">${reachedOnLabel}</div>
             </div>
             <div class="goal-stat-box">
                 <div class="goal-stat-icon">💰</div>
                 <div class="goal-stat-value">${data.money.toFixed(2)}€</div>
-                <div class="goal-stat-label">Geld gespart</div>
+                <div class="goal-stat-label">${moneySavedLabel}</div>
             </div>
             <div class="goal-stat-box">
                 <div class="goal-stat-icon">🚬</div>
-                <div class="goal-stat-value">${data.cigarettes.toLocaleString('de-DE')}</div>
-                <div class="goal-stat-label">Zigaretten vermieden</div>
+                <div class="goal-stat-value">${data.cigarettes.toLocaleString(numberLocale)}</div>
+                <div class="goal-stat-label">${cigarettesAvoidedLabel}</div>
             </div>
             <div class="goal-stat-box">
                 <div class="goal-stat-icon">⏳</div>
-                <div class="goal-stat-value">${data.lifeDays.toFixed(1)} Tage</div>
-                <div class="goal-stat-label">Leben gewonnen</div>
+                <div class="goal-stat-value">${data.lifeDays.toFixed(1)} ${daysLabel}</div>
+                <div class="goal-stat-label">${lifeGainedLabel}</div>
             </div>
         `;
     } else {
@@ -175,23 +200,23 @@ function displayGoalResults(data) {
             <div class="goal-stat-box">
                 <div class="goal-stat-icon">💰</div>
                 <div class="goal-stat-value">${data.targetMoney.toFixed(2)}€</div>
-                <div class="goal-stat-label">Dein Sparziel</div>
+                <div class="goal-stat-label">${savingsGoalLabel}</div>
             </div>
             <div class="goal-stat-box">
                 <div class="goal-stat-icon">📅</div>
-                <div class="goal-stat-value">${Math.ceil(data.daysNeeded)} Tage</div>
-                <div class="goal-stat-label">Benötigte Zeit</div>
-                <div class="goal-stat-date">Erreicht am: ${formattedDate}</div>
+                <div class="goal-stat-value">${Math.ceil(data.daysNeeded)} ${daysLabel}</div>
+                <div class="goal-stat-label">${timeNeededLabel}</div>
+                <div class="goal-stat-date">${reachedOnLabel}</div>
             </div>
             <div class="goal-stat-box">
                 <div class="goal-stat-icon">🚬</div>
-                <div class="goal-stat-value">${data.cigarettes.toLocaleString('de-DE')}</div>
-                <div class="goal-stat-label">Zigaretten vermieden</div>
+                <div class="goal-stat-value">${data.cigarettes.toLocaleString(numberLocale)}</div>
+                <div class="goal-stat-label">${cigarettesAvoidedLabel}</div>
             </div>
             <div class="goal-stat-box">
                 <div class="goal-stat-icon">⏳</div>
-                <div class="goal-stat-value">${data.lifeDays.toFixed(1)} Tage</div>
-                <div class="goal-stat-label">Leben gewonnen</div>
+                <div class="goal-stat-value">${data.lifeDays.toFixed(1)} ${daysLabel}</div>
+                <div class="goal-stat-label">${lifeGainedLabel}</div>
             </div>
         `;
     }

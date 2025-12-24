@@ -5,6 +5,16 @@
 
 import { auth, db, isDemoMode, blockDemoWrite, checkWriteLimit, incrementWriteCount } from '../firebase-auth.js';
 import { doc, getDoc, updateDoc } from '../firebase-init.js';
+import { t, isInitialized } from '../i18n/i18n.js';
+
+// Helper for translation with fallback
+function tr(key, fallback, params = {}) {
+    if (isInitialized()) {
+        const translated = t(key, params);
+        if (translated !== key) return translated;
+    }
+    return fallback.replace(/\{(\w+)\}/g, (match, p) => params[p] !== undefined ? params[p] : match);
+}
 
 // Notification state
 let notificationSettings = {
@@ -88,7 +98,7 @@ async function saveNotificationSettings() {
     if (!user) return;
 
     // Block write in demo mode
-    if (blockDemoWrite('Benachrichtigungen aktivieren')) {
+    if (blockDemoWrite(tr('notifications.enableNotifications', 'Benachrichtigungen aktivieren'))) {
         return;
     }
 
@@ -173,7 +183,7 @@ function setupNotificationToggles() {
  */
 async function requestNotificationPermission() {
     if (!('Notification' in window)) {
-        alert('Dein Browser unterstützt keine Push-Benachrichtigungen.');
+        alert(tr('notifications.alerts.notSupported', 'Dein Browser unterstützt keine Push-Benachrichtigungen.'));
         return false;
     }
 
@@ -182,7 +192,7 @@ async function requestNotificationPermission() {
     }
 
     if (Notification.permission === 'denied') {
-        alert('Du hast Benachrichtigungen blockiert. Bitte aktiviere sie in deinen Browser-Einstellungen.');
+        alert(tr('notifications.alerts.blocked', 'Du hast Benachrichtigungen blockiert. Bitte aktiviere sie in deinen Browser-Einstellungen.'));
         return false;
     }
 
@@ -260,7 +270,8 @@ export async function checkMilestoneNotifications(currentMilestone) {
         // Check if this is a new milestone
         if (currentMilestone && currentMilestone.id > lastMilestone) {
             // Send notification
-            new Notification('🎉 Meilenstein erreicht!', {
+            const milestoneTitle = tr('notifications.milestoneReached', 'Meilenstein erreicht!');
+            new Notification(`🎉 ${milestoneTitle}`, {
                 body: `${currentMilestone.title}\n${currentMilestone.description}`,
                 icon: './icon.png',
                 badge: './icon.png',
@@ -346,20 +357,21 @@ async function sendDailyMotivation() {
     if (isDemoMode()) return;
 
     const motivations = [
-        'Jeder rauchfreie Tag ist ein Erfolg!',
-        'Du bist stärker als dein Verlangen!',
-        'Deine Gesundheit dankt es dir!',
-        'Bleib dran - es wird jeden Tag leichter!',
-        'Du investierst in deine Zukunft!',
-        'Stolz auf dich - weiter so!',
-        'Deine Lunge regeneriert sich jeden Tag mehr!',
-        'Du bist ein Vorbild für andere!',
-        'Freiheit statt Abhängigkeit - du schaffst das!'
+        tr('notifications.motivation.success', 'Jeder rauchfreie Tag ist ein Erfolg!'),
+        tr('notifications.motivation.stronger', 'Du bist stärker als dein Verlangen!'),
+        tr('notifications.motivation.health', 'Deine Gesundheit dankt es dir!'),
+        tr('notifications.motivation.easier', 'Bleib dran - es wird jeden Tag leichter!'),
+        tr('notifications.motivation.future', 'Du investierst in deine Zukunft!'),
+        tr('notifications.motivation.proud', 'Stolz auf dich - weiter so!'),
+        tr('notifications.motivation.lungs', 'Deine Lunge regeneriert sich jeden Tag mehr!'),
+        tr('notifications.motivation.roleModel', 'Du bist ein Vorbild für andere!'),
+        tr('notifications.motivation.freedom', 'Freiheit statt Abhängigkeit - du schaffst das!')
     ];
 
     const randomMotivation = motivations[Math.floor(Math.random() * motivations.length)];
+    const dailyTitle = tr('notifications.dailyMotivation', 'Tägliche Motivation');
 
-    new Notification('💪 Tägliche Motivation', {
+    new Notification(`💪 ${dailyTitle}`, {
         body: randomMotivation,
         icon: './icon.png',
         badge: './icon.png',
@@ -400,8 +412,9 @@ export function sendTestNotification() {
         return;
     }
 
+    const testBody = tr('notifications.testSuccess', 'Benachrichtigungen funktionieren!');
     new Notification('🎉 ByeByeSmoke', {
-        body: 'Benachrichtigungen funktionieren!',
+        body: testBody,
         icon: './icon.png',
         badge: './icon.png',
         tag: 'test-notification'
