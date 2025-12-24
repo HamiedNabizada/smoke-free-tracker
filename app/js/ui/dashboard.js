@@ -189,11 +189,11 @@ export function updateNextMilestoneProgress(stats) {
 
     // Get milestone text from translations (using ID)
     const milestoneId = nextMilestone.id || nextMilestone.title.toLowerCase().replace(/\s+/g, '_');
-    const milestoneTitle = t(`milestones.${milestoneId}.title`) !== `milestones.${milestoneId}.title`
-        ? t(`milestones.${milestoneId}.title`)
+    const milestoneTitle = t(`milestonesData.${milestoneId}.title`) !== `milestonesData.${milestoneId}.title`
+        ? t(`milestonesData.${milestoneId}.title`)
         : nextMilestone.title;
-    const milestoneDesc = t(`milestones.${milestoneId}.description`) !== `milestones.${milestoneId}.description`
-        ? t(`milestones.${milestoneId}.description`)
+    const milestoneDesc = t(`milestonesData.${milestoneId}.description`) !== `milestonesData.${milestoneId}.description`
+        ? t(`milestonesData.${milestoneId}.description`)
         : nextMilestone.description;
 
     container.innerHTML = `

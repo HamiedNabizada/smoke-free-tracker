@@ -1149,8 +1149,8 @@ export default {
         tryDemo: 'Try demo'
     },
 
-    // Milestones data
-    milestones: {
+    // Milestones data (translations for milestone items)
+    milestonesData: {
         '20min': {
             title: '20 Minutes',
             description: 'Heart rate and blood pressure normalize',

@@ -5,8 +5,8 @@ import { t, isInitialized } from '../i18n/i18n.js';
 // Get milestone text with i18n fallback
 function getMilestoneText(milestone, field) {
     if (isInitialized()) {
-        const translated = t(`milestones.${milestone.id}.${field}`);
-        if (translated !== `milestones.${milestone.id}.${field}`) {
+        const translated = t(`milestonesData.${milestone.id}.${field}`);
+        if (translated !== `milestonesData.${milestone.id}.${field}`) {
             return translated;
         }
     }

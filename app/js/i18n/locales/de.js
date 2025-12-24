@@ -1292,7 +1292,7 @@ export default {
     },
 
     // Milestones data
-    milestones: {
+    milestonesData: {
         '20min': {
             title: '20 Minuten',
             description: 'Herzfrequenz und Blutdruck normalisieren sich',
