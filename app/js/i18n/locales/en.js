@@ -113,6 +113,15 @@ export default {
             title: 'Your body is recovering',
             subtitle: 'Watch your body heal in real-time!'
         },
+        // Health Avatar section (HTML data-i18n keys)
+        healthAvatar: {
+            title: '🫁 Your body is recovering',
+            subtitle: 'Watch your body heal in real-time!',
+            lungs: 'Lungs',
+            heart: 'Heart',
+            blood: 'Circulation',
+            skin: 'Skin'
+        },
         progress: {
             title: 'Your Progress',
             days: 'Days',
@@ -120,10 +129,15 @@ export default {
             cigarettes: 'Cigarettes',
             goalDays: 'Goal: {count} days',
             goalMoney: 'Goal: {amount}€',
-            goalCigarettes: 'Goal: {count}'
+            goalCigarettes: 'Goal: {count}',
+            // Gauge titles (HTML data-i18n keys)
+            daysSmokeFree: 'Days smoke-free',
+            moneySaved: 'Money saved',
+            cigarettesAvoided: 'Cigarettes avoided'
         },
         stats: {
             daysSmokeFree: 'Time smoke-free',
+            daysSmokeFreeInfo: 'Since you quit',
             sinceStopped: 'Since you quit',
             moneySaved: 'Money saved',
             basedOn: 'Based on {cigs} cigs/day at {price}',
@@ -132,6 +146,7 @@ export default {
             lifeGained: 'Life gained',
             lifeGainedInfo: '17-22 min per cigarette (Jackson 2025)',
             toxinsAvoided: 'Toxins avoided',
+            toxinsAvoidedInfo: 'Nicotine, tar & more',
             toxinsInfo: 'Nicotine, tar & more',
             lungHealth: 'Lung health',
             lungHealthInfo: 'Recovery over 10 years',
@@ -140,16 +155,22 @@ export default {
             co2Avoided: 'CO₂ avoided',
             co2Info: '~14g CO₂ per cigarette',
             skinImprovement: 'Skin improvement',
+            skinImprovementInfo: 'Significant improvement from 6 months (Milan study)',
             skinInfo: 'Significant improvement from 6 months'
         },
         environment: {
-            title: 'Your environmental impact',
-            waterSaved: 'Liters of water saved',
+            title: '🌱 Your environmental impact',
+            // Keys for HTML data-i18n
+            water: 'Liters of water saved',
             waterInfo: 'Cigarette production uses ~3.7L per cigarette',
+            trees: 'Trees protected',
+            treesInfo: '~1 tree is needed for drying per 300 cigarettes',
+            co2: 'CO₂ avoided',
+            co2Info: '~14g CO₂ per cigarette (production + transport)',
+            // Legacy keys
+            waterSaved: 'Liters of water saved',
             treesProtected: 'Trees protected',
-            treesInfo: '~1 tree is needed per 300 cigarettes',
-            co2Avoided: 'CO₂ avoided',
-            co2Info: '~14g CO₂ per cigarette'
+            co2Avoided: 'CO₂ avoided'
         },
         streak: {
             title: 'App streak',

@@ -114,6 +114,15 @@ export default {
             title: 'Dein Körper erholt sich',
             subtitle: 'Sieh live, wie sich dein Körper regeneriert!'
         },
+        // Health Avatar section (HTML data-i18n keys)
+        healthAvatar: {
+            title: '🫁 Dein Körper erholt sich',
+            subtitle: 'Sieh live, wie sich dein Körper regeneriert!',
+            lungs: 'Lungen',
+            heart: 'Herz',
+            blood: 'Blutkreislauf',
+            skin: 'Haut'
+        },
         progress: {
             title: 'Dein Fortschritt',
             days: 'Tage',
@@ -121,10 +130,15 @@ export default {
             cigarettes: 'Zigaretten',
             goalDays: 'Ziel: {count} Tage',
             goalMoney: 'Ziel: {amount}€',
-            goalCigarettes: 'Ziel: {count}'
+            goalCigarettes: 'Ziel: {count}',
+            // Gauge titles (HTML data-i18n keys)
+            daysSmokeFree: 'Tage rauchfrei',
+            moneySaved: 'Geld gespart',
+            cigarettesAvoided: 'Zigaretten vermieden'
         },
         stats: {
             daysSmokeFree: 'Zeit rauchfrei',
+            daysSmokeFreeInfo: 'Seit deinem Rauchstopp',
             sinceStopped: 'Seit deinem Rauchstopp',
             moneySaved: 'Geld gespart',
             basedOn: 'Basierend auf {cigs} Zig./Tag à {price}',
@@ -133,6 +147,7 @@ export default {
             lifeGained: 'Lebenszeit gewonnen',
             lifeGainedInfo: '17-22 Min pro Zigarette (Jackson 2025)',
             toxinsAvoided: 'Schadstoffe vermieden',
+            toxinsAvoidedInfo: 'Nikotin, Teer & Co.',
             toxinsInfo: 'Nikotin, Teer & Co.',
             lungHealth: 'Lungengesundheit',
             lungHealthInfo: 'Regeneration über 10 Jahre',
@@ -141,16 +156,22 @@ export default {
             co2Avoided: 'CO₂ vermieden',
             co2Info: '~14g CO₂ pro Zigarette',
             skinImprovement: 'Hautverbesserung',
+            skinImprovementInfo: 'Signifikante Verbesserung ab 6 Monaten (Mailänder Studie)',
             skinInfo: 'Signifikante Verbesserung ab 6 Monaten'
         },
         environment: {
-            title: 'Dein Beitrag für die Umwelt',
-            waterSaved: 'Liter Wasser gespart',
+            title: '🌱 Dein Beitrag für die Umwelt',
+            // Keys for HTML data-i18n
+            water: 'Liter Wasser gespart',
             waterInfo: 'Zigarettenproduktion verbraucht ~3.7L pro Zigarette',
+            trees: 'Bäume geschützt',
+            treesInfo: 'Pro 300 Zigaretten wird ~1 Baum für Trocknung benötigt',
+            co2: 'CO₂ vermieden',
+            co2Info: '~14g CO₂ pro Zigarette (Produktion + Transport)',
+            // Legacy keys
+            waterSaved: 'Liter Wasser gespart',
             treesProtected: 'Bäume geschützt',
-            treesInfo: 'Pro 300 Zigaretten wird ~1 Baum benötigt',
-            co2Avoided: 'CO₂ vermieden',
-            co2Info: '~14g CO₂ pro Zigarette'
+            co2Avoided: 'CO₂ vermieden'
         },
         streak: {
             title: 'App-Streak',
