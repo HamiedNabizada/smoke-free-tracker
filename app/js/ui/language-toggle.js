@@ -1,48 +1,49 @@
 /**
  * Language Toggle functionality
  *
- * Toggles between supported languages (de/en)
+ * Language selection in Settings modal
  * Stores preference in localStorage
  */
 
-import { getLocale, setLocale, getSupportedLocales } from '../i18n/i18n.js';
-
-// Flag emojis for each locale
-const FLAGS = {
-    de: '🇩🇪',
-    en: '🇬🇧'
-};
+import { getLocale } from '../i18n/i18n.js';
 
 /**
- * Initialize language toggle button
+ * Initialize language buttons in settings
  */
 export function initializeLanguageToggle() {
-    const languageToggle = document.getElementById('languageToggle');
-    if (!languageToggle) return;
+    const langDe = document.getElementById('langDe');
+    const langEn = document.getElementById('langEn');
+
+    if (!langDe || !langEn) return;
 
     const currentLocale = getLocale();
-    languageToggle.textContent = FLAGS[currentLocale] || FLAGS.de;
-    languageToggle.setAttribute('aria-label', getAriaLabel(currentLocale));
 
-    languageToggle.addEventListener('click', async () => {
-        const locales = getSupportedLocales();
-        const currentIndex = locales.indexOf(getLocale());
-        const nextIndex = (currentIndex + 1) % locales.length;
-        const nextLocale = locales[nextIndex];
+    // Mark current language as active
+    updateActiveButton(currentLocale);
 
-        // Save locale and reload to ensure all dynamic content is updated
-        localStorage.setItem('locale', nextLocale);
-        window.location.reload();
-    });
+    // Add click handlers
+    langDe.addEventListener('click', () => switchLanguage('de'));
+    langEn.addEventListener('click', () => switchLanguage('en'));
 }
 
 /**
- * Get aria-label for current language
+ * Switch language and reload
  */
-function getAriaLabel(locale) {
-    const labels = {
-        de: 'Sprache wechseln (aktuell: Deutsch)',
-        en: 'Change language (current: English)'
-    };
-    return labels[locale] || labels.de;
+function switchLanguage(locale) {
+    const currentLocale = getLocale();
+    if (locale === currentLocale) return;
+
+    localStorage.setItem('locale', locale);
+    window.location.reload();
+}
+
+/**
+ * Update active button styling
+ */
+function updateActiveButton(locale) {
+    const langDe = document.getElementById('langDe');
+    const langEn = document.getElementById('langEn');
+
+    if (langDe) langDe.classList.toggle('active', locale === 'de');
+    if (langEn) langEn.classList.toggle('active', locale === 'en');
 }

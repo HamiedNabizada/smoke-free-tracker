@@ -35,6 +35,7 @@ export default {
     header: {
         skipToContent: 'Skip to content',
         language: 'Change language',
+        share: 'Share',
         darkMode: 'Toggle dark mode',
         tutorial: 'Help & Guide',
         settings: 'Settings',
@@ -779,6 +780,10 @@ export default {
     settings: {
         title: '⚙️ Settings',
         close: 'Close settings',
+        // Language section (HTML data-i18n keys)
+        language: {
+            title: '🌐 Language'
+        },
         // Account section (HTML data-i18n keys)
         account: {
             title: 'Account',
@@ -878,14 +883,32 @@ export default {
 
     // Share
     share: {
-        title: 'My smoke-free success',
+        title: '📤 Share Success',
+        close: 'Close',
         successText: '🎉 I have been smoke-free for {days} days!\n\n💰 Saved: {money}€\n🚭 Cigarettes avoided: {cigarettes}\n❤️ Life gained: {hours} hours\n\n#smokefree #byebyesmoke',
         copiedToClipboard: '📋 Text copied to clipboard!\n\nYou can now paste it in WhatsApp, Facebook, or wherever you like.',
         modalTitle: 'Share your success',
         creatingImage: 'Creating image...',
         imageText: '🎉 Check out my progress! #smokefree #byebyesmoke',
         imageError: 'Error creating image: {message}',
-        imageDownloaded: '📸 Your success image has been downloaded!\n\nYou can now share it on Instagram, WhatsApp, Facebook, or wherever you like.'
+        imageDownloaded: '📸 Your success image has been downloaded!\n\nYou can now share it on Instagram, WhatsApp, Facebook, or wherever you like.',
+        // Share modal buttons
+        shareSuccess: {
+            title: 'Share success',
+            description: 'Share your smoke-free time with others'
+        },
+        badge: {
+            title: 'Create success badge',
+            description: 'Create a badge with your statistics'
+        },
+        shareImage: {
+            title: 'Share as image',
+            description: 'Create an image for Instagram, WhatsApp & more'
+        },
+        pdf: {
+            title: 'Create PDF report',
+            description: 'Export your statistics as a PDF document'
+        }
     },
 
     // Badge

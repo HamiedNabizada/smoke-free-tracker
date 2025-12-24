@@ -32,7 +32,7 @@
                 <img src="logo_small.png" alt="ByeByeSmoke Logo" class="logo-image" width="400" height="150">
             </div>
             <div class="header-buttons">
-                <button id="languageToggle" class="language-toggle" data-i18n-aria="header.language" aria-label="Sprache wechseln">🇩🇪</button>
+                <button id="shareBtn" class="share-btn-header" data-i18n-aria="header.share" aria-label="Teilen">📤</button>
                 <button id="darkModeToggle" class="dark-mode-toggle" data-i18n-aria="header.darkMode" aria-label="Dark Mode umschalten">🌙</button>
                 <button id="tutorialBtn" class="tutorial-btn" data-i18n-aria="header.tutorial" aria-label="Hilfe & Anleitung">ℹ️</button>
                 <button id="settingsBtn" class="settings-btn" data-i18n-aria="header.settings" aria-label="Einstellungen">⚙️</button>
@@ -807,6 +807,14 @@
             </div>
 
             <div class="settings-section">
+                <h3 data-i18n="settings.language.title">🌐 Sprache</h3>
+                <div class="language-selector">
+                    <button id="langDe" class="lang-btn" data-lang="de">🇩🇪 Deutsch</button>
+                    <button id="langEn" class="lang-btn" data-lang="en">🇬🇧 English</button>
+                </div>
+            </div>
+
+            <div class="settings-section">
                 <h3 data-i18n="settings.data.title">📊 Meine Daten bearbeiten</h3>
                 <form id="settingsDataForm">
                     <div class="form-group">
@@ -874,8 +882,8 @@
             </div>
 
             <div class="settings-section">
-                <h3 data-i18n="settings.export.title">📦 Deine Daten</h3>
-                <p class="settings-description" data-i18n="settings.export.description">Exportiere deine Daten oder teile deine Erfolge.</p>
+                <h3 data-i18n="settings.export.title">📦 Daten-Backup</h3>
+                <p class="settings-description" data-i18n="settings.export.description">Sichere deine Daten lokal.</p>
 
                 <div class="data-actions">
                     <button id="exportDataBtn" class="data-action-btn export-btn">
@@ -885,38 +893,6 @@
                             <div class="btn-description" data-i18n="settings.export.exportData.description">Lade alle deine Daten als JSON-Datei herunter</div>
                         </div>
                     </button>
-
-                    <button id="shareSuccessBtn" class="data-action-btn share-btn">
-                        <span class="btn-icon">📤</span>
-                        <div class="btn-content">
-                            <div class="btn-title" data-i18n="settings.export.shareSuccess.title">Erfolg teilen</div>
-                            <div class="btn-description" data-i18n="settings.export.shareSuccess.description">Teile deine rauchfreie Zeit mit anderen</div>
-                        </div>
-                    </button>
-
-                    <button id="generateBadgeBtn" class="data-action-btn badge-btn">
-                        <span class="btn-icon">🏆</span>
-                        <div class="btn-content">
-                            <div class="btn-title" data-i18n="settings.export.badge.title">Erfolgs-Badge erstellen</div>
-                            <div class="btn-description" data-i18n="settings.export.badge.description">Erstelle ein Badge mit deinen Statistiken</div>
-                        </div>
-                    </button>
-
-                    <button id="shareImageBtn" class="data-action-btn image-btn">
-                        <span class="btn-icon">📸</span>
-                        <div class="btn-content">
-                            <div class="btn-title" data-i18n="settings.export.shareImage.title">Als Bild teilen</div>
-                            <div class="btn-description" data-i18n="settings.export.shareImage.description">Erstelle ein Bild für Instagram, WhatsApp & Co.</div>
-                        </div>
-                    </button>
-
-                    <button id="exportPdfBtn" class="data-action-btn pdf-btn">
-                        <span class="btn-icon">📄</span>
-                        <div class="btn-content">
-                            <div class="btn-title" data-i18n="settings.export.pdf.title">PDF-Report erstellen</div>
-                            <div class="btn-description" data-i18n="settings.export.pdf.description">Exportiere deine Statistiken als PDF-Dokument</div>
-                        </div>
-                    </button>
                 </div>
             </div>
 
@@ -924,6 +900,50 @@
                 <h3 data-i18n="settings.danger.title">⚠️ Gefahrenzone</h3>
                 <p class="danger-warning" data-i18n="settings.danger.warning">Diese Aktion kann nicht rückgängig gemacht werden!</p>
                 <button id="deleteAccountBtn" class="delete-account-btn" data-i18n="settings.danger.deleteAccount">Account löschen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Share Modal -->
+    <div id="shareModal" class="settings-modal hidden" role="dialog" aria-modal="true" aria-labelledby="shareModalTitle">
+        <div class="settings-modal-content">
+            <button id="shareCloseBtn" class="settings-close-btn" data-i18n-aria="share.close" aria-label="Schließen">✕</button>
+            <h2 id="shareModalTitle" data-i18n="share.title">📤 Erfolge teilen</h2>
+
+            <div class="settings-section">
+                <div class="data-actions">
+                    <button id="shareSuccessBtnModal" class="data-action-btn share-btn">
+                        <span class="btn-icon">📤</span>
+                        <div class="btn-content">
+                            <div class="btn-title" data-i18n="share.shareSuccess.title">Erfolg teilen</div>
+                            <div class="btn-description" data-i18n="share.shareSuccess.description">Teile deine rauchfreie Zeit mit anderen</div>
+                        </div>
+                    </button>
+
+                    <button id="generateBadgeBtnModal" class="data-action-btn badge-btn">
+                        <span class="btn-icon">🏆</span>
+                        <div class="btn-content">
+                            <div class="btn-title" data-i18n="share.badge.title">Erfolgs-Badge erstellen</div>
+                            <div class="btn-description" data-i18n="share.badge.description">Erstelle ein Badge mit deinen Statistiken</div>
+                        </div>
+                    </button>
+
+                    <button id="shareImageBtnModal" class="data-action-btn image-btn">
+                        <span class="btn-icon">📸</span>
+                        <div class="btn-content">
+                            <div class="btn-title" data-i18n="share.shareImage.title">Als Bild teilen</div>
+                            <div class="btn-description" data-i18n="share.shareImage.description">Erstelle ein Bild für Instagram, WhatsApp & Co.</div>
+                        </div>
+                    </button>
+
+                    <button id="exportPdfBtnModal" class="data-action-btn pdf-btn">
+                        <span class="btn-icon">📄</span>
+                        <div class="btn-content">
+                            <div class="btn-title" data-i18n="share.pdf.title">PDF-Report erstellen</div>
+                            <div class="btn-description" data-i18n="share.pdf.description">Exportiere deine Statistiken als PDF-Dokument</div>
+                        </div>
+                    </button>
+                </div>
             </div>
         </div>
     </div>

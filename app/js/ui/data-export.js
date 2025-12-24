@@ -20,30 +20,64 @@ function tr(key, fallback, params = {}) {
  * Initialize data export features
  */
 export function initializeDataExport() {
+    // Settings modal button (export only)
     const exportBtn = document.getElementById('exportDataBtn');
-    const shareBtn = document.getElementById('shareSuccessBtn');
-    const badgeBtn = document.getElementById('generateBadgeBtn');
-    const shareImageBtn = document.getElementById('shareImageBtn');
-
     if (exportBtn) {
         exportBtn.addEventListener('click', exportUserDataToFile);
     }
 
-    if (shareBtn) {
-        shareBtn.addEventListener('click', shareSuccess);
+    // Share modal buttons
+    const shareBtnModal = document.getElementById('shareSuccessBtnModal');
+    const badgeBtnModal = document.getElementById('generateBadgeBtnModal');
+    const shareImageBtnModal = document.getElementById('shareImageBtnModal');
+    const exportPdfBtnModal = document.getElementById('exportPdfBtnModal');
+
+    if (shareBtnModal) {
+        shareBtnModal.addEventListener('click', shareSuccess);
     }
 
-    if (badgeBtn) {
-        badgeBtn.addEventListener('click', generateBadge);
+    if (badgeBtnModal) {
+        badgeBtnModal.addEventListener('click', generateBadge);
     }
 
-    if (shareImageBtn) {
-        shareImageBtn.addEventListener('click', shareAsImage);
+    if (shareImageBtnModal) {
+        shareImageBtnModal.addEventListener('click', shareAsImage);
     }
 
-    const exportPdfBtn = document.getElementById('exportPdfBtn');
-    if (exportPdfBtn) {
-        exportPdfBtn.addEventListener('click', exportPdf);
+    if (exportPdfBtnModal) {
+        exportPdfBtnModal.addEventListener('click', exportPdf);
+    }
+
+    // Initialize share modal
+    initializeShareModal();
+}
+
+/**
+ * Initialize share modal open/close
+ */
+function initializeShareModal() {
+    const shareBtn = document.getElementById('shareBtn');
+    const shareModal = document.getElementById('shareModal');
+    const shareCloseBtn = document.getElementById('shareCloseBtn');
+
+    if (shareBtn && shareModal) {
+        shareBtn.addEventListener('click', () => {
+            shareModal.classList.remove('hidden');
+        });
+    }
+
+    if (shareCloseBtn && shareModal) {
+        shareCloseBtn.addEventListener('click', () => {
+            shareModal.classList.add('hidden');
+        });
+    }
+
+    if (shareModal) {
+        shareModal.addEventListener('click', (e) => {
+            if (e.target === shareModal) {
+                shareModal.classList.add('hidden');
+            }
+        });
     }
 }
 

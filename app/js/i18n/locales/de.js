@@ -36,6 +36,7 @@ export default {
     header: {
         skipToContent: 'Zum Inhalt springen',
         language: 'Sprache wechseln',
+        share: 'Teilen',
         darkMode: 'Dark Mode umschalten',
         tutorial: 'Hilfe & Anleitung',
         settings: 'Einstellungen',
@@ -924,6 +925,10 @@ export default {
     settings: {
         title: '⚙️ Einstellungen',
         close: 'Einstellungen schließen',
+        // Language section (HTML data-i18n keys)
+        language: {
+            title: '🌐 Sprache'
+        },
         // Account section (HTML data-i18n keys)
         account: {
             title: 'Account',
@@ -1023,14 +1028,32 @@ export default {
 
     // Share
     share: {
-        title: 'Mein rauchfreier Erfolg',
+        title: '📤 Erfolge teilen',
+        close: 'Schließen',
         successText: '🎉 Ich bin seit {days} Tagen rauchfrei!\n\n💰 Gespart: {money}€\n🚭 Zigaretten vermieden: {cigarettes}\n❤️ Lebenszeit gewonnen: {hours} Stunden\n\n#rauchfrei #byebyesmoke',
         copiedToClipboard: '📋 Text wurde in die Zwischenablage kopiert!\n\nDu kannst ihn jetzt in WhatsApp, Facebook oder wo du möchtest einfügen.',
         modalTitle: 'Teile deinen Erfolg',
         creatingImage: 'Erstelle Bild...',
         imageText: '🎉 Schau dir meinen Fortschritt an! #rauchfrei #byebyesmoke',
         imageError: 'Fehler beim Erstellen des Bildes: {message}',
-        imageDownloaded: '📸 Dein Erfolgs-Bild wurde heruntergeladen!\n\nDu kannst es jetzt auf Instagram, WhatsApp, Facebook oder wo du möchtest teilen.'
+        imageDownloaded: '📸 Dein Erfolgs-Bild wurde heruntergeladen!\n\nDu kannst es jetzt auf Instagram, WhatsApp, Facebook oder wo du möchtest teilen.',
+        // Share modal buttons
+        shareSuccess: {
+            title: 'Erfolg teilen',
+            description: 'Teile deine rauchfreie Zeit mit anderen'
+        },
+        badge: {
+            title: 'Erfolgs-Badge erstellen',
+            description: 'Erstelle ein Badge mit deinen Statistiken'
+        },
+        shareImage: {
+            title: 'Als Bild teilen',
+            description: 'Erstelle ein Bild für Instagram, WhatsApp & Co.'
+        },
+        pdf: {
+            title: 'PDF-Report erstellen',
+            description: 'Exportiere deine Statistiken als PDF-Dokument'
+        }
     },
 
     // Badge
