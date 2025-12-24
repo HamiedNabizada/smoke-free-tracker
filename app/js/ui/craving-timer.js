@@ -234,6 +234,14 @@ function initializeBreathingExercises() {
             startUrgeSurfing();
         });
     }
+
+    const pmrBtn = document.getElementById('startPMR');
+    if (pmrBtn) {
+        pmrBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            startPMR();
+        });
+    }
 }
 
 // Urge Surfing - Mindfulness technique by Dr. Alan Marlatt (University of Washington)
@@ -407,6 +415,273 @@ function stopUrgeSurfing() {
     }
 
     urgeSurfingPhaseIndex = 0;
+}
+
+// Progressive Muscle Relaxation (PMR) - Evidence-based relaxation technique
+// Evidence: RCT 2015 shows significantly lower cravings
+// Source: https://pubmed.ncbi.nlm.nih.gov/25645166/
+function getPMRPhases() {
+    return [
+        // Introduction
+        {
+            instruction: tr('cravingTimer.pmr.intro', 'Progressive Muskelentspannung'),
+            subtext: tr('cravingTimer.pmr.introDesc', 'Setz dich bequem hin. Wir spannen nacheinander Muskeln an und entspannen sie wieder.'),
+            duration: 10,
+            animation: 'pulse',
+            phase: 'intro'
+        },
+        // Hands
+        {
+            instruction: tr('cravingTimer.pmr.hands', 'Hände'),
+            subtext: tr('cravingTimer.pmr.handsDesc', 'Balle beide Fäuste so fest du kannst.'),
+            duration: 7,
+            animation: 'tense',
+            phase: 'tense'
+        },
+        {
+            instruction: tr('cravingTimer.pmr.relax', 'Entspannen'),
+            subtext: tr('cravingTimer.pmr.handsRelax', 'Öffne die Hände. Spüre, wie die Spannung abfließt.'),
+            duration: 15,
+            animation: 'relax',
+            phase: 'relax'
+        },
+        // Arms
+        {
+            instruction: tr('cravingTimer.pmr.arms', 'Arme'),
+            subtext: tr('cravingTimer.pmr.armsDesc', 'Beuge die Ellbogen und spanne die Bizeps an.'),
+            duration: 7,
+            animation: 'tense',
+            phase: 'tense'
+        },
+        {
+            instruction: tr('cravingTimer.pmr.relax', 'Entspannen'),
+            subtext: tr('cravingTimer.pmr.armsRelax', 'Lass die Arme locker fallen. Spüre die Entspannung.'),
+            duration: 15,
+            animation: 'relax',
+            phase: 'relax'
+        },
+        // Shoulders
+        {
+            instruction: tr('cravingTimer.pmr.shoulders', 'Schultern'),
+            subtext: tr('cravingTimer.pmr.shouldersDesc', 'Zieh die Schultern hoch zu den Ohren.'),
+            duration: 7,
+            animation: 'tense',
+            phase: 'tense'
+        },
+        {
+            instruction: tr('cravingTimer.pmr.relax', 'Entspannen'),
+            subtext: tr('cravingTimer.pmr.shouldersRelax', 'Lass die Schultern fallen. Spüre, wie der Nacken weich wird.'),
+            duration: 15,
+            animation: 'relax',
+            phase: 'relax'
+        },
+        // Face - Forehead
+        {
+            instruction: tr('cravingTimer.pmr.forehead', 'Stirn'),
+            subtext: tr('cravingTimer.pmr.foreheadDesc', 'Zieh die Augenbrauen hoch, runzle die Stirn.'),
+            duration: 7,
+            animation: 'tense',
+            phase: 'tense'
+        },
+        {
+            instruction: tr('cravingTimer.pmr.relax', 'Entspannen'),
+            subtext: tr('cravingTimer.pmr.foreheadRelax', 'Lass die Stirn glatt werden. Spüre die Ruhe im Gesicht.'),
+            duration: 15,
+            animation: 'relax',
+            phase: 'relax'
+        },
+        // Face - Jaw
+        {
+            instruction: tr('cravingTimer.pmr.jaw', 'Kiefer'),
+            subtext: tr('cravingTimer.pmr.jawDesc', 'Beiß die Zähne zusammen, spanne den Kiefer an.'),
+            duration: 7,
+            animation: 'tense',
+            phase: 'tense'
+        },
+        {
+            instruction: tr('cravingTimer.pmr.relax', 'Entspannen'),
+            subtext: tr('cravingTimer.pmr.jawRelax', 'Öffne den Mund leicht. Lass den Kiefer locker hängen.'),
+            duration: 15,
+            animation: 'relax',
+            phase: 'relax'
+        },
+        // Stomach
+        {
+            instruction: tr('cravingTimer.pmr.stomach', 'Bauch'),
+            subtext: tr('cravingTimer.pmr.stomachDesc', 'Spanne die Bauchmuskeln an, zieh den Nabel ein.'),
+            duration: 7,
+            animation: 'tense',
+            phase: 'tense'
+        },
+        {
+            instruction: tr('cravingTimer.pmr.relax', 'Entspannen'),
+            subtext: tr('cravingTimer.pmr.stomachRelax', 'Lass den Bauch los. Atme tief in den Bauch.'),
+            duration: 15,
+            animation: 'relax',
+            phase: 'relax'
+        },
+        // Legs
+        {
+            instruction: tr('cravingTimer.pmr.legs', 'Beine'),
+            subtext: tr('cravingTimer.pmr.legsDesc', 'Streck die Beine, zieh die Zehen zum Körper.'),
+            duration: 7,
+            animation: 'tense',
+            phase: 'tense'
+        },
+        {
+            instruction: tr('cravingTimer.pmr.relax', 'Entspannen'),
+            subtext: tr('cravingTimer.pmr.legsRelax', 'Lass die Beine schwer werden. Spüre den Boden.'),
+            duration: 15,
+            animation: 'relax',
+            phase: 'relax'
+        },
+        // Feet
+        {
+            instruction: tr('cravingTimer.pmr.feet', 'Füße'),
+            subtext: tr('cravingTimer.pmr.feetDesc', 'Kralle die Zehen zusammen, spanne die Füße an.'),
+            duration: 7,
+            animation: 'tense',
+            phase: 'tense'
+        },
+        {
+            instruction: tr('cravingTimer.pmr.relax', 'Entspannen'),
+            subtext: tr('cravingTimer.pmr.feetRelax', 'Lass die Füße los. Der ganze Körper ist entspannt.'),
+            duration: 15,
+            animation: 'relax',
+            phase: 'relax'
+        },
+        // Full body scan
+        {
+            instruction: tr('cravingTimer.pmr.fullBody', 'Ganzkörper'),
+            subtext: tr('cravingTimer.pmr.fullBodyDesc', 'Spüre deinen entspannten Körper. Von Kopf bis Fuß.'),
+            duration: 20,
+            animation: 'complete',
+            phase: 'scan'
+        }
+    ];
+}
+
+let pmrTimeout = null;
+let pmrPhaseIndex = 0;
+
+function startPMR() {
+    const optionsContainer = document.querySelector('.sos-breathing-options');
+    const activeContainer = document.getElementById('sosBreathingActive');
+
+    if (!optionsContainer || !activeContainer) {
+        return;
+    }
+
+    pmrPhaseIndex = 0;
+    exerciseRunning = true;
+
+    optionsContainer.classList.add('hidden');
+    activeContainer.classList.remove('hidden');
+
+    // Add stop button listener
+    const stopBtn = document.getElementById('sosBreathingStop');
+    if (stopBtn) {
+        stopBtn.onclick = stopPMR;
+    }
+
+    runPMRPhase();
+}
+
+function runPMRPhase() {
+    if (!exerciseRunning) return;
+
+    const phases = getPMRPhases();
+    if (pmrPhaseIndex >= phases.length) {
+        showPMRCompletion();
+        return;
+    }
+
+    const phase = phases[pmrPhaseIndex];
+    const instruction = document.getElementById('sosBreathingInstruction');
+    const timer = document.getElementById('sosBreathingTimer');
+    const progress = document.getElementById('sosBreathingProgress');
+    const circle = document.querySelector('#sosBreathingActive .breathing-exercise-circle');
+
+    // Update UI
+    instruction.textContent = phase.instruction;
+    instruction.className = 'breathing-instruction pmr ' + phase.phase;
+    progress.textContent = phase.subtext;
+    progress.style.fontSize = '0.9rem';
+    progress.style.opacity = '0.9';
+
+    // Update circle animation
+    circle.className = 'breathing-exercise-circle pmr ' + phase.animation;
+
+    // Countdown
+    let secondsLeft = phase.duration;
+    timer.textContent = secondsLeft;
+
+    if (exerciseInterval) clearInterval(exerciseInterval);
+
+    exerciseInterval = setInterval(() => {
+        secondsLeft--;
+        if (secondsLeft > 0) {
+            timer.textContent = secondsLeft;
+        } else {
+            timer.textContent = '';
+        }
+    }, 1000);
+
+    if (pmrTimeout) clearTimeout(pmrTimeout);
+
+    pmrTimeout = setTimeout(() => {
+        clearInterval(exerciseInterval);
+        pmrPhaseIndex++;
+        runPMRPhase();
+    }, phase.duration * 1000);
+}
+
+function showPMRCompletion() {
+    const instruction = document.getElementById('sosBreathingInstruction');
+    const timer = document.getElementById('sosBreathingTimer');
+    const progress = document.getElementById('sosBreathingProgress');
+    const circle = document.querySelector('#sosBreathingActive .breathing-exercise-circle');
+
+    exerciseRunning = false;
+
+    instruction.textContent = tr('cravingTimer.pmr.done', 'Tiefenentspannt!');
+    instruction.className = 'breathing-instruction complete';
+    timer.textContent = '';
+    progress.textContent = tr('cravingTimer.pmr.source', 'Basierend auf PMR nach Edmund Jacobson');
+    progress.style.fontSize = '0.8rem';
+    progress.style.opacity = '0.7';
+    circle.className = 'breathing-exercise-circle complete';
+
+    setTimeout(() => {
+        stopPMR();
+    }, 3000);
+}
+
+function stopPMR() {
+    exerciseRunning = false;
+
+    if (exerciseInterval) {
+        clearInterval(exerciseInterval);
+        exerciseInterval = null;
+    }
+
+    if (pmrTimeout) {
+        clearTimeout(pmrTimeout);
+        pmrTimeout = null;
+    }
+
+    const optionsContainer = document.querySelector('.sos-breathing-options');
+    const activeContainer = document.getElementById('sosBreathingActive');
+    const progress = document.getElementById('sosBreathingProgress');
+
+    if (optionsContainer) optionsContainer.classList.remove('hidden');
+    if (activeContainer) activeContainer.classList.add('hidden');
+    if (progress) {
+        progress.style.fontSize = '';
+        progress.style.opacity = '';
+    }
+
+    pmrPhaseIndex = 0;
 }
 
 function startBreathingExercise(type) {

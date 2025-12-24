@@ -388,6 +388,47 @@
     box-shadow: 0 0 50px rgba(17, 153, 142, 0.5);
 }
 
+/* PMR Animations */
+.breathing-exercise-circle.pmr.tense {
+    animation: pmrTense 0.5s ease-in-out forwards;
+    background: radial-gradient(circle, rgba(255, 107, 107, 0.6), rgba(255, 107, 107, 0.2));
+    box-shadow: 0 0 40px rgba(255, 107, 107, 0.5);
+}
+
+.breathing-exercise-circle.pmr.relax {
+    animation: pmrRelax 2s ease-out forwards;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.6), rgba(102, 126, 234, 0.2));
+    box-shadow: 0 0 40px rgba(102, 126, 234, 0.5);
+}
+
+.breathing-exercise-circle.pmr.pulse {
+    animation: pmrPulse 2s ease-in-out infinite;
+}
+
+@keyframes pmrTense {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1.15); }
+}
+
+@keyframes pmrRelax {
+    0% { transform: scale(1.15); }
+    100% { transform: scale(0.9); }
+}
+
+@keyframes pmrPulse {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.05); opacity: 1; }
+}
+
+.breathing-instruction.pmr.tense {
+    color: #ff6b6b;
+}
+
+.breathing-instruction.pmr.relax {
+    color: #a8e6cf;
+}
+
 @keyframes inhaleAnim {
     from { transform: scale(0.6); opacity: 0.4; }
     to { transform: scale(1.1); opacity: 1; }

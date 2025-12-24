@@ -851,6 +851,10 @@ export default {
             urgeSurfing: {
                 name: 'Urge Surfing',
                 detail: '~5 Min | Achtsamkeit | Evidenzbasiert'
+            },
+            pmr: {
+                name: 'Muskelentspannung',
+                detail: '~6 Min | Tiefenentspannung | Evidenzbasiert'
             }
         },
         games: {
@@ -971,6 +975,40 @@ export default {
             reflectDesc: 'Du hast das Verlangen überstanden, ohne zu rauchen.',
             done: 'Welle überstanden!',
             source: 'Technik nach Dr. Alan Marlatt, University of Washington'
+        },
+        // Progressive Muscle Relaxation (PMR) - Evidence: RCT 2015 (https://pubmed.ncbi.nlm.nih.gov/25645166/)
+        pmr: {
+            intro: 'Progressive Muskelentspannung',
+            introDesc: 'Setz dich bequem hin. Wir spannen nacheinander Muskeln an und entspannen sie wieder.',
+            hands: 'Hände',
+            handsDesc: 'Balle beide Fäuste so fest du kannst.',
+            handsRelax: 'Öffne die Hände. Spüre, wie die Spannung abfließt.',
+            arms: 'Arme',
+            armsDesc: 'Beuge die Ellbogen und spanne die Bizeps an.',
+            armsRelax: 'Lass die Arme locker fallen. Spüre die Entspannung.',
+            shoulders: 'Schultern',
+            shouldersDesc: 'Zieh die Schultern hoch zu den Ohren.',
+            shouldersRelax: 'Lass die Schultern fallen. Spüre, wie der Nacken weich wird.',
+            forehead: 'Stirn',
+            foreheadDesc: 'Zieh die Augenbrauen hoch, runzle die Stirn.',
+            foreheadRelax: 'Lass die Stirn glatt werden. Spüre die Ruhe im Gesicht.',
+            jaw: 'Kiefer',
+            jawDesc: 'Beiß die Zähne zusammen, spanne den Kiefer an.',
+            jawRelax: 'Öffne den Mund leicht. Lass den Kiefer locker hängen.',
+            stomach: 'Bauch',
+            stomachDesc: 'Spanne die Bauchmuskeln an, zieh den Nabel ein.',
+            stomachRelax: 'Lass den Bauch los. Atme tief in den Bauch.',
+            legs: 'Beine',
+            legsDesc: 'Streck die Beine, zieh die Zehen zum Körper.',
+            legsRelax: 'Lass die Beine schwer werden. Spüre den Boden.',
+            feet: 'Füße',
+            feetDesc: 'Kralle die Zehen zusammen, spanne die Füße an.',
+            feetRelax: 'Lass die Füße los. Der ganze Körper ist entspannt.',
+            fullBody: 'Ganzkörper',
+            fullBodyDesc: 'Spüre deinen entspannten Körper. Von Kopf bis Fuß.',
+            relax: 'Entspannen',
+            done: 'Tiefenentspannt!',
+            source: 'Basierend auf PMR nach Edmund Jacobson'
         },
         games: {
             points: 'Punkte',

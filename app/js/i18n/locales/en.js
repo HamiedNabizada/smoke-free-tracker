@@ -706,6 +706,10 @@ export default {
             urgeSurfing: {
                 name: 'Urge Surfing',
                 detail: '~5 min | Mindfulness | Evidence-based'
+            },
+            pmr: {
+                name: 'Muscle Relaxation',
+                detail: '~6 min | Deep relaxation | Evidence-based'
             }
         },
         games: {
@@ -826,6 +830,40 @@ export default {
             reflectDesc: 'You survived the craving without smoking.',
             done: 'Wave conquered!',
             source: 'Technique by Dr. Alan Marlatt, University of Washington'
+        },
+        // Progressive Muscle Relaxation (PMR) - Evidence: RCT 2015 (https://pubmed.ncbi.nlm.nih.gov/25645166/)
+        pmr: {
+            intro: 'Progressive Muscle Relaxation',
+            introDesc: 'Sit comfortably. We will tense and relax muscle groups one by one.',
+            hands: 'Hands',
+            handsDesc: 'Make fists as tight as you can.',
+            handsRelax: 'Open your hands. Feel the tension flowing away.',
+            arms: 'Arms',
+            armsDesc: 'Bend your elbows and flex your biceps.',
+            armsRelax: 'Let your arms fall loose. Feel the relaxation.',
+            shoulders: 'Shoulders',
+            shouldersDesc: 'Raise your shoulders up to your ears.',
+            shouldersRelax: 'Let your shoulders drop. Feel your neck soften.',
+            forehead: 'Forehead',
+            foreheadDesc: 'Raise your eyebrows, wrinkle your forehead.',
+            foreheadRelax: 'Let your forehead smooth out. Feel the calm in your face.',
+            jaw: 'Jaw',
+            jawDesc: 'Clench your teeth, tense your jaw.',
+            jawRelax: 'Open your mouth slightly. Let your jaw hang loose.',
+            stomach: 'Stomach',
+            stomachDesc: 'Tense your abdominal muscles, pull your navel in.',
+            stomachRelax: 'Release your stomach. Breathe deeply into your belly.',
+            legs: 'Legs',
+            legsDesc: 'Stretch your legs, pull your toes toward your body.',
+            legsRelax: 'Let your legs feel heavy. Feel the ground.',
+            feet: 'Feet',
+            feetDesc: 'Curl your toes together, tense your feet.',
+            feetRelax: 'Release your feet. Your whole body is relaxed.',
+            fullBody: 'Full body',
+            fullBodyDesc: 'Feel your relaxed body. From head to toe.',
+            relax: 'Relax',
+            done: 'Deeply relaxed!',
+            source: 'Based on PMR by Edmund Jacobson'
         },
         games: {
             points: 'Points',
