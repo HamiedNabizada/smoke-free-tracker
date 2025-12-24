@@ -241,8 +241,11 @@ export default {
         },
         healthMilestones: {
             title: 'Gesundheits-Meilensteine'
-        },
-        // Legacy milestones data section is below
+        }
+    },
+
+    // Legacy milestones data removed - now in milestonesData below
+    _removed_legacy_milestones: {
         '20min': {
             title: '20 Minuten',
             description: 'Herzfrequenz und Blutdruck normalisieren sich',
