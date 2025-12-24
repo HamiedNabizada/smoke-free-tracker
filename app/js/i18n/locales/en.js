@@ -9,13 +9,20 @@ export default {
         tagline: 'Your path to a smoke-free life'
     },
 
+    // Accessibility
+    accessibility: {
+        skipToContent: 'Skip to main content',
+        skipToNav: 'Skip to navigation'
+    },
+
     // Navigation tabs
     nav: {
         overview: 'Overview',
         milestones: 'Milestones',
         achievements: 'Achievements',
         statistics: 'Statistics',
-        help: 'Help'
+        help: 'Help',
+        mainNavigation: 'Main navigation'
     },
 
     // Header
@@ -220,7 +227,17 @@ export default {
         }
     },
 
-    // Milestones
+    // Milestones (HTML data-i18n keys)
+    milestones: {
+        happeningNow: {
+            title: '⏰ What is happening NOW in your body?'
+        },
+        healthMilestones: {
+            title: 'Health Milestones'
+        }
+    },
+
+    // Milestones Section
     milestonesSection: {
         title: 'Health Milestones',
         subtitle: 'Your body recovers with each day',
@@ -239,7 +256,12 @@ export default {
         allAchieved: 'All health milestones achieved!'
     },
 
-    // Achievements
+    // Achievements (HTML data-i18n key)
+    achievements: {
+        title: 'Achievements'
+    },
+
+    // Achievements Section
     achievementsSection: {
         title: 'Your Achievements',
         subtitle: 'Celebrate your milestones',
@@ -419,9 +441,14 @@ export default {
             lifeGained: 'life gained'
         },
         goalCalculator: {
-            title: 'Goal Calculator',
+            title: '🎯 Your personal goal',
+            intro: 'Calculate how long it takes or what you will achieve!',
             byDays: 'By days',
             byMoney: 'By money',
+            howManyDays: 'How many days?',
+            howMuchMoney: 'How much money (€)?',
+            daysPlaceholder: 'e.g. 100',
+            moneyPlaceholder: 'e.g. 2000',
             daysLabel: 'In how many days?',
             moneyLabel: 'How much money to save?',
             calculate: 'Calculate',
@@ -445,12 +472,29 @@ export default {
             lifeGained: 'Life gained',
             savingsGoal: 'Your savings goal',
             timeNeeded: 'Time needed'
+        },
+        // Chart titles (HTML data-i18n keys)
+        progressChart: {
+            title: 'Progress'
+        },
+        cravingChart: {
+            title: '📊 Your overcome cravings',
+            subtitle: 'Last 30 days'
+        },
+        heatmap: {
+            title: '🔥 When do cravings occur?',
+            subtitle: 'Patterns of the last 30 days by weekday and time'
+        },
+        // Age comparison (HTML uses ageComparison, locale has ageGroup)
+        ageComparison: {
+            title: '👥 Comparison with your age group'
         }
     },
 
     // SOS / Help
     sos: {
         button: 'Acute craving',
+        buttonHint: 'Click here for immediate support with a 5-minute timer',
         hint: 'Click here for immediate support',
         timer: {
             title: 'Craving Timer',
@@ -465,12 +509,128 @@ export default {
             breathing: 'Breathing',
             games: 'Games'
         },
+        // Tips section (HTML data-i18n keys)
+        tips: {
+            title: '💡 Tips for acute cravings',
+            fiveMinRule: {
+                title: '5-minute rule',
+                text: 'Wait 5 minutes. The craving will weaken on its own!'
+            },
+            water: {
+                title: 'Drink water',
+                text: 'Drinking a large glass of water distracts and helps.'
+            },
+            walk: {
+                title: 'Short walk',
+                text: 'Move for 5-10 minutes. Fresh air helps!'
+            },
+            breathe: {
+                title: 'Deep breathing',
+                text: 'Breathe deeply 10 times. Calms immediately.'
+            },
+            call: {
+                title: 'Call someone',
+                text: 'Call a supportive person and talk.'
+            },
+            snack: {
+                title: 'Healthy snack',
+                text: 'Fruit, vegetables or gum distract the mouth.'
+            }
+        },
+        // Shocking facts (HTML data-i18n keys)
+        shockingFacts: {
+            title: '⚠️ Why you quit',
+            intro: 'These facts remind you why every cigarette would be a mistake:',
+            fact1: {
+                number: '170,000',
+                label: 'Deaths per year in Germany',
+                detail: 'Every 7th death caused by smoking'
+            },
+            fact2: {
+                number: '8 million',
+                label: 'Deaths worldwide per year',
+                detail: 'More than alcohol, AIDS & drugs combined'
+            },
+            fact3: {
+                number: '-10 years',
+                label: 'Life expectancy',
+                detail: 'Smokers die on average 10 years earlier'
+            },
+            fact4: {
+                number: '90%',
+                label: 'Lung cancer from smoking',
+                detail: '7x higher risk than non-smokers'
+            },
+            fact5: {
+                number: '3x',
+                label: 'Heart attack risk',
+                detail: 'Stroke risk 2-3x higher'
+            },
+            fact6: {
+                number: '88,000',
+                label: 'New cancer cases/year (DE)',
+                detail: 'Caused by smoking alone'
+            },
+            fact7: {
+                number: '90%',
+                label: 'COPD patients',
+                detail: 'Are or were smokers'
+            },
+            fact8: {
+                number: '17-22 min',
+                label: 'Life time per cigarette',
+                detail: 'Every cigarette shortens your life (Jackson 2025)'
+            },
+            fact9: {
+                number: 'Smoker\'s leg',
+                label: 'Amputation risk',
+                detail: 'Circulation problems in legs'
+            },
+            fact10: {
+                number: 'Blindness',
+                label: 'Retinal degeneration',
+                detail: 'Smoking damages the eyes'
+            },
+            fact11: {
+                number: 'Infertility',
+                label: 'Erectile dysfunction',
+                detail: 'Poor sperm quality'
+            },
+            fact12: {
+                number: 'Tooth loss',
+                label: 'Gum disease',
+                detail: '2x higher risk of tooth loss'
+            },
+            reminder: '<strong>Every craving passes.</strong> You are stronger than the addiction. Remember why you quit!'
+        },
+        // Overlay (HTML data-i18n keys)
+        overlay: {
+            close: 'Close',
+            title: 'SOS Help',
+            remaining: 'remaining',
+            countAsCraving: 'Count as craving',
+            tabs: {
+                tips: '💡 Tips',
+                breathing: '🧘 Breathing',
+                games: '🎮 Games'
+            }
+        },
+        // Breathing exercises (HTML data-i18n keys)
         breathing: {
             title: 'Breathing Exercises',
             boxBreathing: 'Box Breathing',
             boxBreathingDesc: '4 seconds in, 4 hold, 4 out, 4 hold',
             technique478: '4-7-8 Technique',
-            technique478Desc: '4 seconds in, 7 hold, 8 out'
+            technique478Desc: '4 seconds in, 7 hold, 8 out',
+            stop: 'Stop exercise',
+            box: {
+                name: 'Box Breathing',
+                detail: '4-4-4-4 | ~2 min | Focus'
+            },
+            '478': {
+                name: '4-7-8 Technique',
+                detail: '4-7-8 | ~2.5 min | Relaxation'
+            }
         },
         games: {
             title: 'Distraction Games',
@@ -492,7 +652,7 @@ export default {
         dontCount: 'Don\'t count',
         stop: 'Stop',
         cravingStats: {
-            title: 'Your Craving Statistics',
+            title: '💪 Your victories over cravings',
             today: 'Overcome today',
             weekAvg: 'Avg per day (7 days)',
             monthTotal: 'Total (30 days)',
@@ -608,7 +768,71 @@ export default {
 
     // Settings
     settings: {
-        title: 'Settings',
+        title: '⚙️ Settings',
+        close: 'Close settings',
+        // Account section (HTML data-i18n keys)
+        account: {
+            title: 'Account',
+            loggedInAs: 'Logged in as:'
+        },
+        // Data section (HTML data-i18n keys)
+        data: {
+            title: '📊 Edit my data',
+            quitDate: 'Quit date & time',
+            cigarettesPerDay: 'Cigarettes per day (before)',
+            pricePerPack: 'Price per pack (€)',
+            cigarettesPerPack: 'Cigarettes per pack',
+            save: 'Save'
+        },
+        // Notifications section (HTML data-i18n keys)
+        notifications: {
+            title: '🔔 Notifications',
+            description: 'Receive motivational push notifications when you reach important milestones.',
+            push: {
+                label: 'Enable push notifications',
+                description: 'Allow the app to send you notifications'
+            },
+            milestones: {
+                label: 'Milestone notifications',
+                description: 'Receive a notification when you reach a health milestone'
+            },
+            daily: {
+                label: 'Daily motivation',
+                description: 'Receive a motivational message once a day (10:00 AM)'
+            }
+        },
+        // Export section (HTML data-i18n keys)
+        export: {
+            title: '📦 Your data',
+            description: 'Export your data or share your success.',
+            exportData: {
+                title: 'Export data',
+                description: 'Download all your data as a JSON file'
+            },
+            shareSuccess: {
+                title: 'Share success',
+                description: 'Share your smoke-free time with others'
+            },
+            badge: {
+                title: 'Create success badge',
+                description: 'Create a badge with your statistics'
+            },
+            shareImage: {
+                title: 'Share as image',
+                description: 'Create an image for Instagram, WhatsApp & more'
+            },
+            pdf: {
+                title: 'Create PDF report',
+                description: 'Export your statistics as a PDF document'
+            }
+        },
+        // Danger zone (HTML data-i18n keys)
+        danger: {
+            title: '⚠️ Danger zone',
+            warning: 'This action cannot be undone!',
+            deleteAccount: 'Delete account'
+        },
+        // Legacy keys
         accountInfo: 'Account Info',
         username: 'Username',
         email: 'Email',
@@ -618,7 +842,6 @@ export default {
         cigarettesPerDay: 'Cigarettes per day',
         pricePerPack: 'Price per pack (€)',
         cigarettesPerPack: 'Cigarettes per pack',
-        notifications: 'Enable notifications',
         save: 'Save',
         saving: 'Saving...',
         saveSuccess: 'Data saved successfully! The page will reload.',
@@ -717,10 +940,53 @@ export default {
     // Tutorial
     tutorial: {
         title: 'Welcome to ByeByeSmoke!',
+        close: 'Close tutorial',
+        srTitle: 'Tutorial',
         skip: 'Skip',
         next: 'Next',
         prev: 'Back',
         finish: 'Finish',
+        // Slide-specific keys (HTML data-i18n)
+        slide1: {
+            title: 'Welcome to ByeByeSmoke!',
+            text: 'Let us show you the most important features and how to install the app as a PWA.',
+            feature1: '📊 Track your progress',
+            feature2: '🏥 Health milestones',
+            feature3: '🆘 Help with cravings',
+            feature4: '🔔 Push notifications',
+            feature5: '📱 Install as app'
+        },
+        slide2: {
+            title: 'Your Dashboard',
+            text: 'The dashboard shows all important statistics at a glance.',
+            feature1: '⏱️ Time without cigarettes',
+            feature2: '💰 Money saved',
+            feature3: '🚭 Cigarettes avoided',
+            feature4: '❤️ Life time gained'
+        },
+        slide3: {
+            title: 'Health Milestones',
+            text: 'Track how your body recovers - based on scientific studies.',
+            feature1: '🫁 Lung regeneration',
+            feature2: '❤️ Heart health',
+            feature3: '🩸 Circulation',
+            feature4: '✨ Skin improvement'
+        },
+        slide4: {
+            title: 'SOS Help for Cravings',
+            text: 'The craving timer helps you through difficult moments.',
+            feature1: '⏰ 5-minute timer',
+            feature2: '🧘 Breathing exercises',
+            feature3: '🎮 Distraction games',
+            feature4: '💡 Helpful tips'
+        },
+        slide5: {
+            title: 'Install as App',
+            text: 'Install ByeByeSmoke as an app on your device for quick access.',
+            ios: 'iOS: Tap "Share" → "Add to Home Screen"',
+            android: 'Android: Tap ⋮ → "Install app"',
+            desktop: 'Desktop: Click the install icon in the address bar'
+        },
         slides: [
             {
                 title: 'Your Companion',
@@ -759,6 +1025,7 @@ export default {
     // Footer
     footer: {
         madeWith: 'Made with heart for your health',
+        about: 'About ByeByeSmoke',
         privacy: 'Privacy',
         imprint: 'Imprint',
         sources: 'Sources',
