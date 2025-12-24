@@ -5,7 +5,7 @@
 
 import { getTodaysMission, isMissionCompleted, completeMission, getMissionsCompletedTotal } from '../data/missions.js';
 import { t, isInitialized } from '../i18n/i18n.js';
-import { getUserConfig } from '../config.js';
+import { userData } from '../config.js';
 
 // Helper for translation with fallback
 function tr(key, fallback, params = {}) {
@@ -20,10 +20,9 @@ function tr(key, fallback, params = {}) {
  * Calculate days since quit date
  */
 function getDaysSinceQuit() {
-    const config = getUserConfig();
-    if (!config || !config.quit_date) return 0;
+    if (!userData || !userData.quitDate) return 0;
 
-    const quitDate = new Date(config.quit_date);
+    const quitDate = new Date(userData.quitDate);
     const now = new Date();
     const diffMs = now - quitDate;
     return diffMs / (1000 * 60 * 60 * 24);
