@@ -640,6 +640,10 @@ export default {
             '478': {
                 name: '4-7-8 Technique',
                 detail: '4-7-8 | ~2.5 min | Relaxation'
+            },
+            urgeSurfing: {
+                name: 'Urge Surfing',
+                detail: '~5 min | Mindfulness | Evidence-based'
             }
         },
         games: {
@@ -700,7 +704,13 @@ export default {
             healing: 'Your body is healing right now. Every second counts!',
             achieved: 'You have already achieved so much. Don\'t give up now!',
             stronger: 'Every craving you overcome makes you stronger!',
-            roleModel: 'You are a role model for others. Stay strong!'
+            roleModel: 'You are a role model for others. Stay strong!',
+            // Exercise prompts - evidence: 12 studies show up to 50 min reduced cravings (smokefree.gov)
+            squats: 'Do 10 squats now! Exercise reduces cravings instantly.',
+            stairs: 'Walk up and down a staircase - scientifically proven to help!',
+            stretch: 'Stretch for 1 minute. Arms up, to the sides, forward!',
+            walk: 'Walk in place for 2 minutes. Every movement counts!',
+            pushups: 'Can you do 5 push-ups? Or against the wall? Try it!'
         },
         breathing: {
             inhale: 'Breathe in',
@@ -709,6 +719,26 @@ export default {
             cycle: 'Cycle {current} of {total}',
             done: 'Done!',
             completed: 'Exercise completed'
+        },
+        // Urge Surfing - technique by Dr. Alan Marlatt, University of Washington
+        // Evidence: 26% reduction in smoking (https://pubmed.ncbi.nlm.nih.gov/20025372/)
+        urgeSurfing: {
+            notice: 'Notice the craving',
+            noticeDesc: 'Close your eyes. Acknowledge that you have a craving.',
+            bodyAwareness: 'Where do you feel it?',
+            bodyDesc: 'Scan your body. Chest? Hands? Mouth? Stomach?',
+            observe: 'Observe the sensation',
+            observeDesc: 'How does it feel? Tingling? Pressure? Warmth? Cold?',
+            breathe: 'Breathe through the wave',
+            breatheDesc: 'Breathe in slowly... and out. The wave is rising...',
+            peak: 'The wave reaches its peak',
+            peakDesc: 'Hold on. Every wave breaks. Keep breathing.',
+            subside: 'The wave subsides',
+            subsideDesc: 'Feel the craving fading. You made it.',
+            reflect: 'Reflection',
+            reflectDesc: 'You survived the craving without smoking.',
+            done: 'Wave conquered!',
+            source: 'Technique by Dr. Alan Marlatt, University of Washington'
         },
         games: {
             points: 'Points',

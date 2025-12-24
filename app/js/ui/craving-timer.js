@@ -27,7 +27,13 @@ function getCravingTips() {
         { icon: '💚', text: tr('cravingTimer.tips.healing', 'Dein Körper heilt sich gerade. Jede Sekunde zählt!') },
         { icon: '🏆', text: tr('cravingTimer.tips.achieved', 'Du hast schon so viel geschafft. Gib jetzt nicht auf!') },
         { icon: '⭐', text: tr('cravingTimer.tips.stronger', 'Jedes überwundene Verlangen macht dich stärker!') },
-        { icon: '🌟', text: tr('cravingTimer.tips.roleModel', 'Du bist ein Vorbild für andere. Bleib stark!') }
+        { icon: '🌟', text: tr('cravingTimer.tips.roleModel', 'Du bist ein Vorbild für andere. Bleib stark!') },
+        // Exercise prompts - evidence: 12 studies show up to 50 min reduced cravings after short exercise
+        { icon: '🏃', text: tr('cravingTimer.tips.squats', 'Mach jetzt 10 Kniebeugen! Bewegung reduziert Verlangen sofort.'), isExercise: true },
+        { icon: '🦵', text: tr('cravingTimer.tips.stairs', 'Lauf eine Treppe hoch und runter - das hilft wissenschaftlich belegt!'), isExercise: true },
+        { icon: '🙆', text: tr('cravingTimer.tips.stretch', 'Strecke dich 1 Minute lang. Arme hoch, zur Seite, nach vorne!'), isExercise: true },
+        { icon: '🚶', text: tr('cravingTimer.tips.walk', 'Geh 2 Minuten auf der Stelle. Jede Bewegung zählt!'), isExercise: true },
+        { icon: '💪', text: tr('cravingTimer.tips.pushups', 'Schaffst du 5 Liegestütze? Oder gegen die Wand? Probier es!'), isExercise: true }
     ];
 }
 
@@ -137,6 +143,7 @@ function switchTab(contentId) {
 function initializeBreathingExercises() {
     const boxBtn = document.getElementById('startBoxBreathing');
     const btn478 = document.getElementById('start478Breathing');
+    const urgeSurfingBtn = document.getElementById('startUrgeSurfing');
 
     if (boxBtn) {
         boxBtn.addEventListener('click', () => startBreathingExercise('box'));
@@ -145,6 +152,179 @@ function initializeBreathingExercises() {
     if (btn478) {
         btn478.addEventListener('click', () => startBreathingExercise('478'));
     }
+
+    if (urgeSurfingBtn) {
+        urgeSurfingBtn.addEventListener('click', () => startUrgeSurfing());
+    }
+}
+
+// Urge Surfing - Mindfulness technique by Dr. Alan Marlatt (University of Washington)
+// Evidence: 26% reduction in smoking in college students study
+// Source: https://pubmed.ncbi.nlm.nih.gov/20025372/
+function getUrgeSurfingPhases() {
+    return [
+        {
+            instruction: tr('cravingTimer.urgeSurfing.notice', 'Nimm das Verlangen wahr'),
+            subtext: tr('cravingTimer.urgeSurfing.noticeDesc', 'Schließe die Augen. Erkenne an, dass du ein Verlangen hast.'),
+            duration: 15,
+            animation: 'pulse'
+        },
+        {
+            instruction: tr('cravingTimer.urgeSurfing.bodyAwareness', 'Wo spürst du es?'),
+            subtext: tr('cravingTimer.urgeSurfing.bodyDesc', 'Scanne deinen Körper. Brust? Hände? Mund? Bauch?'),
+            duration: 20,
+            animation: 'scan'
+        },
+        {
+            instruction: tr('cravingTimer.urgeSurfing.observe', 'Beobachte die Empfindung'),
+            subtext: tr('cravingTimer.urgeSurfing.observeDesc', 'Wie fühlt es sich an? Kribbeln? Druck? Wärme? Kälte?'),
+            duration: 25,
+            animation: 'observe'
+        },
+        {
+            instruction: tr('cravingTimer.urgeSurfing.breathe', 'Atme durch die Welle'),
+            subtext: tr('cravingTimer.urgeSurfing.breatheDesc', 'Atme langsam ein... und aus. Die Welle steigt...'),
+            duration: 30,
+            animation: 'wave-up'
+        },
+        {
+            instruction: tr('cravingTimer.urgeSurfing.peak', 'Die Welle erreicht ihren Höhepunkt'),
+            subtext: tr('cravingTimer.urgeSurfing.peakDesc', 'Halte durch. Jede Welle bricht. Weiter atmen.'),
+            duration: 30,
+            animation: 'wave-peak'
+        },
+        {
+            instruction: tr('cravingTimer.urgeSurfing.subside', 'Die Welle ebbt ab'),
+            subtext: tr('cravingTimer.urgeSurfing.subsideDesc', 'Spüre, wie das Verlangen nachlässt. Du hast es geschafft.'),
+            duration: 25,
+            animation: 'wave-down'
+        },
+        {
+            instruction: tr('cravingTimer.urgeSurfing.reflect', 'Reflexion'),
+            subtext: tr('cravingTimer.urgeSurfing.reflectDesc', 'Du hast das Verlangen überstanden, ohne zu rauchen.'),
+            duration: 15,
+            animation: 'complete'
+        }
+    ];
+}
+
+let urgeSurfingTimeout = null;
+let urgeSurfingPhaseIndex = 0;
+
+function startUrgeSurfing() {
+    const optionsContainer = document.querySelector('.sos-breathing-options');
+    const activeContainer = document.getElementById('sosBreathingActive');
+
+    urgeSurfingPhaseIndex = 0;
+    exerciseRunning = true;
+
+    optionsContainer.classList.add('hidden');
+    activeContainer.classList.remove('hidden');
+
+    // Add stop button listener
+    const stopBtn = document.getElementById('sosBreathingStop');
+    if (stopBtn) {
+        stopBtn.onclick = stopUrgeSurfing;
+    }
+
+    runUrgeSurfingPhase();
+}
+
+function runUrgeSurfingPhase() {
+    if (!exerciseRunning) return;
+
+    const phases = getUrgeSurfingPhases();
+    if (urgeSurfingPhaseIndex >= phases.length) {
+        showUrgeSurfingCompletion();
+        return;
+    }
+
+    const phase = phases[urgeSurfingPhaseIndex];
+    const instruction = document.getElementById('sosBreathingInstruction');
+    const timer = document.getElementById('sosBreathingTimer');
+    const progress = document.getElementById('sosBreathingProgress');
+    const circle = document.querySelector('#sosBreathingActive .breathing-exercise-circle');
+
+    // Update UI
+    instruction.textContent = phase.instruction;
+    instruction.className = 'breathing-instruction urge-surfing';
+    progress.textContent = phase.subtext;
+    progress.style.fontSize = '0.9rem';
+    progress.style.opacity = '0.9';
+
+    // Update circle animation for wave effect
+    circle.className = 'breathing-exercise-circle urge-surfing ' + phase.animation;
+
+    // Countdown
+    let secondsLeft = phase.duration;
+    timer.textContent = secondsLeft;
+
+    if (exerciseInterval) clearInterval(exerciseInterval);
+
+    exerciseInterval = setInterval(() => {
+        secondsLeft--;
+        if (secondsLeft > 0) {
+            timer.textContent = secondsLeft;
+        } else {
+            timer.textContent = '';
+        }
+    }, 1000);
+
+    if (urgeSurfingTimeout) clearTimeout(urgeSurfingTimeout);
+
+    urgeSurfingTimeout = setTimeout(() => {
+        clearInterval(exerciseInterval);
+        urgeSurfingPhaseIndex++;
+        runUrgeSurfingPhase();
+    }, phase.duration * 1000);
+}
+
+function showUrgeSurfingCompletion() {
+    const instruction = document.getElementById('sosBreathingInstruction');
+    const timer = document.getElementById('sosBreathingTimer');
+    const progress = document.getElementById('sosBreathingProgress');
+    const circle = document.querySelector('#sosBreathingActive .breathing-exercise-circle');
+
+    exerciseRunning = false;
+
+    instruction.textContent = tr('cravingTimer.urgeSurfing.done', 'Welle überstanden!');
+    instruction.className = 'breathing-instruction complete';
+    timer.textContent = '';
+    progress.textContent = tr('cravingTimer.urgeSurfing.source', 'Technik nach Dr. Alan Marlatt, University of Washington');
+    progress.style.fontSize = '0.8rem';
+    progress.style.opacity = '0.7';
+    circle.className = 'breathing-exercise-circle complete';
+
+    setTimeout(() => {
+        stopUrgeSurfing();
+    }, 3000);
+}
+
+function stopUrgeSurfing() {
+    exerciseRunning = false;
+
+    if (exerciseInterval) {
+        clearInterval(exerciseInterval);
+        exerciseInterval = null;
+    }
+
+    if (urgeSurfingTimeout) {
+        clearTimeout(urgeSurfingTimeout);
+        urgeSurfingTimeout = null;
+    }
+
+    const optionsContainer = document.querySelector('.sos-breathing-options');
+    const activeContainer = document.getElementById('sosBreathingActive');
+    const progress = document.getElementById('sosBreathingProgress');
+
+    if (optionsContainer) optionsContainer.classList.remove('hidden');
+    if (activeContainer) activeContainer.classList.add('hidden');
+    if (progress) {
+        progress.style.fontSize = '';
+        progress.style.opacity = '';
+    }
+
+    urgeSurfingPhaseIndex = 0;
 }
 
 function startBreathingExercise(type) {

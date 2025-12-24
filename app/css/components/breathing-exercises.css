@@ -162,6 +162,81 @@
     animation: pulse-complete 1s ease-in-out infinite;
 }
 
+/* Urge Surfing Animations - Wave Effect */
+.breathing-exercise-circle.urge-surfing {
+    border-color: #4fc3f7;
+    background: linear-gradient(180deg, rgba(79, 195, 247, 0.1) 0%, rgba(79, 195, 247, 0.3) 100%);
+}
+
+.breathing-exercise-circle.urge-surfing.pulse {
+    animation: urge-pulse 2s ease-in-out infinite;
+}
+
+.breathing-exercise-circle.urge-surfing.scan {
+    animation: urge-scan 3s ease-in-out infinite;
+    border-color: #ba68c8;
+    background: linear-gradient(180deg, rgba(186, 104, 200, 0.1) 0%, rgba(186, 104, 200, 0.3) 100%);
+}
+
+.breathing-exercise-circle.urge-surfing.observe {
+    animation: urge-observe 2.5s ease-in-out infinite;
+    border-color: #ffb74d;
+    background: linear-gradient(180deg, rgba(255, 183, 77, 0.1) 0%, rgba(255, 183, 77, 0.3) 100%);
+}
+
+.breathing-exercise-circle.urge-surfing.wave-up {
+    animation: urge-wave-up 4s ease-in-out infinite;
+    border-color: #4fc3f7;
+    background: linear-gradient(180deg, rgba(79, 195, 247, 0.2) 0%, rgba(79, 195, 247, 0.4) 100%);
+}
+
+.breathing-exercise-circle.urge-surfing.wave-peak {
+    animation: urge-wave-peak 2s ease-in-out infinite;
+    border-color: #ef5350;
+    background: linear-gradient(180deg, rgba(239, 83, 80, 0.2) 0%, rgba(239, 83, 80, 0.4) 100%);
+}
+
+.breathing-exercise-circle.urge-surfing.wave-down {
+    animation: urge-wave-down 4s ease-in-out infinite;
+    border-color: #81c784;
+    background: linear-gradient(180deg, rgba(129, 199, 132, 0.2) 0%, rgba(129, 199, 132, 0.4) 100%);
+}
+
+@keyframes urge-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.05); opacity: 1; }
+}
+
+@keyframes urge-scan {
+    0%, 100% { transform: scale(1); border-width: 4px; }
+    50% { transform: scale(1.02); border-width: 6px; }
+}
+
+@keyframes urge-observe {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.03); }
+    75% { transform: scale(0.97); }
+}
+
+@keyframes urge-wave-up {
+    0% { transform: scale(0.85); }
+    100% { transform: scale(1.15); }
+}
+
+@keyframes urge-wave-peak {
+    0%, 100% { transform: scale(1.15); }
+    50% { transform: scale(1.2); }
+}
+
+@keyframes urge-wave-down {
+    0% { transform: scale(1.15); }
+    100% { transform: scale(0.9); }
+}
+
+.breathing-instruction.urge-surfing {
+    color: #4fc3f7;
+}
+
 @keyframes breathe-in {
     0% { transform: scale(0.8); }
     100% { transform: scale(1.1); }

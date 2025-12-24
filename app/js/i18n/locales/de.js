@@ -785,6 +785,10 @@ export default {
             '478': {
                 name: '4-7-8 Technik',
                 detail: '4-7-8 | ~2.5 Min | Entspannung'
+            },
+            urgeSurfing: {
+                name: 'Urge Surfing',
+                detail: '~5 Min | Achtsamkeit | Evidenzbasiert'
             }
         },
         games: {
@@ -845,7 +849,13 @@ export default {
             healing: 'Dein Körper heilt sich gerade. Jede Sekunde zählt!',
             achieved: 'Du hast schon so viel geschafft. Gib jetzt nicht auf!',
             stronger: 'Jedes überwundene Verlangen macht dich stärker!',
-            roleModel: 'Du bist ein Vorbild für andere. Bleib stark!'
+            roleModel: 'Du bist ein Vorbild für andere. Bleib stark!',
+            // Exercise prompts - evidence: 12 studies show up to 50 min reduced cravings (smokefree.gov)
+            squats: 'Mach jetzt 10 Kniebeugen! Bewegung reduziert Verlangen sofort.',
+            stairs: 'Lauf eine Treppe hoch und runter - das hilft wissenschaftlich belegt!',
+            stretch: 'Strecke dich 1 Minute lang. Arme hoch, zur Seite, nach vorne!',
+            walk: 'Geh 2 Minuten auf der Stelle. Jede Bewegung zählt!',
+            pushups: 'Schaffst du 5 Liegestütze? Oder gegen die Wand? Probier es!'
         },
         breathing: {
             inhale: 'Einatmen',
@@ -854,6 +864,26 @@ export default {
             cycle: 'Zyklus {current} von {total}',
             done: 'Geschafft!',
             completed: 'Übung abgeschlossen'
+        },
+        // Urge Surfing - technique by Dr. Alan Marlatt, University of Washington
+        // Evidence: 26% reduction in smoking (https://pubmed.ncbi.nlm.nih.gov/20025372/)
+        urgeSurfing: {
+            notice: 'Nimm das Verlangen wahr',
+            noticeDesc: 'Schließe die Augen. Erkenne an, dass du ein Verlangen hast.',
+            bodyAwareness: 'Wo spürst du es?',
+            bodyDesc: 'Scanne deinen Körper. Brust? Hände? Mund? Bauch?',
+            observe: 'Beobachte die Empfindung',
+            observeDesc: 'Wie fühlt es sich an? Kribbeln? Druck? Wärme? Kälte?',
+            breathe: 'Atme durch die Welle',
+            breatheDesc: 'Atme langsam ein... und aus. Die Welle steigt...',
+            peak: 'Die Welle erreicht ihren Höhepunkt',
+            peakDesc: 'Halte durch. Jede Welle bricht. Weiter atmen.',
+            subside: 'Die Welle ebbt ab',
+            subsideDesc: 'Spüre, wie das Verlangen nachlässt. Du hast es geschafft.',
+            reflect: 'Reflexion',
+            reflectDesc: 'Du hast das Verlangen überstanden, ohne zu rauchen.',
+            done: 'Welle überstanden!',
+            source: 'Technik nach Dr. Alan Marlatt, University of Washington'
         },
         games: {
             points: 'Punkte',
