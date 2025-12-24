@@ -30,10 +30,9 @@ export function initializeLanguageToggle() {
         const nextIndex = (currentIndex + 1) % locales.length;
         const nextLocale = locales[nextIndex];
 
-        await setLocale(nextLocale);
-
-        languageToggle.textContent = FLAGS[nextLocale] || FLAGS.de;
-        languageToggle.setAttribute('aria-label', getAriaLabel(nextLocale));
+        // Save locale and reload to ensure all dynamic content is updated
+        localStorage.setItem('locale', nextLocale);
+        window.location.reload();
     });
 }
 
