@@ -58,7 +58,6 @@ Alle JavaScript-Dateien nutzen `import`/`export`. Die App funktioniert nur über
 │   ├── js/
 │   │   ├── app.js                    # Entry Point
 │   │   ├── config.js                 # User Config
-│   │   ├── firebase-config.js        # Firebase Credentials
 │   │   ├── firebase-auth.js          # Auth Helper Functions
 │   │   ├── data/                     # Statische Daten
 │   │   │   ├── milestones.js        # 28 Gesundheitsmeilensteine

@@ -56,13 +56,15 @@ Server-seitige Validierung in Security Rules:
 
 ### Content Security Policy (CSP)
 
-Definiert in `.htaccess`:
+Definiert in `app/.htaccess` und als Meta-Tag in `app/index.html`:
 
 ```apache
 Content-Security-Policy: default-src 'self';
-  script-src 'self' https://www.gstatic.com https://cdn.jsdelivr.net;
+  script-src 'self' https://cdn.jsdelivr.net https://www.gstatic.com https://cdnjs.cloudflare.com;
   style-src 'self' 'unsafe-inline';
-  connect-src 'self' https://*.googleapis.com https://*.firebaseio.com;
+  connect-src 'self' https://*.firebaseapp.com https://*.googleapis.com https://*.firestore.googleapis.com https://firestore.googleapis.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://www.gstatic.com;
+  img-src 'self' data: https:; font-src 'self' data:;
+  frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'
 ```
 
 ### Weitere Security Headers
@@ -145,7 +147,7 @@ Diese Daten sind nicht sensitiv und verbessern die Offline-Funktionalität.
 - [ ] HTTPS mit gültigem Zertifikat
 - [ ] Firestore Security Rules deployed
 - [ ] .htaccess mit Security Headers
-- [ ] firebase-config.js nicht im Git-Repo
+- [ ] Firebase-Config in firebase-init.js auf das eigene Projekt gesetzt (API-Keys sind öffentlich, Schutz über Security Rules)
 - [ ] Regelmäßige Firebase SDK Updates
 - [ ] Monitoring in Firebase Console aktiviert
 

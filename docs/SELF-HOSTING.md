@@ -50,12 +50,6 @@ cd smoke-free-tracker
 
 ## 5. Firebase Config einrichten
 
-### Config-Datei erstellen
-
-```bash
-cp app/js/firebase-config.example.js app/js/firebase-config.js
-```
-
 ### Credentials eintragen
 
 1. Firebase Console -> Projekteinstellungen (Zahnrad-Icon)
@@ -64,10 +58,10 @@ cp app/js/firebase-config.example.js app/js/firebase-config.js
 4. App-Namen eingeben
 5. Firebase-SDK Konfiguration kopieren
 
-Trage die Werte in `app/js/firebase-config.js` ein:
+Trage die Werte in `app/js/firebase-init.js` ein (Objekt `firebaseConfig`):
 
 ```javascript
-export const firebaseConfig = {
+const firebaseConfig = {
     apiKey: "DEIN_API_KEY",
     authDomain: "DEIN_PROJEKT.firebaseapp.com",
     projectId: "DEIN_PROJEKT",
@@ -76,16 +70,6 @@ export const firebaseConfig = {
     appId: "1:123456789:web:abcdef"
 };
 ```
-
-### Alternative: Umgebungsvariablen (.env)
-
-Für mehr Sicherheit kannst du die Credentials über `.env` verwalten:
-
-```bash
-cp .env.example .env
-```
-
-Dann `generate-firebase-config.php` nutzen um die Config zu generieren.
 
 ---
 
@@ -137,8 +121,6 @@ scp -r . user@server:/var/www/byebyesmoke/
 # Oder via rsync
 rsync -avz --exclude='.git' --exclude='node_modules' . user@server:/var/www/byebyesmoke/
 ```
-
-**Wichtig:** `app/js/firebase-config.js` muss auf dem Server vorhanden sein!
 
 ---
 
@@ -247,7 +229,6 @@ firebase deploy
 ```bash
 cd /var/www/byebyesmoke
 git pull origin master
-# firebase-config.js bleibt erhalten (in .gitignore)
 ```
 
 Bei Security Rules Änderungen: Erneut deployen.

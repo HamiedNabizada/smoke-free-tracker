@@ -1,7 +1,3 @@
-# Firebase credentials (NEVER commit!)
-app/js/firebase-config.js
-App/js/firebase-config.js
-
 # Database credentials (NEVER commit!)
 api/db-config.php
 

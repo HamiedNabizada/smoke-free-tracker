@@ -1,6 +1,4 @@
-# Firebase Credentials - NIEMALS committen!
 .env
-js/firebase-config.js
 
 # Backup files
 *.bak
